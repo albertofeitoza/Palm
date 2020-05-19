@@ -1,0 +1,30 @@
+{
+  "products": [
+    {
+      "id": 2,
+      "name": "Notebook Mac Pro",
+      "imagem": "./src/assets/img/produtos/id2.64",
+      "price": "12000.10"
+    },
+    {
+      "id": 3,
+      "name": "Tablet Sangung",
+      "imagem": "",
+      "price": "500."
+    },
+    {
+      "name": "Tela de produtos Diários",
+      "price": "10.00",
+      "imagem": "",
+      "id": 4
+    }
+  ],
+  "usuarios": [
+    {
+      "id": 1,
+      "login": "alberto.feitoza@outlook.com",
+      "senha": "teste",
+      "dominio": "Administrador"
+    }
+  ]
+}
