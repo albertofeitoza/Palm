@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { Usuario } from './modelLogin';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -11,35 +13,40 @@ import { Injectable, EventEmitter  } from '@angular/core';
 })
 export class LoginService {
 
-  UrlAcesso = "http://localhost:3001/usuarios"
-
+  UrlUsuario = "http://localhost:3001/usuarios"
+  
   private usuarioAutenticado: boolean = false; 
 
   mostrarMenuEmitter = new EventEmitter<boolean>();
   mostrarLoginEmitter = new EventEmitter<boolean>();
 
   constructor(private router: Router,
-              private snackbar : MatSnackBar
+              private snackbar : MatSnackBar,
+              private http: HttpClient
               ) { }
 
 
-  logarSistema(usuario: Usuario){
+  logarSistema(usuario: Usuario) {
 
-    if(usuario.nome === 'alberto.feitoza@outlook.com' &&
-      usuario.senha === '123456'){
+
+    if(usuario.login === usuario.loginTemp &&
+      usuario.senha === usuario.passwordTemp){
         this.usuarioAutenticado = true;
 
         this.mostrarMenuEmitter.emit(true);
         this.mostrarLoginEmitter.emit(false)
         this.router.navigate(['/']);
-        this.showMessage("Seja Bem Vindo!  " + usuario.nome , false);
+        this.showMessage("Seja Bem Vindo!  " + usuario.login , false);
       }else{
         this.usuarioAutenticado = false;
         this.mostrarMenuEmitter.emit(false);
         this.mostrarLoginEmitter.emit(true)
         this.showMessage("Usuário ou senha Inválido!", true);
     }
-  
+  }
+
+  buscarUsuario(): Observable<Usuario[]>{
+    return this.http.get<Usuario[]>(this.UrlUsuario);
   }
 
   sairSistema(){
@@ -57,6 +64,8 @@ export class LoginService {
       verticalPosition : "top",
       panelClass : isErro ? ['msg-error'] : ['msg-sucess']
     })
+    
+    
 
 }
 

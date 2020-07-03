@@ -38,6 +38,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProductUpdateComponent } from './components/product/product-update/product-update.component';
 import { ProductDeleteComponent } from './components/product/product-delete/product-delete.component';
+import { RedDirective } from './diretivas/red.directive';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { ProductDeleteComponent } from './components/product/product-delete/prod
     ProductUpdateComponent,
     ProductDeleteComponent,
     LoginComponent,
+    RedDirective,
     
   ],
   imports: [

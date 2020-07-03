@@ -1,5 +1,7 @@
 export class Usuario {
-    nome : string
+    login : string
     senha : string
     dominio : string
+    loginTemp : string
+    passwordTemp : string
 }

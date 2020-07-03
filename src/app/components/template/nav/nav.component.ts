@@ -11,6 +11,7 @@ export class NavComponent implements OnInit {
   constructor(private auth: LoginService) { }
 
   ngOnInit(): void {
+  
   }
 
   sairSistema(){
@@ -18,6 +19,5 @@ export class NavComponent implements OnInit {
     this.auth.sairSistema();
     
   }
-
 
 }
