@@ -1,4 +1,4 @@
-import { LoginService } from './login/login.service';
+import { LoginService } from './services/login.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
 
@@ -15,7 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import localePt from '@angular/common/locales/pt';
 import { registerLocaleData } from  '@angular/common';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './components/login/login.component';
 
 
 
@@ -30,6 +30,10 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import {MatMenuModule} from '@angular/material/menu';
+
+
+
 import { ProductReadComponent } from './components/product/product-read/product-read.component';
 import { ProductReadTableprodutosComponent } from './components/product/product-read-tableprodutos/product-read-tableprodutos.component';
 import { MatTableModule } from '@angular/material/table';
@@ -74,8 +78,9 @@ import { RedDirective } from './diretivas/red.directive';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatMenuModule,
     
-
+ 
 
   ],
   providers: 

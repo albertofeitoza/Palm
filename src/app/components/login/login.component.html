@@ -1,0 +1,21 @@
+<mat-card >
+    <mat-card-title><i class="material-icons">account_box</i></mat-card-title>
+        <form>
+            <mat-form-field > 
+                <input matInput placeholder="login" 
+                 [(ngModel)]="usuario.login" name="name">
+
+            </mat-form-field>
+            <mat-form-field >
+                <input matInput placeholder="senha"
+                [(ngModel)]="usuario.senha" type="password" name="senha">
+
+            </mat-form-field>
+        </form>
+
+        <button mat-raised-button (click)="logarSistema()" color="primary" > 
+            Login
+        </button>
+        
+
+</mat-card>        

@@ -2,21 +2,33 @@
     <mat-sidenav  class="sidenav" mode="side" opened
             fixedInViewport="true" fixedTopGap="64" fixedBottomGap="64" >
             <mat-nav-list class="nav-list">
-            <a mat-list-item routerLink="/">
+            
+                <a mat-list-item routerLink="/">
                 <i class="material-icons">
                     home
                 </i>
                 Início
             </a>
-                       
-            
-            <a mat-list-item routerLink="products">
-                <i class="material-icons">
-                    storefront
-                </i>
-                Produtos
+            <!--Menus de cadastro-->    
+            <button mat-button [matMenuTriggerFor]="menu" class="menuColor" >
+                <i class="material-icons">storefront</i>
+                
+                <mat-menu #menu="matMenu">
+                        <a mat-list-item routerLink="products" >
+                            <i class="material-icons">
+                                storefront
+                            </i>
+                            Produtos
+                        </a>
+                        <a mat-list-item routerLink="products">
+                            <i class="material-icons">
+                                perm_identity
+                            </i>
+                            Usuários
+                        </a>
+                </mat-menu>
+            </button>
 
-            </a>
             <a mat-list-item (click)="sairSistema()">
                 <i class="material-icons">
                     logout
@@ -32,5 +44,5 @@
         <router-outlet></router-outlet>
     </mat-sidenav-content>
 
-
 </mat-sidenav-container>
+

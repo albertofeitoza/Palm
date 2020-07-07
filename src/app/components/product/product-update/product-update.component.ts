@@ -15,7 +15,6 @@ export class ProductUpdateComponent implements OnInit {
   product: Product = {
     id: null,
     name: null,
-    imagem : null,
     price: 0
   }
 

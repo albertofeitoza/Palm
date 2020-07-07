@@ -8,10 +8,20 @@
 }
 
 .sidenav i {
-    padding-right: 10px;
+    padding-right: 2px;
 }
 
 .content {
     padding: 16px;
     background-color: #FFF;
 }
+
+.menuColor {
+    color: #FFF;
+    background-color: #3F51B5;
+}
+
+.mat-menu {
+    background: #3F51B5;
+}
+  

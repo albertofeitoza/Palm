@@ -12,7 +12,6 @@ export class ProductCreateComponent implements OnInit {
 
     product : Product = {
     name : '',
-    imagem : null,
     price : null
     
     }
