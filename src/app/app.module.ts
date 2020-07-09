@@ -8,8 +8,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './components/template/header/header.component';
 import { FooterComponent } from './components/template/footer/footer.component';
 import { NavComponent } from './components/template/nav/nav.component';
+
 import { HomeComponent } from './views/home/home.component';
 import { ProductCrudComponent } from './views/product-crud/product-crud.component';
+import { UsuarioCrudComponent } from './views/usuario-crud/usuario-crud.component';
+
 import { ProductCreateComponent } from './components/product/product-create/product-create.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -43,6 +46,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProductUpdateComponent } from './components/product/product-update/product-update.component';
 import { ProductDeleteComponent } from './components/product/product-delete/product-delete.component';
 import { RedDirective } from './diretivas/red.directive';
+import { UsuarioComponent } from './components/usuario/usuario.component';
+import { UsuarioReadComponent } from './components/usuario/usuario-read/usuario-read.component';
+import { UsuarioCreateComponent } from './components/usuario/usuario-create/usuario-create.component';
+import { UsuarioDeleteComponent } from './components/usuario/usuario-delete/usuario-delete.component';
+import { UsuarioUpdateComponent } from './components/usuario/usuario-update/usuario-update.component';
+
 
 @NgModule({
   declarations: [
@@ -59,6 +68,12 @@ import { RedDirective } from './diretivas/red.directive';
     ProductDeleteComponent,
     LoginComponent,
     RedDirective,
+    UsuarioCrudComponent,
+    UsuarioComponent,
+    UsuarioReadComponent,
+    UsuarioCreateComponent,
+    UsuarioDeleteComponent,
+    UsuarioUpdateComponent,
     
   ],
   imports: [

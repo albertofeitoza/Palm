@@ -64,6 +64,7 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
+              
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -82,6 +83,14 @@
                   "type": "anyComponentStyle",
                   "maximumWarning": "6kb",
                   "maximumError": "10kb"
+                }
+              ]
+            },
+            "qa": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.qa.ts"
                 }
               ]
             }
@@ -111,4 +120,7 @@
   "cli": {
     "analytics": "d00bc348-1c68-4c1f-b943-5e19273b7029"
   }
+  
+
+  
 }

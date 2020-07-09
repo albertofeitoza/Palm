@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { Usuario } from '../models/modelLogin';
 import { map, catchError } from 'rxjs/operators';
 import { Observable, EMPTY } from 'rxjs';
@@ -14,8 +15,10 @@ import { Injectable, EventEmitter  } from '@angular/core';
 })
 export class LoginService {
 
-  UrlUsuario = "http://localhost:3001/usuarios"
-  
+  title = 'multiple-env-demo';
+  environmentName = '';
+  environmentUrl = 'Debug api';
+ 
   private usuarioAutenticado: boolean = false; 
 
   mostrarMenuEmitter = new EventEmitter<boolean>();
@@ -24,7 +27,10 @@ export class LoginService {
   constructor(private router: Router,
               private snackbar : MatSnackBar,
               private http: HttpClient
-              ) { }
+              ) { 
+                this.environmentName = environment.environmentName;
+              this.environmentUrl =  environment.apiUrl + '/usuarios';
+              }
 
 
   logarSistema(usuario: Usuario) {
@@ -47,7 +53,7 @@ export class LoginService {
   }
 
   buscarUsuario(): Observable<Usuario[]>{
-    return this.http.get<Usuario[]>(this.UrlUsuario).pipe(
+    return this.http.get<Usuario[]>(this.environmentUrl).pipe(
       map(obj => obj),
       catchError(e => this.erroHandler(e))
     );

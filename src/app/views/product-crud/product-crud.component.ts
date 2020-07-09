@@ -10,7 +10,9 @@ import { Router} from '@angular/router';
 })
 export class ProductCrudComponent implements OnInit {
 
-  constructor(private router : Router, private headerService : HeaderService) { 
+  constructor(private router : Router,
+             private headerService : HeaderService
+             ) { 
 
     this.headerService.headerData = {
       title : 'Cadastro de Produtos',
