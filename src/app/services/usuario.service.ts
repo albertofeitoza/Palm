@@ -1,6 +1,6 @@
 import { catchError, map } from 'rxjs/operators';
 import { Observable, EMPTY } from 'rxjs';
-import { Usuario } from './../models/modelLogin';
+import { Usuario } from '../models/modelLogin';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Injectable } from '@angular/core';
@@ -17,7 +17,6 @@ export class UsuarioService {
   environmentUrl = 'Debug api';
 
   constructor(
-             // private router: Route,
               private snackbar : MatSnackBar,
               private http: HttpClient
              ) {
