@@ -22,6 +22,7 @@ import { LoginComponent } from './components/login/login.component';
 
 
 
+
 registerLocaleData(localePt);
 
 //Modulos Material
@@ -34,7 +35,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
-
+import {MatSelectModule} from '@angular/material/select';
 
 
 import { ProductReadComponent } from './components/product/product-read/product-read.component';
@@ -51,6 +52,17 @@ import { UsuarioReadComponent } from './components/usuario/usuario-read/usuario-
 import { UsuarioCreateComponent } from './components/usuario/usuario-create/usuario-create.component';
 import { UsuarioDeleteComponent } from './components/usuario/usuario-delete/usuario-delete.component';
 import { UsuarioUpdateComponent } from './components/usuario/usuario-update/usuario-update.component';
+import { ChamadoCrudComponent } from './views/chamado-crud/chamado-crud.component';
+import { ChamadoCreateComponent } from './components/chamados/chamado-create/chamado-create.component';
+import { ChamadoUpdateComponent } from './components/chamados/chamado-update/chamado-update.component';
+import { ChamadoDeleteComponent } from './components/chamados/chamado-delete/chamado-delete.component';
+import { ChamadoReadComponent } from './components/chamados/chamado-read/chamado-read.component';
+import { EmpresaComponent } from './views/empresa/empresa.component';
+import { EmpresaCreateComponent } from './components/empresa/empresa-create/empresa-create.component';
+import { EmpresaUpdateComponent } from './components/empresa/empresa-update/empresa-update.component';
+import { EmpresaDeleteComponent } from './components/empresa/empresa-delete/empresa-delete.component';
+import { EmpresaReadComponent } from './components/empresa/empresa-read/empresa-read.component';
+
 
 
 @NgModule({
@@ -74,6 +86,17 @@ import { UsuarioUpdateComponent } from './components/usuario/usuario-update/usua
     UsuarioCreateComponent,
     UsuarioDeleteComponent,
     UsuarioUpdateComponent,
+    ChamadoCrudComponent,
+    ChamadoCreateComponent,
+    ChamadoUpdateComponent,
+    ChamadoDeleteComponent,
+    ChamadoReadComponent,
+    EmpresaComponent,
+    EmpresaCreateComponent,
+    EmpresaUpdateComponent,
+    EmpresaDeleteComponent,
+    EmpresaReadComponent,
+   
     
   ],
   imports: [
@@ -94,7 +117,8 @@ import { UsuarioUpdateComponent } from './components/usuario/usuario-update/usua
     MatPaginatorModule,
     MatSortModule,
     MatMenuModule,
-    
+    MatSelectModule,
+
  
 
   ],

@@ -1,3 +1,4 @@
+
 import { environment } from './../../environments/environment';
 import { Usuario } from '../models/modelLogin';
 import { map, catchError } from 'rxjs/operators';
@@ -26,7 +27,8 @@ export class LoginService {
 
   constructor(private router: Router,
               private snackbar : MatSnackBar,
-              private http: HttpClient
+              private http: HttpClient,
+               
               ) { 
                 this.environmentName = environment.environmentName;
               this.environmentUrl =  environment.apiUrl + '/usuarios';
@@ -34,7 +36,6 @@ export class LoginService {
 
 
   logarSistema(usuario: Usuario) {
-
 
     if(usuario.login === usuario.loginTemp &&
       usuario.senha === usuario.passwordTemp){
@@ -52,6 +53,16 @@ export class LoginService {
     }
   }
 
+ 
+  readByIdSenha(login: string, senha: string): Observable<Usuario>{
+    const url = `${this.environmentUrl}/${login}/${senha}`      
+      return this.http.get<Usuario>(url).pipe(
+        map(obj => obj),
+        catchError(e => this.erroHandler(e))
+      );
+   }
+ 
+ 
   buscarUsuario(): Observable<Usuario[]>{
     return this.http.get<Usuario[]>(this.environmentUrl).pipe(
       map(obj => obj),

@@ -15,6 +15,7 @@ import { UsuarioCreateComponent } from './components/usuario/usuario-create/usua
 import { UsuarioUpdateComponent } from './components/usuario/usuario-update/usuario-update.component';
 import { UsuarioDeleteComponent } from './components/usuario/usuario-delete/usuario-delete.component';
 
+import { ChamadoCrudComponent } from './views/chamado-crud/chamado-crud.component';
 
 
 const routes: Routes = [
@@ -58,6 +59,12 @@ const routes: Routes = [
     path: "usuarios/delete/:id",
     component : UsuarioDeleteComponent
   },
+  {
+    path: "chamados",
+    component : ChamadoCrudComponent
+  },
+  
+
 
 
 ];

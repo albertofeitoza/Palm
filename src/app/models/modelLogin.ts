@@ -1,10 +1,11 @@
 export class Usuario {
+    id ? :number
     nome: string
     email: string
     telefone:number
     login : string
     senha : string
-    dominio : string
+    empresaId : string
     loginTemp : string
     passwordTemp : string
 }

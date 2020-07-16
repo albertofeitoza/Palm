@@ -14,9 +14,9 @@ import { Observable, EMPTY } from 'rxjs';
 })
 export class ProductService {
 
-  title = 'multiple-env-demo';
+  title = '';
   environmentName = '';
-  environmentUrl = 'Debug api';
+  environmentUrl = '';
 
   constructor(private snackbar : MatSnackBar,
               private http : HttpClient

@@ -24,7 +24,45 @@
       "telefone": "11-946403479",
       "login": "alberto.feitoza@outlook.com",
       "senha": "teste",
-      "dominio": "Administrador"
+      "empresaId": "1",
+      "tipoUsuario": "1"
+    },
+    {
+      "id": 2,
+      "nome": "Kelly Cristina",
+      "email": "kellycristina.golden@gmail.com",
+      "telefone": "11-967466957",
+      "login": "kelly.golden",
+      "senha": "123456",
+      "empresaId": "2",
+      "tipoUsuario": "2"
+    },
+    {
+      "nome": "teste'",
+      "email": "sa",
+      "telefone": "ads",
+      "login": "das",
+      "senha": "ads",
+      "empresaId": 1,
+      "id": 3
+    }
+  ],
+  "empresa": [
+    {
+      "id": 1,
+      "cnpj": "21.425.822/0001-94",
+      "inscricaoEstadual": "6817",
+      "inscricaoMunicipal": "6817",
+      "razaoSocial": "Empresa Teste1",
+      "nomeFantasia": "Empresa Teste1 Fantasia"
+    },
+    {
+      "id": 2,
+      "cnpj": "21.425.822/0001-94",
+      "inscricaoEstadual": "6818",
+      "inscricaoMunicipal": "6818",
+      "razaoSocial": "Empresa Teste2",
+      "nomeFantasia": "Empresa Teste2 Fantasia"
     }
   ]
 }

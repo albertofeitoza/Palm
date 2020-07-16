@@ -37,9 +37,9 @@
         </ng-container>   
         
         <!-- Empresa -->
-        <ng-container matColumnDef="dominio">
+        <ng-container matColumnDef="empresaId">
             <th mat-header-cell *matHeaderCellDef>Empresa</th>
-            <td mat-cell *matCellDef="let row">{{row.dominio}}</td>
+            <td mat-cell *matCellDef="let row">{{row.empresaId}}</td>
         </ng-container>  
 
       <!-- Coluna de Ações -->
@@ -65,5 +65,9 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-
+    
+    <mat-paginator [length]="100"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]">
+    </mat-paginator>
 </div>

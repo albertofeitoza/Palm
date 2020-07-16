@@ -1,6 +1,6 @@
 import { LoginService } from './../../services/login.service';
 
-import { Usuario } from './../../models/modelLogin';
+import { Usuario } from '../../models/modelLogin';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
@@ -26,12 +26,17 @@ constructor(private router :Router,
   
   logarSistema(){
     
+    
+   
+    
     this.authservice.buscarUsuario().subscribe(usuariosSistema => {
       this.usuariosSistema = usuariosSistema;
-      //console.log(usuariosSistema);
 
-      usuariosSistema.forEach(element => {
-        
+
+      for (let index = 0; index < usuariosSistema.length; index++) {
+               
+        const element = usuariosSistema[index];
+
         if(element.login === this.usuario.login  && element.senha == this.usuario.senha)
         {
           this.usuario.loginTemp = element.login;
@@ -40,13 +45,14 @@ constructor(private router :Router,
           this.usuario.loginTemp =  (this.usuario.loginTemp);
           this.authservice.logarSistema(this.usuario);
           this.usuario === null;
-
+          break;
+          
         }
         else{
           this.authservice.showMessage("Usuário ou senha Inválido!", true);
         }
 
-      });
+      }    
 
   });
 
