@@ -1,3 +1,6 @@
+import { EmpresaUpdateComponent } from './components/empresa/empresa-update/empresa-update.component';
+import { EmpresaCreateComponent } from './components/empresa/empresa-create/empresa-create.component';
+import { EmpresaComponent } from './views/empresa/empresa.component';
 
 import { LoginComponent } from './components/login/login.component';
 import { NgModule } from '@angular/core';
@@ -16,6 +19,9 @@ import { UsuarioUpdateComponent } from './components/usuario/usuario-update/usua
 import { UsuarioDeleteComponent } from './components/usuario/usuario-delete/usuario-delete.component';
 
 import { ChamadoCrudComponent } from './views/chamado-crud/chamado-crud.component';
+import { ChamadoCreateComponent } from './components/chamados/chamado-create/chamado-create.component';
+import { ChamadoUpdateComponent } from './components/chamados/chamado-update/chamado-update.component';
+import { ChamadoDeleteComponent } from './components/chamados/chamado-delete/chamado-delete.component';
 
 
 const routes: Routes = [
@@ -63,10 +69,37 @@ const routes: Routes = [
     path: "chamados",
     component : ChamadoCrudComponent
   },
+  {
+    path: "chamados/create",
+    component : ChamadoCreateComponent
+  },
+  {
+    path: "chamados/update/:id",
+    component : ChamadoUpdateComponent
+  },
+  {
+    path: "chamados/delete/:id",
+    component : ChamadoDeleteComponent
+  },
+
+  //Rotas de empresa
+  {
+    path: "empresa",
+    component : EmpresaComponent
+  },
+  {
+    path: "empresa/create",
+    component : EmpresaCreateComponent
+  },
+  {
+    path: "empresa/update/:id",
+    component : EmpresaUpdateComponent
+  },
+  {
+    path: "empresa/delete/:id",
+    component : ChamadoDeleteComponent
+  },
   
-
-
-
 ];
 
 @NgModule({

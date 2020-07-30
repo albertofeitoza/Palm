@@ -24,7 +24,7 @@
       "telefone": "11-946403479",
       "login": "alberto.feitoza@outlook.com",
       "senha": "teste",
-      "empresaId": "1",
+      "empresaId": 1,
       "tipoUsuario": "1"
     },
     {
@@ -34,17 +34,8 @@
       "telefone": "11-967466957",
       "login": "kelly.golden",
       "senha": "123456",
-      "empresaId": "2",
-      "tipoUsuario": "2"
-    },
-    {
-      "nome": "teste'",
-      "email": "sa",
-      "telefone": "ads",
-      "login": "das",
-      "senha": "ads",
       "empresaId": 1,
-      "id": 3
+      "tipoUsuario": "2"
     }
   ],
   "empresa": [
@@ -64,5 +55,65 @@
       "razaoSocial": "Empresa Teste2",
       "nomeFantasia": "Empresa Teste2 Fantasia"
     }
+  ],
+  "contato": [
+    {
+      "id": 1,
+      "Nome": "Nome Contato 2",
+      "E-mail": "teste@gmail.com",
+      "E-mail Secundário": "testeSecundario@gmail.com",
+      "Website": "www.empresa.com.br",
+      "ddd" : "11",
+      "Telefone ": "43352444",
+      "ramal" : "452",
+      "celular" : "99445544875"
+    },
+    {
+      "id": 2,
+      "Nome": "Nome Contato 2",
+      "E-mail": "teste@gmail.com",
+      "E-mail Secundário": "testeSecundario@gmail.com",
+      "Website": "www.empresa.com.br",
+      "ddd" : "11",
+      "Telefone ": "43352444",
+      "ramal" : "452",
+      "celular" : "99445544875"
+    }
+  ],
+  "endereco": [
+    {
+      "id": 1,
+      "cep": "Endereço 1",
+      "estado": "teste@gmail.com",
+      "cidade": "testeSecundario@gmail.com",
+      "logradouro": "Rua OK ",
+      "numero" : "11",
+      "complemento ": "casa",
+      "tipoLogradouro" : "Av",
+      "bairro" : "Bairro 1",
+      "referencia" : "ponto final de ônibus",
+      "codigoIbge" : "000001",
+      "pis" : "021212121",
+      "cnes" : "022",
+      "cnae" : "0212212",
+      "codTributacaoMunicipio": "00000000"
+    },
+    {
+      "id": 2,
+      "cep": "Endereço 2",
+      "estado": "teste@gmail.com",
+      "cidade": "testeSecundario@gmail.com",
+      "logradouro": "Rua OK ",
+      "numero" : "11",
+      "complemento ": "casa",
+      "tipoLogradouro" : "Av",
+      "bairro" : "Bairro 1",
+      "referencia" : "ponto final de ônibus",
+      "codigoIbge" : "000001",
+      "pis" : "021212121",
+      "cnes" : "022",
+      "cnae" : "0212212",
+      "codTributacaoMunicipio": "00000000"
+   }
   ]
 }

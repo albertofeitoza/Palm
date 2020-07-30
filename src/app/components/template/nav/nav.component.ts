@@ -8,7 +8,8 @@ import { LoginService } from 'src/app/services/login.service';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
-
+opened = false;
+  
   constructor(private auth: LoginService) { }
 
   ngOnInit(): void {
@@ -20,5 +21,7 @@ export class NavComponent implements OnInit {
     this.auth.sairSistema();
     
   }
+
+ 
 
 }

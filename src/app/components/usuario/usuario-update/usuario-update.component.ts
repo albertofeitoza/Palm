@@ -1,3 +1,6 @@
+import { Observable } from 'rxjs';
+import { EmpresaService } from './../../../services/empresa.service';
+import { Empresa } from './../../../models/empresa/ModelEmpresa';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UsuarioService } from './../../../services/usuario.service';
 import { Usuario } from './../../../models/modelLogin';
@@ -10,19 +13,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsuarioUpdateComponent implements OnInit {
 
-  usuario : Usuario = {
-    nome: null,
-    email: null,
-    telefone: null,
-    login : null,
-    senha : null,
-    empresaId : null,
-    loginTemp : null,
-    passwordTemp : null
-  
-  }
+  empresa : Observable<Empresa[]>;
+  dadosEmpresa : Empresa;
+  usuario : Usuario = new Usuario();
 
   constructor(private usarioService : UsuarioService,
+              private empresaService : EmpresaService,
              private router : Router,
              private route: ActivatedRoute
              ) { }
@@ -31,6 +27,10 @@ export class UsuarioUpdateComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id')
     this.usarioService.readById(id).subscribe(usuario => {
       this.usuario = usuario;
+      this.usuario.senha = '*****';
+      this.usuario.passwordTemp = '';
+
+      this.buscarEmpresa();
     });
 
   }
@@ -48,5 +48,8 @@ export class UsuarioUpdateComponent implements OnInit {
     this.router.navigate(['/usuarios'])
   }
 
+  buscarEmpresa() {
+    this.empresa = this.empresaService.read();
+  }
 
 }

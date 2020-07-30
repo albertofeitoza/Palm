@@ -16,7 +16,7 @@ import { Empresa } from './../../../models/empresa/ModelEmpresa';
 export class UsuarioCreateComponent implements OnInit {
   
 empresa : Observable<Empresa[]>;
-dadosEmpresa : Empresa = new Empresa();
+dadosEmpresa : Empresa;
 usuario : Usuario = new Usuario();
 
   constructor(private usuarioService : UsuarioService,

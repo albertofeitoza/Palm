@@ -1,4 +1,4 @@
-export class Empresa {
+export interface Empresa {
     id ? :string
     cnpj: string
     inscricaoEstadual: string
