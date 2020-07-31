@@ -1,3 +1,4 @@
+import { UtilService } from './util.service';
 import { environment } from '../../environments/environment';
 import { Component } from '@angular/core';
 
@@ -19,27 +20,19 @@ export class ProductService {
   environmentUrl = '';
 
   constructor(private snackbar : MatSnackBar,
-              private http : HttpClient
+              private http : HttpClient,
+              private utilService: UtilService,
               
              ) { 
               this.environmentName = environment.environmentName;
               this.environmentUrl =  environment.apiUrl + '/products';
              }
 
-    showMessage(msg : string, isErro: boolean = false) : void { 
-        this.snackbar.open(msg, 'X' , { 
-          duration : 3000,
-          horizontalPosition: "right",
-          verticalPosition : "top",
-          panelClass : isErro ? ['msg-error'] : ['msg-sucess']
-        })
-
-    }
     //Criar um produto
     create(product : Product): Observable<Product>{
       return this.http.post<Product>(this.environmentUrl, product).pipe(
         map(obj => obj),
-        catchError(e => this.erroHandler(e))
+        catchError(e => this.utilService.erroHandler(e))
       );
     }
     
@@ -47,7 +40,7 @@ export class ProductService {
     read(): Observable<Product[]>{
       return this.http.get<Product[]>(this.environmentUrl).pipe(
         map(obj => obj),
-        catchError(e => this.erroHandler(e))
+        catchError(e => this.utilService.erroHandler(e))
       );
     }
 
@@ -56,7 +49,7 @@ export class ProductService {
     const url = `${this.environmentUrl}/${id}`      
       return this.http.get<Product>(url).pipe(
         map(obj => obj),
-        catchError(e => this.erroHandler(e))
+        catchError(e => this.utilService.erroHandler(e))
       );
    }
 
@@ -65,7 +58,7 @@ export class ProductService {
     const url = `${this.environmentUrl}/${product.id}`      
     return this.http.put<Product>(url, product).pipe(
       map(obj => obj),
-      catchError(e => this.erroHandler(e))
+      catchError(e => this.utilService.erroHandler(e))
     );
    }
 
@@ -73,14 +66,9 @@ export class ProductService {
     const url = `${this.environmentUrl}/${id}`      
     return this.http.delete<Product>(url).pipe(
       map(obj => obj),
-      catchError(e => this.erroHandler(e))
+      catchError(e => this.utilService.erroHandler(e))
     );
 
    }
-    
-   erroHandler(e: any) : Observable<any>{
-    this.showMessage("Erro ao Acessar a API!", true )
-    return EMPTY  
-  }
 
 }

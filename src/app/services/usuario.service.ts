@@ -1,3 +1,4 @@
+import { UtilService } from './util.service';
 import { catchError, map } from 'rxjs/operators';
 import { Observable, EMPTY } from 'rxjs';
 import { Usuario } from './../models/modelLogin';
@@ -18,7 +19,8 @@ export class UsuarioService {
 
   constructor(
               private snackbar : MatSnackBar,
-              private http: HttpClient
+              private http: HttpClient,
+              private utilService : UtilService
              ) {
               this.environmentName = environment.environmentName;
               this.environmentUrl =  environment.apiUrl + '/usuarios';
@@ -28,7 +30,7 @@ export class UsuarioService {
       read(): Observable<Usuario[]>{
         return this.http.get<Usuario[]>(this.environmentUrl).pipe(
           map(obj => obj),
-          catchError(e => this.erroHandler(e))
+          catchError(e => this.utilService.erroHandler(e))
         );
       }
 
@@ -36,7 +38,7 @@ export class UsuarioService {
       create(usuario : Usuario) : Observable<Usuario>{
         return this.http.post<Usuario>(this.environmentUrl, usuario).pipe(
           map(obj => obj),
-          catchError(e => this.erroHandler(e))
+          catchError(e => this.utilService.erroHandler(e))
         )};
 
       // Atualizar usuario por ID
@@ -44,7 +46,7 @@ export class UsuarioService {
         const url = `${this.environmentUrl}/${usuario.id}`      
         return this.http.put<Usuario>(url, usuario).pipe(
           map(obj => obj),
-          catchError(e => this.erroHandler(e))
+          catchError(e => this.utilService.erroHandler(e))
         );
       }
      
@@ -53,7 +55,7 @@ export class UsuarioService {
         const url = `${this.environmentUrl}/${id}`      
           return this.http.get<Usuario>(url).pipe(
             map(obj => obj),
-            catchError(e => this.erroHandler(e))
+            catchError(e => this.utilService.erroHandler(e))
           );
        }
 
@@ -62,25 +64,8 @@ export class UsuarioService {
         const url = `${this.environmentUrl}/${id}`      
         return this.http.delete<Usuario>(url).pipe(
           map(obj => obj),
-          catchError(e => this.erroHandler(e))
+          catchError(e => this.utilService.erroHandler(e))
         );
        }
 
-
-
-      erroHandler(e: any) : Observable<any>{
-        this.showMessage("Erro ao Acessar a API!", true )
-        return EMPTY
-      }
-
-
-      showMessage(msg : string, isErro: boolean = false) : void { 
-        this.snackbar.open(msg, 'X' , { 
-          duration : 3000,
-          horizontalPosition: "right",
-          verticalPosition : "top",
-          panelClass : isErro ? ['msg-error'] : ['msg-sucess']
-        })
-
-      }
 }

@@ -1,3 +1,4 @@
+import { UtilService } from './util.service';
 
 import { environment } from './../../environments/environment';
 import { Usuario } from '../models/modelLogin';
@@ -28,6 +29,7 @@ export class LoginService {
   constructor(private router: Router,
               private snackbar : MatSnackBar,
               private http: HttpClient,
+              private utilService : UtilService,
                
               ) { 
                 this.environmentName = environment.environmentName;
@@ -44,12 +46,12 @@ export class LoginService {
         this.mostrarMenuEmitter.emit(true);
         this.mostrarLoginEmitter.emit(false)
         this.router.navigate(['/']);
-        this.showMessage("Seja Bem Vindo!  " + usuario.login , false);
+        this.utilService.showMessage("Seja Bem Vindo!  " + usuario.login , false);
       }else{
         this.usuarioAutenticado = false;
         this.mostrarMenuEmitter.emit(false);
         this.mostrarLoginEmitter.emit(true)
-        this.showMessage("Usuário ou senha Inválido!", true);
+        this.utilService.showMessage("Usuário ou senha Inválido!", true);
     }
   }
 
@@ -58,7 +60,7 @@ export class LoginService {
     const url = `${this.environmentUrl}/${login}/${senha}`      
       return this.http.get<Usuario>(url).pipe(
         map(obj => obj),
-        catchError(e => this.erroHandler(e))
+        catchError(e => this.utilService.erroHandler(e))
       );
    }
  
@@ -66,38 +68,20 @@ export class LoginService {
   buscarUsuario(): Observable<Usuario[]>{
     return this.http.get<Usuario[]>(this.environmentUrl).pipe(
       map(obj => obj),
-      catchError(e => this.erroHandler(e))
+      catchError(e => this.utilService.erroHandler(e))
     );
     
   }
-
-  erroHandler(e: any) : Observable<any>{
-    this.showMessage("Erro ao Acessar a API!", true )
-    return EMPTY
-  }
-
 
   sairSistema(){
     this.mostrarMenuEmitter.emit(false);
     this.mostrarLoginEmitter.emit(true)
 
     this.router.navigate(['/login']);
-    this.showMessage("Até logo! ", false);
+    this.utilService.showMessage("Até logo! ", false);
   }
 
-  showMessage(msg : string, isErro: boolean = false) : void { 
-    this.snackbar.open(msg, 'X' , { 
-      duration : 3000,
-      horizontalPosition: "right",
-      verticalPosition : "top",
-      panelClass : isErro ? ['msg-error'] : ['msg-sucess']
-    })
-    
-      
-
-}
-
-
+  
 }
 
 

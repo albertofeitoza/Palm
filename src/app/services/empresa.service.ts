@@ -1,3 +1,4 @@
+import { UtilService } from './util.service';
 import { Empresa } from './../models/empresa/ModelEmpresa';
 import { environment } from './../../environments/environment.prod';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -18,28 +19,18 @@ export class EmpresaService {
   environmentUrl = '';
 
   constructor(private snackbar : MatSnackBar,
-              private http : HttpClient
+              private http : HttpClient,
+              private utilService : UtilService
               ) 
               { 
                 this.environmentName = environment.environmentName;
                 this.environmentUrl =  environment.apiUrl + '/empresa';
               }
-
-
-   showMessage(msg : string, isErro: boolean = false) : void { 
-    this.snackbar.open(msg, 'X' , { 
-      duration : 3000,
-      horizontalPosition: "right",
-      verticalPosition : "top",
-      panelClass : isErro ? ['msg-error'] : ['msg-sucess']
-    })
-}
-
 //Criar empresa
 create(empresa : Empresa): Observable<Empresa>{
   return this.http.post<Empresa>(this.environmentUrl, empresa).pipe(
     map(obj => obj),
-    catchError(e => this.erroHandler(e))
+    catchError(e => this.utilService.erroHandler(e))
   );
 }
 
@@ -47,7 +38,7 @@ create(empresa : Empresa): Observable<Empresa>{
  read(): Observable<Empresa[]>{
   return this.http.get<Empresa[]>(this.environmentUrl).pipe(
     map(obj => obj),
-    catchError(e => this.erroHandler(e))
+    catchError(e => this.utilService.erroHandler(e))
   );
 }
 
@@ -57,7 +48,7 @@ readById(id: string): Observable<Empresa>{
   const url = `${this.environmentUrl}/${id}`      
     return this.http.get<Empresa>(url).pipe(
       map(obj => obj),
-      catchError(e => this.erroHandler(e))
+      catchError(e => this.utilService.erroHandler(e))
     );
  }
 
@@ -66,7 +57,7 @@ readById(id: string): Observable<Empresa>{
   const url = `${this.environmentUrl}/${empresa.id}`      
   return this.http.put<Empresa>(url, empresa).pipe(
     map(obj => obj),
-    catchError(e => this.erroHandler(e))
+    catchError(e => this.utilService.erroHandler(e))
   );
  }
 
@@ -74,16 +65,9 @@ readById(id: string): Observable<Empresa>{
   const url = `${this.environmentUrl}/${id}`      
   return this.http.delete<Empresa>(url).pipe(
     map(obj => obj),
-    catchError(e => this.erroHandler(e))
+    catchError(e => this.utilService.erroHandler(e))
   );
 
  }
-
-
-erroHandler(e: any) : Observable<any>{
-  this.showMessage("Erro ao Acessar a API!", true )
-  return EMPTY  
-}
-
 
 }
