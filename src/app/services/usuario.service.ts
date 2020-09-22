@@ -60,7 +60,7 @@ export class UsuarioService {
        }
 
       //Delete por ID
-       delete(id: number) : Observable<Usuario>{
+       delete(id: string) : Observable<Usuario>{
         const url = `${this.environmentUrl}/${id}`      
         return this.http.delete<Usuario>(url).pipe(
           map(obj => obj),

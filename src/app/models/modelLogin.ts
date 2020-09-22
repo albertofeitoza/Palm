@@ -1,5 +1,6 @@
 export class Usuario {
-    id ? :number
+    id ? :string
+    dataCriacao : Date
     nome: string
     email: string
     telefone:number

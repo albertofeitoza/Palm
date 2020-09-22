@@ -24,4 +24,17 @@ export class UtilService {
     this.showMessage("Erro ao Acessar a API!", true )
     return EMPTY 
   }
+
+convertToBase64(txt : string){
+  return btoa(txt);
+}
+
+convertBase64toText(txt: string){
+  return atob(txt);
+
+
+  
+}
+
+
 }

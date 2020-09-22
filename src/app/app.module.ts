@@ -15,7 +15,7 @@ import { UsuarioCrudComponent } from './views/usuario-crud/usuario-crud.componen
 
 import { ProductCreateComponent } from './components/product/product-create/product-create.component';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import localePt from '@angular/common/locales/pt';
 import { registerLocaleData } from  '@angular/common';
 import { LoginComponent } from './components/login/login.component';
@@ -118,8 +118,8 @@ import { EmpresaReadComponent } from './components/empresa/empresa-read/empresa-
     MatSortModule,
     MatMenuModule,
     MatSelectModule,
+    ReactiveFormsModule,
 
- 
 
   ],
   providers: 

@@ -18,24 +18,24 @@
   ],
   "usuarios": [
     {
-      "id": 1,
+      "id": "1",
       "nome": "Alberto de Freitas Feitoza",
       "email": "alberto.feitoza@outlook.com",
       "telefone": "11-946403479",
       "login": "alberto.feitoza@outlook.com",
       "senha": "teste",
-      "empresaId": 1,
-      "tipoUsuario": "1"
+      "empresaId": 2,
+      "tipoUsuario": "1",
+      "passwordTemp": ""
     },
     {
-      "id": 2,
-      "nome": "Kelly Cristina",
+      "nome": "KELLY C S SANTOS",
       "email": "kellycristina.golden@gmail.com",
       "telefone": "11-967466957",
-      "login": "kelly.golden",
-      "senha": "123456",
+      "login": "alberto.feitoza@outlook.com",
+      "senha": "231",
       "empresaId": 1,
-      "tipoUsuario": "2"
+      "id": "v7dtezT"
     }
   ],
   "empresa": [
@@ -63,10 +63,10 @@
       "E-mail": "teste@gmail.com",
       "E-mail Secundário": "testeSecundario@gmail.com",
       "Website": "www.empresa.com.br",
-      "ddd" : "11",
+      "ddd": "11",
       "Telefone ": "43352444",
-      "ramal" : "452",
-      "celular" : "99445544875"
+      "ramal": "452",
+      "celular": "99445544875"
     },
     {
       "id": 2,
@@ -74,10 +74,10 @@
       "E-mail": "teste@gmail.com",
       "E-mail Secundário": "testeSecundario@gmail.com",
       "Website": "www.empresa.com.br",
-      "ddd" : "11",
+      "ddd": "11",
       "Telefone ": "43352444",
-      "ramal" : "452",
-      "celular" : "99445544875"
+      "ramal": "452",
+      "celular": "99445544875"
     }
   ],
   "endereco": [
@@ -87,15 +87,15 @@
       "estado": "teste@gmail.com",
       "cidade": "testeSecundario@gmail.com",
       "logradouro": "Rua OK ",
-      "numero" : "11",
+      "numero": "11",
       "complemento ": "casa",
-      "tipoLogradouro" : "Av",
-      "bairro" : "Bairro 1",
-      "referencia" : "ponto final de ônibus",
-      "codigoIbge" : "000001",
-      "pis" : "021212121",
-      "cnes" : "022",
-      "cnae" : "0212212",
+      "tipoLogradouro": "Av",
+      "bairro": "Bairro 1",
+      "referencia": "ponto final de ônibus",
+      "codigoIbge": "000001",
+      "pis": "021212121",
+      "cnes": "022",
+      "cnae": "0212212",
       "codTributacaoMunicipio": "00000000"
     },
     {
@@ -104,16 +104,16 @@
       "estado": "teste@gmail.com",
       "cidade": "testeSecundario@gmail.com",
       "logradouro": "Rua OK ",
-      "numero" : "11",
+      "numero": "11",
       "complemento ": "casa",
-      "tipoLogradouro" : "Av",
-      "bairro" : "Bairro 1",
-      "referencia" : "ponto final de ônibus",
-      "codigoIbge" : "000001",
-      "pis" : "021212121",
-      "cnes" : "022",
-      "cnae" : "0212212",
+      "tipoLogradouro": "Av",
+      "bairro": "Bairro 1",
+      "referencia": "ponto final de ônibus",
+      "codigoIbge": "000001",
+      "pis": "021212121",
+      "cnes": "022",
+      "cnae": "0212212",
       "codTributacaoMunicipio": "00000000"
-   }
+    }
   ]
 }

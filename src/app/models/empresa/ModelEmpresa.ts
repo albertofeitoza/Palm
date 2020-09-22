@@ -5,4 +5,4 @@ export interface Empresa {
     inscricaoMunicipal: string
     razaoSocial: string
     nomeFantasia: string
-}
+ }

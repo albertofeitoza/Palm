@@ -1,14 +1,21 @@
+import { Acesso } from './../models/loginModel';
+import { Usuario } from './../models/modelLogin';
 import { UtilService } from './util.service';
 
 import { environment } from './../../environments/environment';
-import { Usuario } from '../models/modelLogin';
-import { map, catchError } from 'rxjs/operators';
-import { Observable, EMPTY } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+
+import { map, catchError, take, retry } from 'rxjs/operators';
+import { Observable, EMPTY, from } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Router } from '@angular/router';
 import { Injectable, EventEmitter  } from '@angular/core';
+import { stringify } from 'querystring';
+
+const httpOptions = {
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
+};
 
 
 
@@ -20,6 +27,7 @@ export class LoginService {
   title = 'multiple-env-demo';
   environmentName = '';
   environmentUrl = 'Debug api';
+  acesso : Acesso = new Acesso();
  
   private usuarioAutenticado: boolean = false; 
 
@@ -33,43 +41,31 @@ export class LoginService {
                
               ) { 
                 this.environmentName = environment.environmentName;
-              this.environmentUrl =  environment.apiUrl + '/usuarios';
+              this.environmentUrl =  environment.BASE_URL;
               }
 
-
-  logarSistema(usuario: Usuario) {
-
-    if(usuario.login === usuario.loginTemp &&
-      usuario.senha === usuario.passwordTemp){
-        this.usuarioAutenticado = true;
-
-        this.mostrarMenuEmitter.emit(true);
-        this.mostrarLoginEmitter.emit(false)
-        this.router.navigate(['/']);
-        this.utilService.showMessage("Seja Bem Vindo!  " + usuario.login , false);
-      }else{
-        this.usuarioAutenticado = false;
-        this.mostrarMenuEmitter.emit(false);
-        this.mostrarLoginEmitter.emit(true)
+  async logarSistema(acesso: Acesso) {
+    
+    try {
+      var token = await this.http.post(this.environmentUrl + '/Token', acesso, httpOptions).toPromise()
+      
+      if(token != null)
+          {
+            this.usuarioAutenticado = true;
+            this.mostrarMenuEmitter.emit(true);
+            this.mostrarLoginEmitter.emit(false)
+            this.router.navigate(['/']);
+            this.utilService.showMessage("Seja Bem Vindo!  " + acesso.login , false);
+          }else{
+            this.usuarioAutenticado = false;
+            this.mostrarMenuEmitter.emit(false);
+            this.mostrarLoginEmitter.emit(true)
+            this.utilService.showMessage("Usuário ou senha Inválido!", true);
+        }
+      
+      } catch (error) {
         this.utilService.showMessage("Usuário ou senha Inválido!", true);
-    }
-  }
-
- 
-  readByIdSenha(login: string, senha: string): Observable<Usuario>{
-    const url = `${this.environmentUrl}/${login}/${senha}`      
-      return this.http.get<Usuario>(url).pipe(
-        map(obj => obj),
-        catchError(e => this.utilService.erroHandler(e))
-      );
-   }
- 
- 
-  buscarUsuario(): Observable<Usuario[]>{
-    return this.http.get<Usuario[]>(this.environmentUrl).pipe(
-      map(obj => obj),
-      catchError(e => this.utilService.erroHandler(e))
-    );
+      }
     
   }
 

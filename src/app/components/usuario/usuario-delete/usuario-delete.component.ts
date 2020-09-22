@@ -1,3 +1,4 @@
+import { UtilService } from './../../../services/util.service';
 import { Empresa } from './../../../models/empresa/ModelEmpresa';
 import { EmpresaService } from './../../../services/empresa.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -17,6 +18,7 @@ usuario : Usuario;
   constructor(private usuarioService : UsuarioService,
               private empresaService : EmpresaService,
               private router : Router,
+              private utilService : UtilService,
               private route : ActivatedRoute
              ) { }
 
@@ -35,8 +37,8 @@ usuario : Usuario;
   }
 
   deleteUsuario(): void{
-    this.usuarioService.delete(this.usuario.id).subscribe(() => {
-      this.usuarioService.showMessage("Usuário Excluído com Sucesso!")
+      this.usuarioService.delete(this.usuario.id).subscribe(() => {
+      this.utilService.showMessage("Usuário Excluído com Sucesso!")
       this.router.navigate(['/usuarios'])
     })
   }

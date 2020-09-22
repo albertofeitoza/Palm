@@ -1,3 +1,4 @@
+import { UtilService } from './../../../services/util.service';
 import { Observable } from 'rxjs';
 import { EmpresaService } from './../../../services/empresa.service';
 import { Empresa } from './../../../models/empresa/ModelEmpresa';
@@ -18,7 +19,8 @@ export class UsuarioUpdateComponent implements OnInit {
   usuario : Usuario = new Usuario();
 
   constructor(private usarioService : UsuarioService,
-              private empresaService : EmpresaService,
+             private empresaService : EmpresaService,
+             private utilService: UtilService,
              private router : Router,
              private route: ActivatedRoute
              ) { }
@@ -37,7 +39,7 @@ export class UsuarioUpdateComponent implements OnInit {
 
   updateUsuario(): void {
     this.usarioService.update(this.usuario).subscribe(() => {
-      this.usarioService.showMessage("Usuário Atualizado com Sucesso!")
+      this.utilService.showMessage("Usuário Atualizado com Sucesso!")
       this.router.navigate(['/usuarios'])
     })
 

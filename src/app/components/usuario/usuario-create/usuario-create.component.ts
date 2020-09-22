@@ -1,3 +1,4 @@
+import { UtilService } from './../../../services/util.service';
 import { Observable } from 'rxjs';
 import { EmpresaService } from './../../../services/empresa.service';
 import { Router } from '@angular/router';
@@ -21,16 +22,15 @@ usuario : Usuario = new Usuario();
 
   constructor(private usuarioService : UsuarioService,
               private empresaService :EmpresaService,
+              private utilService : UtilService,
               private router : Router) { }
 
   ngOnInit(): void {
-  
-    this.buscarEmpresa();
+      this.buscarEmpresa();
   }
   createUsuario() : void {
-    this.usuario.empresaId = this.dadosEmpresa.id;
     this.usuarioService.create(this.usuario).subscribe(() => {
-      this.usuarioService.showMessage('Usuário Criado!');
+      this.utilService.showMessage('Usuário Criado!');
       this.router.navigate(['usuarios']);
     })
 
