@@ -1,10 +1,11 @@
 export interface Contato {
-    id ?: null,
-    nome: string,
-    email: string,
-    Website: string,
-    ddd : string,
-    telefone : string,
-    ramal : string,
-    celular : string
+    id ?: null
+    dtCriacao : Date
+    nome: string
+    email: string
+    email_secundario ?: string
+    Website: string
+    observacao : string
+    padrao : boolean
+    idUsuarioCriacao : number
 }

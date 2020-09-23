@@ -1,18 +1,15 @@
 export interface Endereco{
 id?: null
+dtCriacao : Date
 cep : string
-estado: string
-cidade: string
+bairro : string
+tipoLogradouro : number
 logradouro: string
 numero : string
 complemento :string
-tipoLogradouro : string
-bairro : string
+idUsuarioCriacao : number
+idCidade: number
 referencia : string
-codigoIbge : string
-pis : string
-cnes : string
-cnae : string
-codTributacaoMunicipio: string
+bloqueado : boolean
 
 }
