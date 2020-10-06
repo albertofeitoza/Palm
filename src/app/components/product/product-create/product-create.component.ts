@@ -1,3 +1,4 @@
+import { ServiceAllService } from './../../../services/service-all.service';
 import { Usuario } from 'src/app/models/modelLogin';
 import { Token } from '@angular/compiler/src/ml_parser/lexer';
 import { stringify } from 'querystring';
@@ -25,7 +26,9 @@ export class ProductCreateComponent implements OnInit {
 
   constructor(private ProductService : ProductService,
               private utilService : UtilService,
-              private router : Router ) { }
+              private router : Router,
+              private cadastrarProduto : ServiceAllService<Product>
+               ) { }
 
   ngOnInit(): void {
     
@@ -38,11 +41,10 @@ console.log(localStorage.getItem("usId"))
     this.product.Usuarioid  = Number(localStorage.getItem("usId"));
     this.product.Empresaid = Number(localStorage.getItem("empId"));
     this.product.dtCriacao = new Date;
-
-    
-    this.ProductService.create(this.product).subscribe(() => {
-        this.utilService.showMessage('Produto Criado!');
-        this.router.navigate(['products']);
+    const tipo = `${"/Produto"}`
+    this.cadastrarProduto.create(this.product, tipo).subscribe  (() => {
+    this.utilService.showMessage('Produto Criado!');
+    this.router.navigate(['products']);
       
     })
     

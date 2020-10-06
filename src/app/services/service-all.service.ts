@@ -28,24 +28,24 @@ export class ServiceAllService <T>{
 
 
     //Criar Cadasto
-    create(T : T) : Observable <T>{
-      return this.http.post<T>(this.environmentUrl, T, this.loginservice.header()).pipe(
+    create(T : T, tipo: string) : Observable <T>{
+      return this.http.post<T>(this.environmentUrl + tipo , T, this.loginservice.header()).pipe(
         map(obj => obj),
         catchError(e => this.utilService.erroHandler(e))
       );
     }
 
     // Buscar todos Get All
-    read(): Observable<T[]>{
-      return this.http.get<T[]>(this.environmentUrl, this.loginservice.header()).pipe(
+    read(tipo: string): Observable<T[]>{
+      return this.http.get<T[]>(this.environmentUrl + tipo, this.loginservice.header()).pipe(
         map(obj => obj),
         catchError(e => this.utilService.erroHandler(e))
       ); 
     }
 
     //Buscar um cadastro por id
-    readById(id: string): Observable<T>{
-    const url = `${this.environmentUrl}/${id}`
+    readById(id: string, tipo: string): Observable<T>{
+    const url = `${this.environmentUrl + tipo}/${id}`
 
       return this.http.get<T>(url, this.loginservice.header()).pipe(
         map(obj => obj),
@@ -54,15 +54,15 @@ export class ServiceAllService <T>{
     }
 
     // Atualizar Produto 
-    update(T: T): Observable<T> {    
-    return this.http.put<T>(this.environmentUrl, T, this.loginservice.header()).pipe(
+    update(T: T, tipo: string): Observable<T> {    
+    return this.http.put<T>(this.environmentUrl + tipo, T, this.loginservice.header()).pipe(
       map(obj => obj),
       catchError(e => this.utilService.erroHandler(e))
       );
     }
 
-    delete(T: T) : Observable<T>{
-    const url = `${this.environmentUrl}/${T}`      
+    delete(id: number, tipo : string) : Observable<T>{
+    const url = `${this.environmentUrl + tipo}/${id}`      
     return this.http.delete<T>(url, this.loginservice.header()).pipe(
       map(obj => obj),
       catchError(e => this.utilService.erroHandler(e))

@@ -1,3 +1,4 @@
+import { ServiceAllService } from './../../../services/service-all.service';
 import { UtilService } from './../../../services/util.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductService } from './../../../services/product.service';
@@ -27,7 +28,8 @@ export class ProductUpdateComponent implements OnInit {
   constructor(private productService: ProductService,
     private router: Router,
     private utilService : UtilService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private updateProduto : ServiceAllService<Product>) { }
 
 
   ngOnInit(): void {
@@ -43,8 +45,9 @@ export class ProductUpdateComponent implements OnInit {
     this.product.Usuarioid  = Number(localStorage.getItem("usId"));
     this.product.Empresaid = Number(localStorage.getItem("empId"));
     //this.product.dtCriacao = new Date;
-
-    this.productService.update(this.product).subscribe(() => {
+    const tipo = `${"/Produto"}`;
+   // this.productService.update(this.product).subscribe(() => {
+      this.updateProduto.update(this.product, tipo).subscribe(() => {
       this.utilService.showMessage("Produto Atualizado com Sucesso!")
       this.router.navigate(['/products'])
     })
