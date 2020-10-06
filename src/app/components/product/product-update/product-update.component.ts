@@ -1,7 +1,7 @@
 import { UtilService } from './../../../services/util.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductService } from './../../../services/product.service';
-import { Product } from '../../../models/product.model';
+import { Product } from '../../../models/produtos/product.model';
 import { Component, OnInit } from '@angular/core';
 
 
@@ -15,8 +15,13 @@ export class ProductUpdateComponent implements OnInit {
 
   product: Product = {
     id: null,
-    name: null,
-    price: 0
+    dtCriacao : null,
+    nome: null,
+    preco: null,
+    Usuarioid : null,
+    Empresaid :null
+    
+
   }
 
   constructor(private productService: ProductService,
@@ -35,6 +40,10 @@ export class ProductUpdateComponent implements OnInit {
   }
 
   updateProduct(): void {
+    this.product.Usuarioid  = Number(localStorage.getItem("usId"));
+    this.product.Empresaid = Number(localStorage.getItem("empId"));
+    //this.product.dtCriacao = new Date;
+
     this.productService.update(this.product).subscribe(() => {
       this.utilService.showMessage("Produto Atualizado com Sucesso!")
       this.router.navigate(['/products'])

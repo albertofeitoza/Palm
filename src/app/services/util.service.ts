@@ -1,13 +1,19 @@
+import { ObjetoToken } from './../models/Token/ObjetoToken';
+
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, EMPTY } from 'rxjs';
 import { Injectable } from '@angular/core';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilService {
 
-  constructor(private snackbar : MatSnackBar) { }
+  constructor(private snackbar : MatSnackBar,
+             private http : HttpClient
+             ) { }
 
 
   showMessage(msg : string, isErro: boolean = false) : void { 
@@ -32,9 +38,6 @@ convertToBase64(txt : string){
 convertBase64toText(txt: string){
   return atob(txt);
 
-
-  
 }
-
 
 }

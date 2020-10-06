@@ -1,7 +1,7 @@
 import { UtilService } from './../../../services/util.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductService } from './../../../services/product.service';
-import { Product } from '../../../models/product.model';
+import { Product } from '../../../models/produtos/product.model';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -11,8 +11,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductDeleteComponent implements OnInit {
 
-  product : Product;
-  
+  product : Product = {
+    id: null,
+    dtCriacao : null,
+    nome: null,
+    preco: null,
+    Usuarioid : null,
+    Empresaid :null
+  }
+
   constructor(private productService : ProductService,
               private router : Router,
               private utilService : UtilService,

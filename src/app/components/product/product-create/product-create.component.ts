@@ -1,6 +1,9 @@
+import { Usuario } from 'src/app/models/modelLogin';
+import { Token } from '@angular/compiler/src/ml_parser/lexer';
+import { stringify } from 'querystring';
 import { UtilService } from './../../../services/util.service';
 import { ProductService } from './../../../services/product.service';
-import { Product } from '../../../models/product.model';
+import { Product } from '../../../models/produtos/product.model';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -12,8 +15,11 @@ import { Router } from '@angular/router';
 export class ProductCreateComponent implements OnInit {
 
     product : Product = {
-    name : '',
-    price : null
+    nome : null,
+    dtCriacao : null,
+    preco : null,
+    Usuarioid : null,
+    Empresaid : null
     
     }
 
@@ -27,10 +33,15 @@ export class ProductCreateComponent implements OnInit {
 
   createProduct() : void {
 
-      this.ProductService.create(this.product).subscribe(() => {
-      
+console.log(localStorage.getItem("usId"))
+
+    this.product.Usuarioid  = Number(localStorage.getItem("usId"));
+    this.product.Empresaid = Number(localStorage.getItem("empId"));
+    this.product.dtCriacao = new Date;
+
+    
+    this.ProductService.create(this.product).subscribe(() => {
         this.utilService.showMessage('Produto Criado!');
-      
         this.router.navigate(['products']);
       
     })

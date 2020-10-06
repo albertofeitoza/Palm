@@ -1,7 +1,7 @@
 import { UtilService } from './../../../services/util.service';
 import { ProductService } from './../../../services/product.service';
 import { Component, OnInit } from '@angular/core';
-import { Product } from '../../../models/product.model';
+import { Product } from '../../../models/produtos/product.model';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -14,7 +14,8 @@ export class ProductReadComponent implements OnInit {
 
 
 products: Product[]
-displayedColumns = ['id','name', 'price', 'action']  
+
+displayedColumns = ['id','nome', 'preco','action']  
 
   constructor(private productService : ProductService,
              ) { }

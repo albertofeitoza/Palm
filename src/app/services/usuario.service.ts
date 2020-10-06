@@ -2,7 +2,7 @@ import { UtilService } from './util.service';
 import { catchError, map } from 'rxjs/operators';
 import { Observable, EMPTY } from 'rxjs';
 import { Usuario } from './../models/modelLogin';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Injectable } from '@angular/core';
 import { environment } from './../../environments/environment';
@@ -67,5 +67,7 @@ export class UsuarioService {
           catchError(e => this.utilService.erroHandler(e))
         );
        }
+
+       
 
 }
