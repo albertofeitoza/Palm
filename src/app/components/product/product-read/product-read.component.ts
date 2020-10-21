@@ -1,3 +1,4 @@
+import { ServiceAllService } from './../../../services/service-all.service';
 import { UtilService } from './../../../services/util.service';
 import { ProductService } from './../../../services/product.service';
 import { Component, OnInit } from '@angular/core';
@@ -17,15 +18,15 @@ products: Product[]
 
 displayedColumns = ['id','nome', 'preco','action']  
 
-  constructor(private productService : ProductService,
+  constructor(private serviceProduto : ServiceAllService<Product>
              ) { }
 
   ngOnInit(): void {
-    
-    
-      this.productService.read().subscribe(products => {
+       
+      const tipo = `${"/Produto"}`;
+      this.serviceProduto.read(tipo).subscribe(products => {
         this.products = products;
-        console.log(products)
+        
       })
     
     

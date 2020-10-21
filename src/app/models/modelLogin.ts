@@ -1,12 +1,19 @@
+import { Empresa } from './empresa/ModelEmpresa';
+import { Contato } from './contato/modelContato';
 export class Usuario {
-    id ? :string
-    dataCriacao : Date
-    nome: string
-    email: string
-    telefone:number
-    login : string
-    senha : string
-    empresaId : string
-    loginTemp : string
-    passwordTemp : string
+Id ? :string
+DtCriacao : Date
+Nome : string
+Login : string
+Senha : string
+Cracha : string
+BolSistema: boolean
+BolResetaSenha : boolean
+DataTrocaSenha : Date
+CriadoPor : number
+Bloqueado : boolean
+EmpresaId : string
+GrupoUsuarioId : number
+contato : Contato
+
 }

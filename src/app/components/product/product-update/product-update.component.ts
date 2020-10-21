@@ -1,3 +1,4 @@
+
 import { ServiceAllService } from './../../../services/service-all.service';
 import { UtilService } from './../../../services/util.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,41 +14,38 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductUpdateComponent implements OnInit {
 
-
-  product: Product = {
-    id: null,
+product: Product = {
+    id : null,
     dtCriacao : null,
     nome: null,
     preco: null,
-    Usuarioid : null,
-    Empresaid :null
+    criadoPor : null, 
+    bloqueado : null, 
+    empresaId :null
     
-
   }
+  
 
-  constructor(private productService: ProductService,
-    private router: Router,
-    private utilService : UtilService,
-    private route: ActivatedRoute,
-    private updateProduto : ServiceAllService<Product>) { }
+  constructor(
+              private router: Router,
+              private utilService : UtilService,
+              private route: ActivatedRoute,
+              private ProdutoService : ServiceAllService<Product>
+              ) { }
 
 
   ngOnInit(): void {
-
-    const id = this.route.snapshot.paramMap.get('id')
-    this.productService.readById(id).subscribe(product => {
-      this.product = product;
-    });
-
+    
+    this.buscarProduto();
+   
   }
 
   updateProduct(): void {
-    this.product.Usuarioid  = Number(localStorage.getItem("usId"));
-    this.product.Empresaid = Number(localStorage.getItem("empId"));
-    //this.product.dtCriacao = new Date;
+    this.product.criadoPor  = Number(localStorage.getItem("usId"));
+    this.product.empresaId = Number(localStorage.getItem("empId"));
     const tipo = `${"/Produto"}`;
-   // this.productService.update(this.product).subscribe(() => {
-      this.updateProduto.update(this.product, tipo).subscribe(() => {
+
+      this.ProdutoService.update(this.product, tipo).subscribe(() => {
       this.utilService.showMessage("Produto Atualizado com Sucesso!")
       this.router.navigate(['/products'])
     })
@@ -58,5 +56,14 @@ export class ProductUpdateComponent implements OnInit {
     this.router.navigate(['/products'])
 
   }
+buscarProduto() : void {
+
+  const id = this.route.snapshot.paramMap.get('id')
+  const tipo = `${"/Produto"}`
+    this.ProdutoService.readById(id, tipo).subscribe(product => {
+        this.product = product;
+    })
+
+}  
 
 }

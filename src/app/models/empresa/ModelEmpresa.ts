@@ -1,17 +1,19 @@
+import { Product } from './../produtos/product.model';
+import { Usuario } from './../modelLogin';
+import { Contato } from './../contato/modelContato';
 export interface Empresa {
-    id ? :string
+    id ? : number
     dtCriacao : Date
     cnpj: string
-    inscricaoEstadual: string
-    inscricaoMunicipal: string
     razaoSocial: string
     nomeFantasia: string
+    inscricaoEstadual: string
+    inscricaoMunicipal: string
     cnes : string
     codPIS : string
-    bloqueado : boolean
     observacao : string
-    idUsuarioCriacao : number
-    idEndereco : number
-    idContato : number
     codCnae : string
+    empresaPai : number
+    criadoPor : number
+    bloqueado : boolean
  }

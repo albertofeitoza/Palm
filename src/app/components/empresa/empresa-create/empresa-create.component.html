@@ -1,38 +1,60 @@
-<section>
+<mat-tab-group>
+    <mat-tab label="Empresa">
+        <section>
 
+        <div class="container">
 
-<div class="container">
+            <mat-card>
+                <mat-card-title>Nova Empresa</mat-card-title>
+                    <form>
+                        <mat-form-field>
+                            <input matInput placeholder="Cnpj" 
+                             [(ngModel)]="empresa.cnpj" name="cnpj">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="Nome"
+                            [(ngModel)]="empresa.nomeFantasia" name="nomeFantasia">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="Razão Social"
+                            [(ngModel)]="empresa.razaoSocial" name="razaoSocial">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="Inscrição Estadual"
+                            [(ngModel)]="empresa.inscricaoEstadual" name="inscricaoEstadual">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="Inscrição Municipal"
+                            [(ngModel)]="empresa.inscricaoMunicipal" name="inscricaoMunicipal">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="CNES"
+                            [(ngModel)]="empresa.cnes" name="cnes">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="Cod. PIS"
+                            [(ngModel)]="empresa.codPIS" name="codPIS">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="Cod. CNAE"
+                            [(ngModel)]="empresa.codCnae" name="codCnae">
+                        </mat-form-field>
+            
+                    </form>
+            
+                    <button mat-raised-button (click)="cadastrarEmpresa()" color="primary" > 
+                        Salvar
+                    </button>
+                    
+                    <button mat-raised-button (click)="cancel()" color="primary" > 
+                        Cancelar
+                    </button>
+            </mat-card>
 
-    <form method="post" (ngSubmit)="criar()" [formGroup]="formulario">
-
-        <div class="form-group">
-            <label for="nome">Nome</label>
-            <input type="text" id="nome" name="nome"
-            class="form-control" placeholder="Nome"
-            formControlName="nome">
         </div>
 
-        <div class="form-group">
-            <label for="email">E-mail</label>
-            <input type="email" id="email" name="email"
-            class="form-control" placeholder="E-mail"
-            formControlName="email">
-        </div>
-
-        <div class="form-group">
-            <label for="email">E-mail Secundário</label>
-            <input type="email" id="emailsecundario" name="emailsecundario"
-            class="form-control" placeholder="E-mail Secundário"
-            formControlName="emailsecundario">
-        </div>
-
-        <button type="submit" class="btn btn-primary"
-            [disabled]="formulario.invalid">Salvar</button>
-
-    </form>
-
-</div>
-
-
-
-</section>
+        </section>
+</mat-tab>
+<mat-tab label="Contato"> Contatos</mat-tab>
+<mat-tab label="Endereços">Endereços </mat-tab>
+</mat-tab-group>

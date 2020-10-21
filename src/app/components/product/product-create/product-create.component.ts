@@ -15,13 +15,13 @@ import { Router } from '@angular/router';
 })
 export class ProductCreateComponent implements OnInit {
 
-    product : Product = {
-    nome : null,
+    product : Product = {  
     dtCriacao : null,
+    nome : null,
     preco : null,
-    Usuarioid : null,
-    Empresaid : null
-    
+    criadoPor : null,
+    bloqueado : false,
+    empresaId : null
     }
 
   constructor(private ProductService : ProductService,
@@ -36,13 +36,12 @@ export class ProductCreateComponent implements OnInit {
 
   createProduct() : void {
 
-console.log(localStorage.getItem("usId"))
-
-    this.product.Usuarioid  = Number(localStorage.getItem("usId"));
-    this.product.Empresaid = Number(localStorage.getItem("empId"));
+    this.product.criadoPor  = Number(localStorage.getItem("usId"));
+    this.product.empresaId = Number(localStorage.getItem("empId"));
     this.product.dtCriacao = new Date;
+    this.product.bloqueado = false;
     const tipo = `${"/Produto"}`
-    this.cadastrarProduto.create(this.product, tipo).subscribe  (() => {
+    this.cadastrarProduto.create(this.product, tipo).subscribe(() => {
     this.utilService.showMessage('Produto Criado!');
     this.router.navigate(['products']);
       

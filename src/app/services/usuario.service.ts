@@ -43,7 +43,7 @@ export class UsuarioService {
 
       // Atualizar usuario por ID
       update(usuario: Usuario): Observable<Usuario> {
-        const url = `${this.environmentUrl}/${usuario.id}`      
+        const url = `${this.environmentUrl}/${usuario.Id}`      
         return this.http.put<Usuario>(url, usuario).pipe(
           map(obj => obj),
           catchError(e => this.utilService.erroHandler(e))

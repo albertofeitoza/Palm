@@ -30,14 +30,14 @@ usuario : Usuario;
       
       this.buscarEmpresa().subscribe(empresa =>{
         this.empresa = empresa;
-        this.usuario.empresaId = this.empresa.nomeFantasia;
-        this.usuario.senha = '******';
+        this.usuario.EmpresaId = this.empresa.nomeFantasia;
+        this.usuario.Senha = '******';
       });
     })
   }
 
   deleteUsuario(): void{
-      this.usuarioService.delete(this.usuario.id).subscribe(() => {
+      this.usuarioService.delete(this.usuario.Id).subscribe(() => {
       this.utilService.showMessage("Usuário Excluído com Sucesso!")
       this.router.navigate(['/usuarios'])
     })
@@ -47,6 +47,6 @@ usuario : Usuario;
   }
 
   buscarEmpresa(){
-    return this.empresaService.readById(this.usuario.empresaId);
+    return this.empresaService.readById(this.usuario.EmpresaId);
   }
 }

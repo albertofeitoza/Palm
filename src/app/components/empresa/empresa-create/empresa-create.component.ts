@@ -1,3 +1,6 @@
+import { Empresa } from './../../../models/empresa/ModelEmpresa';
+import { ServiceAllService } from './../../../services/service-all.service';
+import { Router } from '@angular/router';
 import { UtilService } from './../../../services/util.service';
 import { Contato } from './../../../models/contato/modelContato';
 import { ContatoService } from './../../../services/contato.service';
@@ -11,43 +14,52 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class EmpresaCreateComponent implements OnInit {
 
-  contato : Contato
-  formulario : FormGroup;
+ 
+empresa : Empresa = {
+    dtCriacao : null,
+    cnpj: null,
+    razaoSocial: null,
+    nomeFantasia: null,
+    inscricaoEstadual: null,
+    inscricaoMunicipal: null,
+    cnes : null,
+    codPIS : null,
+    observacao : null,
+    codCnae : null,
+    empresaPai : null,
+    criadoPor : null,
+    bloqueado : null
+    
+}
 
 
 
-  constructor(private formbuilder: FormBuilder,
-              private servicoContato : ContatoService,
-              private utilService : UtilService) { }
+  constructor(private utilService : UtilService,
+              private router : Router,
+              private servicoEmpresa : ServiceAllService<Empresa>
+              )
+             { }
 
   ngOnInit(): void {
-
-      this.configurarFormulario();
-
-    
-
+   
   }
 
-  configurarFormulario(){
+  cadastrarEmpresa(){
+    this.empresa.criadoPor  = Number(localStorage.getItem("usId"));
+    this.empresa.dtCriacao = new Date;
+    this.empresa.empresaPai = Number(localStorage.getItem("empId"))
+    this.empresa.bloqueado = false;
 
-    this.formulario = this.formbuilder.group({
-      nome : [null, Validators.required],
-      email : [null,[Validators.required, Validators.email]],
-      emailsecundario : [null, Validators.email],
+    const tipo = `${"/Empresa"}`
 
-    })
-
-  }
-
-  criar(){
-  
-    this.servicoContato.criar(this.formulario.value).subscribe(contato => {
-      this.contato = contato;
-      this.formulario.reset();
-      this.utilService.showMessage("Contato Criado com sucesso!",false);
+    this.servicoEmpresa.create(this.empresa, tipo).subscribe(() => {
+      this.utilService.showMessage("Empresa cadastrada com sucesso!",false);
     })
   
   }
 
+  cancel(){
+    this.router.navigate(['empresa'])
+  }
 
 }

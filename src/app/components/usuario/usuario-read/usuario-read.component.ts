@@ -1,3 +1,5 @@
+import { Usuario } from 'src/app/models/modelLogin';
+import { ServiceAllService } from './../../../services/service-all.service';
 import { DataSource } from '@angular/cdk/collections';
 import { MatTable } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -5,7 +7,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { Empresa } from './../../../models/empresa/ModelEmpresa';
 import { EmpresaService } from './../../../services/empresa.service';
 import { UsuarioService } from './../../../services/usuario.service';
-import { Usuario } from '../../../models/modelLogin';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 
@@ -28,23 +29,23 @@ export class UsuarioReadComponent implements OnInit {
 
   
   constructor(private usuarioService: UsuarioService,
-              private empresaService: EmpresaService
+              private empresaService: EmpresaService,
+              private usuarioRead : ServiceAllService<Usuario>
              ) 
              { }
 
   ngOnInit(): void {
-    this.usuarioService.read().subscribe(usuario => {
+    
+    const tipo = `${"Usuario"}`
+    this.usuarioRead.read(tipo).subscribe(usuario => {
       this.usuario = usuario;
       
-
       usuario.forEach(element => {
-        
-        this.empresaService.readById(element.empresaId).subscribe(empresa => {
-          this.empresa = empresa;
-          element.empresaId  = this.empresa.razaoSocial;
-          element.senha = '******';
-          element.passwordTemp = '******'
-
+        const tipo = `${"Usuario"}`
+        this.usuarioRead.readById(element.EmpresaId, tipo ).subscribe(empresa => {
+          this.empresa = this.empresa;
+          element.EmpresaId  = this.empresa.razaoSocial;
+          element.Senha = '******';
         });
         
 

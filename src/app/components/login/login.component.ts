@@ -1,4 +1,4 @@
-import { Acesso } from '../../models/loginModel';
+import { Acesso } from '../../models/acessoModel';
 import { UtilService } from './../../services/util.service';
 import { LoginService } from './../../services/login.service';
 
@@ -32,8 +32,5 @@ constructor(private router :Router,
           this.authservice.logarSistema(this.acesso);
           
       }    
-
- 
-
 
 }

@@ -1,8 +1,8 @@
 export interface ObjetoToken{
 
-    token : string
     id : string
-    idGrupoUsuario : string
-    bolBloqueado : string
-    idEmpresa : string
+    empresaId : string
+    grupoUsuarioId : string
+    token : string
+    bloqueado : string
 }

@@ -1,6 +1,6 @@
 import { ObjetoToken } from './../models/Token/ObjetoToken';
 import { Empresa } from './../models/empresa/ModelEmpresa';
-import { Acesso } from './../models/loginModel';
+import { Acesso } from '../models/acessoModel';
 import { Usuario } from './../models/modelLogin';
 import { UtilService } from './util.service';
 
@@ -62,9 +62,9 @@ export class LoginService {
                         
             localStorage.setItem("tId", response.token)
             localStorage.setItem("usId", response.id)
-            localStorage.setItem("grpUs", response.idGrupoUsuario)
-            localStorage.setItem("stUs", response.bolBloqueado);
-            localStorage.setItem("empId", response.idEmpresa);
+            localStorage.setItem("grpUs", response.grupoUsuarioId)
+            localStorage.setItem("stUs", response.bloqueado);
+            localStorage.setItem("empId", response.empresaId);
             this.utilService.showMessage("Seja Bem Vindo!  " + acesso.login , false);
 
           }
@@ -77,7 +77,7 @@ export class LoginService {
         }
       
       } catch (error) {
-        this.utilService.showMessage("Usuário ou senha Inválido!", true);
+        this.utilService.showMessage("Erro de acesso a API", true);
       }
     
   }

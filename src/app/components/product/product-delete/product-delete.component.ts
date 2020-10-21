@@ -17,8 +17,9 @@ export class ProductDeleteComponent implements OnInit {
     dtCriacao : null,
     nome: null,
     preco: null,
-    Usuarioid : null,
-    Empresaid :null
+    criadoPor : null,
+    bloqueado : null,
+    empresaId :null
   }
 
   constructor(private productService : ProductService,

@@ -29,8 +29,7 @@ export class UsuarioUpdateComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id')
     this.usarioService.readById(id).subscribe(usuario => {
       this.usuario = usuario;
-      this.usuario.senha = '*****';
-      this.usuario.passwordTemp = '';
+      this.usuario.Senha = '*****';
 
       this.buscarEmpresa();
     });

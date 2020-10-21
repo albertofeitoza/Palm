@@ -36,6 +36,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatSelectModule} from '@angular/material/select';
+import {MatTabsModule} from '@angular/material/tabs';
 
 
 import { ProductReadComponent } from './components/product/product-read/product-read.component';
@@ -119,6 +120,7 @@ import { EmpresaReadComponent } from './components/empresa/empresa-read/empresa-
     MatMenuModule,
     MatSelectModule,
     ReactiveFormsModule,
+    MatTabsModule,
 
 
   ],

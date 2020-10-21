@@ -3,7 +3,7 @@ export interface Product {
     dtCriacao : Date
     nome : string
     preco : number
-    Usuarioid : number
-    Empresaid : number
-
+    criadoPor : number
+    bloqueado : boolean
+    empresaId : number
 }

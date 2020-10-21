@@ -1,3 +1,4 @@
+import { Telefone } from './../Telefone/telefoneModel';
 export interface Contato {
     id ?: null
     dtCriacao : Date
@@ -8,4 +9,5 @@ export interface Contato {
     observacao : string
     padrao : boolean
     idUsuarioCriacao : number
+    telefone : Telefone
 }
