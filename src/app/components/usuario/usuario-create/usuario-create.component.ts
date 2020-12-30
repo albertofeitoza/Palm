@@ -1,3 +1,4 @@
+import { stringify } from 'querystring';
 import { UsuarioReadComponent } from './../usuario-read/usuario-read.component';
 import { Endpoint } from './../../../Negocio/Endpoint';
 import { GrupoUsuario } from './../../../models/usuarios/GrupoUsuarios';
@@ -54,11 +55,28 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
                                 : this.usuario.grupoUsuarioId.toString().trim() == "Master" ? TipoUsuario.Master.toString()
                                 : this.usuario.grupoUsuarioId.toString() == "Usuario" ? TipoUsuario.Usuario.toString() : null;
        
-    this.serviceUsuario.create(this.usuario, Endpoint.Usuario).subscribe(() => {
-      this.utilService.showMessage('Usuário Criado!');
-      this.router.navigate(['usuarios']);
-    })
+    
+    this.serviceUsuario.read(Endpoint.Usuario).subscribe(user => {
+      user = user;
 
+      let ativo = user.filter(x => x.login.toLowerCase() == this.usuario.login.toLowerCase() && x.empresaId == this.usuario.empresaId);
+           
+            if (ativo.length > 0)
+            {
+              this.utilService.showMessage('Esse Usuário já existe para essa Empresa');
+              this.usuario.login =  null; 
+              user =  new Array();
+            }else{
+
+              this.serviceUsuario.create(this.usuario, Endpoint.Usuario).subscribe(() => {
+                this.utilService.showMessage('Usuário Criado!');
+                this.router.navigate(['usuarios']);
+              })
+
+              user =  new Array();
+            }
+
+    })
   }
 
   cancel(): void{
@@ -99,11 +117,10 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
 
       this.serviceGrupoUsuario.create(this.criargrupousuario, Endpoint.GrupoUsuario).subscribe(() => {
         this.utilService.showMessage('Grupo de Usuário Criado!');
-        //this.router.navigate(['usuarios']);
+
       })
     
       
   }
-
 
 }

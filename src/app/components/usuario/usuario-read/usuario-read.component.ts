@@ -1,3 +1,4 @@
+import { GrupoUsuario } from './../../../models/usuarios/GrupoUsuarios';
 import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
 import { map, catchError, take, tap, elementAt } from 'rxjs/operators';
@@ -32,7 +33,7 @@ export class UsuarioReadComponent implements OnInit {
   usuario : Usuario[];
   userAutenticado : boolean = false; 
   
-  displayedColumns = ['id','nome','login','empresaId','bloqueado','action']  
+  displayedColumns = ['id','nome','login','empresaId','grupoUsuarioId','bloqueado','action']  
   
   constructor(
               private serviceEmpresa: ServiceAllService<Empresa>,
@@ -95,10 +96,13 @@ export class UsuarioReadComponent implements OnInit {
                     {
                       empresaID = emp.id;
                       usr.empresaId = emp.razaoSocial;
+                      usr.grupoUsuarioId = usr.grupoUsuarioId == "1" ? "Administrador" : usr.grupoUsuarioId == "2" ? "Sistema" : usr.grupoUsuarioId == "3" ? "Usuario" : usr.grupoUsuarioId == "4" ? "Master" : usr.grupoUsuarioId;
                       idEmpresa = emp.id;
                       
                         if(grpId == TipoUsuario.Administrador)
                         {
+                          
+
                           this.usuario.push(usr);
                             break;  
                           }

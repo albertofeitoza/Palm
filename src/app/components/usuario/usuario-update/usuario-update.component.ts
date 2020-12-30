@@ -41,16 +41,31 @@ export class UsuarioUpdateComponent implements OnInit {
 
   updateUsuario() : void {
     
-    this.usuario.grupoUsuarioId = this.usuario.grupoUsuarioId == "Administrador" ? TipoUsuario.Administrador.toString() 
+  this.usuario.grupoUsuarioId = this.usuario.grupoUsuarioId == "Administrador" ? TipoUsuario.Administrador.toString() 
                                    :this.usuario.grupoUsuarioId == "Sistema" ? TipoUsuario.Sistema.toString()
                                    : this.usuario.grupoUsuarioId == "Usuario" ? TipoUsuario.Usuario.toString()
                                    : this.usuario.grupoUsuarioId == "Master" ? TipoUsuario.Master.toString()
                                    : null 
 
-    this.usarioService.update(this.usuario, Endpoint.Usuario).subscribe(() => {
-      this.utilService.showMessage("Usuário Atualizado com Sucesso!")
-      this.router.navigate(['/usuarios'])
-    })
+    
+      this.usarioService.read(Endpoint.Usuario).subscribe(user => {
+      user = user;
+      
+      let ativo = user.filter(x => x.login.toLowerCase() == this.usuario.login.toLowerCase() && x.empresaId == this.usuario.empresaId);
+      
+          if (ativo.length > 0)
+          {
+              this.utilService.showMessage('o usuário não pode ser Alterado pois já existe esse usuário para essa Empresa');
+              this.usuario.login =  null; 
+              user =  new Array();
+          }else{
+              this.usarioService.update(this.usuario, Endpoint.Usuario).subscribe(() => {
+                this.utilService.showMessage("Usuário Atualizado com Sucesso!")
+                this.router.navigate(['/usuarios'])
+              })
+              user =  new Array();
+          }
+      })
   }
 
   cancel(): void{

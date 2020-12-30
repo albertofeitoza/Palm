@@ -39,17 +39,17 @@
             
 
             <mat-form-field>
-                <input matInput placeholder="Status">
+                <input matInput placeholder="Bloqueado">
                     <input name="status" [(ngModel)]="usuario.bloqueado" [checked]="usuario.bloqueado" type="checkbox">
             </mat-form-field>
       
         </form>
 
-        <button mat-raised-button (click)="updateUsuario()" color="primary" > 
+        <button *ngIf="usuario.nome && usuario.login && usuario.grupoUsuarioId && usuario.empresaId" mat-raised-button (click)="updateUsuario()" color="primary" > 
             Salvar
         </button>
         
         <button mat-raised-button (click)="cancel()" color="primary" > 
-            Cancelar
+            Voltar
         </button>
 </mat-card>
