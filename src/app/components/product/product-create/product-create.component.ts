@@ -1,5 +1,5 @@
 import { ServiceAllService } from './../../../services/service-all.service';
-import { Usuario } from 'src/app/models/modelLogin';
+import { Usuario } from './../../../models/usuarios/modelLogin';
 import { Token } from '@angular/compiler/src/ml_parser/lexer';
 import { stringify } from 'querystring';
 import { UtilService } from './../../../services/util.service';

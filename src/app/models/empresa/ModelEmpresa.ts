@@ -1,5 +1,5 @@
 import { Product } from './../produtos/product.model';
-import { Usuario } from './../modelLogin';
+import { Usuario } from '../usuarios/modelLogin';
 import { Contato } from './../contato/modelContato';
 export interface Empresa {
     id ? : number

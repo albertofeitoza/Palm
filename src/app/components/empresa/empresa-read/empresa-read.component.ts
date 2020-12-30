@@ -1,9 +1,13 @@
+import { TipoUsuario } from './../../../models/usuarios/enumUsuarios';
+import { Endpoint } from './../../../Negocio/Endpoint';
+import { Router } from '@angular/router';
 import { ServiceAllService } from './../../../services/service-all.service';
 import { Endereco } from './../../../models/endereco/modelEndereco';
 import { Contato } from './../../../models/contato/modelContato';
 import { Empresa } from './../../../models/empresa/ModelEmpresa';
 import { Component, OnInit } from '@angular/core';
 import { elementAt } from 'rxjs/operators';
+import { TipoUsuarioSistema } from 'src/app/models/usuarios/enumUsuarios';
 
 @Component({
   selector: 'app-empresa-read',
@@ -19,7 +23,8 @@ export class EmpresaReadComponent implements OnInit {
   endereco : Endereco;
   displayedColumns = ['id','cnpj', 'razaoSocial','nomeFantasia','inscricaoEstadual','inscricaoMunicipal','action']  
 
-  constructor(private serviceEmpresa : ServiceAllService<Empresa>
+  constructor(private router : Router,
+              private serviceEmpresa : ServiceAllService<Empresa>
              ) { }
 
   ngOnInit(): void {
@@ -30,35 +35,54 @@ export class EmpresaReadComponent implements OnInit {
 
   buscarEmpresa(): void 
   {
-    const tipo = `${"/Empresa"}`
-    this.serviceEmpresa.read(tipo).subscribe(empresa => {
-      this.empresa = empresa;
-     
-      
-     
-      let empId = Number(localStorage.getItem("empId"));
-      let grpId = Number(localStorage.getItem("grpUs"));
-    
-        this.empresas = this.empresa;
-        this.empresa =  new Array();
+    let filtroEmpresa = (<HTMLSelectElement>document.getElementById('busca')).value;
+    let empId = localStorage.getItem("empId");
+    let grpId = Number(localStorage.getItem("grpUs"));
 
-          if(grpId == 1)
+    this.serviceEmpresa.read(Endpoint.Empresa).subscribe(empresa => {
+      empresa = empresa;
+
+      
+      this.empresa =  new Array();
+
+          if(grpId == TipoUsuario.Administrador)
           {
-            this.empresas.forEach(element => {
+            empresa.forEach(element => {
             this.empresa.push(element)
              });
           }
           else
           {
-            for (let index = 0; index < this.empresas.length; index++) {
-              const element = this.empresas[index];
-              if (element.empresaPai == empId)
+            for (let index = 0; index < empresa.length; index++) {
+              const element = empresa[index];
+              if (element.empresaPai.toString() == empId)
                 this.empresa.push(element)
             }
 
           }
+
+      let empresaFIltrada = new Array();
+      if (filtroEmpresa){
+           
+        for (let index = 0; index < this.empresa.length; index++) {
+          const element = this.empresa[index];
+            if (element.nomeFantasia.toLowerCase().includes(filtroEmpresa.toLowerCase()))
+            empresaFIltrada.push(element);
+        }
+        this.empresa = new Array();
+        this.empresa = empresaFIltrada;    
+      }else{
+        this.empresa = empresa;
+      }
+
+
     })
   }
+
+  navigateToEmpresaCreate() : void {
+    this.router.navigate(['empresa/create'])
+  }
+
 }
   
 

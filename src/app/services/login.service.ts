@@ -1,7 +1,9 @@
+import { Endpoint } from './../Negocio/Endpoint';
+import { TipoUsuario, TipoUsuarioSistema } from './../models/usuarios/enumUsuarios';
 import { ObjetoToken } from './../models/Token/ObjetoToken';
 import { Empresa } from './../models/empresa/ModelEmpresa';
 import { Acesso } from '../models/acessoModel';
-import { Usuario } from './../models/modelLogin';
+import { Usuario } from '../models/usuarios/modelLogin';
 import { UtilService } from './util.service';
 
 import { environment } from './../../environments/environment';
@@ -32,11 +34,14 @@ export class LoginService {
   environmentUrl = 'Debug api';
   acesso : Acesso = new Acesso();
   objetoToken : ObjetoToken []
-  
-  private usuarioAutenticado: boolean = false; 
+
+  private tipoUsuarios = [];
+
+ // private usuarioAutenticado: boolean = false; 
 
   mostrarMenuEmitter = new EventEmitter<boolean>();
   mostrarLoginEmitter = new EventEmitter<boolean>();
+  
 
   constructor(private router: Router,
               private snackbar : MatSnackBar,
@@ -51,11 +56,11 @@ export class LoginService {
   async logarSistema(acesso: Acesso) {
     
     try {
-      let response = await this.http.post<ObjetoToken>(this.environmentUrl + '/Token', acesso).toPromise()
+      let response = await this.http.post<ObjetoToken>(this.environmentUrl + Endpoint.Token, acesso).toPromise()
    
-       if (response != null)
+       if (response != null && !response.bloqueado )
           {
-            this.usuarioAutenticado = true;
+
             this.mostrarMenuEmitter.emit(true);
             this.mostrarLoginEmitter.emit(false)
             this.router.navigate(['/']);
@@ -63,6 +68,7 @@ export class LoginService {
             localStorage.setItem("tId", response.token)
             localStorage.setItem("usId", response.id)
             localStorage.setItem("grpUs", response.grupoUsuarioId)
+           
             localStorage.setItem("stUs", response.bloqueado);
             localStorage.setItem("empId", response.empresaId);
             this.utilService.showMessage("Seja Bem Vindo!  " + acesso.login , false);
@@ -70,10 +76,14 @@ export class LoginService {
           }
           else
           {
-            this.usuarioAutenticado = false;
+           // this.usuarioAutenticado = false;
             this.mostrarMenuEmitter.emit(false);
-            this.mostrarLoginEmitter.emit(true)
-            this.utilService.showMessage("Usuário ou senha Inválido!", true);
+            this.mostrarLoginEmitter.emit(true);
+            
+            if (response.bloqueado)
+              this.utilService.showMessage("Usuário bloqueado!", true);
+              else 
+                this.utilService.showMessage("Usuário ou senha Inválido!", true);
         }
       
       } catch (error) {
@@ -81,9 +91,6 @@ export class LoginService {
       }
     
   }
-
- 
-
   sairSistema(){
     this.mostrarMenuEmitter.emit(false);
     this.mostrarLoginEmitter.emit(true)
@@ -92,8 +99,8 @@ export class LoginService {
     localStorage.removeItem("grpUs");
     localStorage.removeItem("stUs");
     localStorage.removeItem("empId");
-    this.router.navigate(['/login']);
     this.utilService.showMessage("Até logo! ", false);
+    this.router.navigate(['/login']);
   }
 
   header(){
@@ -105,6 +112,13 @@ export class LoginService {
     return { headers: reqHeader };
   }
 
+  TipoUsuarioSistema(){
+    
+    TipoUsuarioSistema.forEach(element => {
+      this.tipoUsuarios.push(element)
+    });
+   return this.tipoUsuarios;
+  }
   
 }
 

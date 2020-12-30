@@ -1,5 +1,13 @@
+import { stringify } from 'querystring';
+import { query } from '@angular/animations';
+import { UsuarioReadComponent } from './../../components/usuario/usuario-read/usuario-read.component';
+import { Empresa } from './../../models/empresa/ModelEmpresa';
+import { Endpoint } from './../../Negocio/Endpoint';
+import { UsuarioService } from './../../services/usuario.service';
+import { ServiceAllService } from './../../services/service-all.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { Usuario } from 'src/app/models/usuarios/modelLogin';
 
 @Component({
   selector: 'app-usuario-crud',
@@ -8,12 +16,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsuarioCrudComponent implements OnInit {
 
-  constructor(private router : Router) { }
+  constructor(
+              private router : Router) { }
 
   ngOnInit(): void {
   }
 
-  navigateToUsuarioCreate(): void{
-    this.router.navigate(['usuarios/create']);
-  }
+  
 }

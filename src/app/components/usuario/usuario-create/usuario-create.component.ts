@@ -1,11 +1,16 @@
+import { UsuarioReadComponent } from './../usuario-read/usuario-read.component';
+import { Endpoint } from './../../../Negocio/Endpoint';
+import { GrupoUsuario } from './../../../models/usuarios/GrupoUsuarios';
+import { LoginService } from 'src/app/services/login.service';
+import { ServiceAllService } from './../../../services/service-all.service';
+import { TipoUsuario, TipoUsuarioSistema } from './../../../models/usuarios/enumUsuarios';
 import { UtilService } from './../../../services/util.service';
 import { Observable } from 'rxjs';
-import { EmpresaService } from './../../../services/empresa.service';
 import { Router } from '@angular/router';
-import { UsuarioService } from './../../../services/usuario.service';
-import { Usuario } from './../../../models/modelLogin';
+import { Usuario } from '../../../models/usuarios/modelLogin';
 import { Component, OnInit } from '@angular/core';
 import { Empresa } from './../../../models/empresa/ModelEmpresa';
+
 
 
 
@@ -20,27 +25,85 @@ empresa : Observable<Empresa[]>;
 dadosEmpresa : Empresa;
 usuario : Usuario = new Usuario();
 
-  constructor(private usuarioService : UsuarioService,
-              private empresaService :EmpresaService,
+grupousuario : GrupoUsuario[];
+
+criargrupousuario : GrupoUsuario = new GrupoUsuario()
+
+comboTipousuario = [];
+
+constructor(  private serviceUsuario : ServiceAllService<Usuario>,
+              private serviceEmpresa : ServiceAllService<Empresa>,
+              private serviceGrupoUsuario : ServiceAllService<GrupoUsuario>,
               private utilService : UtilService,
+              private serviceLogin : LoginService,
+              
               private router : Router) { }
 
   ngOnInit(): void {
+      this.alimentarCombo();
       this.buscarEmpresa();
   }
+  
   createUsuario() : void {
-    this.usuarioService.create(this.usuario).subscribe(() => {
+    
+    this.usuario.criadoPor  = Number(localStorage.getItem("usId"));
+    this.usuario.dtCriacao = new Date;
+    this.usuario.empresaId = localStorage.getItem("empId")
+    this.usuario.grupoUsuarioId = this.usuario.grupoUsuarioId.toString().trim() == "Administrador" ? TipoUsuario.Administrador.toString() 
+                                : this.usuario.grupoUsuarioId.toString().trim() == "Sistema" ? TipoUsuario.Sistema.toString()
+                                : this.usuario.grupoUsuarioId.toString().trim() == "Master" ? TipoUsuario.Master.toString()
+                                : this.usuario.grupoUsuarioId.toString() == "Usuario" ? TipoUsuario.Usuario.toString() : null;
+       
+    this.serviceUsuario.create(this.usuario, Endpoint.Usuario).subscribe(() => {
       this.utilService.showMessage('Usuário Criado!');
       this.router.navigate(['usuarios']);
     })
 
   }
-  cancel() : void {
 
-    this.router.navigate(['usuarios'])
+  cancel(): void{
+    this.router.navigate(['/usuarios'])
   }
 
   buscarEmpresa() {
-    this.empresa = this.empresaService.read();
+    this.empresa = this.serviceEmpresa.read(Endpoint.Empresa);
   }
+
+  alimentarCombo() : void  {
+ 
+    let empId = localStorage.getItem("empId");
+    let grpId = Number(localStorage.getItem("grpUs"));
+
+    for (var tipo in TipoUsuario) {
+      if (TipoUsuario.hasOwnProperty(tipo) &&
+        (isNaN(parseInt(tipo))) && grpId == TipoUsuario.Administrador ) {
+        
+          this.comboTipousuario.push(tipo)
+      }
+      else if (TipoUsuario.hasOwnProperty(tipo) &&
+      (isNaN(parseInt(tipo))) && grpId != TipoUsuario.Administrador  ){
+        
+        this.comboTipousuario.push(tipo);
+
+      }
+
+    }
+  }
+
+  createGrupoUsuario(){
+
+
+    this.criargrupousuario.criadoPor  = Number(localStorage.getItem("usId"));
+    this.criargrupousuario.dtCriacao = new Date;
+    this.criargrupousuario.empresaId = Number(localStorage.getItem("empId"));
+
+      this.serviceGrupoUsuario.create(this.criargrupousuario, Endpoint.GrupoUsuario).subscribe(() => {
+        this.utilService.showMessage('Grupo de Usuário Criado!');
+        //this.router.navigate(['usuarios']);
+      })
+    
+      
+  }
+
+
 }

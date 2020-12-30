@@ -1,10 +1,12 @@
+import { Endpoint } from './../../../Negocio/Endpoint';
+import { ServiceAllService } from './../../../services/service-all.service';
 import { UtilService } from './../../../services/util.service';
 import { Empresa } from './../../../models/empresa/ModelEmpresa';
 import { EmpresaService } from './../../../services/empresa.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UsuarioService } from './../../../services/usuario.service';
 import { Component, OnInit } from '@angular/core';
-import { Usuario } from 'src/app/models/modelLogin';
+import { Usuario } from './../../../models/usuarios/modelLogin';
 
 @Component({
   selector: 'app-usuario-delete',
@@ -15,29 +17,34 @@ export class UsuarioDeleteComponent implements OnInit {
 empresa : Empresa
 usuario : Usuario;
 
-  constructor(private usuarioService : UsuarioService,
-              private empresaService : EmpresaService,
+  constructor(private usuarioService : ServiceAllService<Usuario>,
+              private empresaService : ServiceAllService<Empresa>,
               private router : Router,
               private utilService : UtilService,
               private route : ActivatedRoute
              ) { }
 
   ngOnInit(): void {
-    
-    const id = this.route.snapshot.paramMap.get('id')
-    this.usuarioService.readById(id).subscribe(usuario => {
-      this.usuario = usuario;
-      
-      this.buscarEmpresa().subscribe(empresa =>{
-        this.empresa = empresa;
-        this.usuario.EmpresaId = this.empresa.nomeFantasia;
-        this.usuario.Senha = '******';
-      });
-    })
+    this.carregaUsuario()
   }
 
+carregaUsuario(){
+
+  const id = this.route.snapshot.paramMap.get('id')
+  this.usuarioService.readById(id, Endpoint.Usuario).subscribe(usuario => {
+    this.usuario = usuario;
+    
+    this.buscarEmpresa().subscribe(empresa =>{
+      this.empresa = empresa;
+      this.usuario.empresaId = this.empresa.nomeFantasia;
+     
+    });
+  })
+
+}
+
   deleteUsuario(): void{
-      this.usuarioService.delete(this.usuario.Id).subscribe(() => {
+      this.usuarioService.delete(this.usuario.id , Endpoint.Usuario).subscribe(() => {
       this.utilService.showMessage("Usuário Excluído com Sucesso!")
       this.router.navigate(['/usuarios'])
     })
@@ -47,6 +54,6 @@ usuario : Usuario;
   }
 
   buscarEmpresa(){
-    return this.empresaService.readById(this.usuario.EmpresaId);
+    return this.empresaService.readById(this.usuario.empresaId, Endpoint.Empresa);
   }
 }

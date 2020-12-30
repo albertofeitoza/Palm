@@ -1,7 +1,7 @@
 import { UtilService } from './util.service';
 import { catchError, map } from 'rxjs/operators';
 import { Observable, EMPTY } from 'rxjs';
-import { Usuario } from './../models/modelLogin';
+import { Usuario } from '../models/usuarios/modelLogin';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Injectable } from '@angular/core';
@@ -31,6 +31,7 @@ export class UsuarioService {
         return this.http.get<Usuario[]>(this.environmentUrl).pipe(
           map(obj => obj),
           catchError(e => this.utilService.erroHandler(e))
+
         );
       }
 
@@ -43,7 +44,7 @@ export class UsuarioService {
 
       // Atualizar usuario por ID
       update(usuario: Usuario): Observable<Usuario> {
-        const url = `${this.environmentUrl}/${usuario.Id}`      
+        const url = `${this.environmentUrl}/${usuario.id}`      
         return this.http.put<Usuario>(url, usuario).pipe(
           map(obj => obj),
           catchError(e => this.utilService.erroHandler(e))

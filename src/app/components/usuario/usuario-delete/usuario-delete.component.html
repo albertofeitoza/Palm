@@ -5,32 +5,19 @@ Search
         <form>
             <mat-form-field>
                 <input matInput placeholder="Nome" 
-                 [(ngModel)]="usuario.contato.nome" name="nome">
+                 [(ngModel)]="usuario.nome" name="nome">
 
             </mat-form-field>
-            <mat-form-field>
-                <input matInput placeholder="Email"
-                [(ngModel)]="usuario.contato.email" name="email">
-
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput placeholder="Telefone"
-                [(ngModel)]="usuario.contato.telefone.telefone" name="telefone">
-            </mat-form-field>
-
+            
+            
             <mat-form-field>
                 <input matInput placeholder="Login"
-                [(ngModel)]="usuario.Login" name="login">
-            </mat-form-field>
-
-            <mat-form-field>
-                <input matInput placeholder="Senha" type="password"
-                [(value)]="usuario.Senha" name="senha">
+                [(ngModel)]="usuario.login" name="login">
             </mat-form-field>
 
             <mat-form-field>
                 <input matInput placeholder="Empresa"
-                [(ngModel)]="usuario.EmpresaId" name="empresaId">
+                [(ngModel)]="usuario.empresaId" name="empresaId">
             </mat-form-field>
 
         </form>

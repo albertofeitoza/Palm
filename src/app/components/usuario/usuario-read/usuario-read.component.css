@@ -25,3 +25,30 @@ table{
 .delete > i{
     color: #e35e6b;
 }
+
+.add > i {
+    margin-right: 15px;
+}
+
+
+
+.search {
+    font-size: 20px;
+    width: 150px;
+}
+
+.material-icons {
+    font-size: 20px;
+    margin: 15px;
+}
+
+
+
+.footer .material-icons {
+
+    margin: 15px;
+    margin-left: 10px;
+        
+    }
+
+

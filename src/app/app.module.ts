@@ -37,6 +37,9 @@ import { MatInputModule } from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatSelectModule} from '@angular/material/select';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatDialogModule} from '@angular/material/dialog';
+
 
 
 import { ProductReadComponent } from './components/product/product-read/product-read.component';
@@ -121,6 +124,8 @@ import { EmpresaReadComponent } from './components/empresa/empresa-read/empresa-
     MatSelectModule,
     ReactiveFormsModule,
     MatTabsModule,
+    MatCheckboxModule,
+    MatDialogModule,
 
 
   ],

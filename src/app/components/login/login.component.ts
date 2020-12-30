@@ -2,7 +2,6 @@ import { Acesso } from '../../models/acessoModel';
 import { UtilService } from './../../services/util.service';
 import { LoginService } from './../../services/login.service';
 
-import { Usuario } from '../../models/modelLogin';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
