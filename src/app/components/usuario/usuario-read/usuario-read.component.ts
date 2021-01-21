@@ -1,3 +1,5 @@
+import { TipoUsuarioSistema } from './../../../models/usuarios/enumUsuarios';
+import { UtilService } from './../../../services/util.service';
 import { GrupoUsuario } from './../../../models/usuarios/GrupoUsuarios';
 import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
@@ -21,6 +23,7 @@ import { TipoUsuario } from 'src/app/models/usuarios/enumUsuarios';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { UsuarioCreateComponent } from '../usuario-create/usuario-create.component';
 
+
 @Component({
   selector: 'app-usuario-read',
   templateUrl: './usuario-read.component.html',
@@ -34,10 +37,11 @@ export class UsuarioReadComponent implements OnInit {
   userAutenticado : boolean = false; 
   
   displayedColumns = ['id','nome','login','empresaId','grupoUsuarioId','bloqueado','action']  
-  
+ 
   constructor(
               private serviceEmpresa: ServiceAllService<Empresa>,
               private serviceUsuario : ServiceAllService<Usuario>,
+              private mensagem : UtilService, 
               private router : Router
              ) 
              { }
@@ -45,12 +49,20 @@ export class UsuarioReadComponent implements OnInit {
 
   ngOnInit(): void {
      this.getUser();
+
+     let grpId = Number(localStorage.getItem("grpUs"));
+
   }
   
 
 
   navigateToUsuarioCreate(): void{
-    this.router.navigate(['usuarios/create']);
+    let grpId = Number(localStorage.getItem("grpUs"));
+
+    if (grpId == TipoUsuario.Usuario) 
+      this.mensagem.showMessage("Você não possui permissão para criação de usuários", true)
+    else
+      this.router.navigate(['usuarios/create']);
   }
 
   async getUser() {
@@ -101,14 +113,12 @@ export class UsuarioReadComponent implements OnInit {
                       
                         if(grpId == TipoUsuario.Administrador)
                         {
-                          
-
                           this.usuario.push(usr);
                             break;  
                           }
                           else if(grpId == TipoUsuario.Master)
                           { 
-                            if(idEmpresa == empId && usr.grupoUsuarioId != TipoUsuario.Administrador.toString())
+                            if(idEmpresa == empId && usr.grupoUsuarioId != "Administrador")
                             {
                               this.usuario.push(usr);
                               empresaID = null;

@@ -46,7 +46,7 @@
             
                     </form>
             
-                    <button mat-raised-button (click)="cadastrarEmpresa()" color="primary" > 
+                    <button *ngIf="empresa.cnpj && empresa.nomeFantasia && empresa.razaoSocial"  mat-raised-button (click)="cadastrarEmpresa()" color="primary" > 
                         Salvar
                     </button>
                     

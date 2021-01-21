@@ -19,7 +19,7 @@ import { query } from '@angular/animations';
 })
 export class UsuarioUpdateComponent implements OnInit {
 
-  empresa : Observable<Empresa[]>;
+  empresa : Empresa[];
   dadosEmpresa : Empresa;
   usuario : Usuario ;
   userAutenticado : boolean = false; 
@@ -40,7 +40,7 @@ export class UsuarioUpdateComponent implements OnInit {
   }
 
   updateUsuario() : void {
-    
+  let grpId = Number(localStorage.getItem("grpUs"));
   this.usuario.grupoUsuarioId = this.usuario.grupoUsuarioId == "Administrador" ? TipoUsuario.Administrador.toString() 
                                    :this.usuario.grupoUsuarioId == "Sistema" ? TipoUsuario.Sistema.toString()
                                    : this.usuario.grupoUsuarioId == "Usuario" ? TipoUsuario.Usuario.toString()
@@ -49,20 +49,28 @@ export class UsuarioUpdateComponent implements OnInit {
 
     
       this.usarioService.read(Endpoint.Usuario).subscribe(user => {
-      user = user;
-      
-      let ativo = user.filter(x => x.login.toLowerCase() == this.usuario.login.toLowerCase() && x.empresaId == this.usuario.empresaId);
-      
-          if (ativo.length > 0)
+        user = user;
+                              
+        let ativo = user.filter(x => x.login.toLowerCase() == this.usuario.login.toLowerCase() && x.empresaId == this.usuario.empresaId && x.id == this.usuario.id);
+     
+          if (ativo.length > 0 )
           {
-              this.utilService.showMessage('o usuário não pode ser Alterado pois já existe esse usuário para essa Empresa');
-              this.usuario.login =  null; 
-              user =  new Array();
-          }else{
               this.usarioService.update(this.usuario, Endpoint.Usuario).subscribe(() => {
                 this.utilService.showMessage("Usuário Atualizado com Sucesso!")
                 this.router.navigate(['/usuarios'])
               })
+              user =  new Array();
+            }else if(grpId == TipoUsuario.Administrador){
+                
+              this.usarioService.update(this.usuario, Endpoint.Usuario).subscribe(() => {
+                  this.utilService.showMessage("Usuário Atualizado com Sucesso!")
+                  this.router.navigate(['/usuarios'])
+                })
+                user =  new Array();
+            }else{
+
+              this.utilService.showMessage('A empresa do Usuário não pode ser Alterada', false);
+              this.usuario.login =  null; 
               user =  new Array();
           }
       })
@@ -73,13 +81,34 @@ export class UsuarioUpdateComponent implements OnInit {
   }
 
   buscarEmpresa() {
-    this.empresa = this.empresaService.read(Endpoint.Empresa);
+    
+    let empId = localStorage.getItem("empId");
+    let grpId = Number(localStorage.getItem("grpUs"));
+
+    this.empresaService.read(Endpoint.Empresa).subscribe(emp => {
+      emp = emp;
+
+      this.empresa =  new Array()
+
+      emp.forEach(empresasCarregadas => {
+        
+        if(grpId == TipoUsuario.Administrador)
+          this.empresa.push(empresasCarregadas)
+        else if (grpId == TipoUsuario.Master && empId == empresasCarregadas.id.toString() || grpId == TipoUsuario.Usuario && empId == empresasCarregadas.id.toString() )
+            this.empresa.push(empresasCarregadas)
+        });
+
+    });
   }
 
   buscarUsuario(){
     const id = this.route.snapshot.paramMap.get('id')
     this.usarioService.readById(id, Endpoint.Usuario).subscribe(usuario => {
       this.usuario = usuario;
+
+
+
+
       let tipousuario = usuario.grupoUsuarioId;
       this.usuario.grupoUsuarioId = this.usuario.grupoUsuarioId == TipoUsuario.Administrador.toString() ? "Administrador"
                                    :this.usuario.grupoUsuarioId == TipoUsuario.Sistema.toString()  ? "Sistema"
@@ -87,7 +116,12 @@ export class UsuarioUpdateComponent implements OnInit {
                                    : this.usuario.grupoUsuarioId == TipoUsuario.Master.toString()  ? "Master" 
                                    : null 
                                          
-      this.carregarComboTipoUsuario(this.usuario.grupoUsuarioId, tipousuario); 
+     
+     
+     
+     
+     
+     this.carregarComboTipoUsuario(this.usuario.grupoUsuarioId, tipousuario); 
       
                    
     });
@@ -95,22 +129,35 @@ export class UsuarioUpdateComponent implements OnInit {
   }
 
   carregarComboTipoUsuario(usuario : string, tipousuario : string) : void  {
- 
-    if (tipousuario == TipoUsuario.Usuario.toString()) 
-    {
-      this.comboTipousuario.push(this.usuario.grupoUsuarioId.toString())
-    }
-    else
-    {
+    let grpId = Number(localStorage.getItem("grpUs"));
+
+    
       for (var tipo in TipoUsuario) {
       
-        if (TipoUsuario.hasOwnProperty(tipo) &&
-          (isNaN(parseInt(tipo)))) {
-          this.comboTipousuario.push(tipo)
-        }
+           if (TipoUsuario.hasOwnProperty(tipo) &&
+            (isNaN(parseInt(tipo))) && grpId == TipoUsuario.Administrador ) {
+    
+              this.comboTipousuario.push(tipo)
+              
+            }
+            else if (TipoUsuario.hasOwnProperty(tipo) &&
+            (isNaN(parseInt(tipo))) && grpId == TipoUsuario.Master ){
+    
+            if(TipoUsuarioSistema.get(tipo) == TipoUsuario.Master || TipoUsuarioSistema.get(tipo) == TipoUsuario.Usuario)            
+                this.comboTipousuario.push(tipo);
+          
+            }
+            else if (TipoUsuario.hasOwnProperty(tipo) &&
+            (isNaN(parseInt(tipo))) && grpId == TipoUsuario.Usuario ){
       
+              if(TipoUsuarioSistema.get(tipo) == TipoUsuario.Usuario)            
+                  this.comboTipousuario.push(tipo);
+            
+            }
+
+
       }
-    }
+    
           
   }
 

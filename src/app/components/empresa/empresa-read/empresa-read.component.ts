@@ -39,22 +39,22 @@ export class EmpresaReadComponent implements OnInit {
     let empId = localStorage.getItem("empId");
     let grpId = Number(localStorage.getItem("grpUs"));
 
-    this.serviceEmpresa.read(Endpoint.Empresa).subscribe(empresa => {
-      empresa = empresa;
+    this.serviceEmpresa.read(Endpoint.Empresa).subscribe(emp => {
+      emp = emp;
 
       
       this.empresa =  new Array();
 
           if(grpId == TipoUsuario.Administrador)
           {
-            empresa.forEach(element => {
+            emp.forEach(element => {
             this.empresa.push(element)
              });
           }
           else
           {
-            for (let index = 0; index < empresa.length; index++) {
-              const element = empresa[index];
+            for (let index = 0; index < emp.length; index++) {
+              const element = emp[index];
               if (element.empresaPai.toString() == empId)
                 this.empresa.push(element)
             }
@@ -72,7 +72,7 @@ export class EmpresaReadComponent implements OnInit {
         this.empresa = new Array();
         this.empresa = empresaFIltrada;    
       }else{
-        this.empresa = empresa;
+        this.empresa = this.empresa;
       }
 
 

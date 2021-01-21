@@ -46,7 +46,7 @@
                 <input matInput placeholder="Empresa">
                 <p></p>
                 <mat-select [(value)]="usuario.empresaId" placeholder="EmpresaID" >
-                    <mat-option *ngFor="let dadosEmpresa of empresa | async" [value]="dadosEmpresa.id">
+                    <mat-option *ngFor="let dadosEmpresa of empresa" [value]="dadosEmpresa.id">
                     {{dadosEmpresa.nomeFantasia}}
                     </mat-option>
                 </mat-select>

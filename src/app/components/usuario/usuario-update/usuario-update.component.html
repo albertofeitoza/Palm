@@ -4,7 +4,6 @@
             <mat-form-field>
                 <input matInput placeholder="Nome" 
                  [(ngModel)]="usuario.nome" name="nome">
-
             </mat-form-field>
             
             <mat-form-field>
@@ -31,12 +30,11 @@
                 <input matInput placeholder="Empresa">
                 <p></p>
                 <mat-select [(value)]="usuario.empresaId" placeholder="EmpresaID">
-                    <mat-option *ngFor="let dadosEmpresa of empresa | async" [value]="dadosEmpresa.id">
+                    <mat-option *ngFor="let dadosEmpresa of empresa" [value]="dadosEmpresa.id">
                        {{dadosEmpresa.nomeFantasia}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            
 
             <mat-form-field>
                 <input matInput placeholder="Bloqueado">

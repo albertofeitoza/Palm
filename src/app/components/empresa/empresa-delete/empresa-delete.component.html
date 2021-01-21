@@ -1,1 +1,31 @@
-<p>empresa-delete works!</p>
+<mat-card>
+    <mat-card-title>Excluir Empresa</mat-card-title>
+        <form>
+                       
+            <mat-form-field>
+                <input matInput placeholder="Empresa"
+                [(ngModel)]="empresa.razaoSocial" name="razaoSocial">
+            </mat-form-field>
+           
+            <mat-form-field>
+                <input matInput placeholder="Nome Fantasia"
+                [(ngModel)]="empresa.nomeFantasia" name="nomeFantasia">
+            </mat-form-field>
+           
+           
+            <mat-form-field>
+                <input matInput placeholder="Cnpj" 
+                 [(ngModel)]="empresa.cnpj" name="cnpj">
+
+            </mat-form-field>
+            
+        </form>
+
+        <button mat-raised-button (click)="excluirEmpresa()" color="primary" > 
+            Excluir
+        </button>
+        
+        <button mat-raised-button (click)="cancel()" color="primary" > 
+            Voltar
+        </button>
+</mat-card>

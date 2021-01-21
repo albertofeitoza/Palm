@@ -1,3 +1,4 @@
+import { EmpresaDeleteComponent } from './components/empresa/empresa-delete/empresa-delete.component';
 import { EmpresaUpdateComponent } from './components/empresa/empresa-update/empresa-update.component';
 import { EmpresaCreateComponent } from './components/empresa/empresa-create/empresa-create.component';
 import { EmpresaComponent } from './views/empresa/empresa.component';
@@ -97,7 +98,7 @@ const routes: Routes = [
   },
   {
     path: "empresa/delete/:id",
-    component : ChamadoDeleteComponent
+    component : EmpresaDeleteComponent
   },
   
 ];
