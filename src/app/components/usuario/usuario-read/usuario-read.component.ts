@@ -97,6 +97,7 @@ export class UsuarioReadComponent implements OnInit {
           this.usuario = new Array();
           let empresaID = null;
           let idEmpresa = null;
+          let IdEmpresaPai = null;
 
           for (let index = 0; index < responseUsuarios.length; index++) {
             const usr = responseUsuarios[index];
@@ -110,6 +111,7 @@ export class UsuarioReadComponent implements OnInit {
                       usr.empresaId = emp.razaoSocial;
                       usr.grupoUsuarioId = usr.grupoUsuarioId == "1" ? "Administrador" : usr.grupoUsuarioId == "2" ? "Sistema" : usr.grupoUsuarioId == "3" ? "Usuario" : usr.grupoUsuarioId == "4" ? "Master" : usr.grupoUsuarioId;
                       idEmpresa = emp.id;
+                      IdEmpresaPai = emp.empresaPai;
                       
                         if(grpId == TipoUsuario.Administrador)
                         {
@@ -118,7 +120,7 @@ export class UsuarioReadComponent implements OnInit {
                           }
                           else if(grpId == TipoUsuario.Master)
                           { 
-                            if(idEmpresa == empId && usr.grupoUsuarioId != "Administrador")
+                            if(idEmpresa == empId || IdEmpresaPai == empId && usr.grupoUsuarioId != "Administrador")
                             {
                               this.usuario.push(usr);
                               empresaID = null;

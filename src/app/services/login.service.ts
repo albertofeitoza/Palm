@@ -58,7 +58,7 @@ export class LoginService {
     try {
       let response = await this.http.post<ObjetoToken>(this.environmentUrl + Endpoint.Token, acesso).toPromise()
    
-       if (response != null && !response.bloqueado )
+       if (response != null && !response.bloqueado && !response.statusEmpresa )
           {
 
             this.mostrarMenuEmitter.emit(true);
@@ -82,8 +82,10 @@ export class LoginService {
             
             if (response.bloqueado)
               this.utilService.showMessage("Usuário bloqueado!", true);
-              else 
-                this.utilService.showMessage("Usuário ou senha Inválido!", true);
+            else if (response.statusEmpresa)
+              this.utilService.showMessage("Empresa bloqueada!", true);
+            else 
+              this.utilService.showMessage("Usuário ou senha Inválido!", true);
         }
       
       } catch (error) {

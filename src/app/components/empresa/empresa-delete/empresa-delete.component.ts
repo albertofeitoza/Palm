@@ -39,7 +39,7 @@ export class EmpresaDeleteComponent implements OnInit {
        
         if (existeUsuario.length > 0)
         {
-          this.mensagem.showMessage("Empresa não pode ser excluida porque possui Dependências", false)
+          this.mensagem.showMessage("Empresa não pode ser excluida porque possui Dependências de usuários.", false)
         }    
         else{
             let grpId = Number(localStorage.getItem("grpUs"));

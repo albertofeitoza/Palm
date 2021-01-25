@@ -94,7 +94,7 @@ export class UsuarioUpdateComponent implements OnInit {
         
         if(grpId == TipoUsuario.Administrador)
           this.empresa.push(empresasCarregadas)
-        else if (grpId == TipoUsuario.Master && empId == empresasCarregadas.id.toString() || grpId == TipoUsuario.Usuario && empId == empresasCarregadas.id.toString() )
+        else if (grpId == TipoUsuario.Master && empId == empresasCarregadas.id.toString() || grpId == TipoUsuario.Usuario && empId == empresasCarregadas.id.toString() || empId == empresasCarregadas.empresaPai.toString())
             this.empresa.push(empresasCarregadas)
         });
 

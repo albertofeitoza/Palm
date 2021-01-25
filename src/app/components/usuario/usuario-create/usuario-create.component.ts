@@ -59,6 +59,8 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
                                 : this.usuario.grupoUsuarioId.toString().trim() == "Master" ? TipoUsuario.Master.toString()
                                 : this.usuario.grupoUsuarioId.toString() == "Usuario" ? TipoUsuario.Usuario.toString() : null;
     
+    
+
     this.serviceUsuario.read(Endpoint.Usuario).subscribe(user => {
       user = user;
 

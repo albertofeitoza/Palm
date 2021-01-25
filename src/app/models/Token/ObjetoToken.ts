@@ -5,4 +5,5 @@ export interface ObjetoToken{
     grupoUsuarioId : string
     token : string
     bloqueado : string
+    statusEmpresa : boolean
 }

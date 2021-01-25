@@ -53,21 +53,36 @@ empresa : Empresa = {
     this.empresa.criadoPor  = Number(localStorage.getItem("usId"));
     this.empresa.dtCriacao = new Date;
     this.empresa.empresaPai = Number(localStorage.getItem("empId"))
+       
     this.empresa.bloqueado = false;
+    
+    if(grpId == TipoUsuario.Usuario)
+    {
+      this.utilService.showMessage("Você não possui permissão para cadastro de empresas", false)
 
-    this.servicoEmpresa.create(this.empresa, Endpoint.Empresa).subscribe(emp => {
-      emp = emp;
-      let empresaPai = emp.id;
-
-      if(grpId == TipoUsuario.Administrador)
-      {
-          emp.empresaPai = empresaPai;
-          this.servicoEmpresa.update(emp,Endpoint.Empresa).subscribe(() => {})
-      }
-      this.utilService.showMessage("Empresa cadastrada com sucesso!",false);
-      this.router.navigate(['empresa']);
-    })
+    }else
+    {
+      this.servicoEmpresa.create(this.empresa, Endpoint.Empresa).subscribe(emp => {
+        emp = emp;
+        let empresaPai = emp.id;
   
+        if(grpId == TipoUsuario.Administrador)
+        {
+            emp.empresaPai = empresaPai;
+            this.servicoEmpresa.update(emp,Endpoint.Empresa).subscribe(() => {})
+        }
+        else if (grpId == TipoUsuario.Master)
+        {
+          emp.bloqueado = true;
+          emp.empresaPai = Number(localStorage.getItem("empId"));
+          this.servicoEmpresa.update(emp,Endpoint.Empresa).subscribe(() => {})
+  
+        }
+        this.utilService.showMessage("Empresa cadastrada com sucesso!",false);
+        this.router.navigate(['empresa']);
+      })
+    }
+
   }
 
   cancel(){
