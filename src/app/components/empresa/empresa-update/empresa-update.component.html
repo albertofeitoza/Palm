@@ -3,7 +3,7 @@
         <form>
             <mat-form-field>
                 <input matInput placeholder="Cnpj" 
-                 [(ngModel)]="empresa.cnpj" name="cnpj">
+                 [(ngModel)]="empresa.cnpj" disabled="true" name="cnpj">
             </mat-form-field>
             <mat-form-field>
                 <input matInput placeholder="Nome"
@@ -33,7 +33,16 @@
                 <input matInput placeholder="Cod. CNAE"
                 [(ngModel)]="empresa.codCnae" name="codCnae">
             </mat-form-field>
+            
+            <div *ngIf="usuariologado">
+                <mat-form-field >
+                            <input matInput placeholder="Bloqueado">
+                                        <input name="status" [(ngModel)]="empresa.bloqueado" [checked]="empresa.bloqueado" type="checkbox">
+                </mat-form-field>
+            </div>
+          
             <mat-form-field>
+    
                 <input matInput placeholder="Observação"
                 [(ngModel)]="empresa.observacao" name="observacao">
             </mat-form-field>

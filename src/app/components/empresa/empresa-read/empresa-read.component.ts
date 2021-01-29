@@ -21,7 +21,7 @@ export class EmpresaReadComponent implements OnInit {
   empresas: Empresa[];
   contato : Contato;
   endereco : Endereco;
-  displayedColumns = ['id','cnpj', 'razaoSocial','nomeFantasia','inscricaoEstadual','inscricaoMunicipal','action']  
+  displayedColumns = ['id','cnpj', 'razaoSocial','nomeFantasia','inscricaoEstadual','inscricaoMunicipal','bloqueado','action']  
 
   constructor(private router : Router,
               private serviceEmpresa : ServiceAllService<Empresa>

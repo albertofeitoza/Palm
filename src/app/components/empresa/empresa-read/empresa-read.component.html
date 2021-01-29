@@ -45,6 +45,23 @@
         <td mat-cell *matCellDef="let row">{{row.inscricaoMunicipal}}</td>
       </ng-container>
 
+      <!-- status -->
+      <ng-container matColumnDef="bloqueado">
+        <th mat-header-cell *matHeaderCellDef>Bloqueado</th>
+          <td mat-cell *matCellDef="let row">
+            <div *ngIf="row.bloqueado" >
+              <i class="material-icons">
+                lock
+              </i>
+            </div>
+            <div *ngIf="!row.bloqueado" >
+              <i class="material-icons">  
+                lock_open
+              </i>
+            </div>
+          </td>
+        </ng-container>
+
        
       <!-- Coluna de Ações -->
       <ng-container matColumnDef="action">

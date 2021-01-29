@@ -8,6 +8,7 @@ import { Contato } from './../../../models/contato/modelContato';
 import { ContatoService } from './../../../services/contato.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { cnpj } from 'cpf-cnpj-validator';
 
 @Component({
   selector: 'app-empresa-create',
@@ -49,10 +50,10 @@ empresa : Empresa = {
   cadastrarEmpresa(){
     
     let grpId = Number(localStorage.getItem("grpUs"));
-    
+    let empPai = Number(localStorage.getItem("empId"));
     this.empresa.criadoPor  = Number(localStorage.getItem("usId"));
     this.empresa.dtCriacao = new Date;
-    this.empresa.empresaPai = Number(localStorage.getItem("empId"))
+    this.empresa.empresaPai = empPai;
        
     this.empresa.bloqueado = false;
     
@@ -62,27 +63,54 @@ empresa : Empresa = {
 
     }else
     {
-      this.servicoEmpresa.create(this.empresa, Endpoint.Empresa).subscribe(emp => {
-        emp = emp;
-        let empresaPai = emp.id;
-  
-        if(grpId == TipoUsuario.Administrador)
-        {
-            emp.empresaPai = empresaPai;
-            this.servicoEmpresa.update(emp,Endpoint.Empresa).subscribe(() => {})
-        }
-        else if (grpId == TipoUsuario.Master)
-        {
-          emp.bloqueado = true;
-          emp.empresaPai = Number(localStorage.getItem("empId"));
-          this.servicoEmpresa.update(emp,Endpoint.Empresa).subscribe(() => {})
-  
-        }
-        this.utilService.showMessage("Empresa cadastrada com sucesso!",false);
-        this.router.navigate(['empresa']);
-      })
-    }
+     if(cnpj.isValid(this.empresa.cnpj)){
+       this.servicoEmpresa.read(Endpoint.Empresa).subscribe(bemp => {
+          bemp = bemp;
+         let retornoEmp = bemp.filter(x => x.cnpj == this.empresa.cnpj)
+         let retornomaster = bemp.filter(x => x.id == empPai);
 
+          if (retornoEmp.length == 0 ){
+            
+            if(grpId == TipoUsuario.Administrador){
+
+                this.servicoEmpresa.create(this.empresa, Endpoint.Empresa).subscribe(emp => {
+                  emp = emp;
+                        
+                  let empresaPai = emp.id;
+                         
+                              emp.empresaPai = empresaPai;
+                              this.servicoEmpresa.update(emp,Endpoint.Empresa).subscribe(() => {})
+                         
+                          this.utilService.showMessage("Empresa cadastrada com sucesso!",false);
+                          this.router.navigate(['empresa']);
+                        })
+                }else if (grpId == TipoUsuario.Master && retornomaster.filter(x => x.empresaPai == empPai).length > 0)
+                {
+                  
+                  this.servicoEmpresa.create(this.empresa, Endpoint.Empresa).subscribe(emp => {
+                    emp = emp;
+                          
+                    let empresaPai = emp.id;
+                          
+                              emp.bloqueado = true;
+                              emp.empresaPai = Number(localStorage.getItem("empId"));
+                              this.servicoEmpresa.update(emp,Endpoint.Empresa).subscribe(() => {})
+                       
+                            this.utilService.showMessage("Empresa cadastrada com sucesso!",false);
+                            this.router.navigate(['empresa']);
+                          })
+                }else{
+                  this.utilService.showMessage("Para criação de uma empresa precisa está logado com a Matriz.!",false);
+                }
+          }
+          else
+           this.utilService.showMessage("Cnpj já cadastrado!",false);
+        });  
+      }
+      else{
+        this.utilService.showMessage("Cnpj inválido",false);
+      }
+    }
   }
 
   cancel(){

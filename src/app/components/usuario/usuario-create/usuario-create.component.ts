@@ -12,9 +12,6 @@ import { Usuario } from '../../../models/usuarios/modelLogin';
 import { Component, OnInit } from '@angular/core';
 import { Empresa } from './../../../models/empresa/ModelEmpresa';
 
-
-
-
 @Component({
   selector: 'app-usuario-create',
   templateUrl: './usuario-create.component.html',
@@ -52,7 +49,6 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
     
     this.usuario.criadoPor  = Number(localStorage.getItem("usId"));
     this.usuario.dtCriacao = new Date;
-    //this.usuario.empresaId = localStorage.getItem("empId")
    
     this.usuario.grupoUsuarioId = this.usuario.grupoUsuarioId.toString().trim() == "Administrador" ? TipoUsuario.Administrador.toString() 
                                 : this.usuario.grupoUsuarioId.toString().trim() == "Sistema" ? TipoUsuario.Sistema.toString()
@@ -72,12 +68,21 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
               this.usuario.login =  null; 
               user =  new Array();
             }else{
-
-              this.serviceUsuario.create(this.usuario, Endpoint.Usuario).subscribe(() => {
-                this.utilService.showMessage('Usuário Criado!');
-                this.router.navigate(['usuarios']);
-              })
-
+           
+              this.serviceEmpresa.readById(this.usuario.empresaId, Endpoint.Empresa).subscribe(emp => {
+                emp = emp;
+                if (!emp.bloqueado){
+                  this.serviceUsuario.create(this.usuario, Endpoint.Usuario).subscribe(() => {
+                    this.utilService.showMessage('Usuário Criado!');
+                    this.router.navigate(['usuarios']);
+                  });
+                }
+                else
+                {
+                  this.utilService.showMessage(`Não pode ser criado Usuário para empresa ${emp.razaoSocial} porque essa empresa está bloqueada.`, false);
+                }
+              });
+              
               user =  new Array();
             }
 
@@ -102,7 +107,7 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
         
             if(grpId == TipoUsuario.Administrador)
               this.empresa.push(empresasCarregadas)
-            else if (grpId == TipoUsuario.Master && empId == empresasCarregadas.empresaPai.toString() || grpId == TipoUsuario.Usuario && empId == empresasCarregadas.empresaPai.toString() )
+            else if (grpId == TipoUsuario.Master && empId == empresasCarregadas.empresaPai.toString())
                 this.empresa.push(empresasCarregadas)
             });
     })
@@ -124,25 +129,17 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
 
         if(TipoUsuarioSistema.get(tipo) == TipoUsuario.Master || TipoUsuarioSistema.get(tipo) == TipoUsuario.Usuario)            
             this.comboTipousuario.push(tipo);
-      
         }
-
     }
   }
 
   createGrupoUsuario(){
-
-
     this.criargrupousuario.criadoPor  = Number(localStorage.getItem("usId"));
     this.criargrupousuario.dtCriacao = new Date;
     this.criargrupousuario.empresaId = Number(localStorage.getItem("empId"));
 
       this.serviceGrupoUsuario.create(this.criargrupousuario, Endpoint.GrupoUsuario).subscribe(() => {
         this.utilService.showMessage('Grupo de Usuário Criado!');
-
       })
-    
-      
   }
-
 }
