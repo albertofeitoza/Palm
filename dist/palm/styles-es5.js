@@ -387,11 +387,11 @@
   /***/
   function _(module, exports, __webpack_require__) {
     __webpack_require__(
-    /*! C:\Users\alberto.feitoza\Documents\Projetos\FrontEnd\Angular\palm\node_modules\@angular\material\prebuilt-themes\indigo-pink.css */
+    /*! C:\Users\alberto.feitoza\Documents\Projetos\FrontEnd\Angular\Palm\node_modules\@angular\material\prebuilt-themes\indigo-pink.css */
     "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css");
 
     module.exports = __webpack_require__(
-    /*! C:\Users\alberto.feitoza\Documents\Projetos\FrontEnd\Angular\palm\src\styles.css */
+    /*! C:\Users\alberto.feitoza\Documents\Projetos\FrontEnd\Angular\Palm\src\styles.css */
     "./src/styles.css");
     /***/
   }

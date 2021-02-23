@@ -1,3 +1,4 @@
+import { TipoUsuario } from './../../../models/usuarios/enumUsuarios';
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/services/login.service';
 
@@ -9,11 +10,11 @@ import { LoginService } from 'src/app/services/login.service';
 })
 export class NavComponent implements OnInit {
 opened = false;
-  
+lock = false;  
   constructor(private auth: LoginService) { }
 
   ngOnInit(): void {
-  
+  this.validarAcesso();
   }
 
   sairSistema(){
@@ -21,7 +22,9 @@ opened = false;
     this.auth.sairSistema();
     
   }
-
+validarAcesso(){
+  this.lock = Number(localStorage.getItem("grpUs")) == TipoUsuario.Administrador ? true : false;
+}
  
 
 }

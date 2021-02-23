@@ -1,3 +1,4 @@
+import { Endpoint } from './../../../Negocio/Endpoint';
 
 import { ServiceAllService } from './../../../services/service-all.service';
 import { UtilService } from './../../../services/util.service';
@@ -17,12 +18,11 @@ export class ProductUpdateComponent implements OnInit {
 product: Product = {
     id : null,
     dtCriacao : null,
+    criadoPor : null,
     nome: null,
-    preco: null,
-    criadoPor : null, 
-    bloqueado : null, 
-    empresaId :null
-    
+    valor: 0,
+    empresaId :null,
+    bloqueado : null
   }
   
 
@@ -42,10 +42,7 @@ product: Product = {
 
   updateProduct(): void {
     this.product.criadoPor  = Number(localStorage.getItem("usId"));
-    this.product.empresaId = Number(localStorage.getItem("empId"));
-    const tipo = `${"/Produto"}`;
-
-      this.ProdutoService.update(this.product, tipo).subscribe(() => {
+      this.ProdutoService.update(this.product, Endpoint.Produto).subscribe(() => {
       this.utilService.showMessage("Produto Atualizado com Sucesso!")
       this.router.navigate(['/products'])
     })
@@ -56,14 +53,12 @@ product: Product = {
     this.router.navigate(['/products'])
 
   }
-buscarProduto() : void {
+  buscarProduto() : void {
 
-  const id = this.route.snapshot.paramMap.get('id')
-  const tipo = `${"/Produto"}`
-    this.ProdutoService.readById(id, tipo).subscribe(product => {
-        this.product = product;
-    })
-
-}  
+    const id = this.route.snapshot.paramMap.get('id')
+      this.ProdutoService.readById(id, Endpoint.Produto).subscribe(product => {
+          this.product = product;
+      })
+  }  
 
 }

@@ -39,6 +39,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatDialogModule} from '@angular/material/dialog';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 
 
@@ -66,6 +67,7 @@ import { EmpresaCreateComponent } from './components/empresa/empresa-create/empr
 import { EmpresaUpdateComponent } from './components/empresa/empresa-update/empresa-update.component';
 import { EmpresaDeleteComponent } from './components/empresa/empresa-delete/empresa-delete.component';
 import { EmpresaReadComponent } from './components/empresa/empresa-read/empresa-read.component';
+import { AgendaComponent } from './Aplicacoes/agenda/agenda.component';
 
 
 
@@ -100,6 +102,7 @@ import { EmpresaReadComponent } from './components/empresa/empresa-read/empresa-
     EmpresaUpdateComponent,
     EmpresaDeleteComponent,
     EmpresaReadComponent,
+    AgendaComponent,
    
     
   ],
@@ -126,6 +129,7 @@ import { EmpresaReadComponent } from './components/empresa/empresa-read/empresa-
     MatTabsModule,
     MatCheckboxModule,
     MatDialogModule,
+    FlexLayoutModule,
 
 
   ],

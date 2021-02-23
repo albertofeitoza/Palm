@@ -1,5 +1,10 @@
+import { TipoUsuario } from './../../models/usuarios/enumUsuarios';
+import { Endpoint } from './../../Negocio/Endpoint';
+import { ServiceAllService } from './../../services/service-all.service';
 import { HeaderService } from './../../components/template/header/header.service';
 import { Component, OnInit } from '@angular/core';
+import { ok } from 'assert';
+import { Product } from 'src/app/models/produtos/product.model';
 
 @Component({
   selector: 'app-home',
@@ -8,15 +13,38 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private headerService :HeaderService) {
-    this.headerService.headerData = {
-      title : 'Início',
-      icon : 'home',
-      routeUrl : ''
-    }
-   }
+produtos : Product[];
+
+
+  constructor(private serviceProdutos : ServiceAllService<Product>,
+              private headerService : HeaderService) 
+              {
+                this.headerService.headerData = {
+                  title : 'Início',
+                  icon : 'home',
+                  routeUrl : ''
+                }
+              }
 
   ngOnInit(): void {
+    this.buscarComponentes();
   }
+  
+  
+  buscarComponentes(){
+     
+    let empId = localStorage.getItem("empId");
+    let grpId = Number(localStorage.getItem("grpUs"));
 
+    this.serviceProdutos.read(Endpoint.Produto).subscribe(prod => {
+      prod = prod;
+
+      this.produtos = new Array();
+
+        prod.forEach(element => {
+          if (empId == element.empresaId)
+              this.produtos.push(element)
+        });
+    });
+  }
 }

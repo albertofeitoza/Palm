@@ -20,11 +20,11 @@
                             </i>
                             Empresa
                         </a>
-                        <a mat-list-item routerLink="products" >
+                        <a *ngIf="lock" mat-list-item routerLink="products" >
                             <i class="material-icons">
                                 storefront
                             </i>
-                            Produtos
+                            Produto - Empresa
                         </a>
                         <a mat-list-item routerLink="chamados">
                             <i class="material-icons">

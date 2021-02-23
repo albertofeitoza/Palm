@@ -1,6 +1,16 @@
 <mat-card >
     <mat-card-title><i class="material-icons">account_box</i></mat-card-title>
         <form>
+            <mat-form-field>
+                <input matInput placeholder="Empresa">
+                <p></p>
+                <mat-select [(value)]="acesso.empresaId" placeholder="empId" >
+                    <mat-option *ngFor="let empresa of comboEmpresa " [value]="empresa.id">
+                        {{empresa.nomeFantasia}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
             <mat-form-field > 
                 <input matInput placeholder="login" 
                  [(ngModel)]="acesso.login" name="name" placeholder="login">

@@ -1,9 +1,9 @@
 export interface Product {
     id ?: number
     dtCriacao : Date
-    nome : string
-    preco : number
     criadoPor : number
+    nome: string
+    valor : number
+    empresaId : string
     bloqueado : boolean
-    empresaId : number
 }

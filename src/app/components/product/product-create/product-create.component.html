@@ -1,20 +1,36 @@
 <mat-card>
-    <mat-card-title>Novo Produto</mat-card-title>
+    <mat-card-title>Habilitar - Produto Empresa</mat-card-title>
         <form>
             <mat-form-field>
-                <input matInput placeholder="Nome" 
-                 [(ngModel)]="product.nome" name="nome">
-
+                <input matInput placeholder="Produto">
+                <p></p>
+                <mat-select [(value)]="product.nome" placeholder="productId" >
+                    <mat-option *ngFor="let produto of comboProduto " [value]="produto">
+                         {{produto}}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
+
+
+            <mat-form-field>
+                <input matInput placeholder="Empresa">
+                <p></p>
+                <mat-select [(value)]="product.empresaId" placeholder="EmpresaID" >
+                    <mat-option *ngFor="let comboEmpresa of empresa" [value]="comboEmpresa.id">
+                            {{comboEmpresa.nomeFantasia}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
             <mat-form-field>
                 <input matInput placeholder="Preço R$"
-                [(ngModel)]="product.preco" name="preco">
+                [(ngModel)]="product.valor" name="valor">
 
             </mat-form-field>
-
+            
         </form>
 
-        <button mat-raised-button (click)="createProduct()" color="primary" > 
+        <button mat-raised-button (click)="associarProdutoEmpresa()" color="primary" > 
             Salvar
         </button>
         

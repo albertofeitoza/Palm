@@ -1,3 +1,6 @@
+import { Empresa } from './../../../models/empresa/ModelEmpresa';
+import { Aplicacao, TipoAplicacao } from './../../../Negocio/Aplicacao';
+import { Endpoint } from './../../../Negocio/Endpoint';
 import { ServiceAllService } from './../../../services/service-all.service';
 import { Usuario } from './../../../models/usuarios/modelLogin';
 import { Token } from '@angular/compiler/src/ml_parser/lexer';
@@ -15,36 +18,53 @@ import { Router } from '@angular/router';
 })
 export class ProductCreateComponent implements OnInit {
 
+  comboProduto =  [];
+  empresa : Empresa[];
+  comboEmpresa : Empresa;
+
     product : Product = {  
     dtCriacao : null,
-    nome : null,
-    preco : null,
     criadoPor : null,
+    nome : null,
+    valor : 0,
+    empresaId : null,
     bloqueado : false,
-    empresaId : null
     }
 
-  constructor(private ProductService : ProductService,
+  constructor(
               private utilService : UtilService,
               private router : Router,
-              private cadastrarProduto : ServiceAllService<Product>
+              private ProdutoEmpresa : ServiceAllService<Product>,
+              private ServiceEmpresa : ServiceAllService<Empresa>
                ) { }
 
   ngOnInit(): void {
-    
+    this.buscarProduto();
+    this.buscarEmpresa()
   }
 
-  createProduct() : void {
+  associarProdutoEmpresa() : void {
 
     this.product.criadoPor  = Number(localStorage.getItem("usId"));
-    this.product.empresaId = Number(localStorage.getItem("empId"));
     this.product.dtCriacao = new Date;
     this.product.bloqueado = false;
-    const tipo = `${"/Produto"}`
-    this.cadastrarProduto.create(this.product, tipo).subscribe(() => {
-    this.utilService.showMessage('Produto Criado!');
-    this.router.navigate(['products']);
+    
+    this.ProdutoEmpresa.read(Endpoint.Produto).subscribe(p => {
+      p = p;
+
+      let ativo = p.filter(x => x.nome == this.product.nome && x.empresaId == this.product.empresaId )
       
+      if (ativo.length == 0)
+      {
+        this.ProdutoEmpresa.create(this.product, Endpoint.Produto).subscribe(() => {
+          this.utilService.showMessage('Produto Criado!');
+          this.router.navigate(['products']);
+          })
+      
+      }else{
+        this.utilService.showMessage('Esse Produto Já foi cadastrado para essa empresa!');
+      }
+
     })
     
   }
@@ -54,7 +74,17 @@ export class ProductCreateComponent implements OnInit {
     this.router.navigate(['products'])
   }
 
+  buscarProduto(){
+    
+      TipoAplicacao.forEach(element => {
+        this.comboProduto.push(element)
+      });
+     return this.comboProduto;
+  }
+  buscarEmpresa(){
+    this.ServiceEmpresa.read(Endpoint.Empresa).subscribe(emp => {
+      this.empresa = emp;
+    })
+  }
   
-  
-
 }

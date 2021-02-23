@@ -8,8 +8,13 @@
             </mat-form-field>
             <mat-form-field>
                 <input matInput placeholder="Preço R$"
-                [(ngModel)]="product.preco" name="preco">
+                [(ngModel)]="product.valor" name="valor">
 
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Bloqueado">
+                    <input name="usuariosisteja" [(ngModel)]="product.bloqueado" [checked]="product.bloqueado" type="checkbox">
             </mat-form-field>
 
         </form>

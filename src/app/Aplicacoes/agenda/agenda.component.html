@@ -1,0 +1,31 @@
+
+<mat-card>
+    <mat-card-header>
+
+        <div class="content">
+            <div fxLayout="row wrap" fxLayoutGap="16px grid">
+              <div fxFlex="10%" fxFlex.xs="100%" fxFlex.sm="33%"  *ngFor="let prod of [1]">
+                <mat-card  class=" mat-elevation-z3">
+                    <mat-card-header>
+                        <mat-card-title>{{prod}}</mat-card-title>
+                    </mat-card-header>
+                    <a *ngIf="!prod.bloqueado" mat-list-item routerLink="{{prod.nome}}" >
+                        <i class="material-icons" >
+                           schedule
+                        </i>
+                    </a>
+                    <mat-card-footer>
+                        <div *ngIf="prod.bloqueado">
+                            <i class="material-icons" >
+                                block
+                             </i>
+                        </div>
+                    </mat-card-footer>
+        
+                </mat-card>
+              </div>
+            </div>
+          </div>
+    </mat-card-header>
+    
+</mat-card>

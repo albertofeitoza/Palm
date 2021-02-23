@@ -1,3 +1,4 @@
+import { Aplicacao } from './Negocio/Aplicacao';
 import { EmpresaDeleteComponent } from './components/empresa/empresa-delete/empresa-delete.component';
 import { EmpresaUpdateComponent } from './components/empresa/empresa-update/empresa-update.component';
 import { EmpresaCreateComponent } from './components/empresa/empresa-create/empresa-create.component';
@@ -24,6 +25,11 @@ import { ChamadoCreateComponent } from './components/chamados/chamado-create/cha
 import { ChamadoUpdateComponent } from './components/chamados/chamado-update/chamado-update.component';
 import { ChamadoDeleteComponent } from './components/chamados/chamado-delete/chamado-delete.component';
 
+//Rotas de componentes Negócio
+import { AgendaComponent } from './Aplicacoes/agenda/agenda.component';
+
+
+
 
 const routes: Routes = [
   {
@@ -32,7 +38,7 @@ const routes: Routes = [
   },
   {
     path: "login",
-    component: LoginComponent
+    component: LoginComponent,
   },
   {
     path: "products",
@@ -100,6 +106,28 @@ const routes: Routes = [
     path: "empresa/delete/:id",
     component : EmpresaDeleteComponent
   },
+
+
+
+//Rotas da Agenda
+{
+  path: Aplicacao.Agenda,
+  component : AgendaComponent
+},
+{
+  path: "empresa/create",
+  component : EmpresaCreateComponent
+},
+{
+  path: "empresa/update/:id",
+  component : EmpresaUpdateComponent
+},
+{
+  path: "empresa/delete/:id",
+  component : EmpresaDeleteComponent
+},
+
+
   
 ];
 

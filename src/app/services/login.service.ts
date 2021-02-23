@@ -37,7 +37,7 @@ export class LoginService {
 
   private tipoUsuarios = [];
 
- // private usuarioAutenticado: boolean = false; 
+  private usuarioAutenticado: boolean = false; 
 
   mostrarMenuEmitter = new EventEmitter<boolean>();
   mostrarLoginEmitter = new EventEmitter<boolean>();
@@ -63,6 +63,7 @@ export class LoginService {
 
             this.mostrarMenuEmitter.emit(true);
             this.mostrarLoginEmitter.emit(false)
+            this.usuarioAutenticado = true;
             this.router.navigate(['/']);
                         
             localStorage.setItem("tId", response.token)
@@ -76,7 +77,7 @@ export class LoginService {
           }
           else
           {
-           // this.usuarioAutenticado = false;
+            this.usuarioAutenticado = false;
             this.mostrarMenuEmitter.emit(false);
             this.mostrarLoginEmitter.emit(true);
             

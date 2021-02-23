@@ -51,13 +51,12 @@ export class EmpresaReadComponent implements OnInit {
             this.empresa.push(element)
              });
           }
-          else
+          else if(grpId == TipoUsuario.Master)
           {
-            for (let index = 0; index < emp.length; index++) {
-              const element = emp[index];
-              if (element.empresaPai.toString() == empId)
-                this.empresa.push(element)
-            }
+            emp.forEach(master => {
+              if(master.empresaPai.toString()== empId) 
+              this.empresa.push(master)
+            });
 
           }
 
