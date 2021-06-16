@@ -1,9 +1,10 @@
+import { GrupoUsuario } from './../models/usuarios/GrupoUsuarios';
+import { ServiceAllService } from './service-all.service';
 import { Endpoint } from './../Negocio/Endpoint';
 import { TipoUsuario, TipoUsuarioSistema } from './../models/usuarios/enumUsuarios';
 import { ObjetoToken } from './../models/Token/ObjetoToken';
 import { Empresa } from './../models/empresa/ModelEmpresa';
 import { Acesso } from '../models/acessoModel';
-import { Usuario } from '../models/usuarios/modelLogin';
 import { UtilService } from './util.service';
 
 import { environment } from './../../environments/environment';
@@ -17,6 +18,7 @@ import { Router } from '@angular/router';
 import { Injectable, EventEmitter  } from '@angular/core';
 import { stringify } from 'querystring';
 import { Token } from '@angular/compiler/src/ml_parser/lexer';
+import { STRING_TYPE } from '@angular/compiler';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -57,7 +59,8 @@ export class LoginService {
     
     try {
       let response = await this.http.post<ObjetoToken>(this.environmentUrl + Endpoint.Token, acesso).toPromise()
-   
+     
+
        if (response != null && !response.bloqueado && !response.statusEmpresa )
           {
 
@@ -74,6 +77,18 @@ export class LoginService {
             localStorage.setItem("empId", response.empresaId);
             this.utilService.showMessage("Seja Bem Vindo!  " + acesso.login , false);
 
+            response.gruposUsuarios.forEach(element => {
+
+              if (element.nome == "Administrador")
+                  localStorage.setItem("grpUsGrpAdm", element.id.toString())
+              else if (element.nome == "Sistema")
+                  localStorage.setItem("grpUsGrpsis", element.id.toString())
+              else if (element.nome == "Usuario")
+                  localStorage.setItem("grpUsGrpUs", element.id.toString())
+              else if (element.nome == "Master")
+                  localStorage.setItem("grpUsGrpMs", element.id.toString())
+            });
+            
           }
           else
           {

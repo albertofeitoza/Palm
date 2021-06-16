@@ -46,7 +46,6 @@ export class UsuarioUpdateComponent implements OnInit {
                                    : this.usuario.grupoUsuarioId == "Usuario" ? TipoUsuario.Usuario.toString()
                                    : this.usuario.grupoUsuarioId == "Master" ? TipoUsuario.Master.toString()
                                    : null 
-
     
       this.usarioService.read(Endpoint.Usuario).subscribe(user => {
         user = user;
@@ -106,26 +105,15 @@ export class UsuarioUpdateComponent implements OnInit {
     this.usarioService.readById(id, Endpoint.Usuario).subscribe(usuario => {
       this.usuario = usuario;
 
-
-
-
       let tipousuario = usuario.grupoUsuarioId;
       this.usuario.grupoUsuarioId = this.usuario.grupoUsuarioId == TipoUsuario.Administrador.toString() ? "Administrador"
                                    :this.usuario.grupoUsuarioId == TipoUsuario.Sistema.toString()  ? "Sistema"
                                    : this.usuario.grupoUsuarioId == TipoUsuario.Usuario.toString()  ? "Usuario" 
                                    : this.usuario.grupoUsuarioId == TipoUsuario.Master.toString()  ? "Master" 
                                    : null 
-                                         
-     
-     
-     
-     
      
      this.carregarComboTipoUsuario(this.usuario.grupoUsuarioId, tipousuario); 
-      
-                   
     });
-    
   }
 
   carregarComboTipoUsuario(usuario : string, tipousuario : string) : void  {
@@ -154,11 +142,6 @@ export class UsuarioUpdateComponent implements OnInit {
                   this.comboTipousuario.push(tipo);
             
             }
-
-
       }
-    
-          
   }
-
 }

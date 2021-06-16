@@ -1,3 +1,4 @@
+import { GrupoUsuario } from './../usuarios/GrupoUsuarios';
 export interface ObjetoToken{
 
     id : string
@@ -6,4 +7,5 @@ export interface ObjetoToken{
     token : string
     bloqueado : string
     statusEmpresa : boolean
+    gruposUsuarios : Array<GrupoUsuario>
 }

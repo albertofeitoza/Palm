@@ -1,12 +1,14 @@
 export enum Aplicacao{
   Agenda = 'Agenda',
+  Cartões = 'Cartões',
   Vendas = 'Vendas',
-  Cartões = 'Cartões'
+  Octoplex = 'Octoplex'
+  
 }
 
 export const TipoAplicacao = new Map<string, string>([
   ['Agenda', 'Agenda'],
-  ['FrenteCaixa', 'FrenteCaixa'],
   ['Cartões', 'Cartões'],
-
+  ['FrenteCaixa', 'FrenteCaixa'],
+  ['Octoplex', 'Octoplex'],
 ])

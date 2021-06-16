@@ -109,7 +109,12 @@ export class UsuarioReadComponent implements OnInit {
                     {
                       empresaID = emp.id;
                       usr.empresaId = emp.razaoSocial;
-                      usr.grupoUsuarioId = usr.grupoUsuarioId == "1" ? "Administrador" : usr.grupoUsuarioId == "2" ? "Sistema" : usr.grupoUsuarioId == "3" ? "Usuario" : usr.grupoUsuarioId == "4" ? "Master" : usr.grupoUsuarioId;
+                      usr.grupoUsuarioId = usr.grupoUsuarioId == localStorage.getItem("grpUsGrpAdm") ? "Administrador"
+                                         : usr.grupoUsuarioId == localStorage.getItem("grpUsGrpsis") ? "Sistema" 
+                                         : usr.grupoUsuarioId == localStorage.getItem("grpUsGrpUs") ? "Usuario" 
+                                         : usr.grupoUsuarioId == localStorage.getItem("grpUsGrpMs") ? "Master" 
+                                         : usr.grupoUsuarioId;
+
                       idEmpresa = emp.id;
                       IdEmpresaPai = emp.empresaPai;
                       

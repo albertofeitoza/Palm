@@ -3,5 +3,6 @@ export enum Endpoint {
     GrupoUsuario = '/GrupoUsuario',
     Produto = '/Produto',
     Usuario = '/Usuario',
+    Agenda = '/Agenda',
     Token = '/Token'
 }

@@ -1,3 +1,4 @@
+import { UtilService } from './../../services/util.service';
 import { TipoUsuario } from './../../models/usuarios/enumUsuarios';
 import { Endpoint } from './../../Negocio/Endpoint';
 import { ServiceAllService } from './../../services/service-all.service';
@@ -17,21 +18,24 @@ produtos : Product[];
 
 
   constructor(private serviceProdutos : ServiceAllService<Product>,
-              private headerService : HeaderService) 
+              private headerService : HeaderService,
+              private utilService : UtilService
+              ) 
               {
-                this.headerService.headerData = {
-                  title : 'Início',
-                  icon : 'home',
-                  routeUrl : ''
-                }
+               // this.headerService.headerData = {
+               //  title : 'Início',
+              //    icon : 'home',
+              //    routeUrl : ''
+               // }
               }
 
   ngOnInit(): void {
-    this.buscarComponentes();
+    this.ObterComponentes();
+    this.utilService.AtualizarMenu("Início","home",'');
   }
   
   
-  buscarComponentes(){
+  ObterComponentes(){
      
     let empId = localStorage.getItem("empId");
     let grpId = Number(localStorage.getItem("grpUs"));
@@ -40,7 +44,6 @@ produtos : Product[];
       prod = prod;
 
       this.produtos = new Array();
-
         prod.forEach(element => {
           if (empId == element.empresaId)
               this.produtos.push(element)

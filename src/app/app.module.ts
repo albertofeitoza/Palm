@@ -40,8 +40,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatDialogModule} from '@angular/material/dialog';
 import {FlexLayoutModule} from '@angular/flex-layout';
-
-
+import {MatIconModule} from '@angular/material/icon';
 
 import { ProductReadComponent } from './components/product/product-read/product-read.component';
 import { ProductReadTableprodutosComponent } from './components/product/product-read-tableprodutos/product-read-tableprodutos.component';
@@ -67,8 +66,11 @@ import { EmpresaCreateComponent } from './components/empresa/empresa-create/empr
 import { EmpresaUpdateComponent } from './components/empresa/empresa-update/empresa-update.component';
 import { EmpresaDeleteComponent } from './components/empresa/empresa-delete/empresa-delete.component';
 import { EmpresaReadComponent } from './components/empresa/empresa-read/empresa-read.component';
-import { AgendaComponent } from './Aplicacoes/agenda/agenda.component';
-
+import { AgendaUpdateComponent } from './Aplicacoes/agenda/agenda-update/agenda-update.component';
+import { AgendaDeleteComponent } from './Aplicacoes/agenda/agenda-delete/agenda-delete.component';
+import { AgendaCreateComponent } from './Aplicacoes/agenda/agenda-create/agenda-create.component';
+import { AgendaReadComponent } from './Aplicacoes/agenda/agenda-read/agenda-read.component';
+import { HomeAgendaComponent } from './Aplicacoes/agenda/home-agenda/home-agenda.component';
 
 
 @NgModule({
@@ -102,12 +104,19 @@ import { AgendaComponent } from './Aplicacoes/agenda/agenda.component';
     EmpresaUpdateComponent,
     EmpresaDeleteComponent,
     EmpresaReadComponent,
-    AgendaComponent,
+    AgendaUpdateComponent,
+    AgendaDeleteComponent,
+    AgendaCreateComponent,
+    AgendaReadComponent,
+    HomeAgendaComponent,
+
+
    
     
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatToolbarModule,
@@ -117,7 +126,6 @@ import { AgendaComponent } from './Aplicacoes/agenda/agenda.component';
     MatButtonModule,
     MatSnackBarModule,
     HttpClientModule,
-    FormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
@@ -130,8 +138,7 @@ import { AgendaComponent } from './Aplicacoes/agenda/agenda.component';
     MatCheckboxModule,
     MatDialogModule,
     FlexLayoutModule,
-
-
+    MatIconModule,
   ],
   providers: 
   [

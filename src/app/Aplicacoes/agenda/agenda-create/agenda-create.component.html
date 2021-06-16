@@ -1,0 +1,96 @@
+<h1 class="titulo">Cadastro de Agenda </h1>
+        <form class="form-agenda">
+            <table class="campoText" cellspacing="0">
+                <tr>
+                    <td>
+                        <mat-form-field class="campoText">
+                            <mat-label>Nome da Agenda</mat-label>
+                            <input matInput placeholder="Nome da Agenda"
+                            [(ngModel)]="agenda.nomeAgenda" name="nomeAgenda">
+                        </mat-form-field>
+                    </td>
+                    
+                    <td>
+                        <mat-form-field class="campoText">
+                            <input matInput placeholder="Unidade">
+                            <mat-select [(value)]="agenda.empresaid" placeholder="Unidade" >
+                                <mat-option *ngFor="let dadosEmpresa of empresa" [value]="dadosEmpresa.id">
+                                {{dadosEmpresa.nomeFantasia}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        
+                    </td>
+                    <td>
+                        <mat-form-field class="campoText">
+                            <mat-label>Sala</mat-label>
+                            <input matInput placeholder="Sala"
+                            [(ngModel)]="agenda.salaid" name="Sala">
+                        </mat-form-field>
+                    </td>
+
+                </tr>
+            </table>
+            <p>
+            <table class="campoText" cellspacing="0">
+                <tr>
+                    <td>
+                        <mat-form-field class="campoText">
+                            <mat-label>Profissional</mat-label>
+                            <input matInput placeholder="Profissional"
+                            [(ngModel)]="agenda.profissionalid" name="profissionalid">
+                        </mat-form-field>
+                    </td>
+
+                    <td>
+                        <mat-form-field class="campoText">
+                            <mat-label>Grupo Agenda</mat-label>
+                            <input matInput placeholder="Grupo Agenda"
+                            [(ngModel)]="agenda.grupoAgendaid" name="grupoAgendaid">
+                        </mat-form-field>
+                    </td>
+                    
+                </tr>
+                
+            </table>
+            <p>
+            <table class="campoText" cellspacing="0">
+                <tr>
+                    <td>
+                        <mat-form-field class="campoText">
+                            <mat-label>Período Inicial</mat-label>
+                                <input matInput placeholder="Periodoinicial"
+                                [(ngModel)]="agenda.vigenciaInico" name="vigenciaInico">
+                            </mat-form-field>
+                    </td>
+                        
+                    <td>
+                        <mat-form-field class="campoText">
+                            <mat-label>Período Final</mat-label>
+                            <input matInput placeholder="Periodofinal"
+                            [(ngModel)]="agenda.vigenciaFim" name="vigenciaInico">
+                        </mat-form-field>
+                    </td>
+                </tr>
+                    
+            </table>
+
+          </form> 
+
+          <div>
+            <button mat-raised-button (click)="createAgenda()" color="primary" > 
+                Salvar
+            </button>
+  
+            <button mat-raised-button (click)="cancel()" color="primary" > 
+                voltar
+            </button>
+        </div>
+
+
+
+        
+
+
+
+  

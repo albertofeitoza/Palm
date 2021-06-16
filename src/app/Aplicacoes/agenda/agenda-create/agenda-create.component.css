@@ -1,0 +1,35 @@
+.titulo{
+  padding-top: 50px;
+  padding-left: 20px;
+  text-align: left;
+}
+
+.form-agenda {
+  min-width: 150px;
+  max-width: 400px;
+  width: 100%;
+  padding-left: 20px;
+  padding-top: 20px;
+}
+
+.campoText {
+  width: 70%;
+}
+.int {
+  width: 10%;
+  border: steelblue;
+}
+
+td {
+  padding-right: 8px;
+}
+
+button{
+    
+    margin-left: 20px;
+    
+    
+}
+.btclick{
+  margin-left: 0px;
+}

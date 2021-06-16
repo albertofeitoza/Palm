@@ -1,3 +1,9 @@
+import { HomeAgendaComponent } from './Aplicacoes/agenda/home-agenda/home-agenda.component';
+import { AgendaReadComponent } from './Aplicacoes/agenda/agenda-read/agenda-read.component';
+import { AgendaDeleteComponent } from './Aplicacoes/agenda/agenda-delete/agenda-delete.component';
+import { AgendaUpdateComponent } from './Aplicacoes/agenda/agenda-update/agenda-update.component';
+import { AgendaCreateComponent } from './Aplicacoes/agenda/agenda-create/agenda-create.component';
+
 import { Aplicacao } from './Negocio/Aplicacao';
 import { EmpresaDeleteComponent } from './components/empresa/empresa-delete/empresa-delete.component';
 import { EmpresaUpdateComponent } from './components/empresa/empresa-update/empresa-update.component';
@@ -26,110 +32,43 @@ import { ChamadoUpdateComponent } from './components/chamados/chamado-update/cha
 import { ChamadoDeleteComponent } from './components/chamados/chamado-delete/chamado-delete.component';
 
 //Rotas de componentes Negócio
-import { AgendaComponent } from './Aplicacoes/agenda/agenda.component';
-
-
-
 
 const routes: Routes = [
-  {
-    path : "",
-    component:HomeComponent
-  },
-  {
-    path: "login",
-    component: LoginComponent,
-  },
-  {
-    path: "products",
-    component: ProductCrudComponent
-  },
-  {
-    path: "products/create",
-    component : ProductCreateComponent
-  },
-  {
-    path: "products/update/:id",
-    component : ProductUpdateComponent
-  },
-  {
-    path: "products/delete/:id",
-    component : ProductDeleteComponent
-  },
-  {
-    path: "usuarios",
-    component : UsuarioCrudComponent
-  },
-  {
-    path: "usuarios/create",
-    component : UsuarioCreateComponent
-  },
-  {
-    path: "usuarios/update/:id",
-    component : UsuarioUpdateComponent
-  },
-  {
-    path: "usuarios/delete/:id",
-    component : UsuarioDeleteComponent
-  },
-  {
-    path: "chamados",
-    component : ChamadoCrudComponent
-  },
-  {
-    path: "chamados/create",
-    component : ChamadoCreateComponent
-  },
-  {
-    path: "chamados/update/:id",
-    component : ChamadoUpdateComponent
-  },
-  {
-    path: "chamados/delete/:id",
-    component : ChamadoDeleteComponent
-  },
+  {path : "", component:HomeComponent },
+  {path: "login", component: LoginComponent },
+  //Rotas de Produtos
+  {path: "products", component: ProductCrudComponent },
+  {path: "products/create", component : ProductCreateComponent },
+  {path: "products/update/:id", component : ProductUpdateComponent },
+  {path: "products/delete/:id", component : ProductDeleteComponent },
+
+  //Rotas de usuarios
+  {path: "usuarios", component : UsuarioCrudComponent },
+  {path: "usuarios/create", component : UsuarioCreateComponent },
+  {path: "usuarios/update/:id", component : UsuarioUpdateComponent },
+  {path: "usuarios/delete/:id", component : UsuarioDeleteComponent },
+
+  //Rotas de chamados
+  {path: "chamados", component : ChamadoCrudComponent },
+  {path: "chamados/create", component : ChamadoCreateComponent },
+  {path: "chamados/update/:id", component : ChamadoUpdateComponent },
+  {path: "chamados/delete/:id", component : ChamadoDeleteComponent },
 
   //Rotas de empresa
-  {
-    path: "empresa",
-    component : EmpresaComponent
-  },
-  {
-    path: "empresa/create",
-    component : EmpresaCreateComponent
-  },
-  {
-    path: "empresa/update/:id",
-    component : EmpresaUpdateComponent
-  },
-  {
-    path: "empresa/delete/:id",
-    component : EmpresaDeleteComponent
-  },
+  {path: "empresa", component : EmpresaComponent },
+  {path: "empresa/create", component : EmpresaCreateComponent },
+  {path: "empresa/update/:id", component : EmpresaUpdateComponent },
+  {path: "empresa/delete/:id", component : EmpresaDeleteComponent },
 
+  //Rotas das APlicações
 
+  {path: Aplicacao.Agenda , component : AgendaReadComponent},
+  {path: Aplicacao.Agenda + "/AgendaHome", component : HomeAgendaComponent },
+  {path: Aplicacao.Agenda + "/AgendaCreate", component : AgendaCreateComponent},
+  {path: Aplicacao.Agenda + "/AgendaUpdate/:id", component : AgendaUpdateComponent},
+  {path: Aplicacao.Agenda + "/AgendaDelete/:id", component : AgendaDeleteComponent}
+]
 
-//Rotas da Agenda
-{
-  path: Aplicacao.Agenda,
-  component : AgendaComponent
-},
-{
-  path: "empresa/create",
-  component : EmpresaCreateComponent
-},
-{
-  path: "empresa/update/:id",
-  component : EmpresaUpdateComponent
-},
-{
-  path: "empresa/delete/:id",
-  component : EmpresaDeleteComponent
-},
-
-
-  
-];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

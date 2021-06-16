@@ -16,27 +16,19 @@ import { Component, OnInit } from '@angular/core';
 export class LoginComponent implements OnInit {
 
 acesso : Acesso = new Acesso();
-comboEmpresa : Empresa[];
+
 
 
 constructor(private router :Router,
              private authservice : LoginService,
-             private ServiceEmpresa : ServiceAllService<Empresa>,
-            
              ) { }
 
   ngOnInit(): void {
-   this.carregaComboEmpresa();
+  
   }
   
   logarSistema(){
     this.authservice.logarSistema(this.acesso);
   }
   
-  carregaComboEmpresa(){
-    this.ServiceEmpresa.read(Endpoint.Empresa).subscribe(emp =>{
-    this.comboEmpresa = emp;
-    });
-  }
-
 }

@@ -27,7 +27,7 @@ export class ServiceAllService <T>{
               }
 
 
-    //Criar Cadasto
+    //Criar Cadastro
     create(T : T, tipo: string) : Observable <T>{
       return this.http.post<T>(this.environmentUrl + tipo , T, this.loginservice.header()).pipe(
         map(obj => obj),
