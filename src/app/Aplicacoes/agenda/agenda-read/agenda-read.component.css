@@ -1,11 +1,54 @@
-form {
-
-    display: flex;
-    flex-direction: column;
+table{
+    width: 100%;
 }
 
-button{
-    margin : 20px 15px 0 0;
-    
-    
+.imagem{
+    max-width:50px;
+    max-height:50px;
+    width: auto;
+    height: auto;
+    border-radius: 50%;
+    border-top-left-radius: 50% 50%;
+    border-top-right-radius: 50% 50%;
+    border-bottom-right-radius: 50% 50%;
+    border-bottom-left-radius: 50% 50%;
 }
+
+
+.edit {
+    margin-right: 15px;
+}
+
+.edit > i{
+    color: #d9cd26;
+}
+.delete > i{
+    color: #e35e6b;
+}
+
+.mat-tab-group {
+    margin-bottom: 48px;
+  }
+
+
+
+  
+
+.search {
+    font-size: 20px;
+    width: 150px;
+}
+
+.material-icons {
+    font-size: 20px;
+    margin: 15px;
+}
+
+
+
+.footer .material-icons {
+
+    margin: 15px;
+    margin-left: 10px;
+        
+    }
