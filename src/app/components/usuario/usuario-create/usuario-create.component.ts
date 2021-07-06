@@ -18,8 +18,7 @@ import { Empresa } from './../../../models/empresa/ModelEmpresa';
   styleUrls: ['./usuario-create.component.css']
 })
 export class UsuarioCreateComponent implements OnInit {
-  
-//empresa : Observable<Empresa[]>;
+
 empresa : Empresa[];
 
 dadosEmpresa : Empresa;

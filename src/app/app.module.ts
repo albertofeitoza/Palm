@@ -41,6 +41,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatDialogModule} from '@angular/material/dialog';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MatIconModule} from '@angular/material/icon';
+import {MatDividerModule} from '@angular/material/divider';
 
 import { ProductReadComponent } from './components/product/product-read/product-read.component';
 import { ProductReadTableprodutosComponent } from './components/product/product-read-tableprodutos/product-read-tableprodutos.component';
@@ -139,6 +140,7 @@ import { HomeAgendaComponent } from './Aplicacoes/agenda/home-agenda/home-agenda
     MatDialogModule,
     FlexLayoutModule,
     MatIconModule,
+    MatDividerModule,
   ],
   providers: 
   [

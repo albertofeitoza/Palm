@@ -1,96 +1,91 @@
-<h1 class="titulo">Cadastro de Agenda </h1>
-        <form class="form-agenda">
-            <table class="campoText" cellspacing="0">
-                <tr>
-                    <td>
-                        <mat-form-field class="campoText">
-                            <mat-label>Nome da Agenda</mat-label>
-                            <input matInput placeholder="Nome da Agenda"
-                            [(ngModel)]="agenda.nomeAgenda" name="nomeAgenda">
+        <div class="container">
+
+            <mat-card>
+                <mat-card-title>Nova Agenda</mat-card-title>
+                    <form>
+                        <mat-form-field>
+                            <input matInput placeholder="Nome Agenda" 
+                             [(ngModel)]="agenda.nomeAgenda" name="nomeAgenda">
                         </mat-form-field>
-                    </td>
-                    
-                    <td>
-                        <mat-form-field class="campoText">
-                            <input matInput placeholder="Unidade">
-                            <mat-select [(value)]="agenda.empresaid" placeholder="Unidade" >
-                                <mat-option *ngFor="let dadosEmpresa of empresa" [value]="dadosEmpresa.id">
-                                {{dadosEmpresa.nomeFantasia}}
+
+                        <mat-form-field>
+                            <input matInput placeholder="Profissional">
+                            <p></p>
+                            <mat-select [(value)]="agenda.Profissionalid" placeholder="Profissional" >
+                                <mat-option *ngFor="let tipoProf of comboProfissional " [value]="tipoProf.id">
+                                    {{tipoProf.nomeProfissional}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
-                        
-                    </td>
-                    <td>
-                        <mat-form-field class="campoText">
-                            <mat-label>Sala</mat-label>
-                            <input matInput placeholder="Sala"
-                            [(ngModel)]="agenda.salaid" name="Sala">
-                        </mat-form-field>
-                    </td>
 
-                </tr>
-            </table>
-            <p>
-            <table class="campoText" cellspacing="0">
-                <tr>
-                    <td>
-                        <mat-form-field class="campoText">
-                            <mat-label>Profissional</mat-label>
-                            <input matInput placeholder="Profissional"
-                            [(ngModel)]="agenda.profissionalid" name="profissionalid">
+                        <mat-form-field>
+                            <input matInput placeholder="Unidade Atendimento">
+                            <p></p>
+                            <mat-select [(value)]="agenda.Unidadeid" placeholder="Unidade Atendimento" >
+                                <mat-option *ngFor="let tipounidade of comboUnidade " [value]="tipounidade.id">
+                                    {{tipounidade.nomeUnidade}}
+                                </mat-option>
+                            </mat-select>
                         </mat-form-field>
-                    </td>
 
-                    <td>
-                        <mat-form-field class="campoText">
-                            <mat-label>Grupo Agenda</mat-label>
-                            <input matInput placeholder="Grupo Agenda"
-                            [(ngModel)]="agenda.grupoAgendaid" name="grupoAgendaid">
+                        <mat-form-field>
+                            <input matInput placeholder="Sala Atendimento">
+                            <p></p>
+                            <mat-select [(value)]="agenda.Salaid" placeholder="Sala Atendimento" >
+                                <mat-option *ngFor="let tipoSala of comboSala " [value]="tipoSala.id">
+                                    {{tipoSala.nomeSala}}
+                                </mat-option>
+                            </mat-select>
                         </mat-form-field>
-                    </td>
+
+
+                        <mat-form-field>
+                            <input matInput placeholder="Substituição">
+                                <input name="substituicao" [(ngModel)]="agenda.substituicao" [checked]="agenda.substituicao" type="checkbox">
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <input matInput placeholder="Grupo Agenda">
+                            <p></p>
+                            <mat-select [(value)]="agenda.GrupoAgendaid" placeholder="Grupo Agenda" >
+                                <mat-option *ngFor="let tipoGrupo of comboTipoGrupoAgenda " [value]="tipoGrupo.id">
+                                    {{tipoGrupo.nomeGrupoAgenda}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <input matInput placeholder="Vigência Início"
+                             [(ngModel)]="agenda.vigenciaInico" name="vigenciaInico" type="datetime-local">
+                        </mat-form-field>
+
+            
+                        <mat-form-field>
+                            <input matInput placeholder="Vigência Fim" 
+                             [(ngModel)]="agenda.vigenciaFim" name="vigenciaFim" type="datetime-local">
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <input matInput placeholder="Considera Feriado">
+                                <input name="considerarFeriado" [(ngModel)]="agenda.considerarFeriado" [checked]="agenda.considerarFeriado" type="checkbox">
+                        </mat-form-field>
+
+
+                        <mat-form-field>
+                            <input matInput placeholder="Ativo">
+                                <input name="ativo" [(ngModel)]="agenda.ativo" [checked]="agenda.ativo" type="checkbox">
+                        </mat-form-field>
+
+
+                    </form>
+            
+                    <button *ngIf="agenda.nomeAgenda && agenda.vigenciaInico && agenda.vigenciaFim"  mat-raised-button (click)="createAgenda()" color="primary" > 
+                        Salvar
+                    </button>
                     
-                </tr>
-                
-            </table>
-            <p>
-            <table class="campoText" cellspacing="0">
-                <tr>
-                    <td>
-                        <mat-form-field class="campoText">
-                            <mat-label>Período Inicial</mat-label>
-                                <input matInput placeholder="Periodoinicial"
-                                [(ngModel)]="agenda.vigenciaInico" name="vigenciaInico">
-                            </mat-form-field>
-                    </td>
-                        
-                    <td>
-                        <mat-form-field class="campoText">
-                            <mat-label>Período Final</mat-label>
-                            <input matInput placeholder="Periodofinal"
-                            [(ngModel)]="agenda.vigenciaFim" name="vigenciaInico">
-                        </mat-form-field>
-                    </td>
-                </tr>
-                    
-            </table>
+                    <button mat-raised-button (click)="cancel()" color="primary" > 
+                        Cancelar
+                    </button>
+            </mat-card>
 
-          </form> 
-
-          <div>
-            <button mat-raised-button (click)="createAgenda()" color="primary" > 
-                Salvar
-            </button>
-  
-            <button mat-raised-button (click)="cancel()" color="primary" > 
-                voltar
-            </button>
         </div>
-
-
-
-        
-
-
-
-  

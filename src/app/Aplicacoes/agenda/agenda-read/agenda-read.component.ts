@@ -25,21 +25,25 @@ export class AgendaReadComponent implements OnInit {
              ) { }
 
   ngOnInit(): void {
-    this.UtilService.AtualizarMenu(Aplicacao.Agenda,'app_registration','')
+    this.UtilService.AtualizarMenu(Aplicacao.Agenda,'app_registration','');
+    this.buscarAgenda();
   }
 
  
   buscarAgenda(){
     
-    this._repAgenda.read(Endpoint.Agenda).subscribe(a => {
-      this.agenda = a;
+    this._repAgenda.read(Endpoint.Agenda).subscribe(ag => {
+      ag = ag;
+      
+      this.agenda = new Array()
+      this.agenda = ag;
+
     });
 
-
   }
 
-
-  navigateToAgendaCreate(){
-    this.route.navigate(['agenda/create'])
+  LimparAgenda(){
+    this.agenda = new Array();
   }
+
 }

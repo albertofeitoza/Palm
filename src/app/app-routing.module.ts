@@ -31,6 +31,7 @@ import { ChamadoCreateComponent } from './components/chamados/chamado-create/cha
 import { ChamadoUpdateComponent } from './components/chamados/chamado-update/chamado-update.component';
 import { ChamadoDeleteComponent } from './components/chamados/chamado-delete/chamado-delete.component';
 
+
 //Rotas de componentes Negócio
 
 const routes: Routes = [
@@ -61,12 +62,18 @@ const routes: Routes = [
   {path: "empresa/delete/:id", component : EmpresaDeleteComponent },
 
   //Rotas das APlicações
-
-  {path: Aplicacao.Agenda , component : AgendaReadComponent},
-  {path: Aplicacao.Agenda + "/AgendaHome", component : HomeAgendaComponent },
-  {path: Aplicacao.Agenda + "/AgendaCreate", component : AgendaCreateComponent},
-  {path: Aplicacao.Agenda + "/AgendaUpdate/:id", component : AgendaUpdateComponent},
-  {path: Aplicacao.Agenda + "/AgendaDelete/:id", component : AgendaDeleteComponent}
+  //Agenda
+  {path: 'home-component' , component : HomeAgendaComponent},
+  {path: Aplicacao.Agenda , component : HomeAgendaComponent,
+    children:[
+      {path: '', redirectTo: Aplicacao.Agenda, pathMatch: 'full'},
+      {path: 'agenda-home', component : HomeAgendaComponent},
+      {path: 'agenda-create', component : AgendaCreateComponent},
+      {path: 'agenda-delete/:id', component : AgendaDeleteComponent },
+      {path: 'agenda-update/:id', component : AgendaUpdateComponent},
+    ]},
+  
+      
 ]
 
 

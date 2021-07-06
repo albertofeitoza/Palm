@@ -12,4 +12,5 @@ criadoPor : number
 bloqueado : boolean
 empresaId : string
 grupoUsuarioId : string
+profissional : boolean
 }

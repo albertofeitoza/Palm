@@ -52,6 +52,11 @@
                 </mat-select>
             </mat-form-field>
 
+            <mat-form-field>
+                <input matInput placeholder="Profissional">
+                    <input name="usuarioProfissional" [(ngModel)]="usuario.profissional" [checked]="usuario.profissional" type="checkbox">
+            </mat-form-field>
+
     </form>
             <button *ngIf="usuario.nome && usuario.login && usuario.senha && usuario.grupoUsuarioId && usuario.empresaId" mat-raised-button (click)="createUsuario()" color="primary" > 
                 Salvar

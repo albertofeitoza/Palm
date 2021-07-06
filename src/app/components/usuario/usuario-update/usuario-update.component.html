@@ -40,6 +40,12 @@
                 <input matInput placeholder="Bloqueado">
                     <input name="status" [(ngModel)]="usuario.bloqueado" [checked]="usuario.bloqueado" type="checkbox">
             </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Profissional">
+                    <input name="profissional" [(ngModel)]="usuario.profissional" [checked]="usuario.profissional" type="checkbox">
+            </mat-form-field>
+
       
         </form>
 
