@@ -10,7 +10,7 @@ bolResetaSenha : boolean
 dataTrocaSenha : Date
 criadoPor : number
 bloqueado : boolean
-empresaId : string
+empresaid : string
 grupoUsuarioId : string
 profissional : boolean
 }

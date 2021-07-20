@@ -45,7 +45,7 @@ produtos : Product[];
 
       this.produtos = new Array();
         prod.forEach(element => {
-          if (empId == element.empresaId)
+          if (empId == element.empresaid)
               this.produtos.push(element)
         });
     });

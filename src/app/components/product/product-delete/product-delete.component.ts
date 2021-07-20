@@ -19,7 +19,7 @@ export class ProductDeleteComponent implements OnInit {
     criadoPor : null,
     nome: null,
     valor : 0,
-    empresaId : null,
+    empresaid : null,
     bloqueado : null,
   }
 

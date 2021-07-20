@@ -34,7 +34,7 @@ export class AgendaCreateComponent implements OnInit {
     vigenciaInico: null,
     vigenciaFim: null,
     considerarFeriado: false,
-    ativo: false
+    bloqueado: false
   }
   
   comboProfissional  : Profissional[];

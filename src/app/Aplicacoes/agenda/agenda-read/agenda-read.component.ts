@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { Agenda } from 'src/app/models/Agenda/modelAgenda';
 import { ServiceAllService } from 'src/app/services/service-all.service';
 import { Endpoint } from 'src/app/Negocio/Endpoint';
+import { AgendaDto } from 'src/app/models/Agenda/modelRetornoAgenda';
 
 
 @Component({
@@ -15,13 +16,13 @@ import { Endpoint } from 'src/app/Negocio/Endpoint';
 })
 export class AgendaReadComponent implements OnInit {
 
-  Colunas = ['id','DtCriacao', 'nomeAgenda','empresaid','unidadeid','salaid','profissionalid',
-                      'substituicao','grupoAgendaid','vigenciaInico','vigenciaFim','considerarFeriado','ativo','action']  
-  agenda : Agenda[];
+  Colunas = ['id','DtCriacao', 'NomeAgenda','Funcionario','NomeEmpresa','NomeUnidade','NomeSala',
+                      'substituicao','GrupoAgenda','vigenciaInico','vigenciaFim','considerarFeriado','bloqueado','action']  
+  agenda : AgendaDto[];
 
   constructor(private UtilService : UtilService,
               private route : Router,
-              private _repAgenda : ServiceAllService<Agenda>
+              private _repAgenda : ServiceAllService<AgendaDto>
              ) { }
 
   ngOnInit(): void {
@@ -33,9 +34,6 @@ export class AgendaReadComponent implements OnInit {
   buscarAgenda(){
     
     this._repAgenda.read(Endpoint.Agenda).subscribe(ag => {
-      ag = ag;
-      
-      this.agenda = new Array()
       this.agenda = ag;
 
     });

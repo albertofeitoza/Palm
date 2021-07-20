@@ -36,7 +36,7 @@ export class UsuarioReadComponent implements OnInit {
   usuario : Usuario[];
   userAutenticado : boolean = false; 
   
-  displayedColumns = ['id','nome','login','empresaId','grupoUsuarioId','bloqueado','action']  
+  displayedColumns = ['id','nome','login','empresaid','grupoUsuarioId','bloqueado','action']  
  
   constructor(
               private serviceEmpresa: ServiceAllService<Empresa>,
@@ -105,10 +105,10 @@ export class UsuarioReadComponent implements OnInit {
                   for (let index = 0; index <  responseEmpresa.length; index++) {
                     const emp =  responseEmpresa[index];
                     
-                    if(usr.empresaId == emp.id.toString().trim())
+                    if(usr.empresaid == emp.id.toString().trim())
                     {
                       empresaID = emp.id;
-                      usr.empresaId = emp.razaoSocial;
+                      usr.empresaid = emp.razaoSocial;
                       usr.grupoUsuarioId = usr.grupoUsuarioId == localStorage.getItem("grpUsGrpAdm") ? "Administrador"
                                          : usr.grupoUsuarioId == localStorage.getItem("grpUsGrpsis") ? "Sistema" 
                                          : usr.grupoUsuarioId == localStorage.getItem("grpUsGrpUs") ? "Usuario" 

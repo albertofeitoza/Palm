@@ -4,6 +4,6 @@ export interface Product {
     criadoPor : number
     nome: string
     valor : number
-    empresaId : string
+    empresaid : string
     bloqueado : boolean
 }

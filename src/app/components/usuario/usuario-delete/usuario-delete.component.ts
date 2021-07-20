@@ -36,7 +36,7 @@ carregaUsuario(){
     
     this.buscarEmpresa().subscribe(empresa =>{
       this.empresa = empresa;
-      this.usuario.empresaId = this.empresa.nomeFantasia;
+      this.usuario.empresaid = this.empresa.nomeFantasia;
      
     });
   })
@@ -54,6 +54,6 @@ carregaUsuario(){
   }
 
   buscarEmpresa(){
-    return this.empresaService.readById(this.usuario.empresaId, Endpoint.Empresa);
+    return this.empresaService.readById(this.usuario.empresaid, Endpoint.Empresa);
   }
 }

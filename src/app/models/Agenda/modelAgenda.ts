@@ -11,6 +11,6 @@ export interface Agenda {
     vigenciaInico: Date
     vigenciaFim: Date
     considerarFeriado: Boolean
-    ativo: Boolean
+    bloqueado: Boolean
 }
 

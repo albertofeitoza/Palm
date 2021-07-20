@@ -20,7 +20,7 @@ export class ProductReadComponent implements OnInit {
 
 products: Product[]
 
-displayedColumns = ['id','nome', 'valor','empresaId','bloqueado','action']  
+displayedColumns = ['id','nome', 'valor','empresaid','bloqueado','action']  
 
   constructor(private router : Router,
               private serviceProduto : ServiceAllService<Product>,
@@ -44,10 +44,10 @@ displayedColumns = ['id','nome', 'valor','empresaId','bloqueado','action']
 
         product.forEach(element => {
           
-            this.serviceEmpresa.readById(element.empresaId.toString(), Endpoint.Empresa).subscribe(e => {
+            this.serviceEmpresa.readById(element.empresaid.toString(), Endpoint.Empresa).subscribe(e => {
               e = e;
               if (e)
-                element.empresaId = e.razaoSocial;
+                element.empresaid = e.razaoSocial;
             })
             this.products.push(element)
         });

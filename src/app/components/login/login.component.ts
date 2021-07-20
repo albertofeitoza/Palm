@@ -27,8 +27,11 @@ constructor(private router :Router,
   
   }
   
-  logarSistema(){
-    this.authservice.logarSistema(this.acesso);
+  logarSistema(keyEvent : any){
+
+    if (keyEvent.which === 13 || keyEvent.which == 1)
+      this.authservice.logarSistema(this.acesso);
+
   }
   
 }

@@ -27,7 +27,7 @@ export class ProductCreateComponent implements OnInit {
     criadoPor : null,
     nome : null,
     valor : 0,
-    empresaId : null,
+    empresaid : null,
     bloqueado : false,
     }
 
@@ -52,7 +52,7 @@ export class ProductCreateComponent implements OnInit {
     this.ProdutoEmpresa.read(Endpoint.Produto).subscribe(p => {
       p = p;
 
-      let ativo = p.filter(x => x.nome == this.product.nome && x.empresaId == this.product.empresaId )
+      let ativo = p.filter(x => x.nome == this.product.nome && x.empresaid == this.product.empresaid )
       
       if (ativo.length == 0)
       {

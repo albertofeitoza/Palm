@@ -15,7 +15,7 @@
             <mat-form-field>
                 <input matInput placeholder="Empresa">
                 <p></p>
-                <mat-select [(value)]="product.empresaId" placeholder="EmpresaID" >
+                <mat-select [(value)]="product.empresaid" placeholder="EmpresaID" >
                     <mat-option *ngFor="let comboEmpresa of empresa" [value]="comboEmpresa.id">
                             {{comboEmpresa.nomeFantasia}}
                     </mat-option>

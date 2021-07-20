@@ -71,10 +71,10 @@ export class LoginService {
                         
             localStorage.setItem("tId", response.token)
             localStorage.setItem("usId", response.id)
-            localStorage.setItem("grpUs", response.grupoUsuarioId)
+            localStorage.setItem("grpUs", response.grupoUsuarioid)
            
             localStorage.setItem("stUs", response.bloqueado);
-            localStorage.setItem("empId", response.empresaId);
+            localStorage.setItem("empId", response.empresaid);
             this.utilService.showMessage("Seja Bem Vindo!  " + acesso.login , false);
 
             response.gruposUsuarios.forEach(element => {

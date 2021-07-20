@@ -2,8 +2,8 @@ import { GrupoUsuario } from './../usuarios/GrupoUsuarios';
 export interface ObjetoToken{
 
     id : string
-    empresaId : string
-    grupoUsuarioId : string
+    empresaid : string
+    grupoUsuarioid : string
     token : string
     bloqueado : string
     statusEmpresa : boolean
