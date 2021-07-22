@@ -2,7 +2,7 @@ export interface Profissional{
     id : number
     dtCriacao : Date
     nomeProfissional : string
-    empresaId : number
+    empresaid : number
     criadoPor : number
     bloqueado : boolean
 

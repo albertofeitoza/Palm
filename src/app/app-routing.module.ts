@@ -66,7 +66,7 @@ const routes: Routes = [
   {path: 'home-component' , component : HomeAgendaComponent},
   {path: Aplicacao.Agenda , component : HomeAgendaComponent,
     children:[
-      {path: '', redirectTo: Aplicacao.Agenda, pathMatch: 'full'},
+      {path: 'agendaHomeDefault', redirectTo: Aplicacao.Agenda, pathMatch: 'full'},
       {path: 'agenda-home', component : HomeAgendaComponent},
       {path: 'agenda-create', component : AgendaCreateComponent},
       {path: 'agenda-delete/:id', component : AgendaDeleteComponent },

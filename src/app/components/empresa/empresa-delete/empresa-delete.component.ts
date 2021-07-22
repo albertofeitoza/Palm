@@ -35,7 +35,7 @@ export class EmpresaDeleteComponent implements OnInit {
     
     this.serviceUsuario.read(Endpoint.Usuario).subscribe(usr => {
         usr = usr;
-        existeUsuario = usr.filter(x => x.empresaId == this.empresa.id.toString())
+        existeUsuario = usr.filter(x => x.empresaid == this.empresa.id.toString())
        
         if (existeUsuario.length > 0)
         {

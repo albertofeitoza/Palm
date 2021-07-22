@@ -50,7 +50,7 @@ export class UsuarioUpdateComponent implements OnInit {
       this.usarioService.read(Endpoint.Usuario).subscribe(user => {
         user = user;
                               
-        let ativo = user.filter(x => x.login.toLowerCase() == this.usuario.login.toLowerCase() && x.empresaId == this.usuario.empresaId && x.id == this.usuario.id);
+        let ativo = user.filter(x => x.login.toLowerCase() == this.usuario.login.toLowerCase() && x.empresaid == this.usuario.empresaid && x.id == this.usuario.id);
      
           if (ativo.length > 0 )
           {

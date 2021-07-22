@@ -31,7 +31,7 @@ export class AgendaCreateComponent implements OnInit {
     Salaid: null,
     substituicao: false,
     GrupoAgendaid: null,
-    vigenciaInico: null,
+    vigenciaInicio: null,
     vigenciaFim: null,
     considerarFeriado: false,
     bloqueado: false
@@ -98,7 +98,7 @@ export class AgendaCreateComponent implements OnInit {
     if (grpId == TipoUsuario.Administrador)
         this.comboProfissional = pro; 
     else if (grpId == TipoUsuario.Master)  
-        this.comboProfissional = pro.filter(x => x.empresaId.toString() == empId);
+        this.comboProfissional = pro.filter(x => x.empresaid.toString() == empId);
     });
 
   }
@@ -130,7 +130,7 @@ export class AgendaCreateComponent implements OnInit {
     if (grpId == TipoUsuario.Administrador)
       this.comboTipoGrupoAgenda = ga; 
     else if (grpId == TipoUsuario.Master)  
-      this.comboTipoGrupoAgenda = ga.filter(x => x.EmpresaId .toString() == empId);
+      this.comboTipoGrupoAgenda = ga.filter(x => x.empresaid .toString() == empId);
 
     });
   }

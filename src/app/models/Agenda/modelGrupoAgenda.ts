@@ -4,7 +4,7 @@ export interface GrupoAgenda {
     dtCriacao : Date
     nomeGrupoAgenda : string
     Agendaid : number
-    EmpresaId : number
+    empresaid : number
     criadoPor : number
     bloqueado : boolean
 }

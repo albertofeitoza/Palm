@@ -17,7 +17,7 @@ import { AgendaDto } from 'src/app/models/Agenda/modelRetornoAgenda';
 export class AgendaReadComponent implements OnInit {
 
   Colunas = ['id','DtCriacao', 'NomeAgenda','Funcionario','NomeEmpresa','NomeUnidade','NomeSala',
-                      'substituicao','GrupoAgenda','vigenciaInico','vigenciaFim','considerarFeriado','bloqueado','action']  
+                      'substituicao','GrupoAgenda','vigenciaInicio','vigenciaFim','considerarFeriado','bloqueado','action']  
   agenda : AgendaDto[];
 
   constructor(private UtilService : UtilService,

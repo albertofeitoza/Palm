@@ -59,7 +59,7 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
     this.serviceUsuario.read(Endpoint.Usuario).subscribe(user => {
       user = user;
 
-      let ativo = user.filter(x => x.login.toLowerCase() == this.usuario.login.toLowerCase() && x.empresaId == this.usuario.empresaId);
+      let ativo = user.filter(x => x.login.toLowerCase() == this.usuario.login.toLowerCase() && x.empresaid == this.usuario.empresaid);
            
             if (ativo.length > 0)
             {
@@ -68,7 +68,7 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
               user =  new Array();
             }else{
            
-              this.serviceEmpresa.readById(this.usuario.empresaId, Endpoint.Empresa).subscribe(emp => {
+              this.serviceEmpresa.readById(this.usuario.empresaid, Endpoint.Empresa).subscribe(emp => {
                 emp = emp;
                 if (!emp.bloqueado){
                   this.serviceUsuario.create(this.usuario, Endpoint.Usuario).subscribe(() => {

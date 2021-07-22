@@ -1,15 +1,15 @@
 export interface AgendaDto {
     id ?: null
     DtCriacao: Date 
-    NomeAgenda: string
-    Funcionario: string
-    NomeEmpresa: string
-    NomeUnidade: string
-    NomeSala: string
+    nomeAgenda: string
+    nomeProfissional: string
+    nomeFantasia: string
+    nomeUnidade: string
+    nomeSala: string
     substituicao: string
-    GrupoAgenda: string
-    vigenciaInico: Date
-    vigenciaFim: Date
+    nomeGrupoAgenda: string
+    vigenciaInicio: string
+    vigenciaFim: string
     considerarFeriado: string
     bloqueado: string
 }

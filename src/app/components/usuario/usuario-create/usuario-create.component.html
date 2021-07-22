@@ -45,7 +45,7 @@
             <mat-form-field>
                 <input matInput placeholder="Empresa">
                 <p></p>
-                <mat-select [(value)]="usuario.empresaId" placeholder="EmpresaID" >
+                <mat-select [(value)]="usuario.empresaid" placeholder="EmpresaID" >
                     <mat-option *ngFor="let dadosEmpresa of empresa" [value]="dadosEmpresa.id">
                     {{dadosEmpresa.nomeFantasia}}
                     </mat-option>
@@ -58,7 +58,7 @@
             </mat-form-field>
 
     </form>
-            <button *ngIf="usuario.nome && usuario.login && usuario.senha && usuario.grupoUsuarioId && usuario.empresaId" mat-raised-button (click)="createUsuario()" color="primary" > 
+            <button *ngIf="usuario.nome && usuario.login && usuario.senha && usuario.grupoUsuarioId && usuario.empresaid" mat-raised-button (click)="createUsuario()" color="primary" > 
                 Salvar
             </button>
   

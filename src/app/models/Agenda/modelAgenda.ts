@@ -8,7 +8,7 @@ export interface Agenda {
     Salaid: number
     substituicao: Boolean
     GrupoAgendaid: number
-    vigenciaInico: Date
+    vigenciaInicio: Date
     vigenciaFim: Date
     considerarFeriado: Boolean
     bloqueado: Boolean

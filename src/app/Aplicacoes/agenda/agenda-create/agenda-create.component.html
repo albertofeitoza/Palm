@@ -56,7 +56,7 @@
 
                         <mat-form-field>
                             <input matInput placeholder="Vigência Início"
-                             [(ngModel)]="agenda.vigenciaInico" name="vigenciaInico" type="datetime-local">
+                             [(ngModel)]="agenda.vigenciaInicio" name="vigenciaInicio" type="datetime-local" teste >
                         </mat-form-field>
 
             
@@ -79,7 +79,7 @@
 
                     </form>
             
-                    <button *ngIf="agenda.nomeAgenda && agenda.vigenciaInico && agenda.vigenciaFim"  mat-raised-button (click)="createAgenda()" color="primary" > 
+                    <button *ngIf="agenda.nomeAgenda && agenda.vigenciaInicio && agenda.vigenciaFim"  mat-raised-button (click)="createAgenda()" color="primary" > 
                         Salvar
                     </button>
                     
