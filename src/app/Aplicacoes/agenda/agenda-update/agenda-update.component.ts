@@ -4,9 +4,9 @@ import { endWith, filter } from 'rxjs/operators';
 import { Agenda } from 'src/app/models/Agenda/modelAgenda';
 import { GrupoAgenda } from 'src/app/models/Agenda/modelGrupoAgenda';
 import { Empresa } from 'src/app/models/empresa/ModelEmpresa';
-import { Profissional } from 'src/app/models/Profissional/modelProfissional';
 import { Sala } from 'src/app/models/Sala/SalaModel';
 import { Unidade } from 'src/app/models/Unidade/unidadeModel';
+import { Usuario } from 'src/app/models/usuarios/modelLogin';
 import { Endpoint } from 'src/app/Negocio/Endpoint';
 import { ServiceAllService } from 'src/app/services/service-all.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -23,15 +23,15 @@ export class AgendaUpdateComponent implements OnInit {
             private utilService : UtilService,
             private route: ActivatedRoute,
             private agendaService : ServiceAllService<Agenda>,
-            private agendaProfissional : ServiceAllService<Profissional>,
             private serviceUnidade : ServiceAllService<Unidade>,
             private serviceSala : ServiceAllService<Sala>,
             private serviceGrupoAGenda : ServiceAllService<GrupoAgenda>,
-            private serviceEmpresa : ServiceAllService<Empresa>
+            private serviceEmpresa : ServiceAllService<Empresa>,
+            private serviceUsuario : ServiceAllService<Usuario>
 
             ) { }
 
-  comboProfissional  : Profissional[];
+  comboProfissional  : Usuario[];
   comboUnidade : Unidade[];
   comboSala : Sala[];
   comboTipoGrupoAgenda : GrupoAgenda[];
@@ -87,8 +87,8 @@ export class AgendaUpdateComponent implements OnInit {
 
         let empId = Number(localStorage.getItem("empId"))
 
-        this.agendaProfissional.read(Endpoint.Profissional).subscribe(pr => {
-          this.comboProfissional = pr.filter(x => x.empresaid == empId );
+        this.serviceUsuario.read(Endpoint.Usuario).subscribe(pr => {
+          this.comboProfissional = pr.filter(x => x.profissional && Number(x.empresaid) == empId );
         });
 
         this.serviceUnidade.read(Endpoint.Unidade).subscribe(un => {

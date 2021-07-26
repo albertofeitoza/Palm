@@ -38,7 +38,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatSelectModule} from '@angular/material/select';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatDialogModule} from '@angular/material/dialog';
+ import {MatDialogModule} from '@angular/material/dialog';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
@@ -72,6 +72,7 @@ import { AgendaDeleteComponent } from './Aplicacoes/agenda/agenda-delete/agenda-
 import { AgendaCreateComponent } from './Aplicacoes/agenda/agenda-create/agenda-create.component';
 import { AgendaReadComponent } from './Aplicacoes/agenda/agenda-read/agenda-read.component';
 import { HomeAgendaComponent } from './Aplicacoes/agenda/home-agenda/home-agenda.component';
+import { FormCadFuncionarioComponent } from './Aplicacoes/agenda/popups/form-cad-funcionario/form-cad-funcionario.component';
 
 
 @NgModule({
@@ -110,6 +111,7 @@ import { HomeAgendaComponent } from './Aplicacoes/agenda/home-agenda/home-agenda
     AgendaCreateComponent,
     AgendaReadComponent,
     HomeAgendaComponent,
+    FormCadFuncionarioComponent,
 
 
    

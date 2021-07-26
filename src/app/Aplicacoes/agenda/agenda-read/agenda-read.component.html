@@ -1,140 +1,143 @@
-  <div class="mat-elevation-z3">
+<mat-dialog-content>
+    <div class="mat-elevation-z3">
 
-    
-    <button mat-button [matMenuTriggerFor]="menu">Agenda</button>
-    <mat-menu #menu="matMenu">
-    <a routerLinkActive="agenda-create-active" [routerLink]="['agenda-create']" (click)="LimparAgenda()" mat-menu-item>Nova Agenda</a> 
-    <a mat-menu-item>Grupo de Agenda</a>
-     <a mat-menu-item>Sala</a>
-    </mat-menu>
-    
-        <span class="botaoBusca" (click)="buscarAgenda()">
-          <i class="material-icons">search</i>
-        </span>
-
-        <input class="textBusca"  name="busca" id="busca" type="text" value="">
-
-      <table class="tabelaagenda" mat-table [dataSource]="agenda">
-        <!-- Id Column -->
         
-        <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef>Id</th>
-          <td mat-cell *matCellDef="let row">{{row.id}}</td>
-        </ng-container>
-    
-        <!-- Name Column -->
-        <ng-container matColumnDef="DtCriacao">
-          <th mat-header-cell *matHeaderCellDef>Criado Em</th>
-          <td mat-cell *matCellDef="let row">{{row.DtCriacao}}</td>
-        </ng-container>
+        <button mat-button [matMenuTriggerFor]="menu">Agenda</button>
+        <mat-menu #menu="matMenu">
         
-        <!-- Name Column -->
-        <ng-container matColumnDef="NomeAgenda">
-          <th mat-header-cell *matHeaderCellDef>Nome Agenda</th>
-          <td mat-cell *matCellDef="let row">{{row.nomeAgenda}}</td>
-        </ng-container>
-  
-         <!-- Name Column -->
-         <ng-container matColumnDef="Funcionario">
-          <th mat-header-cell *matHeaderCellDef>Funcionário</th>
-          <td mat-cell *matCellDef="let row">{{row.nomeProfissional}}</td>
-        </ng-container>
-  
-        <!-- Name Price -->
-        <ng-container matColumnDef="NomeEmpresa">
-          <th mat-header-cell *matHeaderCellDef>Empresa</th>
-          <td mat-cell *matCellDef="let row">{{row.nomeFantasia}}</td>
-        </ng-container>
-  
-         <!-- Name Column -->
-         <ng-container matColumnDef="NomeUnidade">
-          <th mat-header-cell *matHeaderCellDef>Unidade</th>
-          <td mat-cell *matCellDef="let row">{{row.nomeUnidade}}</td>
-        </ng-container>
-  
-        <ng-container matColumnDef="NomeSala">
-            <th mat-header-cell *matHeaderCellDef>Sala</th>
-            <td mat-cell *matCellDef="let row">{{row.nomeSala}}</td>
-          </ng-container>
- 
-          <ng-container matColumnDef="GrupoAgenda">
-            <th mat-header-cell *matHeaderCellDef>Grupo Agenda</th>
-            <td mat-cell *matCellDef="let row">{{row.nomeGrupoAgenda}}</td>
-          </ng-container>
+        <a routerLinkActive="agenda-create-active" (click)="addNovaAgenda()" mat-menu-item>Nova Agenda</a>
 
-          <ng-container matColumnDef="substituicao">
-            <th mat-header-cell *matHeaderCellDef>Pode Substituir?</th>
-            <td mat-cell *matCellDef="let row">{{row.substituicao}}</td>
-          </ng-container>
+        <a mat-menu-item>Grupo de Agenda</a>
+        <a mat-menu-item>Sala</a>
+        </mat-menu>
+        
+            <span class="botaoBusca" (click)="buscarAgenda()">
+              <i class="material-icons">search</i>
+            </span>
 
-          
-          <ng-container matColumnDef="vigenciaInicio">
-            <th mat-header-cell *matHeaderCellDef>Inicio Agenda</th>
-            <td mat-cell *matCellDef="let row">{{row.vigenciaInicio | date: 'dd/MM/yyyy hh:mm:ss'}} </td>
-          </ng-container>
+            <input class="textBusca"  name="busca" id="busca" type="text" value="">
 
-
-          <ng-container matColumnDef="vigenciaFim">
-            <th mat-header-cell *matHeaderCellDef>Fim Agenda</th>
-            <td mat-cell *matCellDef="let row">{{row.vigenciaFim | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
-          </ng-container>
-
-          
-          <ng-container matColumnDef="considerarFeriado">
-            <th mat-header-cell *matHeaderCellDef>Cons. Feriado</th>
-            <td mat-cell *matCellDef="let row">{{row.considerarFeriado}}</td>
-          </ng-container>
-
-        <!-- status -->
-        <ng-container matColumnDef="bloqueado">
-          <th mat-header-cell *matHeaderCellDef>Ativa</th>
-            <td mat-cell *matCellDef="let row">
-              <div *ngIf="row.bloqueado == 'Sim'" >
-                <i class="material-icons">
-                  lock
-                </i>
-              </div>
-              <div *ngIf="row.bloqueado == 'Não'" >
-                <i class="material-icons">  
-                  lock_open
-                </i>
-              </div>
-            </td>
-          </ng-container>
-  
-         
-        <!-- Coluna de Ações -->
-        <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef>Ações</th>
-          <td mat-cell *matCellDef="let row">
-              <a [routerLink]="['agenda-create']" (click)="LimparAgenda()" class="delete">
-                <i class="material-icons">
-                  person_add
-                </i>
-              </a>
-              <a routerLinkActive="agenda-update-active" routerLink="agenda-update/{{ row.id }}" (click)="LimparAgenda()" class="edit">
-                  <i class="material-icons">
-                      edit
-                  </i>
-              </a>
-              <a routerLinkActive="agenda-delete-active" routerLink="agenda-delete/{{ row.id }}" (click)="LimparAgenda()" class="delete">
-                  <i class="material-icons">
-                      delete
-                  </i>
-              </a>
-              
-          </td>
-        </ng-container>
+          <table class="tabelaagenda" mat-table [dataSource]="agenda">
+            <!-- Id Column -->
             
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef>Id</th>
+              <td mat-cell *matCellDef="let row">{{row.id}}</td>
+            </ng-container>
+        
+            <!-- Name Column -->
+            <ng-container matColumnDef="DtCriacao">
+              <th mat-header-cell *matHeaderCellDef>Criado Em</th>
+              <td mat-cell *matCellDef="let row">{{row.dtCriacao | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
+            </ng-container>
+            
+            <!-- Name Column -->
+            <ng-container matColumnDef="NomeAgenda">
+              <th mat-header-cell *matHeaderCellDef>Nome Agenda</th>
+              <td mat-cell *matCellDef="let row">{{row.nomeAgenda}}</td>
+            </ng-container>
+      
+            <!-- Name Column -->
+            <ng-container matColumnDef="Funcionario">
+              <th mat-header-cell *matHeaderCellDef>Funcionário</th>
+              <td mat-cell *matCellDef="let row">{{row.nome}}</td>
+            </ng-container>
+      
+            <!-- Name Price -->
+            <ng-container matColumnDef="NomeEmpresa">
+              <th mat-header-cell *matHeaderCellDef>Empresa</th>
+              <td mat-cell *matCellDef="let row">{{row.nomeFantasia}}</td>
+            </ng-container>
+      
+            <!-- Name Column -->
+            <ng-container matColumnDef="NomeUnidade">
+              <th mat-header-cell *matHeaderCellDef>Unidade</th>
+              <td mat-cell *matCellDef="let row">{{row.nomeUnidade}}</td>
+            </ng-container>
+      
+            <ng-container matColumnDef="NomeSala">
+                <th mat-header-cell *matHeaderCellDef>Sala</th>
+                <td mat-cell *matCellDef="let row">{{row.nomeSala}}</td>
+              </ng-container>
     
-        <tr mat-header-row *matHeaderRowDef="Colunas"></tr>
-        <tr mat-row *matRowDef="let row; columns: Colunas;"></tr>
-      </table>
+              <ng-container matColumnDef="GrupoAgenda">
+                <th mat-header-cell *matHeaderCellDef>Grupo Agenda</th>
+                <td mat-cell *matCellDef="let row">{{row.nomeGrupoAgenda}}</td>
+              </ng-container>
 
-  </div>
+              <ng-container matColumnDef="substituicao">
+                <th mat-header-cell *matHeaderCellDef>Pode Substituir?</th>
+                <td mat-cell *matCellDef="let row">{{row.substituicao}}</td>
+              </ng-container>
 
-  <div class="row">
-    <router-outlet></router-outlet>
-  </div>
-  
+              
+              <ng-container matColumnDef="vigenciaInicio">
+                <th mat-header-cell *matHeaderCellDef>Inicio Agenda</th>
+                <td mat-cell *matCellDef="let row">{{row.vigenciaInicio | date: 'dd/MM/yyyy hh:mm:ss'}} </td>
+              </ng-container>
+
+
+              <ng-container matColumnDef="vigenciaFim">
+                <th mat-header-cell *matHeaderCellDef>Fim Agenda</th>
+                <td mat-cell *matCellDef="let row">{{row.vigenciaFim | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
+              </ng-container>
+
+              
+              <ng-container matColumnDef="considerarFeriado">
+                <th mat-header-cell *matHeaderCellDef>Cons. Feriado</th>
+                <td mat-cell *matCellDef="let row">{{row.considerarFeriado}}</td>
+              </ng-container>
+
+            <!-- status -->
+            <ng-container matColumnDef="bloqueado">
+              <th mat-header-cell *matHeaderCellDef>Ativa</th>
+                <td mat-cell *matCellDef="let row">
+                  <div *ngIf="row.bloqueado == 'Sim'" >
+                    <i class="material-icons">
+                      lock
+                    </i>
+                  </div>
+                  <div *ngIf="row.bloqueado == 'Não'" >
+                    <i class="material-icons">  
+                      lock_open
+                    </i>
+                  </div>
+                </td>
+              </ng-container>
+      
+            
+            <!-- Coluna de Ações -->
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef>Ações</th>
+              <td mat-cell *matCellDef="let row">
+                  <a [routerLink]="['agenda-create']" (click)="LimparAgenda()" class="delete">
+                    <i class="material-icons">
+                      person_add
+                    </i>
+                  </a>
+                  <a routerLinkActive="agenda-update-active" routerLink="agenda-update/{{ row.id }}" (click)="LimparAgenda()" class="edit">
+                      <i class="material-icons">
+                          edit
+                      </i>
+                  </a>
+                  <a routerLinkActive="agenda-delete-active" routerLink="agenda-delete/{{ row.id }}" (click)="LimparAgenda()" class="delete">
+                      <i class="material-icons">
+                          delete
+                      </i>
+                  </a>
+                  
+              </td>
+            </ng-container>
+                
+        
+            <tr mat-header-row *matHeaderRowDef="Colunas"></tr>
+            <tr mat-row *matRowDef="let row; columns: Colunas;"></tr>
+          </table>
+
+      </div>
+
+      <div class="row">
+        <router-outlet></router-outlet>
+      </div>
+</mat-dialog-content>
   

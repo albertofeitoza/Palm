@@ -13,13 +13,13 @@
                             <p></p>
                             <mat-select [(value)]="agenda.Profissionalid" placeholder="Profissional" >
                                 <mat-option *ngFor="let tipoProf of comboProfissional " [value]="tipoProf.id">
-                                    {{tipoProf.nomeProfissional}}
+                                    {{tipoProf.nome}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
 
                         <mat-form-field>
-                            <input matInput placeholder="Unidade Atendimento">
+                            <input matInput placeholder="Unidade Atendimento"> <i class="material-icons">lock_open</i>
                             <p></p>
                             <mat-select [(value)]="agenda.Unidadeid" placeholder="Unidade Atendimento" >
                                 <mat-option *ngFor="let tipounidade of comboUnidade " [value]="tipounidade.id">
@@ -83,7 +83,7 @@
                         Salvar
                     </button>
                     
-                    <button mat-raised-button (click)="cancel()" color="primary" > 
+                    <button mat-raised-button (click)="fecharPopup()" color="primary" > 
                         Cancelar
                     </button>
             </mat-card>

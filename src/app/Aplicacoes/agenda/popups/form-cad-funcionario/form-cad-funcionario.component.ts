@@ -1,86 +1,55 @@
-import { Endpoint } from './../../../Negocio/Endpoint';
-import { ServiceAllService } from './../../../services/service-all.service';
-import { Empresa } from './../../../models/empresa/ModelEmpresa';
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { Aplicacao } from './../../../Negocio/Aplicacao';
-import { Router } from '@angular/router';
-
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { Agenda } from 'src/app/models/Agenda/modelAgenda';
-import { UtilService } from 'src/app/services/util.service';
-import { TipoUsuario, TipoUsuarioSistema } from 'src/app/models/usuarios/enumUsuarios';
-import { Unidade } from 'src/app/models/Unidade/unidadeModel';
-import { Sala } from 'src/app/models/Sala/SalaModel';
-import { GrupoAgenda } from 'src/app/models/Agenda/modelGrupoAgenda';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { Agenda } from 'src/app/models/Agenda/modelAgenda';
+import { GrupoAgenda } from 'src/app/models/Agenda/modelGrupoAgenda';
+import { Empresa } from 'src/app/models/empresa/ModelEmpresa';
+import { Sala } from 'src/app/models/Sala/SalaModel';
+import { Unidade } from 'src/app/models/Unidade/unidadeModel';
+import { TipoUsuario } from 'src/app/models/usuarios/enumUsuarios';
 import { Usuario } from 'src/app/models/usuarios/modelLogin';
+import { Endpoint } from 'src/app/Negocio/Endpoint';
+import { ServiceAllService } from 'src/app/services/service-all.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
-  selector: 'app-agenda-create',
-  templateUrl: './agenda-create.component.html',
-  styleUrls: ['./agenda-create.component.css']
+  selector: 'app-form-cad-funcionario',
+  templateUrl: './form-cad-funcionario.component.html',
+  styleUrls: ['./form-cad-funcionario.component.css']
 })
-export class AgendaCreateComponent implements OnInit {
-  
-  agenda : Agenda = {
-    DtCriacao: new Date, 
-    nomeAgenda: null,
-    Profissionalid: null,
-    Empresaid: null,
-    Unidadeid: null,
-    Salaid: null,
-    substituicao: false,
-    GrupoAgendaid: null,
-    vigenciaInicio: null,
-    vigenciaFim: null,
-    considerarFeriado: false,
-    bloqueado: false
-  }
-  
+export class FormCadFuncionarioComponent implements OnInit {
+
+  agenda : Agenda;
   comboProfissional  : Usuario[];
   comboUnidade : Unidade[];
   comboSala : Sala[];
   comboTipoGrupoAgenda : GrupoAgenda[];
   empresa : Empresa[];
 
-  constructor(private route : Router,
-    public dialogRef: MatDialogRef <AgendaCreateComponent>,          
-    private _serviceEmpresa : ServiceAllService<Empresa>,
+  constructor(
+    public dialogRef: MatDialogRef<FormCadFuncionarioComponent>,
+    private route : Router,
+              private _serviceEmpresa : ServiceAllService<Empresa>,
               private _serviceAgenda : ServiceAllService<Agenda>,
+              private _service_usuario : ServiceAllService<Usuario>,
               private _serviceUnidade : ServiceAllService<Unidade>,
               private _serviceSala : ServiceAllService<Sala>,
               private _serviceGrupoAgenda : ServiceAllService<GrupoAgenda>,
-              private _serviceUsuario : ServiceAllService<Usuario>,
               private _utilService : UtilService
-    ) { }
-
+              
+              ) { }
 
   ngOnInit(): void {
-     this.carregaCombos()
-  }
-  
-  createAgenda(){
-   let empId = localStorage.getItem("empId");
-   this.agenda.Empresaid = Number(empId);
- 
-
-    this._serviceAgenda.create(this.agenda, Endpoint.Agenda).subscribe(ag => {
-    this._utilService.showMessage("Agenda cadastrada com sucesso!",false);
-    this.route.navigate(['home-component'])
-   });
-   this.route.navigate(['home-component'])
+    this.carregaCombos()
   }
 
-  cancel(){
-    this.route.navigate(['home-component'])  
-  }
 
   carregaCombos(){
     //let filtroUsuario = (<HTMLSelectElement>document.getElementById('busca')).value;
     let empId = localStorage.getItem("empId");
     let grpId = Number(localStorage.getItem("grpUs"));
-      
+    //let logado = Number(localStorage.getItem("usId"));
+     
       this.carregaComboEmpresa(grpId, empId );
       this.carregaComboUnidade(grpId, empId);
       this.carregaComboSala(grpId, empId);
@@ -93,8 +62,8 @@ export class AgendaCreateComponent implements OnInit {
       this.empresa = emp;
     });
 
-    this._serviceUsuario.read(Endpoint.Usuario).subscribe(pro => {
-      pro = pro.filter(x => x.profissional)
+    this._service_usuario.read(Endpoint.Usuario).subscribe(pro => {
+      pro = pro;       
        
     if (grpId == TipoUsuario.Administrador)
         this.comboProfissional = pro; 
@@ -136,10 +105,15 @@ export class AgendaCreateComponent implements OnInit {
     });
   }
 
+
+  createAgenda(): void{
+
+  }
+
+
   fecharPopup(): void {
     this.dialogRef.close();
   }
-
 
 
 }
