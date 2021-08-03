@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { endWith, filter } from 'rxjs/operators';
 import { Agenda } from 'src/app/models/Agenda/modelAgenda';
@@ -27,7 +28,9 @@ export class AgendaUpdateComponent implements OnInit {
             private serviceSala : ServiceAllService<Sala>,
             private serviceGrupoAGenda : ServiceAllService<GrupoAgenda>,
             private serviceEmpresa : ServiceAllService<Empresa>,
-            private serviceUsuario : ServiceAllService<Usuario>
+            private serviceUsuario : ServiceAllService<Usuario>,
+            public dialogRef: MatDialogRef <AgendaUpdateComponent>,
+
 
             ) { }
 
@@ -39,7 +42,8 @@ export class AgendaUpdateComponent implements OnInit {
 
 
 
-  agenda : Agenda = {
+  agenda : Agenda = {  
+    id: null,
     DtCriacao: new Date, 
     nomeAgenda: null,
     Profissionalid: null,
@@ -57,27 +61,25 @@ export class AgendaUpdateComponent implements OnInit {
   
   
   ngOnInit(): void {
+ 
     this.buscarAgendaPorId();
   
   }
 
       UpdateAgenda(){
+        this.agenda.id = this.dialogRef.id
         this.agendaService.update(this.agenda, Endpoint.Agenda).subscribe(() => {
           this.utilService.showMessage("Agenda Atualizada com Sucesso!", false)
-          this.router.navigate(['agendaHomeDefault'])
+          this.router.navigate(['home-component'])
+          this.fecharPopup();
+      
         });
 
       }
-      cancel(){
-        this.router.navigate(['agendaHomeDefault'])
-      }
-
-
 
       buscarAgendaPorId(){
              
-        const id = this.route.snapshot.paramMap.get('id')
-            this.agendaService.readById(id, Endpoint.Agenda).subscribe(agId => {
+        this.agendaService.readById(this.dialogRef.id, Endpoint.Agenda).subscribe(agId => {
               this.agenda = agId
               this.carregaCombos();
             });
@@ -106,6 +108,10 @@ export class AgendaUpdateComponent implements OnInit {
         this.serviceEmpresa.read(Endpoint.Empresa).subscribe(emp => {
           this.empresa = emp.filter(x => x.id == empId );
         })
+      }
+
+      fecharPopup(): void {
+        this.dialogRef.close();
       }
 
 }

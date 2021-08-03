@@ -3,6 +3,7 @@
     <mat-card>
         <mat-card-title>Atualizar Agenda</mat-card-title>
             <form>
+
                 <mat-form-field>
                     <input matInput placeholder="Nome Agenda" 
                      [(ngModel)]="agenda.nomeAgenda" name="nomeAgenda">
@@ -83,7 +84,7 @@
                 Salvar
             </button>
             
-            <button mat-raised-button (click)="cancel()" color="primary" > 
+            <button mat-raised-button (click)="fecharPopup()" color="primary" > 
                 Cancelar
             </button>
     </mat-card>

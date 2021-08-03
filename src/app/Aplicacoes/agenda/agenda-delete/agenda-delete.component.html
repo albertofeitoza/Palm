@@ -1,1 +1,28 @@
-<p>Exclusão de agenda</p>
+<div class="container">
+
+    <mat-card>
+        <mat-card-title>Excluir Agenda</mat-card-title>
+            <form>
+
+                <mat-form-field>
+                    <input matInput placeholder="Id Agenda" 
+                     [(ngModel)]="agenda.id" name="idAgenda" disabled="true">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="Nome Agenda" 
+                    [(ngModel)]="agenda.nomeAgenda" name="nomeAgenda" disabled="true"> 
+                </mat-form-field>
+               
+            </form>
+    
+            <button mat-raised-button (click)="ExcluirAgenda()"  color="primary" > 
+                Excluir
+            </button>
+            
+            <button mat-raised-button (click)="fecharPopup()" color="primary" > 
+                Cancelar
+            </button>
+    </mat-card>
+
+</div>

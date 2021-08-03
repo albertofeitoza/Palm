@@ -8,9 +8,10 @@ import { ServiceAllService } from 'src/app/services/service-all.service';
 import { Endpoint } from 'src/app/Negocio/Endpoint';
 import { AgendaDto } from 'src/app/models/Agenda/modelRetornoAgenda';
 import { MatDialog } from '@angular/material/dialog';
-import { FormCadFuncionarioComponent } from '../popups/form-cad-funcionario/form-cad-funcionario.component';
 import { AgendaCreateComponent } from '../agenda-create/agenda-create.component';
 import { Overlay } from '@angular/cdk/overlay';
+import { AgendaUpdateComponent } from '../agenda-update/agenda-update.component';
+import { AgendaDeleteComponent } from '../agenda-delete/agenda-delete.component';
 
 
 @Component({
@@ -48,16 +49,10 @@ export class AgendaReadComponent implements OnInit {
 
   }
 
-  LimparAgenda(){
-    this.agenda = new Array();
-  }
-
-
-
   addNovaAgenda(): void {
    const scrollStrategy = this.overlay.scrollStrategies.reposition();
    const dialogRef = this.dialog.open(AgendaCreateComponent, {
-     width : '600px',
+     width : '700px',
      height : '900px',
      scrollStrategy
 
@@ -70,7 +65,40 @@ export class AgendaReadComponent implements OnInit {
   
   }
 
+  AtualizarAgenda(id : string): void {
+    const scrollStrategy = this.overlay.scrollStrategies.reposition();
+    const dialogRef = this.dialog.open(AgendaUpdateComponent , {
+      width : '30%',
+      height : '80%',
+      scrollStrategy,
+      id
+      
+    });
+ 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+    
 
+  }
+
+  ExcluirAgenda(id : string): void {
+    const scrollStrategy = this.overlay.scrollStrategies.reposition();
+    const dialogRef = this.dialog.open(AgendaDeleteComponent , {
+      width : '30%',
+      height : '25%',
+      scrollStrategy,
+      id,
+      
+      
+    });
+ 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+    
+
+  }
 
 
 }

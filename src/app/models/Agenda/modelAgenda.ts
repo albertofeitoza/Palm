@@ -1,5 +1,5 @@
 export interface Agenda {
-    id ?: null
+    id ?: string
     DtCriacao: Date 
     nomeAgenda: string
     Profissionalid: number
