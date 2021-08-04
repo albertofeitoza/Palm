@@ -1,6 +1,7 @@
 export interface AgendaDto {
     id ?: null
     dtCriacao: string 
+    empresaId : number
     nomeAgenda: string
     nome: string
     nomeFantasia: string

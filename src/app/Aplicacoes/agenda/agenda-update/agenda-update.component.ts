@@ -22,7 +22,6 @@ export class AgendaUpdateComponent implements OnInit {
   constructor(
             private router: Router,
             private utilService : UtilService,
-            private route: ActivatedRoute,
             private agendaService : ServiceAllService<Agenda>,
             private serviceUnidade : ServiceAllService<Unidade>,
             private serviceSala : ServiceAllService<Sala>,
@@ -38,9 +37,6 @@ export class AgendaUpdateComponent implements OnInit {
   comboUnidade : Unidade[];
   comboSala : Sala[];
   comboTipoGrupoAgenda : GrupoAgenda[];
-  empresa : Empresa[];
-
-
 
   agenda : Agenda = {  
     id: null,
@@ -86,28 +82,22 @@ export class AgendaUpdateComponent implements OnInit {
       }
 
       carregaCombos(){
-
-        let empId = Number(localStorage.getItem("empId"))
-
         this.serviceUsuario.read(Endpoint.Usuario).subscribe(pr => {
-          this.comboProfissional = pr.filter(x => x.profissional && Number(x.empresaid) == empId );
+          this.comboProfissional = pr.filter(x => x.profissional && x.empresaid == this.utilService.Sessao().IdEmpresa );
         });
 
         this.serviceUnidade.read(Endpoint.Unidade).subscribe(un => {
-          this.comboUnidade = un.filter(x => x.empresaid == empId );
+          this.comboUnidade = un.filter(x => x.empresaid == Number(this.utilService.Sessao().IdEmpresa));
         });
 
         this.serviceSala.read(Endpoint.Sala).subscribe(sl =>{
-          this.comboSala = sl.filter(x => x.empresaid == empId );
+          this.comboSala = sl.filter(x => x.empresaid == Number(this.utilService.Sessao().IdEmpresa));
         });
         
         this.serviceGrupoAGenda.read(Endpoint.GrupoAgenda).subscribe(ga => {
-          this.comboTipoGrupoAgenda = ga.filter(x => x.empresaid == empId );
+          this.comboTipoGrupoAgenda = ga.filter(x => x.empresaid == Number(this.utilService.Sessao().IdEmpresa) );
         });
-        
-        this.serviceEmpresa.read(Endpoint.Empresa).subscribe(emp => {
-          this.empresa = emp.filter(x => x.id == empId );
-        })
+       
       }
 
       fecharPopup(): void {

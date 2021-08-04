@@ -46,7 +46,6 @@ export class AgendaCreateComponent implements OnInit {
 
   constructor(private route : Router,
     public dialogRef: MatDialogRef <AgendaCreateComponent>,          
-    private _serviceEmpresa : ServiceAllService<Empresa>,
               private _serviceAgenda : ServiceAllService<Agenda>,
               private _serviceUnidade : ServiceAllService<Unidade>,
               private _serviceSala : ServiceAllService<Sala>,
@@ -61,15 +60,13 @@ export class AgendaCreateComponent implements OnInit {
   }
   
   createAgenda(){
-   let empId = localStorage.getItem("empId");
-   this.agenda.Empresaid = Number(empId);
+     this.agenda.Empresaid = Number(this._utilService.Sessao().IdEmpresa)
  
-
-    this._serviceAgenda.create(this.agenda, Endpoint.Agenda).subscribe(ag => {
-    this._utilService.showMessage("Agenda cadastrada com sucesso!",false);
-    this.route.navigate(['home-component'])
-   });
-   this.route.navigate(['home-component'])
+      this._serviceAgenda.create(this.agenda, Endpoint.Agenda).subscribe(ag => {
+      this._utilService.showMessage("Agenda cadastrada com sucesso!",false);
+      this.route.navigate(['home-component'])
+      });
+        this.route.navigate(['home-component'])
   }
 
   cancel(){
@@ -77,69 +74,38 @@ export class AgendaCreateComponent implements OnInit {
   }
 
   carregaCombos(){
-    //let filtroUsuario = (<HTMLSelectElement>document.getElementById('busca')).value;
-    let empId = localStorage.getItem("empId");
-    let grpId = Number(localStorage.getItem("grpUs"));
-      
-      this.carregaComboEmpresa(grpId, empId );
-      this.carregaComboUnidade(grpId, empId);
-      this.carregaComboSala(grpId, empId);
-      this.carregaComboGrupoAgenda(grpId, empId);
+
+    this.carregaComboProfissional(this._utilService.Sessao().GrupoUsuario, this._utilService.Sessao().IdEmpresa)
+      this.carregaComboUnidade(this._utilService.Sessao().GrupoUsuario, this._utilService.Sessao().IdEmpresa);
+      this.carregaComboSala(this._utilService.Sessao().GrupoUsuario, this._utilService.Sessao().IdEmpresa);
+      this.carregaComboGrupoAgenda(this._utilService.Sessao().GrupoUsuario, this._utilService.Sessao().IdEmpresa);
   }
 
-  carregaComboEmpresa(grpId: number , empId: string ){
-   
-    this._serviceEmpresa.read(Endpoint.Empresa).subscribe(emp => {
-      this.empresa = emp;
-    });
-
+  carregaComboProfissional(grpId: number , empId: string){
     this._serviceUsuario.read(Endpoint.Usuario).subscribe(pro => {
-      pro = pro.filter(x => x.profissional)
-       
-    if (grpId == TipoUsuario.Administrador)
-        this.comboProfissional = pro; 
-    else if (grpId == TipoUsuario.Master)  
-        this.comboProfissional = pro.filter(x => x.empresaid.toString() == empId);
+      pro = this.comboProfissional = grpId == TipoUsuario.Master || grpId == TipoUsuario.Administrador ? this.comboProfissional = pro.filter(x => x.empresaid.toString() == empId) : null;
     });
-
   }
-
+  
   carregaComboUnidade(grpId: number , empId: string){
     this._serviceUnidade.read(Endpoint.Unidade).subscribe(un => {
-      un = un;
-    if (grpId == TipoUsuario.Administrador)
-      this.comboUnidade = un; 
-    else if (grpId == TipoUsuario.Master)  
-      this.comboUnidade = un.filter(x => x.empresaid.toString() == empId);
+      un = this.comboUnidade = grpId == TipoUsuario.Master || grpId == TipoUsuario.Administrador ? this.comboUnidade = un.filter(x => x.empresaid.toString() == empId) : null;
     });
   }
 
   carregaComboSala(grpId: number , empId: string){
     this._serviceSala.read(Endpoint.Sala).subscribe(sl => {
-      sl = sl; 
-    if (grpId == TipoUsuario.Administrador)
-      this.comboSala = sl; 
-    else if (grpId == TipoUsuario.Master)  
-      this.comboSala = sl.filter(x => x.empresaid .toString() == empId);
+      sl = this.comboSala = grpId == TipoUsuario.Master || grpId == TipoUsuario.Administrador? this.comboSala = sl.filter(x => x.empresaid .toString() == empId) : null;                      
     });
   }
 
   carregaComboGrupoAgenda(grpId: number , empId: string){
     this._serviceGrupoAgenda.read(Endpoint.GrupoAgenda).subscribe(ga => {
-      ga = ga;
-    
-    if (grpId == TipoUsuario.Administrador)
-      this.comboTipoGrupoAgenda = ga; 
-    else if (grpId == TipoUsuario.Master)  
-      this.comboTipoGrupoAgenda = ga.filter(x => x.empresaid .toString() == empId);
-
+      ga = this.comboTipoGrupoAgenda = grpId == TipoUsuario.Master || grpId == TipoUsuario.Administrador ? this.comboTipoGrupoAgenda = ga.filter(x => x.empresaid .toString() == empId) : null;
     });
   }
 
   fecharPopup(): void {
     this.dialogRef.close();
   }
-
-
-
 }

@@ -50,5 +50,18 @@ export class UtilService {
   
   }
 
+  Sessao(){
+    let chave = this.convertBase64toText("Palm");
+    var dados =  {
+        IdEmpresa : localStorage.getItem("empId"),
+        GrupoUsuario : Number(localStorage.getItem("grpUs")),
+        UsuarioId : Number(localStorage.getItem("usId")),
+        StatusUsuario : localStorage.getItem("stUs"),
+        TokenSessao : chave +  localStorage.getItem("tId")
+
+    }
+    
+    return dados
+  }
 
 }
