@@ -38,16 +38,17 @@ export class AgendaUpdateComponent implements OnInit {
   comboSala : Sala[];
   comboTipoGrupoAgenda : GrupoAgenda[];
 
+
   agenda : Agenda = {  
     id: null,
     DtCriacao: new Date, 
     nomeAgenda: null,
-    Profissionalid: null,
+    profissionalid: null,
     Empresaid: null,
-    Unidadeid: null,
-    Salaid: null,
+    unidadeid: null,
+    salaid: null,
     substituicao: false,
-    GrupoAgendaid: null,
+    grupoAgendaid: null,
     vigenciaInicio: null,
     vigenciaFim: null,
     considerarFeriado: false,
@@ -59,19 +60,9 @@ export class AgendaUpdateComponent implements OnInit {
   ngOnInit(): void {
  
     this.buscarAgendaPorId();
+    
   
   }
-
-      UpdateAgenda(){
-        this.agenda.id = this.dialogRef.id
-        this.agendaService.update(this.agenda, Endpoint.Agenda).subscribe(() => {
-          this.utilService.showMessage("Agenda Atualizada com Sucesso!", false)
-          this.router.navigate(['home-component'])
-          this.fecharPopup();
-      
-        });
-
-      }
 
       buscarAgendaPorId(){
              
@@ -82,10 +73,12 @@ export class AgendaUpdateComponent implements OnInit {
       }
 
       carregaCombos(){
+        
         this.serviceUsuario.read(Endpoint.Usuario).subscribe(pr => {
-          this.comboProfissional = pr.filter(x => x.profissional && x.empresaid == this.utilService.Sessao().IdEmpresa );
+          this.comboProfissional = pr.filter(x => x.empresaid == this.utilService.Sessao().IdEmpresa )
         });
 
+        
         this.serviceUnidade.read(Endpoint.Unidade).subscribe(un => {
           this.comboUnidade = un.filter(x => x.empresaid == Number(this.utilService.Sessao().IdEmpresa));
         });
@@ -95,9 +88,20 @@ export class AgendaUpdateComponent implements OnInit {
         });
         
         this.serviceGrupoAGenda.read(Endpoint.GrupoAgenda).subscribe(ga => {
-          this.comboTipoGrupoAgenda = ga.filter(x => x.empresaid == Number(this.utilService.Sessao().IdEmpresa) );
+          this.comboTipoGrupoAgenda = ga.filter(x => x.empresaid == Number(this.utilService.Sessao().IdEmpresa));
         });
        
+      } 
+
+      UpdateAgenda(){
+        this.agenda.id = this.dialogRef.id
+        this.agendaService.update(this.agenda, Endpoint.Agenda).subscribe(() => {
+          this.utilService.showMessage("Agenda Atualizada com Sucesso!", false)
+          this.router.navigate(['home-component'])
+          this.fecharPopup();
+      
+        });
+
       }
 
       fecharPopup(): void {

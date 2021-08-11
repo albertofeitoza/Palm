@@ -19,7 +19,7 @@
             <mat-form-field>
                 <input matInput placeholder="Tipo de Usuário">
                 <p></p>
-                <mat-select [(value)]="usuario.grupoUsuarioId" placeholder="GrupoUsuarioID">
+                <mat-select [(value)]="usuario.grupoUsuarioid" placeholder="GrupoUsuarioID">
                          <mat-option *ngFor="let tipo of comboTipousuario" [value]="tipo">
                         {{tipo}}
                     </mat-option>
@@ -49,11 +49,11 @@
       
         </form>
 
-        <button *ngIf="usuario.nome && usuario.login && usuario.grupoUsuarioId && usuario.empresaid" mat-raised-button (click)="updateUsuario()" color="primary" > 
+        <button *ngIf="usuario.nome && usuario.login && usuario.grupoUsuarioid && usuario.empresaid" mat-raised-button (click)="updateUsuario()" color="primary" > 
             Salvar
         </button>
         
-        <button mat-raised-button (click)="cancel()" color="primary" > 
+        <button mat-raised-button (click)="fecharPopup()" color="primary" > 
             Voltar
         </button>
 </mat-card>

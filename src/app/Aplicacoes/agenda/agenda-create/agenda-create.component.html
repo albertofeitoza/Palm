@@ -9,19 +9,20 @@
                         </mat-form-field>
 
                         <mat-form-field>
-                            <input matInput placeholder="Profissional">
+                            <input matInput placeholder="Profissional"><i class="material-icons ordem" (click)="novoUsuario()" >person_add</i>
                             <p></p>
-                            <mat-select [(value)]="agenda.Profissionalid" placeholder="Profissional" >
-                                <mat-option *ngFor="let tipoProf of comboProfissional " [value]="tipoProf.id">
-                                    {{tipoProf.nome}}
-                                </mat-option>
-                            </mat-select>
+                            <mat-select [(value)]="agenda.profissionalid" placeholder="Profissional">
+                                    <mat-option></mat-option>
+                                    <mat-option *ngFor="let tipoProf of comboProfissional " [value]="tipoProf.id">
+                                        {{tipoProf.nome}}
+                                    </mat-option>
+                                </mat-select>
                         </mat-form-field>
 
                         <mat-form-field>
-                            <input matInput placeholder="Unidade Atendimento"> <i class="material-icons">lock_open</i>
+                            <input matInput placeholder="Unidade Atendimento">
                             <p></p>
-                            <mat-select [(value)]="agenda.Unidadeid" placeholder="Unidade Atendimento" >
+                            <mat-select [(value)]="agenda.unidadeid" placeholder="Unidade Atendimento" >
                                 <mat-option *ngFor="let tipounidade of comboUnidade " [value]="tipounidade.id">
                                     {{tipounidade.nomeUnidade}}
                                 </mat-option>
@@ -31,7 +32,7 @@
                         <mat-form-field>
                             <input matInput placeholder="Sala Atendimento">
                             <p></p>
-                            <mat-select [(value)]="agenda.Salaid" placeholder="Sala Atendimento" >
+                            <mat-select [(value)]="agenda.salaid" placeholder="Sala Atendimento" >
                                 <mat-option *ngFor="let tipoSala of comboSala " [value]="tipoSala.id">
                                     {{tipoSala.nomeSala}}
                                 </mat-option>
@@ -47,7 +48,7 @@
                         <mat-form-field>
                             <input matInput placeholder="Grupo Agenda">
                             <p></p>
-                            <mat-select [(value)]="agenda.GrupoAgendaid" placeholder="Grupo Agenda" >
+                            <mat-select [(value)]="agenda.grupoAgendaid" placeholder="Grupo Agenda" >
                                 <mat-option *ngFor="let tipoGrupo of comboTipoGrupoAgenda " [value]="tipoGrupo.id">
                                     {{tipoGrupo.nomeGrupoAgenda}}
                                 </mat-option>

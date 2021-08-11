@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, EMPTY } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AbstractControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -15,7 +16,9 @@ export class UtilService {
 
   constructor(private snackbar : MatSnackBar,
              private http : HttpClient,
-             private headerService : HeaderService
+             private headerService : HeaderService,
+             private router : Router
+
              ) { }
 
 
@@ -60,8 +63,21 @@ export class UtilService {
         TokenSessao : chave +  localStorage.getItem("tId")
 
     }
-    
     return dados
   }
+
+
+  atualizaRota() {
+    this.router.routeReuseStrategy.shouldReuseRoute = function(){return false;};
+  
+    let currentUrl = this.router.url + '?';
+  
+    this.router.navigateByUrl(currentUrl)
+      .then(() => {
+        this.router.navigated = false;
+        this.router.navigate([this.router.url]);
+      });
+  }
+
 
 }

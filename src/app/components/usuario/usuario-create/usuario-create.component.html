@@ -1,4 +1,5 @@
 <mat-card>
+    <h1>Cadastro de Usuário</h1>
     <form>
             <mat-form-field>
                 <input matInput placeholder="Nome" 
@@ -35,7 +36,7 @@
             <mat-form-field>
                 <input matInput placeholder="Tipo de Usuário">
                 <p></p>
-                <mat-select [(value)]="usuario.grupoUsuarioId" placeholder="tipousuario" >
+                <mat-select [(value)]="usuario.grupoUsuarioid" placeholder="tipousuario" >
                     <mat-option *ngFor="let tipo of comboTipousuario " [value]="tipo">
                         {{tipo}}
                     </mat-option>
@@ -58,11 +59,11 @@
             </mat-form-field>
 
     </form>
-            <button *ngIf="usuario.nome && usuario.login && usuario.senha && usuario.grupoUsuarioId && usuario.empresaid" mat-raised-button (click)="createUsuario()" color="primary" > 
+            <button *ngIf="usuario.nome && usuario.login && usuario.senha && usuario.grupoUsuarioid && usuario.empresaid" mat-raised-button (click)="createUsuario()" color="primary" > 
                 Salvar
             </button>
   
-            <button mat-raised-button (click)="cancel()" color="primary" > 
+            <button mat-raised-button (click)="fecharPopup()" color="primary" > 
                 Voltar
             </button>
   

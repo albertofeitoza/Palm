@@ -3,19 +3,19 @@
         <form>
             <mat-form-field>
                 <input matInput placeholder="Nome" 
-                 [(ngModel)]="usuario.nome" name="nome">
+                 [(ngModel)]="usuario.nome" name="nome" disabled = "true" > 
 
             </mat-form-field>
             
             
             <mat-form-field>
                 <input matInput placeholder="Login"
-                [(ngModel)]="usuario.login" name="login">
+                [(ngModel)]="usuario.login" name="login" disabled="true">
             </mat-form-field>
 
             <mat-form-field>
                 <input matInput placeholder="Empresa"
-                [(ngModel)]="usuario.empresaid" name="empresaid">
+                [(ngModel)]="usuario.empresaid" name="empresaid" disabled="true" >
             </mat-form-field>
 
         </form>
@@ -24,7 +24,7 @@
             Excluir
         </button>
         
-        <button mat-raised-button (click)="cancel()" color="primary" > 
+        <button mat-raised-button (click)="fecharPopup()" color="primary" > 
             Cancelar
         </button>
 </mat-card>

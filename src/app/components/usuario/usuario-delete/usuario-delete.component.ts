@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UsuarioService } from './../../../services/usuario.service';
 import { Component, OnInit } from '@angular/core';
 import { Usuario } from './../../../models/usuarios/modelLogin';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-usuario-delete',
@@ -19,9 +20,9 @@ usuario : Usuario;
 
   constructor(private usuarioService : ServiceAllService<Usuario>,
               private empresaService : ServiceAllService<Empresa>,
-              private router : Router,
               private utilService : UtilService,
-              private route : ActivatedRoute
+              private route : ActivatedRoute,
+              public dialogRef : MatDialogRef<UsuarioDeleteComponent>
              ) { }
 
   ngOnInit(): void {
@@ -30,8 +31,8 @@ usuario : Usuario;
 
 carregaUsuario(){
 
-  const id = this.route.snapshot.paramMap.get('id')
-  this.usuarioService.readById(id, Endpoint.Usuario).subscribe(usuario => {
+  
+  this.usuarioService.readById(this.dialogRef.id, Endpoint.Usuario).subscribe(usuario => {
     this.usuario = usuario;
     
     this.buscarEmpresa().subscribe(empresa =>{
@@ -46,11 +47,14 @@ carregaUsuario(){
   deleteUsuario(): void{
       this.usuarioService.delete(this.usuario.id , Endpoint.Usuario).subscribe(() => {
       this.utilService.showMessage("Usuário Excluído com Sucesso!")
-      this.router.navigate(['/usuarios'])
+      this.fecharPopup();
+      this.utilService.atualizaRota();
+
+
     })
   }
-  cancel():void{
-    this.router.navigate(['/usuarios'])
+  fecharPopup():void{
+    this.dialogRef.close();
   }
 
   buscarEmpresa(){

@@ -22,6 +22,9 @@ import { FooterComponent } from '../../template/footer/footer.component';
 import { TipoUsuario } from 'src/app/models/usuarios/enumUsuarios';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { UsuarioCreateComponent } from '../usuario-create/usuario-create.component';
+import { Overlay } from '@angular/cdk/overlay';
+import { UsuarioUpdateComponent } from '../usuario-update/usuario-update.component';
+import { UsuarioDeleteComponent } from '../usuario-delete/usuario-delete.component';
 
 
 @Component({
@@ -36,41 +39,95 @@ export class UsuarioReadComponent implements OnInit {
   usuario : Usuario[];
   userAutenticado : boolean = false; 
   
-  displayedColumns = ['id','nome','login','empresaid','grupoUsuarioId','bloqueado','action']  
+  displayedColumns = ['id','nome','login','empresaid','grupoUsuarioid','bloqueado','action']  
  
   constructor(
+              public dialog : MatDialog,
+              public overlay : Overlay,
               private serviceEmpresa: ServiceAllService<Empresa>,
               private serviceUsuario : ServiceAllService<Usuario>,
-              private mensagem : UtilService, 
-              private router : Router
+              private _utilService : UtilService, 
+              private router : Router,
+
              ) 
              { }
 
 
   ngOnInit(): void {
      this.getUser();
-
-     let grpId = Number(localStorage.getItem("grpUs"));
-
   }
   
 
 
-  navigateToUsuarioCreate(): void{
-    let grpId = Number(localStorage.getItem("grpUs"));
+  addUsuario(): void{
+    
+    if(this._utilService.Sessao().GrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().GrupoUsuario == TipoUsuario.Administrador)
+    {
+        const scrollStrategy = this.overlay.scrollStrategies.reposition();
+        const dialogRef = this.dialog.open(UsuarioCreateComponent, {
+          width : '700px',
+          height : '820px',
+          scrollStrategy
 
-    if (grpId == TipoUsuario.Usuario) 
-      this.mensagem.showMessage("Você não possui permissão para criação de usuários", true)
-    else
-      this.router.navigate(['usuarios/create']);
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+        });
+    }else{
+      this._utilService.showMessage("Você não possui permissão para criação de usuários",true);
+    }
   }
+
+
+  editarUsuario(id : string): void{
+    
+    if(this._utilService.Sessao().GrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().GrupoUsuario == TipoUsuario.Administrador)
+    {
+        const scrollStrategy = this.overlay.scrollStrategies.reposition();
+        const dialogRef = this.dialog.open(UsuarioUpdateComponent, {
+          width : '700px',
+          height : '670px',
+          scrollStrategy,
+          id
+
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+        });
+    }else{
+      this._utilService.showMessage("Você não possui permissão para criação de usuários",true);
+    }
+  }
+
+
+  deletarUsuario(id : string): void{
+    
+    if(this._utilService.Sessao().GrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().GrupoUsuario == TipoUsuario.Administrador)
+    {
+        const scrollStrategy = this.overlay.scrollStrategies.reposition();
+        const dialogRef = this.dialog.open(UsuarioDeleteComponent, {
+          width : '5  00px',
+          height : '205px',
+          scrollStrategy,
+          id
+
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+        });
+    }else{
+      this._utilService.showMessage("Você não possui permissão para criação de usuários",true);
+    }
+  }
+
 
   async getUser() {
       
       let filtroUsuario = (<HTMLSelectElement>document.getElementById('busca')).value;
-      let empId = localStorage.getItem("empId");
-      let grpId = Number(localStorage.getItem("grpUs"));
-      let logado = Number(localStorage.getItem("usId"));
+
+      let empId = this._utilService.Sessao().IdEmpresa;
+      let grpId = Number(this._utilService.Sessao().GrupoUsuario);
+      let logado =  Number(this._utilService.Sessao().UsuarioId);
       this.userAutenticado = grpId == TipoUsuario.Usuario ? false : true;
   
       this.serviceUsuario.read(Endpoint.Usuario).subscribe(u =>{
@@ -109,11 +166,11 @@ export class UsuarioReadComponent implements OnInit {
                     {
                       empresaID = emp.id;
                       usr.empresaid = emp.razaoSocial;
-                      usr.grupoUsuarioId = usr.grupoUsuarioId == localStorage.getItem("grpUsGrpAdm") ? "Administrador"
-                                         : usr.grupoUsuarioId == localStorage.getItem("grpUsGrpsis") ? "Sistema" 
-                                         : usr.grupoUsuarioId == localStorage.getItem("grpUsGrpUs") ? "Usuario" 
-                                         : usr.grupoUsuarioId == localStorage.getItem("grpUsGrpMs") ? "Master" 
-                                         : usr.grupoUsuarioId;
+                      usr.grupoUsuarioid = usr.grupoUsuarioid == localStorage.getItem("grpUsGrpAdm") ? "Administrador"
+                                         : usr.grupoUsuarioid == localStorage.getItem("grpUsGrpsis") ? "Sistema" 
+                                         : usr.grupoUsuarioid == localStorage.getItem("grpUsGrpUs") ? "Usuario" 
+                                         : usr.grupoUsuarioid == localStorage.getItem("grpUsGrpMs") ? "Master" 
+                                         : usr.grupoUsuarioid;
 
                       idEmpresa = emp.id;
                       IdEmpresaPai = emp.empresaPai;
@@ -125,7 +182,7 @@ export class UsuarioReadComponent implements OnInit {
                           }
                           else if(grpId == TipoUsuario.Master)
                           { 
-                            if(idEmpresa == empId || IdEmpresaPai == empId && usr.grupoUsuarioId != "Administrador")
+                            if(idEmpresa == empId || IdEmpresaPai == empId && usr.grupoUsuarioid != "Administrador")
                             {
                               this.usuario.push(usr);
                               empresaID = null;

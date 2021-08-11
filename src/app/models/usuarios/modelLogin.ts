@@ -11,6 +11,6 @@ dataTrocaSenha : Date
 criadoPor : number
 bloqueado : boolean
 empresaid : string
-grupoUsuarioId : string
+grupoUsuarioid : string
 profissional : boolean
 }

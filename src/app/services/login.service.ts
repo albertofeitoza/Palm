@@ -61,7 +61,7 @@ export class LoginService {
       let response = await this.http.post<ObjetoToken>(this.environmentUrl + Endpoint.Token, acesso).toPromise()
      
 
-       if (response != null && !response.bloqueado && !response.statusEmpresa )
+       if (response != null && !response.bloqueado && !response.statusEmpresa && !response.erroLogin )
           {
 
             this.mostrarMenuEmitter.emit(true);
@@ -104,8 +104,9 @@ export class LoginService {
               this.utilService.showMessage("Usuário ou senha Inválido!", true);
         }
       
-      } catch (error) {
-        this.utilService.showMessage("Erro de acesso a API", true);
+      } catch (e) {
+     
+          this.utilService.showMessage("Erro de acesso a API" + e.message, true);
       }
     
   }

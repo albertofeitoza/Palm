@@ -8,4 +8,5 @@ export interface ObjetoToken{
     bloqueado : string
     statusEmpresa : boolean
     gruposUsuarios : Array<GrupoUsuario>
+    erroLogin : boolean
 }

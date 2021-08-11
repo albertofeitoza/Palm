@@ -13,8 +13,10 @@ import { TipoUsuario, TipoUsuarioSistema } from 'src/app/models/usuarios/enumUsu
 import { Unidade } from 'src/app/models/Unidade/unidadeModel';
 import { Sala } from 'src/app/models/Sala/SalaModel';
 import { GrupoAgenda } from 'src/app/models/Agenda/modelGrupoAgenda';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Usuario } from 'src/app/models/usuarios/modelLogin';
+import { Overlay } from '@angular/cdk/overlay';
+import { UsuarioCreateComponent } from 'src/app/components/usuario/usuario-create/usuario-create.component';
 
 @Component({
   selector: 'app-agenda-create',
@@ -26,12 +28,12 @@ export class AgendaCreateComponent implements OnInit {
   agenda : Agenda = {
     DtCriacao: new Date, 
     nomeAgenda: null,
-    Profissionalid: null,
+    profissionalid: null,
     Empresaid: null,
-    Unidadeid: null,
-    Salaid: null,
+    unidadeid: null,
+    salaid: null,
     substituicao: false,
-    GrupoAgendaid: null,
+    grupoAgendaid: null,
     vigenciaInicio: null,
     vigenciaFim: null,
     considerarFeriado: false,
@@ -45,7 +47,9 @@ export class AgendaCreateComponent implements OnInit {
   empresa : Empresa[];
 
   constructor(private route : Router,
-    public dialogRef: MatDialogRef <AgendaCreateComponent>,          
+              public dialogRef: MatDialogRef <AgendaCreateComponent>, 
+              public overlay : Overlay,
+              public dialog: MatDialog,         
               private _serviceAgenda : ServiceAllService<Agenda>,
               private _serviceUnidade : ServiceAllService<Unidade>,
               private _serviceSala : ServiceAllService<Sala>,
@@ -108,4 +112,25 @@ export class AgendaCreateComponent implements OnInit {
   fecharPopup(): void {
     this.dialogRef.close();
   }
+
+  novoUsuario(){
+    
+    if(this._utilService.Sessao().GrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().GrupoUsuario == TipoUsuario.Administrador)
+    {
+        const scrollStrategy = this.overlay.scrollStrategies.reposition();
+        const dialogRef = this.dialog.open(UsuarioCreateComponent, {
+          width : '700px',
+          height : '820px',
+          scrollStrategy
+
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+        });
+    }else{
+      this._utilService.showMessage("Solicitar ao um Usuário Master para criar Nova Agenda!",true);
+    }
+  }
+
+  
 }

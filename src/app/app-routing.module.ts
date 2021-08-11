@@ -44,7 +44,7 @@ const routes: Routes = [
   {path: "products/delete/:id", component : ProductDeleteComponent },
 
   //Rotas de usuarios
-  {path: "usuarios", component : UsuarioCrudComponent },
+  {path: 'usuarios', component : UsuarioCrudComponent },
   {path: "usuarios/create", component : UsuarioCreateComponent },
   {path: "usuarios/update/:id", component : UsuarioUpdateComponent },
   {path: "usuarios/delete/:id", component : UsuarioDeleteComponent },

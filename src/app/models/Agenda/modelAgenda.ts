@@ -2,12 +2,12 @@ export interface Agenda {
     id ?: string
     DtCriacao: Date 
     nomeAgenda: string
-    Profissionalid: number
+    profissionalid: string
     Empresaid: number
-    Unidadeid: number
-    Salaid: number
+    unidadeid: string
+    salaid: string
     substituicao: Boolean
-    GrupoAgendaid: number
+    grupoAgendaid: string
     vigenciaInicio: Date
     vigenciaFim: Date
     considerarFeriado: Boolean

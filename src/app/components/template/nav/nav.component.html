@@ -38,8 +38,6 @@
                             </i>
                             Usuários
                         </a>
-
-                        
                 </mat-menu>
             </button>
 
@@ -57,13 +55,13 @@
     <mat-sidenav-content class="content">
         <div *ngIf="!opened">
             <i class="material-icons" (click)="opened=!opened" >
-                navigate_next 
+                navigate_next
             </i>
         </div>
             
         <div *ngIf="opened">
                 <i class="material-icons" (click)="opened=!opened" >
-                    navigate_before 
+                    navigate_before
                 </i>
         </div>
         <router-outlet></router-outlet>

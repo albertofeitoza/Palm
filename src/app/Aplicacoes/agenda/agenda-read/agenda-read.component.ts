@@ -41,6 +41,7 @@ export class AgendaReadComponent implements OnInit {
 
  
   buscarAgenda(){
+    
     let filtroAgenda = (<HTMLSelectElement>document.getElementById('busca')).value;
 
     this._repAgenda.read(Endpoint.Agenda).subscribe(ag => {

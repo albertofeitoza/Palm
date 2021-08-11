@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { Usuario } from '../../../models/usuarios/modelLogin';
 import { Component, OnInit } from '@angular/core';
 import { Empresa } from './../../../models/empresa/ModelEmpresa';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-usuario-create',
@@ -35,6 +36,7 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
               private serviceGrupoUsuario : ServiceAllService<GrupoUsuario>,
               private utilService : UtilService,
               private serviceLogin : LoginService,
+              public dialogRef: MatDialogRef <UsuarioCreateComponent>, 
               
               private router : Router) { }
 
@@ -49,10 +51,10 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
     this.usuario.criadoPor  = Number(localStorage.getItem("usId"));
     this.usuario.dtCriacao = new Date;
    
-    this.usuario.grupoUsuarioId = this.usuario.grupoUsuarioId.toString().trim() == "Administrador" ? TipoUsuario.Administrador.toString() 
-                                : this.usuario.grupoUsuarioId.toString().trim() == "Sistema" ? TipoUsuario.Sistema.toString()
-                                : this.usuario.grupoUsuarioId.toString().trim() == "Master" ? TipoUsuario.Master.toString()
-                                : this.usuario.grupoUsuarioId.toString() == "Usuario" ? TipoUsuario.Usuario.toString() : null;
+    this.usuario.grupoUsuarioid = this.usuario.grupoUsuarioid.toString().trim() == "Administrador" ? TipoUsuario.Administrador.toString() 
+                                : this.usuario.grupoUsuarioid.toString().trim() == "Sistema" ? TipoUsuario.Sistema.toString()
+                                : this.usuario.grupoUsuarioid.toString().trim() == "Master" ? TipoUsuario.Master.toString()
+                                : this.usuario.grupoUsuarioid.toString() == "Usuario" ? TipoUsuario.Usuario.toString() : null;
     
     
 
@@ -88,8 +90,8 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
     })
   }
 
-  cancel(): void{
-    this.router.navigate(['/usuarios'])
+  fecharPopup(): void{
+    this.dialogRef.close();
   }
 
   buscarEmpresa() {

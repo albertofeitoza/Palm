@@ -2,14 +2,13 @@ import { TipoUsuario, TipoUsuarioSistema } from './../../../models/usuarios/enum
 import { Endpoint } from './../../../Negocio/Endpoint';
 import { ServiceAllService } from './../../../services/service-all.service';
 import { UtilService } from './../../../services/util.service';
-import { Observable } from 'rxjs';
-import { EmpresaService } from './../../../services/empresa.service';
 import { Empresa } from './../../../models/empresa/ModelEmpresa';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UsuarioService } from './../../../services/usuario.service';
 import { Usuario } from '../../../models/usuarios/modelLogin';
 import { Component, OnInit } from '@angular/core';
-import { query } from '@angular/animations';
+import { MatDialogRef } from '@angular/material/dialog';
+import { UsuarioReadComponent } from '../usuario-read/usuario-read.component';
+
 
 
 @Component({
@@ -25,58 +24,61 @@ export class UsuarioUpdateComponent implements OnInit {
   userAutenticado : boolean = false; 
   
   comboTipousuario = [];
+  UsuarioReadComponent: any;
 
 
   constructor(private usarioService : ServiceAllService<Usuario>,
              private empresaService : ServiceAllService<Empresa>,
              private utilService: UtilService,
              private router : Router,
-             private route: ActivatedRoute
+             public dialogRef : MatDialogRef<UsuarioUpdateComponent>,
              ) { }
 
   ngOnInit(): void {
     this.buscarUsuario();
     this.buscarEmpresa();
+
   }
 
   updateUsuario() : void {
-  let grpId = Number(localStorage.getItem("grpUs"));
-  this.usuario.grupoUsuarioId = this.usuario.grupoUsuarioId == "Administrador" ? TipoUsuario.Administrador.toString() 
-                                   :this.usuario.grupoUsuarioId == "Sistema" ? TipoUsuario.Sistema.toString()
-                                   : this.usuario.grupoUsuarioId == "Usuario" ? TipoUsuario.Usuario.toString()
-                                   : this.usuario.grupoUsuarioId == "Master" ? TipoUsuario.Master.toString()
-                                   : null 
-    
-      this.usarioService.read(Endpoint.Usuario).subscribe(user => {
-        user = user;
-                              
-        let ativo = user.filter(x => x.login.toLowerCase() == this.usuario.login.toLowerCase() && x.empresaid == this.usuario.empresaid && x.id == this.usuario.id);
-     
-          if (ativo.length > 0 )
-          {
-              this.usarioService.update(this.usuario, Endpoint.Usuario).subscribe(() => {
-                this.utilService.showMessage("Usuário Atualizado com Sucesso!")
-                this.router.navigate(['/usuarios'])
-              })
-              user =  new Array();
-            }else if(grpId == TipoUsuario.Administrador){
-                
-              this.usarioService.update(this.usuario, Endpoint.Usuario).subscribe(() => {
-                  this.utilService.showMessage("Usuário Atualizado com Sucesso!")
-                  this.router.navigate(['/usuarios'])
-                })
-                user =  new Array();
-            }else{
+  
+        let grpId = Number(localStorage.getItem("grpUs"));
+        this.usuario.grupoUsuarioid = this.usuario.grupoUsuarioid == "Administrador" ? TipoUsuario.Administrador.toString() 
+                                        :this.usuario.grupoUsuarioid == "Sistema" ? TipoUsuario.Sistema.toString()
+                                        : this.usuario.grupoUsuarioid == "Usuario" ? TipoUsuario.Usuario.toString()
+                                        : this.usuario.grupoUsuarioid == "Master" ? TipoUsuario.Master.toString()
+                                        : null 
+          
+            this.usarioService.read(Endpoint.Usuario).subscribe(user => {
+              user = user;
+                                    
+              let ativo = user.filter(x => x.login.toLowerCase() == this.usuario.login.toLowerCase() && x.empresaid == this.usuario.empresaid && x.id == this.usuario.id);
+          
+                if (ativo.length > 0 )
+                {
+                    this.usarioService.update(this.usuario, Endpoint.Usuario).subscribe(() => {
+                      this.utilService.showMessage("Usuário Atualizado com Sucesso!")
+                      this.fecharPopup();
+                      this.utilService.atualizaRota();
+                    })
+                    user =  new Array();
+                  }else if(grpId == TipoUsuario.Administrador){
+                      
+                    this.usarioService.update(this.usuario, Endpoint.Usuario).subscribe(() => {
+                        this.utilService.showMessage("Usuário Atualizado com Sucesso!")
+                        this.fecharPopup();
+                        this.utilService.atualizaRota();
+                        
+                      })
+                      user =  new Array();
+                  }else{
 
-              this.utilService.showMessage('A empresa do Usuário não pode ser Alterada', false);
-              this.usuario.login =  null; 
-              user =  new Array();
-          }
-      })
-  }
+                    this.utilService.showMessage('A empresa do Usuário não pode ser Alterada', false);
+                    this.usuario.login =  null; 
+                    user =  new Array();
+                }
+            })
 
-  cancel(): void{
-    this.router.navigate(['/usuarios'])
   }
 
   buscarEmpresa() {
@@ -89,30 +91,38 @@ export class UsuarioUpdateComponent implements OnInit {
 
       this.empresa =  new Array()
 
-      emp.forEach(empresasCarregadas => {
+       grpId==TipoUsuario.Administrador ? this.empresa = emp : 
+                      grpId == TipoUsuario.Master && emp.filter(x => x.id == Number(empId))
+                      || grpId == TipoUsuario.Usuario && emp.filter(x => x.id == Number(empId))
+                      || emp.filter(x => x.empresaPai == Number(empId));
+                   
+    
+      
+    /*  emp.forEach(empresasCarregadas => {
         
         if(grpId == TipoUsuario.Administrador)
           this.empresa.push(empresasCarregadas)
         else if (grpId == TipoUsuario.Master && empId == empresasCarregadas.id.toString() || grpId == TipoUsuario.Usuario && empId == empresasCarregadas.id.toString() || empId == empresasCarregadas.empresaPai.toString())
             this.empresa.push(empresasCarregadas)
         });
+      */  
 
     });
   }
 
   buscarUsuario(){
-    const id = this.route.snapshot.paramMap.get('id')
-    this.usarioService.readById(id, Endpoint.Usuario).subscribe(usuario => {
+
+      this.usarioService.readById(this.dialogRef.id, Endpoint.Usuario).subscribe(usuario => {
       this.usuario = usuario;
 
-      let tipousuario = usuario.grupoUsuarioId;
-      this.usuario.grupoUsuarioId = this.usuario.grupoUsuarioId == TipoUsuario.Administrador.toString() ? "Administrador"
-                                   :this.usuario.grupoUsuarioId == TipoUsuario.Sistema.toString()  ? "Sistema"
-                                   : this.usuario.grupoUsuarioId == TipoUsuario.Usuario.toString()  ? "Usuario" 
-                                   : this.usuario.grupoUsuarioId == TipoUsuario.Master.toString()  ? "Master" 
+      let tipousuario = usuario.grupoUsuarioid;
+      this.usuario.grupoUsuarioid = this.usuario.grupoUsuarioid == TipoUsuario.Administrador.toString() ? "Administrador"
+                                   :this.usuario.grupoUsuarioid == TipoUsuario.Sistema.toString()  ? "Sistema"
+                                   : this.usuario.grupoUsuarioid == TipoUsuario.Usuario.toString()  ? "Usuario" 
+                                   : this.usuario.grupoUsuarioid == TipoUsuario.Master.toString()  ? "Master" 
                                    : null 
      
-     this.carregarComboTipoUsuario(this.usuario.grupoUsuarioId, tipousuario); 
+     this.carregarComboTipoUsuario(this.usuario.grupoUsuarioid, tipousuario); 
     });
   }
 
@@ -144,4 +154,11 @@ export class UsuarioUpdateComponent implements OnInit {
             }
       }
   }
+
+  fecharPopup(): void{
+    this.dialogRef.close();
+  }
+
+
+
 }
