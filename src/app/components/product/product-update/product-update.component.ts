@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ProductService } from './../../../services/product.service';
 import { Product } from '../../../models/produtos/product.model';
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 
 @Component({
@@ -27,10 +28,9 @@ product: Product = {
   
 
   constructor(
-              private router: Router,
               private utilService : UtilService,
-              private route: ActivatedRoute,
-              private ProdutoService : ServiceAllService<Product>
+              private ProdutoService : ServiceAllService<Product>,
+              public matdialogRef : MatDialogRef<ProductUpdateComponent>
               ) { }
 
 
@@ -44,19 +44,18 @@ product: Product = {
     this.product.criadoPor  = Number(localStorage.getItem("usId"));
       this.ProdutoService.update(this.product, Endpoint.Produto).subscribe(() => {
       this.utilService.showMessage("Produto Atualizado com Sucesso!")
-      this.router.navigate(['/products'])
+      this.utilService.atualizaRota();
+      this.fecharPopup();
     })
 
   }
 
-  cancel(): void {
-    this.router.navigate(['/products'])
+  fecharPopup(): void {
+    this.matdialogRef.close();
 
   }
   buscarProduto() : void {
-
-    const id = this.route.snapshot.paramMap.get('id')
-      this.ProdutoService.readById(id, Endpoint.Produto).subscribe(product => {
+      this.ProdutoService.readById(this.matdialogRef.id, Endpoint.Produto).subscribe(product => {
           this.product = product;
       })
   }  

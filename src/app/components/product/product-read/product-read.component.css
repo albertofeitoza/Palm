@@ -15,6 +15,7 @@ table{
 }
 
 
+
 .edit {
     margin-right: 15px;
 }
@@ -24,4 +25,7 @@ table{
 }
 .delete > i{
     color: #e35e6b;
+}
+.head{
+    margin-left: 15px;
 }

@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ProductService } from './../../../services/product.service';
 import { Product } from '../../../models/produtos/product.model';
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-product-delete',
@@ -24,29 +25,32 @@ export class ProductDeleteComponent implements OnInit {
   }
 
   constructor(private productService : ProductService,
-              private router : Router,
               private utilService : UtilService,
-              private route : ActivatedRoute,
-              private deleteProduto : ServiceAllService<Product> ) { }
+              private deleteProduto : ServiceAllService<Product>,
+              public dialogRef : MatDialogRef<ProductDeleteComponent> 
+              ) { }
 
   ngOnInit(): void {
-    
-    const id = this.route.snapshot.paramMap.get('id')
-    this.productService.readById(id).subscribe(product => {
-      this.product = product;
-    });
-
+    this.buscarProduto();
   }
+  
   deleteProduct():void{
-      this.deleteProduto.delete(this.product.id, Endpoint.Produto).subscribe(() => {
+      
+    this.deleteProduto.delete(Number(this.dialogRef.id), Endpoint.Produto).subscribe(() => {
         this.utilService.showMessage("Produto Excluído com Sucesso!")
-        this.router.navigate(['/products'])
+        this.utilService.atualizaRota();
       })
     
   }
 
-  cancel():void{
-    this.router.navigate(['/products'])
+  buscarProduto(){
+    this.productService.readById(this.dialogRef.id).subscribe(product => {
+      this.product = product;
+    });
+  }
+
+  fecharPopup():void{
+    this.dialogRef.close();
   }
 
 }

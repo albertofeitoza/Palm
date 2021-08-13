@@ -42,11 +42,9 @@ export class EmpresaDeleteComponent implements OnInit {
         {
           this.mensagem.showMessage("Empresa não pode ser excluida porque possui Dependências de usuários.", false)
         }    
-        else{
-            let grpId = Number(this.utilservice.Sessao().GrupoUsuario);
-          
-            if (grpId == TipoUsuario.Administrador){
-        
+        else
+        {
+            if (Number(this.utilservice.Sessao().GrupoUsuario) == TipoUsuario.Administrador){
               this.serviceEmpresa.delete(this.empresa.id, Endpoint.Empresa).subscribe(()=>{
                 this.mensagem.showMessage("Empresa excluida com sucesso !", false);
                this.utilservice.atualizaRota()

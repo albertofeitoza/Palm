@@ -138,7 +138,7 @@ export class EmpresaReadComponent implements OnInit {
         const scrollStrategy = this.overlay.scrollStrategies.reposition();
         const dialogRef = this.dialog.open(EmpresaDeleteComponent, {
           width : '500',
-          height : '350px',
+          height : '200px',
           scrollStrategy,
           id
 
@@ -150,9 +150,6 @@ export class EmpresaReadComponent implements OnInit {
       this._utilService.showMessage("Você não possui permissão para criação de empresas",true);
     }
     
-
-
-
   }
 
 }

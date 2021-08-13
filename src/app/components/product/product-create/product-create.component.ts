@@ -10,6 +10,7 @@ import { ProductService } from './../../../services/product.service';
 import { Product } from '../../../models/produtos/product.model';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-product-create',
@@ -35,7 +36,8 @@ export class ProductCreateComponent implements OnInit {
               private utilService : UtilService,
               private router : Router,
               private ProdutoEmpresa : ServiceAllService<Product>,
-              private ServiceEmpresa : ServiceAllService<Empresa>
+              private ServiceEmpresa : ServiceAllService<Empresa>,
+              public matDialogref : MatDialogRef<ProductCreateComponent>
                ) { }
 
   ngOnInit(): void {
@@ -57,8 +59,8 @@ export class ProductCreateComponent implements OnInit {
       if (ativo.length == 0)
       {
         this.ProdutoEmpresa.create(this.product, Endpoint.Produto).subscribe(() => {
-          this.utilService.showMessage('Produto Criado!');
-          this.router.navigate(['products']);
+          this.utilService.showMessage('o Produto Criado!');
+          this.utilService.atualizaRota()
           })
       
       }else{
@@ -69,9 +71,8 @@ export class ProductCreateComponent implements OnInit {
     
   }
 
-  cancel() : void {
-
-    this.router.navigate(['products'])
+  fecharPopup() : void {
+    this.matDialogref.close();
   }
 
   buscarProduto(){

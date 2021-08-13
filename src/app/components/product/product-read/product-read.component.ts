@@ -8,6 +8,12 @@ import { ProductService } from './../../../services/product.service';
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../../../models/produtos/product.model';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { TipoUsuario } from 'src/app/models/usuarios/enumUsuarios';
+import { MatDialog } from '@angular/material/dialog';
+import { Overlay } from '@angular/cdk/overlay';
+import { ProductCreateComponent } from '../product-create/product-create.component';
+import { ProductUpdateComponent } from '../product-update/product-update.component';
+import { ProductDeleteComponent } from '../product-delete/product-delete.component';
 
 @Component({
   selector: 'app-product-read',
@@ -24,16 +30,81 @@ displayedColumns = ['id','nome', 'valor','empresaid','bloqueado','action']
 
   constructor(private router : Router,
               private serviceProduto : ServiceAllService<Product>,
-              private serviceEmpresa : ServiceAllService<Empresa>
+              private serviceEmpresa : ServiceAllService<Empresa>,
+              private _utilService : UtilService,
+              public dialog : MatDialog, 
+              private overlay : Overlay
              ) { }
 
   ngOnInit(): void {
       this.buscarProduto()
   }
 
-  navigateToProdutoCreate() : void {
-    this.router.navigate(['products/create'])
+  addProduto(){
+
+    
+    if(this._utilService.Sessao().GrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().GrupoUsuario == TipoUsuario.Administrador)
+    {
+        const scrollStrategy = this.overlay.scrollStrategies.reposition();
+        const dialogRef = this.dialog.open(ProductCreateComponent, {
+          width : '500',
+          height : '400px',
+          scrollStrategy,
+
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+        });
+    }else{
+      this._utilService.showMessage("Você não possui permissão para criação de empresas",true);
+    }
+
+
   }
+
+  editarProduto(id : string){
+    
+    if(this._utilService.Sessao().GrupoUsuario == TipoUsuario.Administrador)
+    {
+        const scrollStrategy = this.overlay.scrollStrategies.reposition();
+        const dialogRef = this.dialog.open(ProductUpdateComponent, {
+          width : '400px',
+          height : '360px',
+          scrollStrategy,
+          id
+
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+        });
+    }else{
+      this._utilService.showMessage("Você não possui permissão para associar produtos a uma empresa",true);
+    }
+  }
+
+
+  excluirProdutoEmpresa(id : string){
+
+    if(this._utilService.Sessao().GrupoUsuario == TipoUsuario.Administrador)
+    {
+        const scrollStrategy = this.overlay.scrollStrategies.reposition();
+        const dialogRef = this.dialog.open(ProductDeleteComponent, {
+          width : '400px',
+          height : '240px',
+          scrollStrategy,
+          id
+
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+        });
+    }else{
+      this._utilService.showMessage("Você não possui permissão para associar produtos a uma empresa",true);
+    }
+
+
+  }
+
 
   buscarProduto() : void {
 
