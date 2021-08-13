@@ -68,8 +68,8 @@ export class LoginService {
             this.mostrarLoginEmitter.emit(false)
             this.usuarioAutenticado = true;
             this.router.navigate(['/']);
-                        
-            localStorage.setItem("tId", response.token)
+
+            localStorage.setItem("tId", response.token )
             localStorage.setItem("usId", response.id)
             localStorage.setItem("grpUs", response.grupoUsuarioid)
            

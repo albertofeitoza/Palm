@@ -6,6 +6,7 @@ import { ServiceAllService } from './../../../services/service-all.service';
 import { Empresa } from './../../../models/empresa/ModelEmpresa';
 import { Component, OnInit } from '@angular/core';
 import { Usuario } from 'src/app/models/usuarios/modelLogin';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-empresa-delete',
@@ -18,9 +19,9 @@ export class EmpresaDeleteComponent implements OnInit {
   empresa : Empresa
   constructor(private serviceEmpresa : ServiceAllService<Empresa>,
               private serviceUsuario : ServiceAllService<Usuario>,
-              private router : Router,
-              private route : ActivatedRoute,
-              private mensagem : UtilService
+              private mensagem : UtilService,
+              public dialogRef : MatDialogRef<EmpresaDeleteComponent>,
+              private utilservice : UtilService
 
             ) { }
 
@@ -42,31 +43,31 @@ export class EmpresaDeleteComponent implements OnInit {
           this.mensagem.showMessage("Empresa não pode ser excluida porque possui Dependências de usuários.", false)
         }    
         else{
-            let grpId = Number(localStorage.getItem("grpUs"));
+            let grpId = Number(this.utilservice.Sessao().GrupoUsuario);
           
             if (grpId == TipoUsuario.Administrador){
         
               this.serviceEmpresa.delete(this.empresa.id, Endpoint.Empresa).subscribe(()=>{
                 this.mensagem.showMessage("Empresa excluida com sucesso !", false);
-                this.router.navigate(['/empresa'])
+               this.utilservice.atualizaRota()
               })
             }
               else{
                 this.mensagem.showMessage("Permissão de exclusão negada !", false);
-                this.router.navigate(['/empresa'])
+                this.utilservice.atualizaRota()
               }
         }
     });
   }
 
-  cancel(){
-    this.router.navigate(['/empresa'])
+  fecharPopup(){
+    this.dialogRef.close();
   }
 
    BuscarEmpresa(){
-    const id = this.route.snapshot.paramMap.get('id');
     
-    this.serviceEmpresa.readById(id, Endpoint.Empresa).subscribe(emp => {
+    
+    this.serviceEmpresa.readById(this.dialogRef.id, Endpoint.Empresa).subscribe(emp => {
       this.empresa = emp;
 
     })

@@ -106,8 +106,8 @@ export class UsuarioReadComponent implements OnInit {
     {
         const scrollStrategy = this.overlay.scrollStrategies.reposition();
         const dialogRef = this.dialog.open(UsuarioDeleteComponent, {
-          width : '5  00px',
-          height : '205px',
+          width : '500px',
+          height : '260px',
           scrollStrategy,
           id
 

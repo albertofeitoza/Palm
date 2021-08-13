@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Empresa } from './../../../models/empresa/ModelEmpresa';
 import { Component, OnInit } from '@angular/core';
 import { cnpj } from 'cpf-cnpj-validator';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-empresa-update',
@@ -17,15 +18,15 @@ export class EmpresaUpdateComponent implements OnInit {
 
   empresa : Empresa;
   usuariologado : boolean;
-  constructor(private router : Router,
-              private route: ActivatedRoute,
+  constructor(
               private empresaService : ServiceAllService<Empresa>,
-              private mensagem : UtilService
+              private utilservice : UtilService,
+              public dialog : MatDialogRef<EmpresaUpdateComponent>
               ) { }
 
   ngOnInit(): void {
-  
-  if (Number(localStorage.getItem("grpUs")) == TipoUsuario.Administrador)
+ 
+  if (Number(this.utilservice.Sessao().GrupoUsuario) == TipoUsuario.Administrador)
      this.usuariologado = true;
   
   this.ObterEmpresa();
@@ -35,38 +36,37 @@ export class EmpresaUpdateComponent implements OnInit {
 
   atualizarEmpresa() : void {
     
-    let grpId = Number(localStorage.getItem("grpUs"));
+    let grpId = Number(this.utilservice.Sessao().GrupoUsuario);
     if(grpId == TipoUsuario.Usuario)
     {
-      this.mensagem.showMessage("Você não possui permissão para editar o cadastro de empresas", false)
+      this.utilservice.showMessage("Você não possui permissão para editar o cadastro de empresas", false)
 
     }else
     {
      if (cnpj.isValid(this.empresa.cnpj)){
                try {
                         this.empresaService.update(this.empresa, Endpoint.Empresa).subscribe(()=>{
-                        this.mensagem.showMessage("Empresa atualizada com sucesso", false)
-                        this.router.navigate(['/empresa'])
+                        this.utilservice.showMessage("Empresa atualizada com sucesso", false)
+                        this.utilservice.atualizaRota();
                       });
 
                     } catch (error) {
-                      this.mensagem.showMessage("Erro na atualização dos dados " + error, true);
+                      this.utilservice.showMessage("Erro na atualização dos dados " + error, true);
                     }
 
       }else{
-        this.mensagem.showMessage("Cnpj Inválido " , false);
+        this.utilservice.showMessage("Cnpj Inválido " , false);
       }
       }
   }
 
-  cancel(){
-    this.router.navigate(['/empresa'])
+  fecharPopup(){
+    this.dialog.close();
   }
 
   
   ObterEmpresa() {
-    const id = this.route.snapshot.paramMap.get('id')
-    this.empresaService.readById(id, Endpoint.Empresa).subscribe(emp => {
+    this.empresaService.readById(this.dialog.id, Endpoint.Empresa).subscribe(emp => {
       this.empresa = emp;
     })    
        

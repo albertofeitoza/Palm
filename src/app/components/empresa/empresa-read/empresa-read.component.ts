@@ -8,6 +8,12 @@ import { Empresa } from './../../../models/empresa/ModelEmpresa';
 import { Component, OnInit } from '@angular/core';
 import { elementAt } from 'rxjs/operators';
 import { TipoUsuarioSistema } from 'src/app/models/usuarios/enumUsuarios';
+import { MatDialog } from '@angular/material/dialog';
+import { EmpresaCreateComponent } from '../empresa-create/empresa-create.component';
+import { UtilService } from 'src/app/services/util.service';
+import { Overlay } from '@angular/cdk/overlay';
+import { EmpresaUpdateComponent } from '../empresa-update/empresa-update.component';
+import { EmpresaDeleteComponent } from '../empresa-delete/empresa-delete.component';
 
 @Component({
   selector: 'app-empresa-read',
@@ -24,7 +30,10 @@ export class EmpresaReadComponent implements OnInit {
   displayedColumns = ['id','cnpj', 'razaoSocial','nomeFantasia','inscricaoEstadual','inscricaoMunicipal','bloqueado','action']  
 
   constructor(private router : Router,
-              private serviceEmpresa : ServiceAllService<Empresa>
+              private serviceEmpresa : ServiceAllService<Empresa>,
+              public dialog : MatDialog,
+              private _utilService : UtilService,
+              private overlay : Overlay
              ) { }
 
   ngOnInit(): void {
@@ -78,8 +87,72 @@ export class EmpresaReadComponent implements OnInit {
     })
   }
 
-  navigateToEmpresaCreate() : void {
-    this.router.navigate(['empresa/create'])
+  addEmpresa(){
+
+    if(this._utilService.Sessao().GrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().GrupoUsuario == TipoUsuario.Administrador)
+    {
+        const scrollStrategy = this.overlay.scrollStrategies.reposition();
+        const dialogRef = this.dialog.open(EmpresaCreateComponent, {
+          width : '700px',
+          height : '730px',
+          scrollStrategy
+
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+        });
+    }else{
+      this._utilService.showMessage("Você não possui permissão para criação de empresas",true);
+    }
+
+  }
+
+
+  editarEmpresa(id : string){
+
+    if(this._utilService.Sessao().GrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().GrupoUsuario == TipoUsuario.Administrador)
+    {
+        const scrollStrategy = this.overlay.scrollStrategies.reposition();
+        const dialogRef = this.dialog.open(EmpresaUpdateComponent, {
+          width : '700px',
+          height : '750px',
+          scrollStrategy,
+          id
+
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+        });
+    }else{
+      this._utilService.showMessage("Você não possui permissão para criação de empresas",true);
+    }
+
+  }
+
+
+
+  excluirEmpresa(id : string){
+
+    if(this._utilService.Sessao().GrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().GrupoUsuario == TipoUsuario.Administrador)
+    {
+        const scrollStrategy = this.overlay.scrollStrategies.reposition();
+        const dialogRef = this.dialog.open(EmpresaDeleteComponent, {
+          width : '500',
+          height : '350px',
+          scrollStrategy,
+          id
+
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+        });
+    }else{
+      this._utilService.showMessage("Você não possui permissão para criação de empresas",true);
+    }
+    
+
+
+
   }
 
 }

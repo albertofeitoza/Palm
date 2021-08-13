@@ -41,14 +41,14 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
               private router : Router) { }
 
   ngOnInit(): void {
-      let grpId = Number(localStorage.getItem("grpUs"));
+      let grpId = Number(this.utilService.Sessao().GrupoUsuario);
       this.alimentarCombo();
       this.buscarEmpresa();
   }
   
   createUsuario() : void {
     
-    this.usuario.criadoPor  = Number(localStorage.getItem("usId"));
+    this.usuario.criadoPor  = Number(this.utilService.Sessao().UsuarioId);
     this.usuario.dtCriacao = new Date;
    
     this.usuario.grupoUsuarioid = this.usuario.grupoUsuarioid.toString().trim() == "Administrador" ? TipoUsuario.Administrador.toString() 
@@ -75,7 +75,7 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
                 if (!emp.bloqueado){
                   this.serviceUsuario.create(this.usuario, Endpoint.Usuario).subscribe(() => {
                     this.utilService.showMessage('Usuário Criado!');
-                    this.router.navigate(['usuarios']);
+                    this.utilService.atualizaRota()
                   });
                 }
                 else
@@ -96,8 +96,8 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
 
   buscarEmpresa() {
    
-    let empId = localStorage.getItem("empId");
-    let grpId = Number(localStorage.getItem("grpUs"));
+    let empId = this.utilService.Sessao().IdEmpresa
+    let grpId = Number(this.utilService.Sessao().GrupoUsuario);
 
     this.serviceEmpresa.read(Endpoint.Empresa).subscribe(emp => {
         emp = emp; 
@@ -116,7 +116,7 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
 
   alimentarCombo() : void  {
 
-    let grpId = Number(localStorage.getItem("grpUs"));
+    let grpId = Number(this.utilService.Sessao().GrupoUsuario);
 
     for (var tipo in TipoUsuario) {
       if (TipoUsuario.hasOwnProperty(tipo) &&
@@ -135,9 +135,9 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
   }
 
   createGrupoUsuario(){
-    this.criargrupousuario.criadoPor  = Number(localStorage.getItem("usId"));
+    this.criargrupousuario.criadoPor  = Number(this.utilService.Sessao().UsuarioId);
     this.criargrupousuario.dtCriacao = new Date;
-    this.criargrupousuario.empresaId = Number(localStorage.getItem("empId"));
+    this.criargrupousuario.empresaId = Number(this.utilService.Sessao().IdEmpresa);
 
       this.serviceGrupoUsuario.create(this.criargrupousuario, Endpoint.GrupoUsuario).subscribe(() => {
         this.utilService.showMessage('Grupo de Usuário Criado!');

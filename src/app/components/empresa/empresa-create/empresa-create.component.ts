@@ -9,6 +9,7 @@ import { ContatoService } from './../../../services/contato.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { cnpj } from 'cpf-cnpj-validator';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-empresa-create',
@@ -39,7 +40,9 @@ empresa : Empresa = {
 
   constructor(private utilService : UtilService,
               private router : Router,
-              private servicoEmpresa : ServiceAllService<Empresa>
+              private servicoEmpresa : ServiceAllService<Empresa>,
+              public dialofRef : MatDialogRef<EmpresaCreateComponent>,
+   
 
 
               )
@@ -51,9 +54,9 @@ empresa : Empresa = {
 
   cadastrarEmpresa(){
     
-    let grpId = Number(localStorage.getItem("grpUs"));
-    let empPai = Number(localStorage.getItem("empId"));
-    this.empresa.criadoPor  = Number(localStorage.getItem("usId"));
+    let grpId = Number(this.utilService.Sessao().GrupoUsuario);
+    let empPai = Number(this.utilService.Sessao().IdEmpresa);
+    this.empresa.criadoPor  = Number(this.utilService.Sessao().UsuarioId);
     this.empresa.dtCriacao = new Date;
     this.empresa.empresaPai = empPai;
        
@@ -84,7 +87,8 @@ empresa : Empresa = {
                               this.servicoEmpresa.update(emp,Endpoint.Empresa).subscribe(() => {})
                          
                           this.utilService.showMessage("Empresa cadastrada com sucesso!",false);
-                          this.router.navigate(['empresa']);
+                          this.utilService.atualizaRota();
+                          this.empresa = null;
                         })
                 }else if (grpId == TipoUsuario.Master && retornomaster.filter(x => x.empresaPai == empPai).length > 0)
                 {
@@ -99,7 +103,8 @@ empresa : Empresa = {
                               this.servicoEmpresa.update(emp,Endpoint.Empresa).subscribe(() => {})
                        
                             this.utilService.showMessage("Empresa cadastrada com sucesso!",false);
-                            this.router.navigate(['empresa']);
+                            this.utilService.atualizaRota();
+                            this.empresa = null;
                           })
                 }else{
                   this.utilService.showMessage("Para criação de uma empresa precisa está logado com a Matriz.!",false);
@@ -115,8 +120,8 @@ empresa : Empresa = {
     }
   }
 
-  cancel(){
-    this.router.navigate(['empresa'])
+  fecharPopup(){
+    this.dialofRef.close()
   }
 
 }
