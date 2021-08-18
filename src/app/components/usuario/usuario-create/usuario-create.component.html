@@ -22,7 +22,7 @@
                 [(ngModel)]="usuario.cracha" name="cracha">
             </mat-form-field>
 
-            <mat-form-field>
+            <mat-form-field *ngIf="tipoLogin">
                 <input matInput placeholder="Usuario de Sistema">
                     <input name="usuariosisteja" [(ngModel)]="usuario.bolSistema" [checked]="usuario.bolSistema" type="checkbox">
             </mat-form-field>

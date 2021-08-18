@@ -1,4 +1,4 @@
-export interface Unidade {
+export class Unidade {
     id? : number
     dtCriacao : Date
     nomeUnidade : string

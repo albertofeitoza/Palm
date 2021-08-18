@@ -13,6 +13,8 @@ import { Overlay } from '@angular/cdk/overlay';
 import { AgendaUpdateComponent } from '../agenda-update/agenda-update.component';
 import { AgendaDeleteComponent } from '../agenda-delete/agenda-delete.component';
 import { TipoUsuario } from 'src/app/models/usuarios/enumUsuarios';
+import { UsuarioCreateComponent } from 'src/app/components/usuario/usuario-create/usuario-create.component';
+import { AgendaCadastroUnidadeComponent } from '../agenda-cadastro-unidade/agenda-cadastro-unidade.component';
 
 
 @Component({
@@ -29,13 +31,13 @@ export class AgendaReadComponent implements OnInit {
   constructor(
               public dialog: MatDialog,
               public overlay : Overlay,
-              private utilService : UtilService,
+              private servico : UtilService,
               private _repAgenda : ServiceAllService<AgendaDto>,
-              private _utilService : UtilService
+
              ) { }
 
   ngOnInit(): void {
-    this.utilService.AtualizarMenu(Aplicacao.Agenda,'app_registration','');
+    this.servico.AtualizarMenu(Aplicacao.Agenda,'app_registration','');
     this.buscarAgenda();
   }
 
@@ -45,62 +47,51 @@ export class AgendaReadComponent implements OnInit {
     let filtroAgenda = (<HTMLSelectElement>document.getElementById('busca')).value;
 
     this._repAgenda.read(Endpoint.Agenda).subscribe(ag => {
-      this.agenda = filtroAgenda == null ? ag.filter(x => x.empresaId.toString() == this.utilService.Sessao().IdEmpresa) 
-                    :  ag.filter(x => x.nomeAgenda.toLowerCase().includes(filtroAgenda.toLowerCase()) && x.empresaId.toString() == this.utilService.Sessao().IdEmpresa)
+      this.agenda = filtroAgenda == null ? ag.filter(x => x.empresaId.toString() == this.servico.Sessao().IdEmpresa) 
+                    :  ag.filter(x => x.nomeAgenda.toLowerCase().includes(filtroAgenda.toLowerCase()) && x.empresaId.toString() == this.servico.Sessao().IdEmpresa)
     });
   }
 
   addNovaAgenda(): void {
    
-    if(this._utilService.Sessao().GrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().GrupoUsuario == TipoUsuario.Administrador)
+    if(this.servico.Sessao().GrupoUsuario == TipoUsuario.Master || this.servico.Sessao().GrupoUsuario == TipoUsuario.Administrador)
     {
-        const scrollStrategy = this.overlay.scrollStrategies.reposition();
-        const dialogRef = this.dialog.open(AgendaCreateComponent, {
-          width : '700px',
-          height : '900px',
-          scrollStrategy
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          console.log(`Dialog result: ${result}`);
-        });
+      this.servico.Popup("0",AgendaCreateComponent, '700px','900px' );
     }else{
-      this._utilService.showMessage("Solicitar ao um Usuário Master para criar Nova Agenda!",true);
+      this.servico.showMessage("Solicitar ao um Usuário Master para criar Nova Agenda!",true);
     }
   }
 
   AtualizarAgenda(id : string): void {
-    if(this._utilService.Sessao().GrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().GrupoUsuario == TipoUsuario.Administrador)
+    if(this.servico.Sessao().GrupoUsuario == TipoUsuario.Master || this.servico.Sessao().GrupoUsuario == TipoUsuario.Administrador)
     {
-        const scrollStrategy = this.overlay.scrollStrategies.reposition();
-        const dialogRef = this.dialog.open(AgendaUpdateComponent , {
-          width : '30%',
-          height : '80%',
-          scrollStrategy,
-          id
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          console.log(`Dialog result: ${result}`);
-        });
+      this.servico.Popup(id, AgendaUpdateComponent, '30%','80%' )
+     
       }else{
-        this._utilService.showMessage("Solicitar ao um Usuário Master para Editar os  dados da Agenda!",true);
+        this.servico.showMessage("Solicitar ao um Usuário Master para Editar os  dados da Agenda!",true);
       }   
   }
 
   ExcluirAgenda(id : string): void {
-      if(this._utilService.Sessao().GrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().GrupoUsuario == TipoUsuario.Administrador)
+      
+    if(this.servico.Sessao().GrupoUsuario == TipoUsuario.Master || this.servico.Sessao().GrupoUsuario == TipoUsuario.Administrador)
       {
-          const scrollStrategy = this.overlay.scrollStrategies.reposition();
-          const dialogRef = this.dialog.open(AgendaDeleteComponent , {
-            width : '30%',
-            height : '25%',
-            scrollStrategy,
-            id,
-          });
-          dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
-          });
-    }else{
-      this._utilService.showMessage("Solicitar ao um Usuário Master para Excluir a Agenda!",true);
-    }
+        this.servico.Popup(id, AgendaDeleteComponent,'30%','25%');
+      }
+      else
+      {
+        this.servico.showMessage("Solicitar ao um Usuário Master para Excluir a Agenda!",true);
+      }
   }
+
+
+  addUnidade(){
+    
+    if(this.servico.Sessao().GrupoUsuario == TipoUsuario.Master || this.servico.Sessao().GrupoUsuario == TipoUsuario.Administrador)
+      this.servico.Popup("0", AgendaCadastroUnidadeComponent, "800px", "400px", )
+    else
+      this.servico.showMessage("Solicitar ao um Usuário Master cadastrar a Unidade",true);
+  }
+
+
 }

@@ -4,9 +4,14 @@ import { ObjetoToken } from './../models/Token/ObjetoToken';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, EMPTY } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { AbstractControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TipoUsuario } from '../models/usuarios/enumUsuarios';
+import { Overlay } from '@angular/cdk/overlay';
+import { MatDialog } from '@angular/material/dialog';
+import { isNull } from '@angular/compiler/src/output/output_ast';
+import { isNullOrUndefined } from 'util';
 
 
 @Injectable({
@@ -17,7 +22,9 @@ export class UtilService {
   constructor(private snackbar : MatSnackBar,
              private http : HttpClient,
              private headerService : HeaderService,
-             private router : Router
+             private router : Router,
+             public overlay : Overlay,
+             public dialog : MatDialog
 
              ) { }
 
@@ -81,5 +88,19 @@ export class UtilService {
       });
   }
 
+  Popup(id : string, T : any, largura : string, altura: string ): void {
+   
+    const scrollStrategy = this.overlay.scrollStrategies.reposition();
+    const dialogRef = this.dialog.open(T, {
+        width : largura,
+        height : altura,
+        scrollStrategy,
+        id
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+      });
+
+  }
 
 }

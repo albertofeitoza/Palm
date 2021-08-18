@@ -72,6 +72,7 @@ import { AgendaDeleteComponent } from './Aplicacoes/agenda/agenda-delete/agenda-
 import { AgendaCreateComponent } from './Aplicacoes/agenda/agenda-create/agenda-create.component';
 import { AgendaReadComponent } from './Aplicacoes/agenda/agenda-read/agenda-read.component';
 import { HomeAgendaComponent } from './Aplicacoes/agenda/home-agenda/home-agenda.component';
+import { AgendaCadastroUnidadeComponent } from './Aplicacoes/agenda/agenda-cadastro-unidade/agenda-cadastro-unidade.component';
 
 
 @NgModule({
@@ -110,6 +111,7 @@ import { HomeAgendaComponent } from './Aplicacoes/agenda/home-agenda/home-agenda
     AgendaCreateComponent,
     AgendaReadComponent,
     HomeAgendaComponent,
+    AgendaCadastroUnidadeComponent,
   
     
   ],

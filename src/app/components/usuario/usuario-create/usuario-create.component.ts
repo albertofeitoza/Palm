@@ -20,6 +20,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class UsuarioCreateComponent implements OnInit {
 
+tipoLogin : boolean = false;
 empresa : Empresa[];
 
 dadosEmpresa : Empresa;
@@ -42,6 +43,10 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
 
   ngOnInit(): void {
       let grpId = Number(this.utilService.Sessao().GrupoUsuario);
+      
+      if (grpId == TipoUsuario.Administrador)
+         this.tipoLogin=true;
+
       this.alimentarCombo();
       this.buscarEmpresa();
   }
