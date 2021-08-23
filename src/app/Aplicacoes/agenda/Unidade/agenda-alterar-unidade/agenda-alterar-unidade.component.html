@@ -1,0 +1,31 @@
+<mat-card>
+    <mat-card-title>Alterar Unidade</mat-card-title>
+        <form>
+
+            <mat-form-field>
+                <input matInput placeholder="Id" 
+                [(ngModel)]="unidade.id" name="id" disabled = "true">
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Nome Unidade" 
+                [(ngModel)]="unidade.nomeUnidade" name="nomeUnidade">
+            </mat-form-field>
+
+            
+            <mat-form-field>
+                <input matInput placeholder="bloqueado">
+                    <input name="bloqueado" [(ngModel)]="unidade.bloqueado" [checked]="unidade.bloqueado" type="checkbox">
+            </mat-form-field>
+
+        </form>
+
+        <button *ngIf="unidade.nomeUnidade" mat-raised-button (click)="editarUnidade()" color="primary" > 
+            Salvar
+        </button>
+        
+        <button mat-raised-button (click)="fecharPopup()" color="primary" > 
+          Sair
+        </button>
+       
+</mat-card>

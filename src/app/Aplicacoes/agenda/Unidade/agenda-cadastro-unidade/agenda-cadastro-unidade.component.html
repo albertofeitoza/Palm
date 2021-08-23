@@ -37,13 +37,12 @@
                 <mat-card-title class="titleCard" >Unidades</mat-card-title>
 
                 <div class="mat-elevation-z3">
-
         
-                    <span class="botaoBusca" (click)="buscarUnidade()">
+                    <span class="botaoBusca" (click)="selecionarUnidade($event)">
                         <i class="material-icons">search</i>
                     </span>
             
-                    <input class="textBusca"  name="busca" id="txtbusca" type="text" value="">
+                    <input class="textBusca"  name="busca" id="txtbusca" type="text" (keypress)="selecionarUnidade($event)" value="">
 
                     <a (click)="cadUnidade()" class="cadUnidade" >
                       <i class="material-icons">add</i>
@@ -74,12 +73,12 @@
                         <ng-container matColumnDef="bloqueado">
                           <th mat-header-cell *matHeaderCellDef>Status</th>
                             <td mat-cell *matCellDef="let row">
-                              <div *ngIf="row.bloqueado == 'Sim'" >
+                              <div *ngIf="row.bloqueado" >
                                 <i class="material-icons">
                                   lock
                                 </i>
                               </div>
-                              <div *ngIf="row.bloqueado == 'Não'" >
+                              <div *ngIf="!row.bloqueado" >
                                 <i class="material-icons">  
                                   lock_open
                                 </i>

@@ -14,7 +14,8 @@ import { AgendaUpdateComponent } from '../agenda-update/agenda-update.component'
 import { AgendaDeleteComponent } from '../agenda-delete/agenda-delete.component';
 import { TipoUsuario } from 'src/app/models/usuarios/enumUsuarios';
 import { UsuarioCreateComponent } from 'src/app/components/usuario/usuario-create/usuario-create.component';
-import { AgendaCadastroUnidadeComponent } from '../agenda-cadastro-unidade/agenda-cadastro-unidade.component';
+import { AgendaCadastroUnidadeComponent } from '../Unidade/agenda-cadastro-unidade/agenda-cadastro-unidade.component';
+
 
 
 @Component({
@@ -88,7 +89,7 @@ export class AgendaReadComponent implements OnInit {
   addUnidade(){
     
     if(this.servico.Sessao().GrupoUsuario == TipoUsuario.Master || this.servico.Sessao().GrupoUsuario == TipoUsuario.Administrador)
-      this.servico.Popup("0", AgendaCadastroUnidadeComponent, "800px", "400px", )
+      this.servico.Popup("0", AgendaCadastroUnidadeComponent, "800px", "600px", )
     else
       this.servico.showMessage("Solicitar ao um Usuário Master cadastrar a Unidade",true);
   }
