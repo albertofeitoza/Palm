@@ -1,11 +1,11 @@
 
 
-export interface Sala {
+export class Sala {
     id? : null
     dtCriacao : Date
-    nomeSala : string
+    nomeSala     : string
     empresaid : number
-    Unidadeid : number
+    unidadeid : number
     criadoPor : number
     ativo : boolean
 }

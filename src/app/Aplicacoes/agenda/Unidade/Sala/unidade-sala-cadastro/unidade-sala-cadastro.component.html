@@ -1,0 +1,24 @@
+<mat-card>
+    <mat-card-title>Nova Sala</mat-card-title>
+        <form>
+            <mat-form-field>
+                <input matInput placeholder="Nome Sala" 
+                [(ngModel)]="sala.nomeSala" name="nomeSala">
+            </mat-form-field>
+            
+            <mat-form-field>
+                <input matInput placeholder="ativo">
+                    <input name="ativo" [(ngModel)]="sala.ativo" [checked]="sala.ativo" type="checkbox">
+            </mat-form-field>
+
+        </form>
+
+        <button mat-raised-button (click)="addSala()" color="primary" > 
+            Salvar
+        </button>
+        
+        <button mat-raised-button (click)="fecharPopup()" color="primary" > 
+          Sair
+        </button>
+        
+</mat-card>

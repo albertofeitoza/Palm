@@ -1,7 +1,6 @@
-<mat-tab-group>
-    
-    
-    <mat-tab label="Cadastro de Unidade">
+<mat-tab-group (selectedTabChange)="selecionaAba($event)" >
+        
+    <mat-tab label="Cadastro de Unidade" id="labelUnidade">
 
         <div class="container">
                     <mat-card *ngIf="novaUnidade">
@@ -11,13 +10,11 @@
                                     <input matInput placeholder="Nome Unidade" 
                                     [(ngModel)]="unidade.nomeUnidade" name="nomeUnidade">
                                 </mat-form-field>
-
                                 
                                 <mat-form-field>
                                     <input matInput placeholder="bloqueado">
                                         <input name="bloqueado" [(ngModel)]="unidade.bloqueado" [checked]="unidade.bloqueado" type="checkbox">
                                 </mat-form-field>
-
                             </form>
                     
                             <button *ngIf="unidade.nomeUnidade" mat-raised-button (click)="addUnidade()" color="primary" > 
@@ -29,46 +26,45 @@
                             </button>
                             <button mat-raised-button (click)="voltar()" color="primary" > 
                               Voltar
-                          </button>
+                            </button>
                     </mat-card>
 
 
             <mat-card *ngIf="!novaUnidade" >
-                <mat-card-title class="titleCard" >Unidades</mat-card-title>
+                
+              <mat-card-title class="titleCard" >Unidades</mat-card-title>
 
                 <div class="mat-elevation-z3">
         
-                    <span class="botaoBusca" (click)="selecionarUnidade($event)">
-                        <i class="material-icons">search</i>
-                    </span>
+                  <span class="botaoBusca" (click)="selecionarUnidade($event)">
+                    <i class="material-icons">search</i>
+                  </span>
             
-                    <input class="textBusca"  name="busca" id="txtbusca" type="text" (keypress)="selecionarUnidade($event)" value="">
+                  <input class="textBusca"  name="busca" id="txtbusca" type="text" (keypress)="selecionarUnidade($event)"  value="">
 
-                    <a (click)="cadUnidade()" class="cadUnidade" >
-                      <i class="material-icons">add</i>
-                    </a>
-                    
-                    <table class="tabelaUnidade" mat-table [dataSource]="unidades">
+                  <a (click)="cadUnidade()" class="cadUnidade" >
+                    <i class="material-icons">add</i>
+                  </a>
+                  <a (click)="testePopup()" class="cadUnidade" >
+                    <i class="material-icons">person</i>
+                  </a>
+
+                  <table class="tabelaUnidade" mat-table [dataSource]="unidades">
                         <!-- Id Column -->
-                        
                         <ng-container matColumnDef="id">
                           <th mat-header-cell *matHeaderCellDef>Id</th>
                           <td mat-cell id="idunidade" *matCellDef="let row">{{row.id}}</td>
                         </ng-container>
-                    
                         <!-- Name Column -->
                         <ng-container matColumnDef="dtCriacao">
                           <th mat-header-cell *matHeaderCellDef>Criado Em</th>
-                          <td mat-cell *matCellDef="let row">{{row.dtCriacao | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
+                          <td mat-cell *matCellDef="let row" >{{row.dtCriacao | date: 'dd/MM/yyyy'}}</td>
                         </ng-container>
-                        
                         <!-- Name Column -->
                         <ng-container matColumnDef="nomeUnidade">
                           <th mat-header-cell *matHeaderCellDef>Nome Unidade</th>
                           <td mat-cell *matCellDef="let row">{{row.nomeUnidade}}</td>
                         </ng-container>
-                  
-                       
                         <!-- status -->
                         <ng-container matColumnDef="bloqueado">
                           <th mat-header-cell *matHeaderCellDef>Status</th>
@@ -85,49 +81,116 @@
                               </div>
                             </td>
                           </ng-container>
-                  
                         
                         <!-- Coluna de Ações -->
                         <ng-container matColumnDef="action">
                           <th mat-header-cell *matHeaderCellDef>Ações</th>
                           <td mat-cell *matCellDef="let row">
-                              
-                              <a  (click)="AtualizarUnidade(row.id)" class="edit">
-                                  <i class="material-icons">
-                                      edit
-                                  </i>
+                           
+                            <a  (click)="AtualizarUnidade(row.id)" class="edit">
+                              <i class="material-icons">
+                                 edit
+                              </i>
                               </a>
-                              <a (click)="ExcluirUnidade(row.id)" class="delete">
-                                  <i class="material-icons">
-                                      delete
-                                  </i>
-                              </a>
+                            <a (click)="ExcluirUnidade(row.id)" class="delete">
+                              <i class="material-icons">
+                                delete
+                              </i>
+                            </a>
                               
                           </td>
                         </ng-container>
                     
                         <tr mat-header-row *matHeaderRowDef="Colunas"></tr>
-                        <tr mat-row *matRowDef="let row; columns: Colunas;"></tr>
-                    </table>
-            
-                  </div>
-                
-                
-                
-              
-
+                        <tr mat-row *matRowDef="let row; columns: Colunas;" (click)="UnidadeSelecionada(row.id)"></tr>
+                  </table>
+                </div>
             </mat-card>
         </div>
-
     </mat-tab>  
     
     
-    <mat-tab label="Cadastro de Sala">
+    <mat-tab *ngIf="unidadeSelecionada > 0" label="Cadastro de Sala">
+     
+      <mat-card>
+                
+        <mat-card-title class="titleCard" >Salas</mat-card-title>
+    
+          <div class="mat-elevation-z3">
+    
+            <span class="botaoBusca" (click)="selecionarSala($event)">
+              <i class="material-icons">search</i>
+            </span>
+      
+            <input class="textBusca"  name="busca" id="txtbusca" type="text" (keypress)="selecionarSala($event)"  value="">
+    
+            <a (click)="cadsala()" class="cadsala" >
+              <i class="material-icons">add</i>
+            </a>
+    
+            <table class="tabela" mat-table [dataSource]="salas">
+                  <!-- Id Column -->
+                  <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef>Id</th>
+                    <td mat-cell id="idsala" *matCellDef="let row">{{row.id}}</td>
+                  </ng-container>
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="dtCriacao">
+                    <th mat-header-cell *matHeaderCellDef>Criado Em</th>
+                    <td mat-cell *matCellDef="let row" >{{row.dtCriacao | date: 'dd/MM/yyyy'}}</td>
+                  </ng-container>
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="nomeSala">
+                    <th mat-header-cell *matHeaderCellDef>Nome Sala</th>
+                    <td mat-cell *matCellDef="let row">{{row.nomeSala}}</td>
+                  </ng-container>
+    
+    
+                  <!-- status -->
+                  <ng-container matColumnDef="ativo">
+                    <th mat-header-cell *matHeaderCellDef>Status</th>
+                      <td mat-cell *matCellDef="let row">
+                        <div *ngIf="row.ativo" >
+                          <i class="material-icons">
+                            lock
+                          </i>
+                        </div>
+                        <div *ngIf="!row.ativo" >
+                          <i class="material-icons">  
+                            lock_open
+                          </i>
+                        </div>
+                      </td>
+                    </ng-container>
+                  
+                  <!-- Coluna de Ações -->
+                  <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef>Ações</th>
+                    <td mat-cell *matCellDef="let row">
+                     
+                      <a  (click)="AtualizarSala(row.id)" class="edit">
+                        <i class="material-icons">
+                           edit
+                        </i>
+                        </a>
+                      <a (click)="Excluirsala(row.id)" class="delete">
+                        <i class="material-icons">
+                          delete
+                        </i>
+                      </a>
+                        
+                    </td>
+                  </ng-container>
+              
+                  <tr mat-header-row *matHeaderRowDef="ColunasSala"></tr>
+                  <tr mat-row *matRowDef="let row; columns: ColunasSala;"></tr>
+            </table>
+          </div>
+      </mat-card>
 
 
 
-    </mat-tab>  
-    <mat-tab label="Grupos de Agenda">
 
     </mat-tab>
+    
 </mat-tab-group>
