@@ -4,7 +4,7 @@ import { ObjetoToken } from './../models/Token/ObjetoToken';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, EMPTY } from 'rxjs';
-import { Component, Injectable } from '@angular/core';
+import { Component, EventEmitter, Injectable } from '@angular/core';
 import { AbstractControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TipoUsuario } from '../models/usuarios/enumUsuarios';
@@ -12,6 +12,7 @@ import { Overlay } from '@angular/cdk/overlay';
 import { MatDialog } from '@angular/material/dialog';
 import { isNull } from '@angular/compiler/src/output/output_ast';
 import { isNullOrUndefined } from 'util';
+import { Output } from '@angular/core';
 
 
 @Injectable({
@@ -24,11 +25,8 @@ export class UtilService {
              private headerService : HeaderService,
              private router : Router,
              public overlay : Overlay,
-             public dialog : MatDialog
-
+             public dialog : MatDialog,
              ) { }
-
-
   showMessage(msg : string, isErro: boolean = false) : void { 
     this.snackbar.open(msg, 'X' , { 
       duration : 3000,
@@ -76,19 +74,18 @@ export class UtilService {
   }
 
 
-  atualizaRota() {
-    this.router.routeReuseStrategy.shouldReuseRoute = function(){return false;};
+  atualizaRota(rota : string, reload : boolean = false) {
+      
+    if (reload) {
+        this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
+          this.router.navigate([rota]);
+          reload = false;
+        });
+      }
   
-    let currentUrl = this.router.url + '?';
-  
-    this.router.navigateByUrl(currentUrl)
-      .then(() => {
-        this.router.navigated = false;
-        this.router.navigate([this.router.url]);
-      });
-  }
+    }
 
-  Popup(id : string, T : any, largura : string, altura: string ): void {
+  Popup(id : string, T : any, largura : string, altura: string ) {
    
     const scrollStrategy = this.overlay.scrollStrategies.reposition();
     const dialogRef = this.dialog.open(T, {
@@ -99,6 +96,7 @@ export class UtilService {
       });
       dialogRef.afterClosed().subscribe(result => {
         console.log(`Dialog result: ${result}`);
+      
       });
 
   }

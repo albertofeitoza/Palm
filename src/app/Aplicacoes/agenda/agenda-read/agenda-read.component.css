@@ -1,5 +1,7 @@
 .tabelaagenda{
-    width: 100%;
+    width: 70%;
+    background-color: ivory;
+    grid-column-start: auto;
 }
 
 .imagem{
@@ -61,6 +63,8 @@
     margin: 15px;
     margin-left: 10px;
         
-    }
+}
+
+
 
 

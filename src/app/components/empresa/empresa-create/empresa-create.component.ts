@@ -87,7 +87,7 @@ empresa : Empresa = {
                               this.servicoEmpresa.update(emp,Endpoint.Empresa).subscribe(() => {})
                          
                           this.utilService.showMessage("Empresa cadastrada com sucesso!",false);
-                          this.utilService.atualizaRota();
+                          this.utilService.atualizaRota("empresa");
                           this.empresa = null;
                         })
                 }else if (grpId == TipoUsuario.Master && retornomaster.filter(x => x.empresaPai == empPai).length > 0)
@@ -103,7 +103,7 @@ empresa : Empresa = {
                               this.servicoEmpresa.update(emp,Endpoint.Empresa).subscribe(() => {})
                        
                             this.utilService.showMessage("Empresa cadastrada com sucesso!",false);
-                            this.utilService.atualizaRota();
+                            this.utilService.atualizaRota("empresa");
                             this.empresa = null;
                           })
                 }else{

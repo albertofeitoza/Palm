@@ -46,6 +46,11 @@ export class AgendaCreateComponent implements OnInit {
   comboTipoGrupoAgenda : GrupoAgenda[];
   empresa : Empresa[];
 
+  //Grupo
+  grupo : GrupoAgenda[]
+  ColunasGrupo = ['id','dtCriacao','nomeGrupoAgenda','bloqueado','action']
+  GrupoSelecionado : number = 0;
+  
   constructor(private route : Router,
               public dialogRef: MatDialogRef <AgendaCreateComponent>, 
               public overlay : Overlay,
@@ -55,7 +60,8 @@ export class AgendaCreateComponent implements OnInit {
               private _serviceSala : ServiceAllService<Sala>,
               private _serviceGrupoAgenda : ServiceAllService<GrupoAgenda>,
               private _serviceUsuario : ServiceAllService<Usuario>,
-              private _utilService : UtilService
+              private _utilService : UtilService,
+              private servicoGrupo : ServiceAllService<GrupoAgenda>
     ) { }
 
 
@@ -77,33 +83,49 @@ export class AgendaCreateComponent implements OnInit {
     this.route.navigate(['home-component'])  
   }
 
+  BuscarSala(){
+      this.carregaComboSala(this._utilService.Sessao().GrupoUsuario, this._utilService.Sessao().IdEmpresa)
+  }
+
+  AtualizarComboProfissional(){
+    this.carregaComboProfissional(this._utilService.Sessao().GrupoUsuario, this._utilService.Sessao().IdEmpresa)
+  }
+
   carregaCombos(){
 
     this.carregaComboProfissional(this._utilService.Sessao().GrupoUsuario, this._utilService.Sessao().IdEmpresa)
       this.carregaComboUnidade(this._utilService.Sessao().GrupoUsuario, this._utilService.Sessao().IdEmpresa);
+      
+      
       this.carregaComboSala(this._utilService.Sessao().GrupoUsuario, this._utilService.Sessao().IdEmpresa);
+      
       this.carregaComboGrupoAgenda(this._utilService.Sessao().GrupoUsuario, this._utilService.Sessao().IdEmpresa);
   }
 
   carregaComboProfissional(grpId: number , empId: string){
+    this.comboProfissional =  new Array();
     this._serviceUsuario.read(Endpoint.Usuario).subscribe(pro => {
       pro = this.comboProfissional = grpId == TipoUsuario.Master || grpId == TipoUsuario.Administrador ? this.comboProfissional = pro.filter(x => x.empresaid.toString() == empId) : null;
     });
   }
   
   carregaComboUnidade(grpId: number , empId: string){
+    this.comboUnidade =  new Array()
     this._serviceUnidade.read(Endpoint.Unidade).subscribe(un => {
       un = this.comboUnidade = grpId == TipoUsuario.Master || grpId == TipoUsuario.Administrador ? this.comboUnidade = un.filter(x => x.empresaid.toString() == empId) : null;
     });
   }
 
   carregaComboSala(grpId: number , empId: string){
+    this.comboSala = new Array();
+
     this._serviceSala.read(Endpoint.Sala).subscribe(sl => {
-      sl = this.comboSala = grpId == TipoUsuario.Master || grpId == TipoUsuario.Administrador? this.comboSala = sl.filter(x => x.empresaid .toString() == empId) : null;                      
+      sl = this.comboSala = grpId == TipoUsuario.Master || grpId == TipoUsuario.Administrador? this.comboSala = sl.filter(x => x.empresaid .toString() == empId && x.unidadeid == Number(this.agenda.unidadeid)) : null;                      
     });
   }
 
   carregaComboGrupoAgenda(grpId: number , empId: string){
+    this.comboTipoGrupoAgenda = new Array();
     this._serviceGrupoAgenda.read(Endpoint.GrupoAgenda).subscribe(ga => {
       ga = this.comboTipoGrupoAgenda = grpId == TipoUsuario.Master || grpId == TipoUsuario.Administrador ? this.comboTipoGrupoAgenda = ga.filter(x => x.empresaid .toString() == empId) : null;
     });
@@ -132,5 +154,41 @@ export class AgendaCreateComponent implements OnInit {
     }
   }
 
+  selecionaAbaAgenda(tab : any){
+    
+    switch (tab.index) {
+      case 1 :
+          this.buscarGrupos()
+        break;
+      default:
+        break;
+    }
+    
+  }
+
+
+  selecionarGrupo(event : any){
+
+  }
+
+
+  buscarGrupos(){
+      this.servicoGrupo.read(Endpoint.GrupoAgenda).subscribe(x => {
+        this.grupo = x;
+      })
+
+  }
+
+  cadGrupo(){
+
+  }
+
+  AtualizarGrupo(id : string){
+
+  }
+
+  ExcluirGrupo(id : string){
+
+  }
   
 }

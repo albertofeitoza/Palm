@@ -35,6 +35,7 @@ export class AgendaExcluirUnidadeComponent implements OnInit {
   ExcluirUnidade(){
       this.servicoUnidade.delete(Number(this.dialog.id), Endpoint.Unidade).subscribe(() => {
         this.servico.showMessage("Unidade Excluída com sucesso!", false);
+        this.servico.atualizaRota("agenda", true)
         this.fecharPopup();
       })
   }

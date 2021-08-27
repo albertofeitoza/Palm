@@ -39,40 +39,20 @@ const routes: Routes = [
   {path: "login", component: LoginComponent },
   //Rotas de Produtos
   {path: "products", component: ProductCrudComponent },
-  {path: "products/create", component : ProductCreateComponent },
-  {path: "products/update/:id", component : ProductUpdateComponent },
-  {path: "products/delete/:id", component : ProductDeleteComponent },
 
   //Rotas de usuarios
   {path: 'usuarios', component : UsuarioCrudComponent },
-  {path: "usuarios/create", component : UsuarioCreateComponent },
-  {path: "usuarios/update/:id", component : UsuarioUpdateComponent },
-  {path: "usuarios/delete/:id", component : UsuarioDeleteComponent },
 
   //Rotas de chamados
   {path: "chamados", component : ChamadoCrudComponent },
-  {path: "chamados/create", component : ChamadoCreateComponent },
-  {path: "chamados/update/:id", component : ChamadoUpdateComponent },
-  {path: "chamados/delete/:id", component : ChamadoDeleteComponent },
 
   //Rotas de empresa
   {path: "empresa", component : EmpresaComponent },
-  {path: "empresa/create", component : EmpresaCreateComponent },
-  {path: "empresa/update/:id", component : EmpresaUpdateComponent },
-  {path: "empresa/delete/:id", component : EmpresaDeleteComponent },
 
   //Rotas das APlicações
   //Agenda
-  {path: 'home-component' , component : HomeAgendaComponent},
-  {path: Aplicacao.Agenda , component : HomeAgendaComponent,
-    children:[
-      {path: 'agendaHomeDefault', redirectTo: Aplicacao.Agenda, pathMatch: 'full'},
-      {path: 'agenda-home', component : HomeAgendaComponent},
-      {path: 'agenda-create', component : AgendaCreateComponent},
-      {path: 'agenda-delete/:id', component : AgendaDeleteComponent },
-      {path: 'agenda-update/:id', component : AgendaUpdateComponent},
-    ]},
-  
+  {path: Aplicacao.Agenda , component : HomeAgendaComponent},
+  {path: Aplicacao.Agenda+"?" , component : AgendaReadComponent}
       
 ]
 

@@ -25,3 +25,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     background-color: #e36e6b;
     color: #fff;
 }
+
+
+.botaoBusca {
+    float : right;
+    font-size: 15px;
+    width: 150px;
+    margin-top: 10px;
+    padding-left: 15px;
+  
+  }
+  

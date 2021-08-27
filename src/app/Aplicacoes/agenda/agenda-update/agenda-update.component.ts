@@ -8,6 +8,7 @@ import { Empresa } from 'src/app/models/empresa/ModelEmpresa';
 import { Sala } from 'src/app/models/Sala/SalaModel';
 import { Unidade } from 'src/app/models/Unidade/unidadeModel';
 import { Usuario } from 'src/app/models/usuarios/modelLogin';
+import { Aplicacao } from 'src/app/Negocio/Aplicacao';
 import { Endpoint } from 'src/app/Negocio/Endpoint';
 import { ServiceAllService } from 'src/app/services/service-all.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -97,7 +98,7 @@ export class AgendaUpdateComponent implements OnInit {
         this.agenda.id = this.dialogRef.id
         this.agendaService.update(this.agenda, Endpoint.Agenda).subscribe(() => {
           this.utilService.showMessage("Agenda Atualizada com Sucesso!", false)
-          this.router.navigate(['home-component'])
+          this.utilService.atualizaRota(Aplicacao.Agenda+"?", true)
           this.fecharPopup();
       
         });

@@ -1,9 +1,16 @@
 <div class="mat-elevation-z4">
 
-  <div class="head">
+  <div>
     <span (click)="addProduto()">
       <i class="material-icons">person_add</i>
     </span>
+  
+    <span class="botaoBusca" (click)="selecionarProduto($event)" (keypress)="selecionarProduto($event)">
+      <i class="material-icons">search</i>
+    </span>
+    
+    <input class="textBusca"  name="busca" id="txtbusca" type="text" (keypress)="selecionarProduto($event)"  value="">
+  
   </div>
 
     <table mat-table [dataSource]="products">

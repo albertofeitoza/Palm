@@ -15,6 +15,8 @@ import { AgendaDeleteComponent } from '../agenda-delete/agenda-delete.component'
 import { TipoUsuario } from 'src/app/models/usuarios/enumUsuarios';
 import { UsuarioCreateComponent } from 'src/app/components/usuario/usuario-create/usuario-create.component';
 import { AgendaCadastroUnidadeComponent } from '../Unidade/agenda-cadastro-unidade/agenda-cadastro-unidade.component';
+import { EventEmitter } from 'events';
+import { stringify } from '@angular/compiler/src/util';
 
 
 
@@ -25,9 +27,11 @@ import { AgendaCadastroUnidadeComponent } from '../Unidade/agenda-cadastro-unida
 })
 export class AgendaReadComponent implements OnInit {
 
-  Colunas = ['id','DtCriacao', 'NomeAgenda','Funcionario','NomeEmpresa','NomeUnidade','NomeSala',
+  Colunas = ['id', 'NomeAgenda','Funcionario','NomeEmpresa','NomeUnidade','NomeSala',
                       'substituicao','GrupoAgenda','vigenciaInicio','vigenciaFim','considerarFeriado','bloqueado','action']  
   agenda : AgendaDto[];
+
+  
 
   constructor(
               public dialog: MatDialog,
@@ -53,21 +57,24 @@ export class AgendaReadComponent implements OnInit {
     });
   }
 
-  addNovaAgenda(): void {
+  addNovaAgenda() {
    
     if(this.servico.Sessao().GrupoUsuario == TipoUsuario.Master || this.servico.Sessao().GrupoUsuario == TipoUsuario.Administrador)
     {
       this.servico.Popup("0",AgendaCreateComponent, '700px','900px' );
+
     }else{
       this.servico.showMessage("Solicitar ao um Usuário Master para criar Nova Agenda!",true);
     }
+
+
   }
 
   AtualizarAgenda(id : string): void {
     if(this.servico.Sessao().GrupoUsuario == TipoUsuario.Master || this.servico.Sessao().GrupoUsuario == TipoUsuario.Administrador)
     {
-      this.servico.Popup(id, AgendaUpdateComponent, '30%','80%' )
-     
+      let response  =  this.servico.Popup(id, AgendaUpdateComponent, '30%','80%' )
+      
       }else{
         this.servico.showMessage("Solicitar ao um Usuário Master para Editar os  dados da Agenda!",true);
       }   

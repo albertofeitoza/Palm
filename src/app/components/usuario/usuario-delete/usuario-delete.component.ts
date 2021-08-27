@@ -48,7 +48,7 @@ carregaUsuario(){
       this.usuarioService.delete(this.usuario.id , Endpoint.Usuario).subscribe(() => {
       this.utilService.showMessage("Usuário Excluído com Sucesso!")
       this.fecharPopup();
-      this.utilService.atualizaRota();
+      this.utilService.atualizaRota("usuario", true);
 
 
     })

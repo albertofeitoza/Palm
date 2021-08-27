@@ -80,7 +80,6 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
                 if (!emp.bloqueado){
                   this.serviceUsuario.create(this.usuario, Endpoint.Usuario).subscribe(() => {
                     this.utilService.showMessage('Usuário Criado!');
-                    this.utilService.atualizaRota()
                   });
                 }
                 else

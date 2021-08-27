@@ -16,21 +16,14 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class ProductUpdateComponent implements OnInit {
 
-product: Product = {
-    id : null,
-    dtCriacao : null,
-    criadoPor : null,
-    nome: null,
-    valor: 0,
-    empresaid :null,
-    bloqueado : null
-  }
+product: Product = new Product()
   
 
   constructor(
               private utilService : UtilService,
               private ProdutoService : ServiceAllService<Product>,
-              public matdialogRef : MatDialogRef<ProductUpdateComponent>
+              public matdialogRef : MatDialogRef<ProductUpdateComponent>,
+              private route : Router
               ) { }
 
 
@@ -44,15 +37,16 @@ product: Product = {
     this.product.criadoPor  = Number(localStorage.getItem("usId"));
       this.ProdutoService.update(this.product, Endpoint.Produto).subscribe(() => {
       this.utilService.showMessage("Produto Atualizado com Sucesso!")
-      this.utilService.atualizaRota();
+      this.utilService.atualizaRota("products", true);
       this.fecharPopup();
     })
 
   }
 
   fecharPopup(): void {
+    
     this.matdialogRef.close();
-
+   
   }
   buscarProduto() : void {
       this.ProdutoService.readById(this.matdialogRef.id, Endpoint.Produto).subscribe(product => {

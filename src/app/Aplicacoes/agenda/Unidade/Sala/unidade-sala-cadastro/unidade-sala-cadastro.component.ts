@@ -39,7 +39,6 @@ sala : Sala = new Sala();
 
     this.servicoSala.create(this.sala, Endpoint.Sala).subscribe(() => {
       this.servico.showMessage("Sala Cadastrada com sucesso", false);
-
     })
 
 

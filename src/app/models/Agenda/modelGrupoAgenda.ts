@@ -1,9 +1,8 @@
-export interface GrupoAgenda {
+export class GrupoAgenda {
 
     id? : number
     dtCriacao : Date
     nomeGrupoAgenda : string
-    Agendaid : number
     empresaid : number
     criadoPor : number
     bloqueado : boolean

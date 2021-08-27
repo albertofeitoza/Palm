@@ -13,3 +13,143 @@ button{
 .ordem{
   float: right;
 }
+
+
+
+.tabelaUnidade{
+  width: 100%;
+}
+
+
+form {
+
+    display: flex;
+    flex-direction: column;
+  }
+  
+  button{
+    margin : 20px 15px 0 0;
+    
+    
+  }
+  
+  .ordem{
+    float: right;
+  }
+
+  
+.textBusca {
+  float: right;
+  margin-top: 10px;
+}
+
+.botaoBusca {
+  float : right;
+  font-size: 15px;
+  width: 150px;
+  margin-top: 10px;
+  padding-left: 15px;
+
+}
+
+.cadUnidade{
+  padding-left: 15px;
+  padding-top: 10px;
+}
+
+.titleCard{
+
+  padding-top: 15px;
+
+}
+
+.edit {
+  margin-right: 15px;
+}
+
+.edit > i{
+  color: #d9cd26;
+}
+.delete > i{
+  color: #e35e6b;
+}
+
+
+.cadsala{
+  padding-left: 15px;
+  padding-top: 10px;
+}
+
+.titleCard{
+
+  padding-top: 15px;
+
+}
+
+.edit {
+  margin-right: 15px;
+}
+
+.edit > i{
+  color: #d9cd26;
+}
+.delete > i{
+  color: #e35e6b;
+}
+
+
+
+
+.tabela{
+  width: 100%;
+}
+
+form {
+
+    display: flex;
+    flex-direction: column;
+  }
+  
+  button{
+    margin : 20px 15px 0 0;
+    
+    
+  }
+  
+  .ordem{
+    float: right;
+  }
+
+  
+
+.botaoBusca {
+  float : right;
+  font-size: 15px;
+  width: 150px;
+  margin-top: 10px;
+  padding-left: 15px;
+
+}
+
+.cadGrupo{
+  padding-left: 15px;
+  padding-top: 10px;
+}
+
+.titleCard{
+
+  padding-top: 15px;
+
+}
+
+.edit {
+  margin-right: 15px;
+}
+
+.edit > i{
+  color: #d9cd26;
+}
+.delete > i{
+  color: #e35e6b;
+}
+

@@ -47,12 +47,12 @@ export class EmpresaDeleteComponent implements OnInit {
             if (Number(this.utilservice.Sessao().GrupoUsuario) == TipoUsuario.Administrador){
               this.serviceEmpresa.delete(this.empresa.id, Endpoint.Empresa).subscribe(()=>{
                 this.mensagem.showMessage("Empresa excluida com sucesso !", false);
-               this.utilservice.atualizaRota()
+               this.utilservice.atualizaRota("empresa")
               })
             }
               else{
                 this.mensagem.showMessage("Permissão de exclusão negada !", false);
-                this.utilservice.atualizaRota()
+                this.utilservice.atualizaRota("empresa")
               }
         }
     });

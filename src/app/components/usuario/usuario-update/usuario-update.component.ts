@@ -59,7 +59,7 @@ export class UsuarioUpdateComponent implements OnInit {
                     this.usarioService.update(this.usuario, Endpoint.Usuario).subscribe(() => {
                       this.utilService.showMessage("Usuário Atualizado com Sucesso!")
                       this.fecharPopup();
-                      this.utilService.atualizaRota();
+                      this.utilService.atualizaRota("usuario");
                     })
                     user =  new Array();
                   }else if(grpId == TipoUsuario.Administrador){
@@ -67,7 +67,7 @@ export class UsuarioUpdateComponent implements OnInit {
                     this.usarioService.update(this.usuario, Endpoint.Usuario).subscribe(() => {
                         this.utilService.showMessage("Usuário Atualizado com Sucesso!")
                         this.fecharPopup();
-                        this.utilService.atualizaRota();
+                        this.utilService.atualizaRota("usuario", true);
                         
                       })
                       user =  new Array();

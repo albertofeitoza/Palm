@@ -47,7 +47,7 @@ export class EmpresaUpdateComponent implements OnInit {
                try {
                         this.empresaService.update(this.empresa, Endpoint.Empresa).subscribe(()=>{
                         this.utilservice.showMessage("Empresa atualizada com sucesso", false)
-                        this.utilservice.atualizaRota();
+                        this.utilservice.atualizaRota("empresa");
                       });
 
                     } catch (error) {

@@ -1,1 +1,19 @@
-<p>unidade-sala-delete works!</p>
+<mat-card>
+    <mat-card-title>Excluir Sala</mat-card-title>
+        <form>
+            <mat-form-field>
+                <input matInput placeholder="Nome Sala" 
+                [(ngModel)]="sala.nomeSala" name="nomeSala" disabled = "true">
+            </mat-form-field>
+           
+        </form>
+
+        <button mat-raised-button (click)="excluirSala()" color="primary" > 
+            Salvar
+        </button>
+        
+        <button mat-raised-button (click)="fecharPopup()" color="primary" > 
+          Sair
+        </button>
+        
+</mat-card>

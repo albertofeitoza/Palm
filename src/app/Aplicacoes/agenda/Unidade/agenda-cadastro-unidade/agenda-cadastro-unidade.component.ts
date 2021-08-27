@@ -14,6 +14,7 @@ import { AgendaCreateComponent } from '../../agenda-create/agenda-create.compone
 import { AgendaAlterarUnidadeComponent } from '../agenda-alterar-unidade/agenda-alterar-unidade.component';
 import { AgendaExcluirUnidadeComponent } from '../agenda-excluir-unidade/agenda-excluir-unidade.component';
 import { UnidadeSalaCadastroComponent } from '../Sala/unidade-sala-cadastro/unidade-sala-cadastro.component';
+import { UnidadeSalaDeleteComponent } from '../Sala/unidade-sala-delete/unidade-sala-delete.component';
 import { UnidadeSalaUpdateComponent } from '../Sala/unidade-sala-update/unidade-sala-update.component';
 
 @Component({
@@ -64,7 +65,7 @@ unidadeSelecionada : number = 0;
     
     this.ServicoUnidade.create(this.unidade, Endpoint.Unidade).subscribe(() => {
      this.servico.showMessage("Unidade cadastrada com sucesso", false);
-     this.servico.atualizaRota();
+     this.servico.atualizaRota("agenda", true);
      this.novaUnidade = false;
    })
 
@@ -119,19 +120,15 @@ unidadeSelecionada : number = 0;
   }
 
   selecionaAba(tab){
-    
+      
+      if (tab.index == 1)
+      {
+        this.buscarSala()
+        
 
-
-  if (tab.index == 1)
-  {
-     this.buscarSala()
-    
-
-  }else{
-    this.unidadeSelecionada = 0
-  }
-   
-
+      }else{
+        this.unidadeSelecionada = 0
+      }
 }
 
 
@@ -155,11 +152,11 @@ unidadeSelecionada : number = 0;
 
   }
   AtualizarSala(id : any){
-      this.servico.Popup(id, UnidadeSalaUpdateComponent, "500PX", "400PX");
+      this.servico.Popup(id, UnidadeSalaUpdateComponent, "500px", "400px");
   }
 
   Excluirsala(id : any){
-
+      this.servico.Popup(id,UnidadeSalaDeleteComponent, "500px", "400px")
   }
 
   cadsala(){

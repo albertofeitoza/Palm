@@ -60,7 +60,7 @@ export class ProductCreateComponent implements OnInit {
       {
         this.ProdutoEmpresa.create(this.product, Endpoint.Produto).subscribe(() => {
           this.utilService.showMessage('o Produto Criado!');
-          this.utilService.atualizaRota()
+          this.utilService.atualizaRota("products")
           })
       
       }else{

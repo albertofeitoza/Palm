@@ -38,7 +38,7 @@ export class ProductDeleteComponent implements OnInit {
       
     this.deleteProduto.delete(Number(this.dialogRef.id), Endpoint.Produto).subscribe(() => {
         this.utilService.showMessage("Produto Excluído com Sucesso!")
-        this.utilService.atualizaRota();
+        this.utilService.atualizaRota("products", true);
       })
     
   }

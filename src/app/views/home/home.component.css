@@ -4,6 +4,7 @@ font-weight: 300;
 line-height: 1.2;
 
 }
+
 .home .subtitle {
     font-size: 1.1rem;
 }
@@ -16,31 +17,36 @@ line-height: 1.2;
     line-height: 1.2;
     
 }
+
 .app .titleapp {
     font-size: 1rem;
     font-weight: 300;
     line-height: 1.2;
     
 }
-    .app .subtitle {
-        font-size: 1.1rem;
+
+.app .subtitle {
+    font-size: 1.1rem;
 }
 
-    .content{
-        padding: 16px;
-    }
+.content{
+    padding: 16px;
+}
 
-    .content > i {
-        align-content: center;
-        width: 50px;
-        height: 50px;
-    }
+.content > i {
+    align-content: center;
+    width: 50px;
+    height: 50px;
+}
 
 
-
-    .material-icons {
-        width: 50;
-        height: 50px;
-        font-size: 500%;
-        padding-left: 40Px;
-    }
+.material-icons {
+    margin: 10px;
+    font-size: 50px;
+    
+}
+    
+.tamanhoCard{
+    width: 70px;
+    height: 70px;
+}

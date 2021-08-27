@@ -26,6 +26,23 @@ table{
 .delete > i{
     color: #e35e6b;
 }
-.head{
-    margin-left: 15px;
+.material-icons{
+    padding-left: 20px;
+    padding-top: 10;
+    font-size: 30px;
+    
+}
+
+.botaoBusca {
+    float : right;
+    font-size: 15px;
+    width: 150px;
+    margin-top: 10px;
+    padding-left: 15px;
+  
+}
+
+  .textBusca {
+    float: right;
+    margin-top: 15px;
 }

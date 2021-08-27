@@ -25,6 +25,7 @@ export class ProductReadComponent implements OnInit {
 
 
 products: Product[]
+vlrProduto : string = null;
 
 displayedColumns = ['id','nome', 'valor','empresaid','bloqueado','action']  
 
@@ -109,19 +110,33 @@ displayedColumns = ['id','nome', 'valor','empresaid','bloqueado','action']
   buscarProduto() : void {
 
     this.serviceProduto.read(Endpoint.Produto).subscribe(product => {
-        product = product;
+        product = this.vlrProduto == null ?  product : product.filter(x => x.nome.toLowerCase().includes(this.vlrProduto.toLowerCase()))
 
         this.products = new Array();
-
         product.forEach(element => {
           
-            this.serviceEmpresa.readById(element.empresaid.toString(), Endpoint.Empresa).subscribe(e => {
-              e = e;
-              if (e)
-                element.empresaid = e.razaoSocial;
+            this.serviceEmpresa.readById(element.empresaid.toString(), Endpoint.Empresa).subscribe(emp => {
+              emp = emp
+              
+              if (emp)
+                element.empresaid = emp.razaoSocial;
+                
             })
-            this.products.push(element)
+            
+            this.products.push(element);
+   
         });
     })
   }
+
+  selecionarProduto(KeyEvent : any){
+
+    if (KeyEvent.which == 13 || KeyEvent.which == 1){
+      this.vlrProduto =  (<HTMLInputElement>document.getElementById('txtbusca')).value;
+    
+      this.buscarProduto();
+    
+    }
+  }
+  
 }
