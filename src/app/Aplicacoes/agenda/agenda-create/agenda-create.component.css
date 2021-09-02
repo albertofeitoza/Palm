@@ -10,12 +10,6 @@ button{
   
 }
 
-.ordem{
-  float: right;
-}
-
-
-
 .tabelaUnidade{
   width: 100%;
 }
@@ -32,11 +26,6 @@ form {
     
     
   }
-  
-  .ordem{
-    float: right;
-  }
-
   
 .textBusca {
   float: right;
@@ -117,7 +106,7 @@ form {
   }
   
   .ordem{
-    float: right;
+    float: left;
   }
 
   

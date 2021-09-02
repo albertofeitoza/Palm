@@ -26,6 +26,8 @@
 
                         <mat-form-field>
                             <input matInput placeholder="Unidade Atendimento">
+                            <i class="material-icons ordem" (click)="AtualizarComboUnidade()" >refresh</i>
+                            <i class="material-icons ordem" (click)="novaUnidade()" >house</i>
                             <p></p>
                             <mat-select [(value)]="agenda.unidadeid" placeholder="Unidade Atendimento" (selectionChange)="BuscarSala()" >
                                 <mat-option *ngFor="let tipounidade of comboUnidade " [value]="tipounidade.id">
@@ -52,10 +54,11 @@
 
                         <mat-form-field>
                             <input matInput placeholder="Grupo Agenda">
+                            <i class="material-icons ordem" (click)="AtualizarComboGrupoAgenda()" >refresh</i>
                             <p></p>
                             <mat-select [(value)]="agenda.grupoAgendaid" placeholder="Grupo Agenda" >
                                 <mat-option *ngFor="let tipoGrupo of comboTipoGrupoAgenda " [value]="tipoGrupo.id">
-                                    {{tipoGrupo.nomeGrupoAgenda}}
+                                    {{tipoGrupo.nomeGrupoAgenda}} 
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>

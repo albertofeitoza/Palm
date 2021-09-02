@@ -1,0 +1,18 @@
+<mat-card>
+    <mat-card-title>Editar Grupo</mat-card-title>
+        <form class="formCadastro">
+            <mat-form-field>
+                <input matInput placeholder="Nome Grupo" 
+                    [(ngModel)]="grupo.nomeGrupoAgenda" name="nomeGrupoAgenda" disabled= "true">
+            </mat-form-field>
+
+        </form>
+
+        <button mat-raised-button (click)="excluirGrupo()" color="primary" > 
+            Excluir
+        </button>
+        
+        <button mat-raised-button (click)="fecharPopup()" color="primary" > 
+            Sair
+        </button>
+</mat-card>

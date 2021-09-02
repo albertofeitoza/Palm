@@ -78,6 +78,9 @@ import { AgendaExcluirUnidadeComponent } from './Aplicacoes/agenda/Unidade/agend
 import { UnidadeSalaCadastroComponent } from './Aplicacoes/agenda/Unidade/Sala/unidade-sala-cadastro/unidade-sala-cadastro.component';
 import { UnidadeSalaUpdateComponent } from './Aplicacoes/agenda/Unidade/Sala/unidade-sala-update/unidade-sala-update.component';
 import { UnidadeSalaDeleteComponent } from './Aplicacoes/agenda/Unidade/Sala/unidade-sala-delete/unidade-sala-delete.component';
+import { AgendaGrupoCadastroComponent } from './Aplicacoes/agenda/GrupoAgenda/agenda-grupo-cadastro/agenda-grupo-cadastro.component';
+import { AgendaGrupoExcluirComponent } from './Aplicacoes/agenda/GrupoAgenda/agenda-grupo-excluir/agenda-grupo-excluir.component';
+import { AgendaGrupoUpdateComponent } from './Aplicacoes/agenda/GrupoAgenda/agenda-grupo-update/agenda-grupo-update.component';
 
 
 @NgModule({
@@ -122,6 +125,9 @@ import { UnidadeSalaDeleteComponent } from './Aplicacoes/agenda/Unidade/Sala/uni
     UnidadeSalaCadastroComponent,
     UnidadeSalaUpdateComponent,
     UnidadeSalaDeleteComponent,
+    AgendaGrupoCadastroComponent,
+    AgendaGrupoExcluirComponent,
+    AgendaGrupoUpdateComponent,
   
     
   ],

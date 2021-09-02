@@ -1,0 +1,24 @@
+<mat-card>
+    <mat-card-title>Editar Grupo</mat-card-title>
+        <form class="formCadastro">
+            <mat-form-field>
+                <input matInput placeholder="Nome Grupo" 
+                    [(ngModel)]="grupo.nomeGrupoAgenda" name="nomeGrupoAgenda">
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="bloqueado">
+                    <input name="grupo.bloqueado" [(ngModel)]="grupo.bloqueado" [checked]="grupo.bloqueado" type="checkbox">
+            </mat-form-field>
+
+
+        </form>
+
+        <button mat-raised-button (click)="editarGrupo()" color="primary" > 
+            Criar
+        </button>
+        
+        <button mat-raised-button (click)="fecharPopup()" color="primary" > 
+            Sair
+        </button>
+</mat-card>
