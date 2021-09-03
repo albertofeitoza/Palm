@@ -21,6 +21,7 @@ import { AgendaGrupoCadastroComponent } from '../GrupoAgenda/agenda-grupo-cadast
 import { AgendaGrupoUpdateComponent } from '../GrupoAgenda/agenda-grupo-update/agenda-grupo-update.component';
 import { AgendaGrupoExcluirComponent } from '../GrupoAgenda/agenda-grupo-excluir/agenda-grupo-excluir.component';
 import { AgendaCadastroUnidadeComponent } from '../Unidade/agenda-cadastro-unidade/agenda-cadastro-unidade.component';
+import { Horarios } from 'src/app/models/Agenda/modeloHorarios';
 
 @Component({
   selector: 'app-agenda-create',
@@ -43,6 +44,9 @@ export class AgendaCreateComponent implements OnInit {
     considerarFeriado: false,
     bloqueado: false
   }
+
+
+  segunda : Horarios
   
   comboProfissional  : Usuario[];
   comboUnidade : Unidade[];
@@ -54,6 +58,9 @@ export class AgendaCreateComponent implements OnInit {
   grupo : GrupoAgenda[]
   ColunasGrupo = ['id','dtCriacao','nomeGrupoAgenda','bloqueado','action']
   GrupoSelecionado : number = 0;
+
+  //Horários
+  ColunasHorarios = ['Hora','Tempo']
   
   constructor(private route : Router,
               public dialogRef: MatDialogRef <AgendaCreateComponent>, 

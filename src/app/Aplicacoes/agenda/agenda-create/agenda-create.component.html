@@ -1,5 +1,5 @@
 <mat-tab-group (selectedTabChange)="selecionaAbaAgenda($event)" >
-
+<!--Cadastro de AGENDA-->
 <mat-tab label="Cadastro de Agenda" id="labelAgenda">  
         <div class="container">
 
@@ -99,7 +99,7 @@
 
         </div>
     </mat-tab>
-    
+ <!--Cadastro Grupo AGENDA-->   
     <mat-tab label="Grupo Agenda">
      
         <mat-card>
@@ -182,4 +182,175 @@
   
   
       </mat-tab>
+
+
+      <!--Cadastro de Horários-->
+      
+      <mat-tab label = "Horários">
+        <div class="HorarioHeader">GERAÇÃO DE HORARIOS</div>
+        <hr /><br />
+        <div class="display">
+          <div>Dia da Semana</div>
+          <div class="displayTipo">Tipo</div>
+          <div class="displayInicioGeracao">Início e Fim da Geração</div>
+        </div>
+        <br>
+
+      <mat-select value="0" class="formataSelectDia">
+          <mat-option value="0">Selecione</mat-option>
+          <mat-option value="1">Domingo</mat-option>
+          <mat-option value="2">Segunda</mat-option>
+          <mat-option value="3">Terça</mat-option>
+          <mat-option value="4">Quarta</mat-option>
+          <mat-option value="5">Quinta</mat-option>
+          <mat-option value="6">Sexta</mat-option>
+          <mat-option value="7">Sábado</mat-option>
+      </mat-select>
+      
+      <mat-select value="0" class="formataSelectTipo">
+        <mat-option value="0">Selecione</mat-option>
+        <mat-option value="1">Normal</mat-option>
+        <mat-option value="2">Encaixe</mat-option>
+      </mat-select>
+      <br />
+
+      segunda
+      <div class="display">
+      <!--Segunda-->
+     
+          <table class="tabelaHorario" mat-table [dataSource]="segunda">
+            <!-- Id Column -->
+            <ng-container matColumnDef="Hora">
+              <th mat-header-cell *matHeaderCellDef>Hora</th>
+              <td mat-cell id="idhora" *matCellDef="let row">{{row.Hora}}</td>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="Tempo">
+              <th mat-header-cell *matHeaderCellDef>Tempo</th>
+              <td mat-cell *matCellDef="let row" >{{row.Tempo}}</td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="ColunasHorarios"></tr>
+            <tr mat-row *matRowDef="let row; columns: ColunasHorarios;"></tr>
+          </table>
+      
+      <!--Terça-->
+
+          <table class="tabelaHorario" mat-table [dataSource]="segunda">
+            <!-- Id Column -->
+            <ng-container matColumnDef="Hora">
+              <th mat-header-cell *matHeaderCellDef>Hora</th>
+              <td mat-cell id="idhora" *matCellDef="let row">{{row.Hora}}</td>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="Tempo">
+              <th mat-header-cell *matHeaderCellDef>Tempo</th>
+              <td mat-cell *matCellDef="let row" >{{row.Tempo}}</td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="ColunasHorarios"></tr>
+            <tr mat-row *matRowDef="let row; columns: ColunasHorarios;"></tr>
+          </table>
+
+           <!--Quarta-->
+
+           <table class="tabelaHorario" mat-table [dataSource]="segunda">
+            <!-- Id Column -->
+            <ng-container matColumnDef="Hora">
+              <th mat-header-cell *matHeaderCellDef>Hora</th>
+              <td mat-cell id="idhora" *matCellDef="let row">{{row.Hora}}</td>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="Tempo">
+              <th mat-header-cell *matHeaderCellDef>Tempo</th>
+              <td mat-cell *matCellDef="let row" >{{row.Tempo}}</td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="ColunasHorarios"></tr>
+            <tr mat-row *matRowDef="let row; columns: ColunasHorarios;"></tr>
+          </table>
+
+          <!--Quinta-->
+
+          <table class="tabelaHorario" mat-table [dataSource]="segunda">
+            <!-- Id Column -->
+            <ng-container matColumnDef="Hora">
+              <th mat-header-cell *matHeaderCellDef>Hora</th>
+              <td mat-cell id="idhora" *matCellDef="let row">{{row.Hora}}</td>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="Tempo">
+              <th mat-header-cell *matHeaderCellDef>Tempo</th>
+              <td mat-cell *matCellDef="let row" >{{row.Tempo}}</td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="ColunasHorarios"></tr>
+            <tr mat-row *matRowDef="let row; columns: ColunasHorarios;"></tr>
+          </table>
+
+          <!--Sexta-->
+
+          <table class="tabelaHorario" mat-table [dataSource]="segunda">
+            <!-- Id Column -->
+            <ng-container matColumnDef="Hora">
+              <th mat-header-cell *matHeaderCellDef>Hora</th>
+              <td mat-cell id="idhora" *matCellDef="let row">{{row.Hora}}</td>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="Tempo">
+              <th mat-header-cell *matHeaderCellDef>Tempo</th>
+              <td mat-cell *matCellDef="let row" >{{row.Tempo}}</td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="ColunasHorarios"></tr>
+            <tr mat-row *matRowDef="let row; columns: ColunasHorarios;"></tr>
+          </table>
+
+          <!--Sábado-->
+
+          <table class="tabelaHorario" mat-table [dataSource]="segunda">
+            <!-- Id Column -->
+            <ng-container matColumnDef="Hora">
+              <th mat-header-cell *matHeaderCellDef>Hora</th>
+              <td mat-cell id="idhora" *matCellDef="let row">{{row.Hora}}</td>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="Tempo">
+              <th mat-header-cell *matHeaderCellDef>Tempo</th>
+              <td mat-cell *matCellDef="let row" >{{row.Tempo}}</td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="ColunasHorarios"></tr>
+            <tr mat-row *matRowDef="let row; columns: ColunasHorarios;"></tr>
+          </table>
+
+          <!--Domingo-->
+
+          <table class="tabelaHorario" mat-table [dataSource]="segunda">
+            <!-- Id Column -->
+            <ng-container matColumnDef="Hora">
+              <th mat-header-cell *matHeaderCellDef>Hora</th>
+              <td mat-cell id="idhora" *matCellDef="let row">{{row.Hora}}</td>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="Tempo">
+              <th mat-header-cell *matHeaderCellDef>Tempo</th>
+              <td mat-cell *matCellDef="let row" >{{row.Tempo}}</td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="ColunasHorarios"></tr>
+            <tr mat-row *matRowDef="let row; columns: ColunasHorarios;"></tr>
+          </table>
+
+      </div>
+
+      </mat-tab>
+
+      <!--Cadastro dos dias que não atende-->
+      <mat-tab label = "Data N.Atende">
+
+      </mat-tab>
+
+
+
 </mat-tab-group>

@@ -142,3 +142,48 @@ form {
   color: #e35e6b;
 }
 
+.HorarioHeader{
+  font-size: 14px;
+  padding-top: 10px;
+  padding-bottom: 0px;
+ 
+}
+
+hr{
+ border:0;
+ height: 0.5px;
+ background: #333;
+ background-image: linear-gradient(to rigth, #ccc,#333,#ccc);
+ width: 50%;
+ float: left;
+
+}
+
+
+.formataSelectDia{
+  width: 100px;
+  border: 1px;
+}
+
+
+.formataSelectTipo{
+  width: 100px;
+  border: 1px;
+  padding-left: 10%;
+}
+
+.tabelaHorario{
+  width: 14.2%;
+  padding-right: 15PX;
+}
+
+.display{
+  display: flex;
+}
+.displayTipo{
+  padding-left: 10%;
+}
+
+.displayInicioGeracao{
+  padding-left: 15%;
+}
