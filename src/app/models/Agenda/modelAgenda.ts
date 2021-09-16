@@ -1,4 +1,4 @@
-export interface Agenda {
+export class Agenda {
     id ?: string
     DtCriacao: Date 
     nomeAgenda: string

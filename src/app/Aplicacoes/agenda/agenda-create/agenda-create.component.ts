@@ -22,6 +22,7 @@ import { AgendaGrupoUpdateComponent } from '../GrupoAgenda/agenda-grupo-update/a
 import { AgendaGrupoExcluirComponent } from '../GrupoAgenda/agenda-grupo-excluir/agenda-grupo-excluir.component';
 import { AgendaCadastroUnidadeComponent } from '../Unidade/agenda-cadastro-unidade/agenda-cadastro-unidade.component';
 import { Horarios } from 'src/app/models/Agenda/modeloHorarios';
+import { HorarioAgenda } from 'src/app/models/Agenda/modelHorarioAgenda';
 
 @Component({
   selector: 'app-agenda-create',
@@ -30,23 +31,9 @@ import { Horarios } from 'src/app/models/Agenda/modeloHorarios';
 })
 export class AgendaCreateComponent implements OnInit {
   
-  agenda : Agenda = {
-    DtCriacao: new Date, 
-    nomeAgenda: null,
-    profissionalid: null,
-    Empresaid: null,
-    unidadeid: null,
-    salaid: null,
-    substituicao: false,
-    grupoAgendaid: null,
-    vigenciaInicio: null,
-    vigenciaFim: null,
-    considerarFeriado: false,
-    bloqueado: false
-  }
+  agenda : Agenda = new Agenda()
 
-
-  segunda : Horarios
+  segunda : Horarios[]
   
   comboProfissional  : Usuario[];
   comboUnidade : Unidade[];
@@ -72,7 +59,8 @@ export class AgendaCreateComponent implements OnInit {
               private _serviceGrupoAgenda : ServiceAllService<GrupoAgenda>,
               private _serviceUsuario : ServiceAllService<Usuario>,
               private _utilService : UtilService,
-              private servicoGrupo : ServiceAllService<GrupoAgenda>
+              private servicoGrupo : ServiceAllService<GrupoAgenda>,
+              private servicoHorario : ServiceAllService<HorarioAgenda>
     ) { }
 
 
@@ -84,6 +72,7 @@ export class AgendaCreateComponent implements OnInit {
      this.agenda.Empresaid = Number(this._utilService.Sessao().IdEmpresa)
  
       this._serviceAgenda.create(this.agenda, Endpoint.Agenda).subscribe(ag => {
+      
       this._utilService.showMessage("Agenda cadastrada com sucesso!",false);
       this.route.navigate(['home-component'])
       });
@@ -176,7 +165,7 @@ export class AgendaCreateComponent implements OnInit {
     
   }
 
-
+  ////GRUPOPS//////
   selecionarGrupo(event : any){
 
       if(event.which == 1 || event.which ==13){
@@ -186,19 +175,14 @@ export class AgendaCreateComponent implements OnInit {
           this.buscarGrupos(txtBusca);
       
       }
-      
-
 
   }
-
 
   buscarGrupos(txtbusca : any){
       
     this.servicoGrupo.read(Endpoint.GrupoAgenda).subscribe(x => {
         this.grupo = txtbusca == null ? x : x.filter(x => x.nomeGrupoAgenda.toLocaleLowerCase().includes(txtbusca.toLocaleLowerCase()))
-    
     })
-
   }
 
   cadGrupo(){
@@ -215,5 +199,22 @@ export class AgendaCreateComponent implements OnInit {
 
   novaUnidade(){
     this._utilService.Popup("", AgendaCadastroUnidadeComponent, "700px", "500px")
+  }
+
+
+  ///HORÁRIOS///////
+  CriarHorarios(){
+    
+    this._utilService.showMessage("Aguarde Criando os Horários dessa agenda", false);
+
+    this.servicoHorario.read(Endpoint.AgendaHorarios).subscribe(h => {
+      h = h;
+    });
+    
+
+
+
+
+
   }
 }
