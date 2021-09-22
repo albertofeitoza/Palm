@@ -184,11 +184,14 @@ hr{
   display: flex;
 }
 .displayTipo{
-  padding-left: 10%;
+  padding-left: 3%;
+}
+.displayintervalo{
+  padding-left: 13%;
 }
 
 .displayInicioGeracao{
-  padding-left: 15%;
+  padding-left: 9%;
 }
 
 .tempo{

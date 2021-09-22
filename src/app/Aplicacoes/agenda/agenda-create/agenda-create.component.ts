@@ -23,6 +23,7 @@ import { AgendaGrupoExcluirComponent } from '../GrupoAgenda/agenda-grupo-excluir
 import { AgendaCadastroUnidadeComponent } from '../Unidade/agenda-cadastro-unidade/agenda-cadastro-unidade.component';
 import { Horarios } from 'src/app/models/Agenda/modeloHorarios';
 import { HorarioAgenda } from 'src/app/models/Agenda/modelHorarioAgenda';
+import { query } from '@angular/animations';
 
 @Component({
   selector: 'app-agenda-create',
@@ -32,9 +33,9 @@ import { HorarioAgenda } from 'src/app/models/Agenda/modelHorarioAgenda';
 export class AgendaCreateComponent implements OnInit {
   
   agenda : Agenda = new Agenda()
-
-  segunda : Horarios[]
   
+
+
   comboProfissional  : Usuario[];
   comboUnidade : Unidade[];
   comboSala : Sala[];
@@ -47,8 +48,11 @@ export class AgendaCreateComponent implements OnInit {
   GrupoSelecionado : number = 0;
 
   //Horários
+  segunda : HorarioAgenda[]
   ColunasHorarios = ['Hora','Tempo']
-  
+  dadosHorarios : HorarioAgenda = new HorarioAgenda();
+
+
   constructor(private route : Router,
               public dialogRef: MatDialogRef <AgendaCreateComponent>, 
               public overlay : Overlay,
@@ -66,13 +70,14 @@ export class AgendaCreateComponent implements OnInit {
 
   ngOnInit(): void {
      this.carregaCombos()
+     this.buscarHorarios();
   }
   
   createAgenda(){
      this.agenda.Empresaid = Number(this._utilService.Sessao().IdEmpresa)
  
       this._serviceAgenda.create(this.agenda, Endpoint.Agenda).subscribe(ag => {
-      
+      this.agenda = ag;
       this._utilService.showMessage("Agenda cadastrada com sucesso!",false);
       this.route.navigate(['home-component'])
       });
@@ -205,16 +210,24 @@ export class AgendaCreateComponent implements OnInit {
   ///HORÁRIOS///////
   CriarHorarios(){
     
-    this._utilService.showMessage("Aguarde Criando os Horários dessa agenda", false);
+    this.dadosHorarios.dtCriacao = new Date;
+    this.dadosHorarios.criadoPor = this._utilService.Sessao().UsuarioId;
+    //this.dadosHorarios.id_agenda = Number(this.agenda.id);
+    this.dadosHorarios.id_agenda = 1;
+    this.dadosHorarios.id_empresa = Number(this._utilService.Sessao().IdEmpresa);
 
-    this.servicoHorario.read(Endpoint.AgendaHorarios).subscribe(h => {
-      h = h;
-    });
+
+   this._utilService.showMessage("Aguarde Criando os Horários dessa agenda", false);    
+
+    this.servicoHorario.create(this.dadosHorarios, Endpoint.AgendaHorarios).subscribe(h => {});
+
+    this.buscarHorarios();
     
+  }
 
-
-
-
-
+  buscarHorarios(){
+    this.servicoHorario.read(Endpoint.AgendaHorarios).subscribe(x => {
+      this.segunda = x;
+    })
   }
 }
