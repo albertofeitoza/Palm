@@ -25,6 +25,7 @@ import { Horarios } from 'src/app/models/Agenda/modeloHorarios';
 import { HorarioAgenda } from 'src/app/models/Agenda/modelHorarioAgenda';
 import { query } from '@angular/animations';
 
+
 @Component({
   selector: 'app-agenda-create',
   templateUrl: './agenda-create.component.html',
@@ -48,7 +49,14 @@ export class AgendaCreateComponent implements OnInit {
   GrupoSelecionado : number = 0;
 
   //Horários
-  segunda : HorarioAgenda[]
+  segunda : HorarioAgenda[];
+  terca : HorarioAgenda[];
+  quarta : HorarioAgenda[];
+  quinta : HorarioAgenda[];
+  sexta : HorarioAgenda[];
+  sabado : HorarioAgenda[];
+  domingo : HorarioAgenda[];
+
   ColunasHorarios = ['Hora','Tempo']
   dadosHorarios : HorarioAgenda = new HorarioAgenda();
 
@@ -127,6 +135,7 @@ export class AgendaCreateComponent implements OnInit {
     this._serviceSala.read(Endpoint.Sala).subscribe(sl => {
       sl = this.comboSala = grpId == TipoUsuario.Master || grpId == TipoUsuario.Administrador? this.comboSala = sl.filter(x => x.empresaid .toString() == empId && x.unidadeid == Number(this.agenda.unidadeid)) : null;                      
     });
+    
   }
 
   carregaComboGrupoAgenda(grpId: number , empId: string){
@@ -210,24 +219,41 @@ export class AgendaCreateComponent implements OnInit {
   ///HORÁRIOS///////
   CriarHorarios(){
     
-    this.dadosHorarios.dtCriacao = new Date;
-    this.dadosHorarios.criadoPor = this._utilService.Sessao().UsuarioId;
-    //this.dadosHorarios.id_agenda = Number(this.agenda.id);
-    this.dadosHorarios.id_agenda = 1;
-    this.dadosHorarios.id_empresa = Number(this._utilService.Sessao().IdEmpresa);
+    if(this.dadosHorarios.diaDasemana == null)
+      this._utilService.showMessage("Informe o dia da Semana", false);
+    else if(this.dadosHorarios.tipoHorario == null)
+      this._utilService.showMessage("Informe o tipo de horário", false);
+    else if(this.dadosHorarios.intervalo == null)
+      this._utilService.showMessage("Intervalo de tempo Obrigatório", false);
+    else if (this.dadosHorarios.horainicio == null || this.dadosHorarios.horafim == null)
+      this._utilService.showMessage("Informar inicio e fim da geração de Horas", false);
+    else{
+      this.dadosHorarios.dtCriacao = new Date;
+      this.dadosHorarios.criadoPor = this._utilService.Sessao().UsuarioId;
+      //this.dadosHorarios.id_agenda = Number(this.agenda.id);
+      this.dadosHorarios.id_agenda = 1;
+      this.dadosHorarios.id_empresa = Number(this._utilService.Sessao().IdEmpresa);
+      this._utilService.showMessage("Aguarde Criando os Horários dessa agenda", false);    
 
+      this.servicoHorario.create(this.dadosHorarios, Endpoint.AgendaHorarios).subscribe(h => {
+        this._utilService.showMessage("Horários Criados como solicitado", false);  
+        this.buscarHorarios();
+      });
 
-   this._utilService.showMessage("Aguarde Criando os Horários dessa agenda", false);    
-
-    this.servicoHorario.create(this.dadosHorarios, Endpoint.AgendaHorarios).subscribe(h => {});
-
+      
+    }
     this.buscarHorarios();
-    
   }
 
   buscarHorarios(){
     this.servicoHorario.read(Endpoint.AgendaHorarios).subscribe(x => {
-      this.segunda = x;
+      this.domingo = x.filter(x => x.diaDasemana == 1);
+      this.segunda = x.filter(x => x.diaDasemana == 2);
+      this.terca = x.filter(x => x.diaDasemana == 3);
+      this.quarta = x.filter(x => x.diaDasemana == 4);
+      this.quinta = x.filter(x => x.diaDasemana == 5);
+      this.sexta = x.filter(x => x.diaDasemana == 6);
+      this.sabado = x.filter(x => x.diaDasemana == 7);
     })
   }
 }

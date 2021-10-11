@@ -5,10 +5,10 @@ export class HorarioAgenda{
     dtCriacao : Date
     id_agenda : number
     id_empresa : number
-    intervalo : Time
+    intervalo : string
     tipoHorario : number
     diaDasemana : number
-    hora : Time
+    hora : string
     criadoPor : number
     bloqueado : boolean
     naoDisponivel : boolean
