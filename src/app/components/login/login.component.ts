@@ -7,6 +7,8 @@ import { LoginService } from './../../services/login.service';
 
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { ObjetoToken } from 'src/app/models/Token/ObjetoToken';
+import { Usuario } from 'src/app/models/usuarios/modelLogin';
 
 @Component({
   selector: 'app-login',
@@ -16,11 +18,12 @@ import { Component, OnInit } from '@angular/core';
 export class LoginComponent implements OnInit {
 
 acesso : Acesso = new Acesso();
-
+usuario : Usuario = new Usuario();
 
 
 constructor(private router :Router,
              private authservice : LoginService,
+             private serviceLogin : ServiceAllService<Usuario>
              ) { }
 
   ngOnInit(): void {
@@ -30,7 +33,21 @@ constructor(private router :Router,
   logarSistema(keyEvent : any){
 
     if (keyEvent.which === 13 || keyEvent.which == 1)
-      this.authservice.logarSistema(this.acesso);
+    {
+     
+      //let respons = await this.http.post<ObjetoToken>(this.environmentUrl + Endpoint.Token, acesso).toPromise()
+      
+      this.serviceLogin.create(this.usuario, Endpoint.Token).subscribe(response => {
+        let resposta = response;
+
+   
+        
+        this.authservice.logarSistema(resposta);
+      });
+
+     
+      
+    }
 
   }
   

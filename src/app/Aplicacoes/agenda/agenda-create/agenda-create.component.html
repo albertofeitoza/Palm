@@ -238,7 +238,7 @@
             </ng-container>
             <!-- Name Column -->
             <ng-container matColumnDef="Tempo">
-              <th mat-header-cell *matHeaderCellDef><br />Tempo</th>
+              <th mat-header-cell *matHeaderCellDef><br />Intervalo</th>
               <td mat-cell *matCellDef="let row" >{{row.intervalo | slice:0:5}}</td>
             </ng-container>
           
@@ -248,33 +248,35 @@
       
         <!--Terça-->
 
-          <table class="tabelaHorario" mat-table [dataSource]="terca">
-            <!-- Id Column -->
-            <ng-container matColumnDef="Hora">
-              <th mat-header-cell *matHeaderCellDef>Terça <br />Hora</th>
-              <td mat-cell id="idhora" *matCellDef="let row">{{row.hora | slice:0:5 }}</td>
-            </ng-container>
-            <!-- Name Column -->
-            <ng-container matColumnDef="Tempo">
-              <th mat-header-cell *matHeaderCellDef><br />Tempo</th>
-              <td mat-cell *matCellDef="let row" >{{row.intervalo | slice:0:5}}</td>
-            </ng-container>
-          
-            <tr mat-header-row *matHeaderRowDef="ColunasHorarios"></tr>
-            <tr mat-row *matRowDef="let row; columns: ColunasHorarios;"></tr>
-          </table>
+        <table class="tabelaHorario" mat-table [dataSource]="terca">
+          <!-- Id Column -->
+          <ng-container matColumnDef="Hora">
+             
+            <th mat-header-cell *matHeaderCellDef><b>Terça</b> <br />Hora</th>
+            <td mat-cell id="idhoraterca" *matCellDef="let row">{{row.hora | slice:0:5}}</td>
+          </ng-container>
+          <!-- Name Column -->
+          <ng-container matColumnDef="Tempo">
+            <th mat-header-cell *matHeaderCellDef><br />Intervalo</th>
+            <td mat-cell *matCellDef="let row" >{{row.intervalo | slice:0:5}}</td>
+          </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="ColunasHorarios"></tr>
+          <tr mat-row *matRowDef="let row; columns: ColunasHorarios;"></tr>
+        </table>
 
            <!--Quarta-->
 
            <table class="tabelaHorario" mat-table [dataSource]="quarta">
             <!-- Id Column -->
             <ng-container matColumnDef="Hora">
-              <th mat-header-cell *matHeaderCellDef>Quarta <br />Hora</th>
-              <td mat-cell id="idhora" *matCellDef="let row">{{row.hora | slice:0:5}}</td>
+               
+              <th mat-header-cell *matHeaderCellDef><b>Quarta</b> <br />Hora</th>
+              <td mat-cell id="idhoraquarta" *matCellDef="let row">{{row.hora | slice:0:5}}  </td>
             </ng-container>
             <!-- Name Column -->
             <ng-container matColumnDef="Tempo">
-              <th mat-header-cell *matHeaderCellDef><br /> Tempo</th>
+              <th mat-header-cell *matHeaderCellDef><br />Intervalo</th>
               <td mat-cell *matCellDef="let row" >{{row.intervalo | slice:0:5}}</td>
             </ng-container>
           
@@ -287,12 +289,12 @@
           <table class="tabelaHorario" mat-table [dataSource]="quinta">
             <!-- Id Column -->
             <ng-container matColumnDef="Hora">
-              <th mat-header-cell *matHeaderCellDef>Quinta <br />Hora</th>
+              <th mat-header-cell *matHeaderCellDef><b>Quinta</b> <br />Hora</th>
               <td mat-cell id="idhora" *matCellDef="let row">{{row.hora | slice:0:5}}</td>
             </ng-container>
             <!-- Name Column -->
             <ng-container matColumnDef="Tempo">
-              <th mat-header-cell *matHeaderCellDef><br />Tempo</th>
+              <th mat-header-cell *matHeaderCellDef><br />Intervalo</th>
               <td mat-cell *matCellDef="let row" >{{row.intervalo | slice:0:5}}</td>
             </ng-container>
           
@@ -305,12 +307,12 @@
           <table class="tabelaHorario" mat-table [dataSource]="sexta">
             <!-- Id Column -->
             <ng-container matColumnDef="Hora">
-              <th mat-header-cell *matHeaderCellDef>Sexta <br />Hora</th>
+              <th mat-header-cell *matHeaderCellDef><b>Sexta</b> <br />Hora</th>
               <td mat-cell id="idhora" *matCellDef="let row">{{row.hora | slice:0:5}}</td>
             </ng-container>
             <!-- Name Column -->
             <ng-container matColumnDef="Tempo">
-              <th mat-header-cell *matHeaderCellDef><br />Tempo</th>
+              <th mat-header-cell *matHeaderCellDef><br />Intervalo</th>
               <td mat-cell *matCellDef="let row" >{{row.intervalo | slice:0:5}}</td>
             </ng-container>
           
@@ -323,12 +325,12 @@
           <table class="tabelaHorario" mat-table [dataSource]="sabado">
             <!-- Id Column -->
             <ng-container matColumnDef="Hora">
-              <th mat-header-cell *matHeaderCellDef>Sábado <br />Hora</th>
+              <th mat-header-cell *matHeaderCellDef><b>Sábado</b> <br />Hora</th>
               <td mat-cell id="idhora" *matCellDef="let row">{{row.hora | slice:0:5 }}</td>
             </ng-container>
             <!-- Name Column -->
             <ng-container matColumnDef="Tempo">
-              <th mat-header-cell *matHeaderCellDef><br />Tempo</th>
+              <th mat-header-cell *matHeaderCellDef><br />Intervalo</th>
               <td mat-cell *matCellDef="let row" >{{row.intervalo | slice:0:5 }}</td>
             </ng-container>
           
@@ -341,12 +343,12 @@
           <table class="tabelaHorario" mat-table [dataSource]="domingo">
             <!-- Id Column -->
             <ng-container matColumnDef="Hora">
-              <th mat-header-cell *matHeaderCellDef>Domingo <br />Hora</th>
+              <th mat-header-cell *matHeaderCellDef><b>Domingo</b> <br />Hora</th>
               <td mat-cell id="idhora" *matCellDef="let row">{{row.hora | slice:0:5 }}</td>
             </ng-container>
             <!-- Name Column -->
             <ng-container matColumnDef="Tempo">
-              <th mat-header-cell *matHeaderCellDef><br />Tempo</th>
+              <th mat-header-cell *matHeaderCellDef><br />Intervalo</th>
               <td mat-cell *matCellDef="let row" >{{row.intervalo | slice:0:5 }}</td>
             </ng-container>
           

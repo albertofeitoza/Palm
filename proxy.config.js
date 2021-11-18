@@ -1,10 +1,10 @@
 const PROXY_CONFIG = [
     {
       context: '/api',
-      target: 'http://localhost:5000',
+      target: 'http://201.95.197.175:888',
       secure : false,
       logLevel : 'debug',
-     // pathRewrite: {'^/api' : ''}
+     // pathRenwrite: {'^/api' : ''}
     }
   ];
   module.exports = PROXY_CONFIG;

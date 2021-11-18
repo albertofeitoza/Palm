@@ -19,6 +19,7 @@ import { Injectable, EventEmitter  } from '@angular/core';
 import { stringify } from 'querystring';
 import { Token } from '@angular/compiler/src/ml_parser/lexer';
 import { STRING_TYPE } from '@angular/compiler';
+import { Usuario } from '../models/usuarios/modelLogin';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -49,18 +50,20 @@ export class LoginService {
               private snackbar : MatSnackBar,
               private http: HttpClient,
               private utilService : UtilService,
+              
                
               ) { 
-                this.environmentName = environment.environmentName;
+              this.environmentName = environment.environmentName;
               this.environmentUrl =  environment.BASE_URL;
               }
 
-  async logarSistema(acesso: Acesso) {
+  async logarSistema(response: any) {
+    
+    
     
     try {
-      let response = await this.http.post<ObjetoToken>(this.environmentUrl + Endpoint.Token, acesso).toPromise()
+      //let response = await this.http.post<ObjetoToken>(this.environmentUrl + Endpoint.Token, acesso).toPromise()
      
-
        if (response != null && !response.bloqueado && !response.statusEmpresa && !response.erroLogin )
           {
 
@@ -75,7 +78,7 @@ export class LoginService {
            
             localStorage.setItem("stUs", response.bloqueado);
             localStorage.setItem("empId", response.empresaid);
-            this.utilService.showMessage("Seja Bem Vindo!  " + acesso.login , false);
+            this.utilService.showMessage("Seja Bem Vindo!  " + response.empresaid , false);
 
             response.gruposUsuarios.forEach(element => {
 

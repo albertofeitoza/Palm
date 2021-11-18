@@ -3,24 +3,24 @@
         <form>
             <mat-form-field > 
                 <input matInput placeholder="Chave Empresa" 
-                 [(ngModel)]="acesso.nome" name="name" placeholder="Empresa">
+                 [(ngModel)]="usuario.nome" name="name" placeholder="Empresa">
                  
             </mat-form-field>
 
             <mat-form-field > 
                 <input matInput placeholder="login" 
-                 [(ngModel)]="acesso.login" name="name" placeholder="login">
+                 [(ngModel)]="usuario.login" name="name" placeholder="login">
                  
             </mat-form-field>
            
             <mat-form-field >
                 <input matInput placeholder="senha"
-                [(ngModel)]="acesso.senha" type="password" name="senha" (keypress)="logarSistema($event)">
+                [(ngModel)]="usuario.senha" type="password" name="senha" (keypress)="logarSistema($event)">
                 
             </mat-form-field>
         </form>
         
-            <div *ngIf="acesso.login && acesso.senha && acesso.nome">
+            <div *ngIf="usuario.nome && usuario.login && usuario.senha">
                 <button mat-raised-button (click)="logarSistema($event)"  color="primary"> 
                     Login
                 </button> 
