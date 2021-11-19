@@ -115,6 +115,15 @@ export class LoginService {
     this.router.navigate(['/login']);
   }
 
+  LimparCache(){
+
+    localStorage.removeItem("tId");
+    localStorage.removeItem("usId");
+    localStorage.removeItem("grpUs");
+    localStorage.removeItem("stUs");
+    localStorage.removeItem("empId");
+  }
+
   header(){
        
     var key = localStorage.getItem('tId') != null ? localStorage.getItem('tId').substring(0, localStorage.getItem('tId').length -12)  : null
