@@ -34,21 +34,10 @@ constructor(private router :Router,
 
     if (keyEvent.which === 13 || keyEvent.which == 1)
     {
-     
-      //let respons = await this.http.post<ObjetoToken>(this.environmentUrl + Endpoint.Token, acesso).toPromise()
-      
       this.serviceLogin.create(this.usuario, Endpoint.Token).subscribe(response => {
         let resposta = response;
-
-   
-        
         this.authservice.logarSistema(resposta);
       });
-
-     
-      
     }
-
   }
-  
 }

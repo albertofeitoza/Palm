@@ -57,9 +57,7 @@ export class LoginService {
               this.environmentUrl =  environment.BASE_URL;
               }
 
-  async logarSistema(response: any) {
-    
-    
+  logarSistema(response: any) {
     
     try {
       //let response = await this.http.post<ObjetoToken>(this.environmentUrl + Endpoint.Token, acesso).toPromise()
@@ -78,7 +76,7 @@ export class LoginService {
            
             localStorage.setItem("stUs", response.bloqueado);
             localStorage.setItem("empId", response.empresaid);
-            this.utilService.showMessage("Seja Bem Vindo!  " + response.empresaid , false);
+            this.utilService.showMessage("Seja Bem Vindo!  " , false);
 
             response.gruposUsuarios.forEach(element => {
 
@@ -126,10 +124,12 @@ export class LoginService {
   }
 
   header(){
+       
+    var key = localStorage.getItem('tId') != null ? localStorage.getItem('tId').substring(0, localStorage.getItem('tId').length -12)  : null
     var reqHeader = new HttpHeaders({ 
         'Content-Type' : 'application/json; charset=utf-8',
         'Accept'       : 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('tId')
+        'Authorization': 'Bearer ' + key
     })
     return { headers: reqHeader };
   }
