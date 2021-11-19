@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  environmentName : "QA",
+  environmentName : "dev",
   apiUrl : 'http://localhost:888',
   BASE_URL : '/api'
 };
