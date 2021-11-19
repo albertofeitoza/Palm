@@ -3,7 +3,6 @@ import { Endpoint } from './../../../Negocio/Endpoint';
 import { ServiceAllService } from './../../../services/service-all.service';
 import { UtilService } from './../../../services/util.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ProductService } from './../../../services/product.service';
 import { Product } from '../../../models/produtos/product.model';
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';

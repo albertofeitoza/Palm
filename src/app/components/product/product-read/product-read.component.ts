@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { Endpoint } from './../../../Negocio/Endpoint';
 import { ServiceAllService } from './../../../services/service-all.service';
 import { UtilService } from './../../../services/util.service';
-import { ProductService } from './../../../services/product.service';
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../../../models/produtos/product.model';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';

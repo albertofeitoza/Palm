@@ -50,21 +50,13 @@ export class LoginService {
               private snackbar : MatSnackBar,
               private http: HttpClient,
               private utilService : UtilService,
-              
-               
-              ) { 
-              this.environmentName = environment.environmentName;
-              this.environmentUrl =  environment.BASE_URL;
-              }
+              ) { }
 
   logarSistema(response: any) {
     
     try {
-      //let response = await this.http.post<ObjetoToken>(this.environmentUrl + Endpoint.Token, acesso).toPromise()
-     
-       if (response != null && !response.bloqueado && !response.statusEmpresa && !response.erroLogin )
+      if (response != null && !response.bloqueado && !response.statusEmpresa && !response.erroLogin )
           {
-
             this.mostrarMenuEmitter.emit(true);
             this.mostrarLoginEmitter.emit(false)
             this.usuarioAutenticado = true;

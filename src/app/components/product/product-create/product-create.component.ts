@@ -6,7 +6,6 @@ import { Usuario } from './../../../models/usuarios/modelLogin';
 import { Token } from '@angular/compiler/src/ml_parser/lexer';
 import { stringify } from 'querystring';
 import { UtilService } from './../../../services/util.service';
-import { ProductService } from './../../../services/product.service';
 import { Product } from '../../../models/produtos/product.model';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';

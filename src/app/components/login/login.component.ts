@@ -34,9 +34,11 @@ constructor(private router :Router,
 
     if (keyEvent.which === 13 || keyEvent.which == 1)
     {
+      this.authservice.sairSistema();
       this.serviceLogin.create(this.usuario, Endpoint.Token).subscribe(response => {
         let resposta = response;
         this.authservice.logarSistema(resposta);
+        resposta = null;
       });
     }
   }

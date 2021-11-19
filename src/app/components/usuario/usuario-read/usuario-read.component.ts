@@ -14,8 +14,6 @@ import { MatTable } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { Empresa } from './../../../models/empresa/ModelEmpresa';
-import { EmpresaService } from './../../../services/empresa.service';
-import { UsuarioService } from './../../../services/usuario.service';
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { __await } from 'tslib';
 import { FooterComponent } from '../../template/footer/footer.component';

@@ -5,7 +5,6 @@ import { ServiceAllService } from './../../../services/service-all.service';
 import { Router } from '@angular/router';
 import { UtilService } from './../../../services/util.service';
 import { Contato } from './../../../models/contato/modelContato';
-import { ContatoService } from './../../../services/contato.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { cnpj } from 'cpf-cnpj-validator';
