@@ -1,7 +1,7 @@
 <mat-dialog-content>
     <div class="mat-elevation-z3">
 
-        <div class="barraMenu">
+      <div class="barraMenu">
           <button mat-button [matMenuTriggerFor]="menu">Rotina Diária</button>
             <mat-menu #menu="matMenu">
               <a mat-menu-item>Agendamento</a>
@@ -16,122 +16,20 @@
                 <a (click)="addUnidade()" mat-menu-item>Unidade</a>              
               </mat-menu>
 
-
-
-              <span class="botaoBusca" (click)="buscarAgenda()" (keypress)="buscarAgenda()">
+              <span class="botaoBusca" (click)="buscarAgendamento()" (keypress)="buscarAgendamento()">
                 <i class="material-icons">search</i>
               </span>
 
               <input class="textBusca"  name="busca" id="busca" type="text" value="">
-          </div>
-          <table class="tabelaagenda" mat-table [dataSource]="agenda">
-            <!-- Id Column -->
-            
-            <ng-container matColumnDef="id">
-              <th mat-header-cell *matHeaderCellDef>Id</th>
-              <td mat-cell id="idAgenda" *matCellDef="let row">{{row.id}}</td>
-            </ng-container>
-            
-            <!-- Name Column -->
-            <ng-container matColumnDef="NomeAgenda">
-              <th mat-header-cell *matHeaderCellDef>Nome Agenda</th>
-              <td mat-cell *matCellDef="let row">{{row.nomeAgenda}}</td>
-            </ng-container>
-      
-            <!-- Name Column -->
-            <ng-container matColumnDef="Funcionario">
-              <th mat-header-cell *matHeaderCellDef>Profissional</th>
-              <td mat-cell *matCellDef="let row">{{row.nome}}</td>
-            </ng-container>
-      
-            <!-- Name Price -->
-            <ng-container matColumnDef="NomeEmpresa">
-              <th mat-header-cell *matHeaderCellDef>Empresa</th>
-              <td mat-cell *matCellDef="let row">{{row.nomeFantasia}}</td>
-            </ng-container>
-      
-            <!-- Name Column -->
-            <ng-container matColumnDef="NomeUnidade">
-              <th mat-header-cell *matHeaderCellDef>Unidade</th>
-              <td mat-cell *matCellDef="let row">{{row.nomeUnidade}}</td>
-            </ng-container>
-      
-            <ng-container matColumnDef="NomeSala">
-                <th mat-header-cell *matHeaderCellDef>Sala</th>
-                <td mat-cell *matCellDef="let row">{{row.nomeSala}}</td>
-              </ng-container>
-    
-              <ng-container matColumnDef="GrupoAgenda">
-                <th mat-header-cell *matHeaderCellDef>Grupo Agenda</th>
-                <td mat-cell *matCellDef="let row">{{row.nomeGrupoAgenda}}</td>
-              </ng-container>
-
-              <ng-container matColumnDef="substituicao">
-                <th mat-header-cell *matHeaderCellDef>Pode Substituir?</th>
-                <td mat-cell *matCellDef="let row">{{row.substituicao}}</td>
-              </ng-container>
-
-              
-              <ng-container matColumnDef="vigenciaInicio">
-                <th mat-header-cell *matHeaderCellDef>Inicio Agenda</th>
-                <td mat-cell *matCellDef="let row">{{row.vigenciaInicio | date: 'dd/MM/yyyy hh:mm:ss'}} </td>
-              </ng-container>
-
-
-              <ng-container matColumnDef="vigenciaFim">
-                <th mat-header-cell *matHeaderCellDef>Fim Agenda</th>
-                <td mat-cell *matCellDef="let row">{{row.vigenciaFim | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
-              </ng-container>
-
-              
-              <ng-container matColumnDef="considerarFeriado">
-                <th mat-header-cell *matHeaderCellDef>Feriado</th>
-                <td mat-cell *matCellDef="let row">{{row.considerarFeriado}}</td>
-              </ng-container>
-
-            <!-- status -->
-            <ng-container matColumnDef="bloqueado">
-              <th mat-header-cell *matHeaderCellDef>Ativa</th>
-                <td mat-cell *matCellDef="let row">
-                  <div *ngIf="row.bloqueado == 'Sim'" >
-                    <i class="material-icons">
-                      lock
-                    </i>
-                  </div>
-                  <div *ngIf="row.bloqueado == 'Não'" >
-                    <i class="material-icons">  
-                      lock_open
-                    </i>
-                  </div>
-                </td>
-              </ng-container>
-      
-            
-            <!-- Coluna de Ações -->
-            <ng-container matColumnDef="action">
-              <th mat-header-cell *matHeaderCellDef>Ações</th>
-              <td mat-cell *matCellDef="let row">
-                  
-                  <a  (click)="AtualizarAgenda(row.id)" class="edit">
-                      <i class="material-icons">
-                          edit
-                      </i>
-                  </a>
-                  <a (click)="ExcluirAgenda(row.id)" class="delete">
-                      <i class="material-icons">
-                          delete
-                      </i>
-                  </a>
-                  
-              </td>
-            </ng-container>
-                
-        
-            <tr mat-header-row *matHeaderRowDef="Colunas"></tr>
-            <tr mat-row *matRowDef="let row; columns: Colunas;"></tr>
-          </table>
-
       </div>
+         
+              <!--Inserir a tabela aqui-->
+
+              <div>
+                <h1>Aqui será apresentado os agendamentos</h1>
+              </div>
+              
+              </div>
 
       <div class="row">
         <router-outlet></router-outlet>

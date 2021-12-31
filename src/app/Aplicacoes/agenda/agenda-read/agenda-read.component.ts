@@ -27,11 +27,12 @@ import { stringify } from '@angular/compiler/src/util';
 })
 export class AgendaReadComponent implements OnInit {
 
+ 
   Colunas = ['id', 'NomeAgenda','Funcionario','NomeEmpresa','NomeUnidade','NomeSala',
                       'substituicao','GrupoAgenda','vigenciaInicio','vigenciaFim','considerarFeriado','bloqueado','action']  
-  agenda : AgendaDto[];
+ 
+  agendamento : []
 
-  
 
   constructor(
               public dialog: MatDialog,
@@ -43,25 +44,13 @@ export class AgendaReadComponent implements OnInit {
 
   ngOnInit(): void {
     this.servico.AtualizarMenu(Aplicacao.Agenda,'app_registration','');
-    this.buscarAgenda();
-  }
-
- 
-  buscarAgenda(){
-    
-    let filtroAgenda = (<HTMLSelectElement>document.getElementById('busca')).value;
-
-    this._repAgenda.read(Endpoint.Agenda).subscribe(ag => {
-      this.agenda = filtroAgenda == null ? ag.filter(x => x.empresaId.toString() == this.servico.Sessao().IdEmpresa) 
-                    :  ag.filter(x => x.nomeAgenda.toLowerCase().includes(filtroAgenda.toLowerCase()) && x.empresaId.toString() == this.servico.Sessao().IdEmpresa)
-    });
   }
 
   addNovaAgenda() {
    
     if(this.servico.Sessao().GrupoUsuario == TipoUsuario.Master || this.servico.Sessao().GrupoUsuario == TipoUsuario.Administrador)
     {
-      this.servico.Popup("0",AgendaCreateComponent, '50%','98%' );
+      this.servico.Popup("0",AgendaCreateComponent, '70%','98%' );
 
     }else{
       this.servico.showMessage("Solicitar ao um Usuário Master para criar Nova Agenda!",true);
@@ -69,29 +58,6 @@ export class AgendaReadComponent implements OnInit {
 
 
   }
-
-  AtualizarAgenda(id : string): void {
-    if(this.servico.Sessao().GrupoUsuario == TipoUsuario.Master || this.servico.Sessao().GrupoUsuario == TipoUsuario.Administrador)
-    {
-      let response  =  this.servico.Popup(id, AgendaUpdateComponent, '30%','80%' )
-      
-      }else{
-        this.servico.showMessage("Solicitar ao um Usuário Master para Editar os  dados da Agenda!",true);
-      }   
-  }
-
-  ExcluirAgenda(id : string): void {
-      
-    if(this.servico.Sessao().GrupoUsuario == TipoUsuario.Master || this.servico.Sessao().GrupoUsuario == TipoUsuario.Administrador)
-      {
-        this.servico.Popup(id, AgendaDeleteComponent,'30%','25%');
-      }
-      else
-      {
-        this.servico.showMessage("Solicitar ao um Usuário Master para Excluir a Agenda!",true);
-      }
-  }
-
 
   addUnidade(){
     
@@ -101,5 +67,14 @@ export class AgendaReadComponent implements OnInit {
       this.servico.showMessage("Solicitar ao um Usuário Master cadastrar a Unidade",true);
   }
 
+  buscarAgendamento(){
+    return null;
+  }
+  AtualizarAgendamento(){
+    return null;
+  }
+  ExcluirAgendamento(){
+    return null;
+  }
 
 }

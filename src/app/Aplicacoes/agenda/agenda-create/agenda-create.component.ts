@@ -24,6 +24,9 @@ import { AgendaCadastroUnidadeComponent } from '../Unidade/agenda-cadastro-unida
 import { Horarios } from 'src/app/models/Agenda/modeloHorarios';
 import { HorarioAgenda } from 'src/app/models/Agenda/modelHorarioAgenda';
 import { query } from '@angular/animations';
+import { AgendaDto } from 'src/app/models/Agenda/modelRetornoAgenda';
+import { AgendaDeleteComponent } from '../agenda-delete/agenda-delete.component';
+import { AgendaUpdateComponent } from '../agenda-update/agenda-update.component';
 
 
 @Component({
@@ -34,8 +37,8 @@ import { query } from '@angular/animations';
 export class AgendaCreateComponent implements OnInit {
   
   agenda : Agenda = new Agenda()
+  estadoForm : boolean = false;
   
-
 
   comboProfissional  : Usuario[];
   comboUnidade : Unidade[];
@@ -61,6 +64,10 @@ export class AgendaCreateComponent implements OnInit {
   dadosHorarios : HorarioAgenda = new HorarioAgenda();
 
 
+  Colunas = ['id', 'Agenda','Responsável','Unidade','Sala',
+                      'Grupo','Inicio','Fim','bloqueado','action']  
+  agendas : AgendaDto[];
+
   constructor(private route : Router,
               public dialogRef: MatDialogRef <AgendaCreateComponent>, 
               public overlay : Overlay,
@@ -72,13 +79,20 @@ export class AgendaCreateComponent implements OnInit {
               private _serviceUsuario : ServiceAllService<Usuario>,
               private _utilService : UtilService,
               private servicoGrupo : ServiceAllService<GrupoAgenda>,
-              private servicoHorario : ServiceAllService<HorarioAgenda>
+              private servicoHorario : ServiceAllService<HorarioAgenda>,
+              private _repAgenda : ServiceAllService<AgendaDto>,
+
     ) { }
 
 
   ngOnInit(): void {
      this.carregaCombos()
      this.buscarHorarios();
+     this._utilService.AtualizarMenu(Aplicacao.Agenda,'app_registration','');
+    
+     if(!this.estadoForm)
+        this.buscarAgenda();
+
   }
   
   createAgenda(){
@@ -154,8 +168,9 @@ export class AgendaCreateComponent implements OnInit {
   }
 
   fecharPopup(): void {
-    this.dialogRef.close();
-  }
+    this.estadoForm = false;
+    this.agenda = new Agenda();
+   }
 
   novoUsuario(){
     
@@ -187,7 +202,6 @@ export class AgendaCreateComponent implements OnInit {
         let txtBusca = (<HTMLInputElement>document.getElementById('txtbusca')).value
         if (txtBusca != null)
           this.buscarGrupos(txtBusca);
-      
       }
 
   }
@@ -256,4 +270,46 @@ export class AgendaCreateComponent implements OnInit {
       this.sabado = x.filter(x => x.diaDasemana == 7);
     })
   }
+
+
+  //Métodos de Edição da agenda
+
+  cadAgenda(){
+    this.estadoForm = true;
+  }
+
+  buscarAgenda (){
+    
+    let filtroAgenda = (<HTMLSelectElement>document.getElementById('busca')).value;
+
+    this._repAgenda.read(Endpoint.Agenda).subscribe(ag => {
+      this.agendas = filtroAgenda == null ? ag.filter(x => x.empresaId.toString() == this._utilService.Sessao().IdEmpresa) 
+                    :  ag.filter(x => x.nomeAgenda.toLowerCase().includes(filtroAgenda.toLowerCase()) && x.empresaId.toString() == this._utilService.Sessao().IdEmpresa)
+    });
+  }
+
+
+  AtualizarAgenda(id : string): void {
+    if(this._utilService.Sessao().GrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().GrupoUsuario == TipoUsuario.Administrador)
+    {
+      let response  =  this._utilService.Popup(id, AgendaUpdateComponent, '30%','80%' )
+      
+      }else{
+        this._utilService.showMessage("Solicitar ao um Usuário Master para Editar os  dados da Agenda!",true);
+      }   
+  }
+
+  ExcluirAgenda(id : string): void {
+      
+    if(this._utilService.Sessao().GrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().GrupoUsuario == TipoUsuario.Administrador)
+      {
+        this._utilService.Popup(id, AgendaDeleteComponent,'30%','25%');
+      }
+      else
+      {
+        this._utilService.showMessage("Solicitar ao um Usuário Master para Excluir a Agenda!",true);
+      }
+  }
+
+
 }

@@ -32,8 +32,8 @@ grupo : GrupoAgenda
 
   editarGrupo(){
     this.servicoGrupo.update(this.grupo, Endpoint.GrupoAgenda).subscribe(()=> {
-        this.servico.showMessage("Grupo Excluído com sucesso", false)
-    })
+        this.servico.showMessage("Grupo Alterado com sucesso", false)
+    });
 
   }
 
