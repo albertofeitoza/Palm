@@ -1,3 +1,5 @@
+import { Agenda } from "./modelAgenda"
+
 export class GrupoAgenda {
 
     id? : number

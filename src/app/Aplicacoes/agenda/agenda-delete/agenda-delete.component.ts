@@ -14,22 +14,8 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class AgendaDeleteComponent implements OnInit {
 
-  agenda : Agenda = {  
-    id: null,
-    DtCriacao: new Date, 
-    nomeAgenda: null,
-    profissionalid: null,
-    Empresaid: null,
-    unidadeid: null,
-    salaid: null,
-    substituicao: false,
-    grupoAgendaid: null,
-    vigenciaInicio: null,
-    vigenciaFim: null,
-    considerarFeriado: false,
-    bloqueado: false
-  }
-
+  agenda : Agenda = new Agenda();
+  
   constructor(
               public dialgRef : MatDialogRef<AgendaDeleteComponent>,
               private serviceAgenda : ServiceAllService<Agenda>,

@@ -38,7 +38,7 @@ export class AgendaCreateComponent implements OnInit {
   
   agenda : Agenda = new Agenda()
   estadoForm : boolean = false;
-  
+  agendaSelecionada : number = 0;
 
   comboProfissional  : Usuario[];
   comboUnidade : Unidade[];
@@ -91,18 +91,17 @@ export class AgendaCreateComponent implements OnInit {
      this._utilService.AtualizarMenu(Aplicacao.Agenda,'app_registration','');
     
      if(!this.estadoForm)
-        this.buscarAgenda();
+        this.buscarAgenda(null);
 
   }
   
   createAgenda(){
      this.agenda.Empresaid = Number(this._utilService.Sessao().IdEmpresa)
- 
-      this._serviceAgenda.create(this.agenda, Endpoint.Agenda).subscribe(ag => {
-      this.agenda = ag;
-      this._utilService.showMessage("Agenda cadastrada com sucesso!",false);
-      this.route.navigate(['home-component'])
-      });
+     this._serviceAgenda.create(this.agenda, Endpoint.Agenda).subscribe(ag => {
+     this.agenda = ag;
+     this._utilService.showMessage("Agenda cadastrada com sucesso!",false);
+     this.route.navigate(['home-component'])
+     });
         this.route.navigate(['home-component'])
   }
 
@@ -147,7 +146,7 @@ export class AgendaCreateComponent implements OnInit {
     this.comboSala = new Array();
 
     this._serviceSala.read(Endpoint.Sala).subscribe(sl => {
-      sl = this.comboSala = grpId == TipoUsuario.Master || grpId == TipoUsuario.Administrador? this.comboSala = sl.filter(x => x.empresaid .toString() == empId && x.unidadeid == Number(this.agenda.unidadeid)) : null;                      
+      sl = this.comboSala = grpId == TipoUsuario.Master || grpId == TipoUsuario.Administrador? this.comboSala = sl.filter(x => x.empresaid .toString() == empId ) : null;                      
     });
     
   }
@@ -185,7 +184,7 @@ export class AgendaCreateComponent implements OnInit {
   selecionaAbaAgenda(tab : any){
     
     switch (tab.index) {
-      case 1 :
+      case 0 :
           this.buscarGrupos("")
         break;
       default:
@@ -199,17 +198,33 @@ export class AgendaCreateComponent implements OnInit {
 
       if(event.which == 1 || event.which ==13){
         
-        let txtBusca = (<HTMLInputElement>document.getElementById('txtbusca')).value
-        if (txtBusca != null)
-          this.buscarGrupos(txtBusca);
-      }
-
+        let txtBuscaGrupo = (<HTMLInputElement>document?.getElementById('txtbuscaGrupo')).value
+                
+        if (txtBuscaGrupo != null)
+          this.buscarGrupos(txtBuscaGrupo);
+        }
   }
 
-  buscarGrupos(txtbusca : any){
+  ////AGENDAS//////
+  selecionarAgenda(event : any){
+
+    if(event.which == 1 || event.which ==13){
       
+      let txtBuscaAgenda = (<HTMLInputElement>document?.getElementById('txtbuscaAgenda')).value
+              
+      if (txtBuscaAgenda != null)
+        this.buscarAgenda(txtBuscaAgenda)
+      }
+
+}
+
+
+  buscarGrupos(txtbusca : any){
+    
+    let agenda = this.agendas.filter;
+    
     this.servicoGrupo.read(Endpoint.GrupoAgenda).subscribe(x => {
-        this.grupo = txtbusca == null ? x : x.filter(x => x.nomeGrupoAgenda.toLocaleLowerCase().includes(txtbusca.toLocaleLowerCase()))
+      this.grupo = txtbusca == null ? x : x.filter(x => x.nomeGrupoAgenda.toLocaleLowerCase().includes(txtbusca.toLocaleLowerCase()))
     })
   }
 
@@ -273,15 +288,11 @@ export class AgendaCreateComponent implements OnInit {
 
 
   //Métodos de Edição da agenda
-
   cadAgenda(){
     this.estadoForm = true;
   }
 
-  buscarAgenda (){
-    
-    let filtroAgenda = (<HTMLSelectElement>document.getElementById('busca')).value;
-
+  buscarAgenda (filtroAgenda : string){
     this._repAgenda.read(Endpoint.Agenda).subscribe(ag => {
       this.agendas = filtroAgenda == null ? ag.filter(x => x.empresaId.toString() == this._utilService.Sessao().IdEmpresa) 
                     :  ag.filter(x => x.nomeAgenda.toLowerCase().includes(filtroAgenda.toLowerCase()) && x.empresaId.toString() == this._utilService.Sessao().IdEmpresa)
@@ -311,5 +322,9 @@ export class AgendaCreateComponent implements OnInit {
       }
   }
 
+  AgendaSelecionada(id : any){
+    this.agendaSelecionada = 0;
+    this.agendaSelecionada = id > 0 ? this.agendaSelecionada = id : 0;
+  }
 
 }

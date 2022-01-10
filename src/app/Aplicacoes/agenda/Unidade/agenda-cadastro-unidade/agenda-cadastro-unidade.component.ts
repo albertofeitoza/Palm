@@ -48,6 +48,7 @@ unidadeSelecionada : number = 0;
 
   ngOnInit(): void {
       this.buscarUnidade("");
+     // this.buscarSala();
       
   }
 
@@ -133,19 +134,17 @@ unidadeSelecionada : number = 0;
 
 
   buscarSala(){
-    
     this.servicoSala.read(Endpoint.Sala).subscribe(sl => {
-      this.salas = this.vlrsala == null ?   sl.filter(x => x.unidadeid == this.unidadeSelecionada) :
-                                            sl.filter(x => x.unidadeid == this.unidadeSelecionada && x.nomeSala.toLowerCase().includes(this.vlrsala.toLowerCase())) 
+      this.salas = this.vlrsala == null ? sl.filter(x => x.unidadeid == this.unidadeSelecionada) :
+          sl.filter(x => x.unidadeid == this.unidadeSelecionada && x.nomeSala.toLowerCase().includes(this.vlrsala.toLowerCase())) 
     })
-   
 
   }
   
   selecionarSala(keyEvent : any){
     
     if (keyEvent.which == 13 || keyEvent.which == 1){
-      this.vlrsala =  (<HTMLInputElement>document.getElementById('txtbusca')).value;
+      this.vlrsala =  (<HTMLInputElement>document.getElementById('txtbuscaSala')).value;
     }
 
     this.buscarSala();

@@ -45,9 +45,6 @@
                   <a (click)="cadUnidade()" class="cadUnidade" >
                     <i class="material-icons">add</i>
                   </a>
-                  <a (click)="testePopup()" class="cadUnidade" >
-                    <i class="material-icons">person</i>
-                  </a>
 
                   <table class="tabelaUnidade" mat-table [dataSource]="unidades">
                         <!-- Id Column -->
@@ -122,7 +119,7 @@
               <i class="material-icons">search</i>
             </span>
       
-            <input class="textBusca"  name="busca" id="txtbusca" type="text" (keypress)="selecionarSala($event)"  value="">
+            <input class="textBusca"  name="busca" id="txtbuscaSala" type="text" (keypress)="selecionarSala($event)"  value="">
     
             <a (click)="cadsala()" class="cadsala" >
               <i class="material-icons">add</i>

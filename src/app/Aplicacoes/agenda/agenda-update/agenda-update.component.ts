@@ -40,29 +40,12 @@ export class AgendaUpdateComponent implements OnInit {
   comboTipoGrupoAgenda : GrupoAgenda[];
 
 
-  agenda : Agenda = {  
-    id: null,
-    DtCriacao: new Date, 
-    nomeAgenda: null,
-    profissionalid: null,
-    Empresaid: null,
-    unidadeid: null,
-    salaid: null,
-    substituicao: false,
-    grupoAgendaid: null,
-    vigenciaInicio: null,
-    vigenciaFim: null,
-    considerarFeriado: false,
-    bloqueado: false
-  }
-
-  
+  agenda : Agenda = new Agenda();
   
   ngOnInit(): void {
  
     this.buscarAgendaPorId();
     
-  
   }
 
       buscarAgendaPorId(){

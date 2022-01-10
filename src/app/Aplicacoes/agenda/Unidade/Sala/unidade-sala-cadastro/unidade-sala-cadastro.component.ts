@@ -32,7 +32,7 @@ sala : Sala = new Sala();
 
   addSala(){
 
-    this.sala.unidadeid = Number(this.dialog.id);
+    this.sala.unidadeid= Number(this.dialog.id);
     this.sala.empresaid = Number(this.servico.Sessao().IdEmpresa);
     this.sala.dtCriacao = new Date;
     this.sala.criadoPor = this.servico.Sessao().UsuarioId;

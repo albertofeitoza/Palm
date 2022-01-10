@@ -1,7 +1,7 @@
 const PROXY_CONFIG = [
     {
       context: '/api',
-      target: 'http://187.10.96.58:888',
+      target: 'http://localhost:887',
       secure : false,
       logLevel : 'debug',
     }
