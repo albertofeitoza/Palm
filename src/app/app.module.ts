@@ -128,7 +128,6 @@ import { AgendaGrupoUpdateComponent } from './Aplicacoes/agenda/GrupoAgenda/agen
     AgendaGrupoCadastroComponent,
     AgendaGrupoExcluirComponent,
     AgendaGrupoUpdateComponent,
-  
     
   ],
   imports: [

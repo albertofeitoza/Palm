@@ -6,6 +6,8 @@ import { UtilService } from './util.service';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Injectable } from '@angular/core';
+import { LocalStorageCache } from '@auth0/auth0-spa-js';
+import { stringify } from 'querystring';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +39,8 @@ export class ServiceAllService <T>{
 
     // Buscar todos Get All
     read(tipo: string): Observable<T[]>{
-      return this.http.get<T[]>(this.environmentUrl + tipo, this.loginservice.header()).pipe(
+      let idEmpresa = this.utilService.Sessao().GrupoUsuario == 1 ? 0 : localStorage.getItem('empId');
+      return this.http.get<T[]>(`${this.environmentUrl + tipo}/?idEmpresa=${idEmpresa}` , this.loginservice.header()).pipe(
         map(obj => obj),
         catchError(e => this.utilService.erroHandler(e))
       ); 

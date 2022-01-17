@@ -86,16 +86,18 @@ export class AgendaCreateComponent implements OnInit {
 
 
   ngOnInit(): void {
-     this.carregaCombos()
-     this.buscarHorarios();
-     this._utilService.AtualizarMenu(Aplicacao.Agenda,'app_registration','');
+    this.carregaCombos()
+      this._utilService.AtualizarMenu(Aplicacao.Agenda,'app_registration','');
     
-     if(!this.estadoForm)
-        this.buscarAgenda(null);
+    if(!this.estadoForm)
+      this.buscarAgenda(null);
+
+    this.buscarHorarios(this.agendaSelecionada);        
 
   }
   
   createAgenda(){
+    this.agendaSelecionada = 0;
      this.agenda.Empresaid = Number(this._utilService.Sessao().IdEmpresa)
      this._serviceAgenda.create(this.agenda, Endpoint.Agenda).subscribe(ag => {
      this.agenda = ag;
@@ -110,7 +112,7 @@ export class AgendaCreateComponent implements OnInit {
   }
 
   BuscarSala(){
-      this.carregaComboSala(this._utilService.Sessao().GrupoUsuario, this._utilService.Sessao().IdEmpresa)
+    this.carregaComboSala(this._utilService.Sessao().GrupoUsuario, this._utilService.Sessao().IdEmpresa)
   }
 
   AtualizarComboProfissional(){
@@ -144,9 +146,8 @@ export class AgendaCreateComponent implements OnInit {
 
   carregaComboSala(grpId: number , empId: string){
     this.comboSala = new Array();
-
     this._serviceSala.read(Endpoint.Sala).subscribe(sl => {
-      sl = this.comboSala = grpId == TipoUsuario.Master || grpId == TipoUsuario.Administrador? this.comboSala = sl.filter(x => x.empresaid .toString() == empId ) : null;                      
+      this.comboSala = sl.filter(x => x.unidadeid == this.agenda.Unidadeid && x.empresaid .toString() == empId);                      
     });
     
   }
@@ -184,9 +185,16 @@ export class AgendaCreateComponent implements OnInit {
   selecionaAbaAgenda(tab : any){
     
     switch (tab.index) {
-      case 0 :
-          this.buscarGrupos("")
+      case 1 :
+          this.buscarGrupos("");
         break;
+        case 2 :
+          this.selecionarHorários();
+        break;
+        case 2 :
+          this.selecionarDiaNaoatende();
+        break;
+        
       default:
         break;
     }
@@ -219,14 +227,13 @@ export class AgendaCreateComponent implements OnInit {
 }
 
 
-  buscarGrupos(txtbusca : any){
-    
-    let agenda = this.agendas.filter;
+ buscarGrupos (txtbusca : any){
     
     this.servicoGrupo.read(Endpoint.GrupoAgenda).subscribe(x => {
-      this.grupo = txtbusca == null ? x : x.filter(x => x.nomeGrupoAgenda.toLocaleLowerCase().includes(txtbusca.toLocaleLowerCase()))
+      this.grupo = txtbusca == null  ? x : x.filter(x => x.nomeGrupoAgenda.toLocaleLowerCase().includes(txtbusca.toLocaleLowerCase()))
     })
   }
+
 
   cadGrupo(){
     this._utilService.Popup("", AgendaGrupoCadastroComponent, "500px", "500px");
@@ -256,34 +263,49 @@ export class AgendaCreateComponent implements OnInit {
       this._utilService.showMessage("Intervalo de tempo Obrigatório", false);
     else if (this.dadosHorarios.horainicio == null || this.dadosHorarios.horafim == null)
       this._utilService.showMessage("Informar inicio e fim da geração de Horas", false);
+    else if (this.agendaSelecionada == 0)  
+    this._utilService.showMessage("Selecionar a Agenda para criação de Horários", false);
     else{
       this.dadosHorarios.dtCriacao = new Date;
       this.dadosHorarios.criadoPor = this._utilService.Sessao().UsuarioId;
-      //this.dadosHorarios.id_agenda = Number(this.agenda.id);
-      this.dadosHorarios.id_agenda = 1;
+      this.dadosHorarios.id_agenda = Number(this.agendaSelecionada);
       this.dadosHorarios.id_empresa = Number(this._utilService.Sessao().IdEmpresa);
       this._utilService.showMessage("Aguarde Criando os Horários dessa agenda", false);    
 
       this.servicoHorario.create(this.dadosHorarios, Endpoint.AgendaHorarios).subscribe(h => {
         this._utilService.showMessage("Horários Criados como solicitado", false);  
-        this.buscarHorarios();
+        this.buscarHorarios(this.agendaSelecionada);
       });
 
       
     }
-    this.buscarHorarios();
+    this.buscarHorarios(this.agendaSelecionada);
   }
 
-  buscarHorarios(){
-    this.servicoHorario.read(Endpoint.AgendaHorarios).subscribe(x => {
-      this.domingo = x.filter(x => x.diaDasemana == 1);
-      this.segunda = x.filter(x => x.diaDasemana == 2);
-      this.terca = x.filter(x => x.diaDasemana == 3);
-      this.quarta = x.filter(x => x.diaDasemana == 4);
-      this.quinta = x.filter(x => x.diaDasemana == 5);
-      this.sexta = x.filter(x => x.diaDasemana == 6);
-      this.sabado = x.filter(x => x.diaDasemana == 7);
-    })
+  selecionarHorários(){
+    
+    this.agendaSelecionada > 0 
+     ? this.buscarHorarios(this.agendaSelecionada)
+     : this._utilService.showMessage("Selecionar a agenda para acessar os horários.", false)
+  }
+
+  selecionarDiaNaoatende(){
+
+  }
+  buscarHorarios(id : any){
+    
+    if(id > 0)
+    {
+      this.servicoHorario.read(Endpoint.AgendaHorarios).subscribe(x => {
+        this.domingo = x.filter(x => x.diaDasemana == 1 && x.id_agenda == id);
+        this.segunda = x.filter(x => x.diaDasemana == 2 && x.id_agenda == id);
+        this.terca = x.filter(x => x.diaDasemana == 3 && x.id_agenda == id);
+        this.quarta = x.filter(x => x.diaDasemana == 4 && x.id_agenda == id);
+        this.quinta = x.filter(x => x.diaDasemana == 5 && x.id_agenda == id);
+        this.sexta = x.filter(x => x.diaDasemana == 6 && x.id_agenda == id);
+        this.sabado = x.filter(x => x.diaDasemana == 7 && x.id_agenda == id);
+      });
+    }
   }
 
 

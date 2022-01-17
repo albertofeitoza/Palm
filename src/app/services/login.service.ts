@@ -130,8 +130,9 @@ export class LoginService {
     var reqHeader = new HttpHeaders({ 
         'Content-Type' : 'application/json; charset=utf-8',
         'Accept'       : 'application/json',
-        'Authorization': 'Bearer ' + key
+        'Authorization': 'Bearer ' + key,
     })
+    
     return { headers: reqHeader };
   }
 
