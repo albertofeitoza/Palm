@@ -36,9 +36,8 @@ export class EmpresaDeleteComponent implements OnInit {
     
     this.serviceUsuario.read(Endpoint.Usuario).subscribe(usr => {
         usr = usr;
-        existeUsuario = usr.filter(x => x.empresaid == this.empresa.id.toString())
-       
-        if (existeUsuario.length > 0)
+        
+        if (usr.length > 0)
         {
           this.mensagem.showMessage("Empresa não pode ser excluida porque possui Dependências de usuários.", false)
         }    

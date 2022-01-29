@@ -66,7 +66,7 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
     this.serviceUsuario.read(Endpoint.Usuario).subscribe(user => {
       user = user;
 
-      let ativo = user.filter(x => x.login.toLowerCase() == this.usuario.login.toLowerCase() && x.empresaid == this.usuario.empresaid);
+      let ativo = user.filter(x => x.login.toLowerCase() == this.usuario.login.toLowerCase());
            
             if (ativo.length > 0)
             {
@@ -141,8 +141,6 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
   createGrupoUsuario(){
     this.criargrupousuario.criadoPor  = Number(this.utilService.Sessao().UsuarioId);
     this.criargrupousuario.dtCriacao = new Date;
-    this.criargrupousuario.empresaId = Number(this.utilService.Sessao().IdEmpresa);
-
       this.serviceGrupoUsuario.create(this.criargrupousuario, Endpoint.GrupoUsuario).subscribe(() => {
         this.utilService.showMessage('Grupo de Usuário Criado!');
       })

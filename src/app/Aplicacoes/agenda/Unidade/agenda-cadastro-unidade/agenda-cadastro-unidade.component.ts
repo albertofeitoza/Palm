@@ -10,7 +10,7 @@ import { Unidade } from '../../../../models/Unidade/unidadeModel';
 
 
 import { GrupoUsuario } from '../../../../models/usuarios/GrupoUsuarios';
-import { AgendaCreateComponent } from '../../agenda-create/agenda-create.component';
+import { AgendaCreateComponent } from '../../CadastroAgenda/agenda-create/agenda-create.component';
 import { AgendaAlterarUnidadeComponent } from '../agenda-alterar-unidade/agenda-alterar-unidade.component';
 import { AgendaExcluirUnidadeComponent } from '../agenda-excluir-unidade/agenda-excluir-unidade.component';
 import { UnidadeSalaCadastroComponent } from '../Sala/unidade-sala-cadastro/unidade-sala-cadastro.component';

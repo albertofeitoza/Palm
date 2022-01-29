@@ -1,19 +1,15 @@
-import { Unidade } from "../Unidade/unidadeModel"
-import { GrupoAgenda } from "./modelGrupoAgenda"
-
 export class Agenda {
-    id ?: string
+    id ?: number
     DtCriacao: Date 
     nomeAgenda: string
-    Profissionalid: string
-    Empresaid: number
-    Unidadeid : number
-    Salaid : number
+    usuarioid: string
+    empresaid: number
+    unidadeid : number
+    salaid : number
     substituicao: Boolean
-    GrupoAgendaid: number
+    grupoAgendaid: number
     vigenciaInicio: Date
     vigenciaFim: Date
     considerarFeriado: Boolean
     bloqueado: Boolean
 }
-

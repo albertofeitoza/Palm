@@ -38,7 +38,8 @@ export class UtilService {
 }
 
   erroHandler(e: any) : Observable<any>{
-    this.showMessage("Erro ao Acessar a API!", true )
+    let mensagem = e.error;
+    this.showMessage(e.error, true )
     return EMPTY 
   }
 

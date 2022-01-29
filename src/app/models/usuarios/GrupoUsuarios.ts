@@ -1,10 +1,11 @@
+import { Usuario } from "./modelLogin"
+
 export class GrupoUsuario{
     id? : number
     dtCriacao : Date
     nome : string
     usuarioApp : boolean
-    empresaId : number
     criadoPor : number
     bloqueado : boolean
-
+    usuarios : Array<Usuario>
 }

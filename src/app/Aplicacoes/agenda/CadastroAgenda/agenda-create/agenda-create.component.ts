@@ -1,8 +1,8 @@
-import { Endpoint } from './../../../Negocio/Endpoint';
-import { ServiceAllService } from './../../../services/service-all.service';
-import { Empresa } from './../../../models/empresa/ModelEmpresa';
+import { Endpoint } from '../../../../Negocio/Endpoint';
+import { ServiceAllService } from '../../../../services/service-all.service';
+import { Empresa } from '../../../../models/empresa/ModelEmpresa';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { Aplicacao } from './../../../Negocio/Aplicacao';
+import { Aplicacao } from '../../../../Negocio/Aplicacao';
 import { Router } from '@angular/router';
 
 import { Component, OnInit } from '@angular/core';
@@ -17,10 +17,10 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Usuario } from 'src/app/models/usuarios/modelLogin';
 import { Overlay } from '@angular/cdk/overlay';
 import { UsuarioCreateComponent } from 'src/app/components/usuario/usuario-create/usuario-create.component';
-import { AgendaGrupoCadastroComponent } from '../GrupoAgenda/agenda-grupo-cadastro/agenda-grupo-cadastro.component';
-import { AgendaGrupoUpdateComponent } from '../GrupoAgenda/agenda-grupo-update/agenda-grupo-update.component';
-import { AgendaGrupoExcluirComponent } from '../GrupoAgenda/agenda-grupo-excluir/agenda-grupo-excluir.component';
-import { AgendaCadastroUnidadeComponent } from '../Unidade/agenda-cadastro-unidade/agenda-cadastro-unidade.component';
+import { AgendaGrupoCadastroComponent } from '../../GrupoAgenda/agenda-grupo-cadastro/agenda-grupo-cadastro.component';
+import { AgendaGrupoUpdateComponent } from '../../GrupoAgenda/agenda-grupo-update/agenda-grupo-update.component';
+import { AgendaGrupoExcluirComponent } from '../../GrupoAgenda/agenda-grupo-excluir/agenda-grupo-excluir.component';
+import { AgendaCadastroUnidadeComponent } from '../../Unidade/agenda-cadastro-unidade/agenda-cadastro-unidade.component';
 import { Horarios } from 'src/app/models/Agenda/modeloHorarios';
 import { HorarioAgenda } from 'src/app/models/Agenda/modelHorarioAgenda';
 import { query } from '@angular/animations';
@@ -98,9 +98,10 @@ export class AgendaCreateComponent implements OnInit {
   
   createAgenda(){
     this.agendaSelecionada = 0;
-     this.agenda.Empresaid = Number(this._utilService.Sessao().IdEmpresa)
+     this.agenda.empresaid = Number(this._utilService.Sessao().IdEmpresa)
      this._serviceAgenda.create(this.agenda, Endpoint.Agenda).subscribe(ag => {
      this.agenda = ag;
+     this.agenda.DtCriacao = new Date;
      this._utilService.showMessage("Agenda cadastrada com sucesso!",false);
      this.route.navigate(['home-component'])
      });
@@ -123,31 +124,28 @@ export class AgendaCreateComponent implements OnInit {
 
     this.carregaComboProfissional(this._utilService.Sessao().GrupoUsuario, this._utilService.Sessao().IdEmpresa)
       this.carregaComboUnidade(this._utilService.Sessao().GrupoUsuario, this._utilService.Sessao().IdEmpresa);
-      
-      
       this.carregaComboSala(this._utilService.Sessao().GrupoUsuario, this._utilService.Sessao().IdEmpresa);
-      
       this.carregaComboGrupoAgenda(this._utilService.Sessao().GrupoUsuario, this._utilService.Sessao().IdEmpresa);
   }
 
   carregaComboProfissional(grpId: number , empId: string){
     this.comboProfissional =  new Array();
     this._serviceUsuario.read(Endpoint.Usuario).subscribe(pro => {
-      pro = this.comboProfissional = grpId == TipoUsuario.Master || grpId == TipoUsuario.Administrador ? this.comboProfissional = pro.filter(x => x.empresaid.toString() == empId) : null;
+      pro = this.comboProfissional = grpId == TipoUsuario.Master || grpId == TipoUsuario.Administrador ? this.comboProfissional = pro : null;
     });
   }
   
   carregaComboUnidade(grpId: number , empId: string){
     this.comboUnidade =  new Array()
     this._serviceUnidade.read(Endpoint.Unidade).subscribe(un => {
-      un = this.comboUnidade = grpId == TipoUsuario.Master || grpId == TipoUsuario.Administrador ? this.comboUnidade = un.filter(x => x.empresaid.toString() == empId) : null;
+      un = this.comboUnidade = grpId == TipoUsuario.Master || grpId == TipoUsuario.Administrador ? this.comboUnidade = un: null;
     });
   }
 
   carregaComboSala(grpId: number , empId: string){
     this.comboSala = new Array();
     this._serviceSala.read(Endpoint.Sala).subscribe(sl => {
-      this.comboSala = sl.filter(x => x.unidadeid == this.agenda.Unidadeid && x.empresaid .toString() == empId);                      
+      this.comboSala = sl.filter(x => x.unidadeid == this.agenda.unidadeid);                      
     });
     
   }
@@ -268,8 +266,7 @@ export class AgendaCreateComponent implements OnInit {
     else{
       this.dadosHorarios.dtCriacao = new Date;
       this.dadosHorarios.criadoPor = this._utilService.Sessao().UsuarioId;
-      this.dadosHorarios.id_agenda = Number(this.agendaSelecionada);
-      this.dadosHorarios.id_empresa = Number(this._utilService.Sessao().IdEmpresa);
+      this.dadosHorarios.agendaid = Number(this.agendaSelecionada);
       this._utilService.showMessage("Aguarde Criando os Horários dessa agenda", false);    
 
       this.servicoHorario.create(this.dadosHorarios, Endpoint.AgendaHorarios).subscribe(h => {
@@ -297,13 +294,13 @@ export class AgendaCreateComponent implements OnInit {
     if(id > 0)
     {
       this.servicoHorario.read(Endpoint.AgendaHorarios).subscribe(x => {
-        this.domingo = x.filter(x => x.diaDasemana == 1 && x.id_agenda == id);
-        this.segunda = x.filter(x => x.diaDasemana == 2 && x.id_agenda == id);
-        this.terca = x.filter(x => x.diaDasemana == 3 && x.id_agenda == id);
-        this.quarta = x.filter(x => x.diaDasemana == 4 && x.id_agenda == id);
-        this.quinta = x.filter(x => x.diaDasemana == 5 && x.id_agenda == id);
-        this.sexta = x.filter(x => x.diaDasemana == 6 && x.id_agenda == id);
-        this.sabado = x.filter(x => x.diaDasemana == 7 && x.id_agenda == id);
+        this.domingo = x.filter(x => x.diaDasemana == 1 && x.agendaid == id);
+        this.segunda = x.filter(x => x.diaDasemana == 2 && x.agendaid == id);
+        this.terca = x.filter(x => x.diaDasemana == 3 && x.agendaid == id);
+        this.quarta = x.filter(x => x.diaDasemana == 4 && x.agendaid == id);
+        this.quinta = x.filter(x => x.diaDasemana == 5 && x.agendaid == id);
+        this.sexta = x.filter(x => x.diaDasemana == 6 && x.agendaid == id);
+        this.sabado = x.filter(x => x.diaDasemana == 7 && x.agendaid == id);
       });
     }
   }
@@ -316,8 +313,10 @@ export class AgendaCreateComponent implements OnInit {
 
   buscarAgenda (filtroAgenda : string){
     this._repAgenda.read(Endpoint.Agenda).subscribe(ag => {
-      this.agendas = filtroAgenda == null ? ag.filter(x => x.empresaId.toString() == this._utilService.Sessao().IdEmpresa) 
-                    :  ag.filter(x => x.nomeAgenda.toLowerCase().includes(filtroAgenda.toLowerCase()) && x.empresaId.toString() == this._utilService.Sessao().IdEmpresa)
+      this.agendas = filtroAgenda == null ? ag 
+                    :  ag.filter(x => x.nomeAgenda.toLowerCase().includes(filtroAgenda.toLowerCase()) 
+                    || x.nomeGrupoAgenda.toLowerCase().includes(filtroAgenda.toLowerCase())) 
+
     });
   }
 

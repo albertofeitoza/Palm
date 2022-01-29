@@ -67,10 +67,10 @@ import { EmpresaCreateComponent } from './components/empresa/empresa-create/empr
 import { EmpresaUpdateComponent } from './components/empresa/empresa-update/empresa-update.component';
 import { EmpresaDeleteComponent } from './components/empresa/empresa-delete/empresa-delete.component';
 import { EmpresaReadComponent } from './components/empresa/empresa-read/empresa-read.component';
-import { AgendaUpdateComponent } from './Aplicacoes/agenda/agenda-update/agenda-update.component';
-import { AgendaDeleteComponent } from './Aplicacoes/agenda/agenda-delete/agenda-delete.component';
-import { AgendaCreateComponent } from './Aplicacoes/agenda/agenda-create/agenda-create.component';
-import { AgendaReadComponent } from './Aplicacoes/agenda/agenda-read/agenda-read.component';
+import { AgendaUpdateComponent } from './Aplicacoes/agenda/CadastroAgenda/agenda-update/agenda-update.component';
+import { AgendaDeleteComponent } from './Aplicacoes/agenda/CadastroAgenda/agenda-delete/agenda-delete.component';
+import { AgendaCreateComponent } from './Aplicacoes/agenda/CadastroAgenda/agenda-create/agenda-create.component';
+import { AgendaReadComponent } from './Aplicacoes/agenda/CadastroAgenda/agenda-read/agenda-read.component';
 import { HomeAgendaComponent } from './Aplicacoes/agenda/home-agenda/home-agenda.component';
 import { AgendaCadastroUnidadeComponent } from './Aplicacoes/agenda/Unidade/agenda-cadastro-unidade/agenda-cadastro-unidade.component';
 import { AgendaAlterarUnidadeComponent } from './Aplicacoes/agenda/Unidade/agenda-alterar-unidade/agenda-alterar-unidade.component';
@@ -81,8 +81,7 @@ import { UnidadeSalaDeleteComponent } from './Aplicacoes/agenda/Unidade/Sala/uni
 import { AgendaGrupoCadastroComponent } from './Aplicacoes/agenda/GrupoAgenda/agenda-grupo-cadastro/agenda-grupo-cadastro.component';
 import { AgendaGrupoExcluirComponent } from './Aplicacoes/agenda/GrupoAgenda/agenda-grupo-excluir/agenda-grupo-excluir.component';
 import { AgendaGrupoUpdateComponent } from './Aplicacoes/agenda/GrupoAgenda/agenda-grupo-update/agenda-grupo-update.component';
-
-
+import { AgendamentosReadComponent } from './Aplicacoes/agenda/Agendamentos/agendamentos-read/agendamentos-read.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -128,6 +127,7 @@ import { AgendaGrupoUpdateComponent } from './Aplicacoes/agenda/GrupoAgenda/agen
     AgendaGrupoCadastroComponent,
     AgendaGrupoExcluirComponent,
     AgendaGrupoUpdateComponent,
+    AgendamentosReadComponent,
     
   ],
   imports: [

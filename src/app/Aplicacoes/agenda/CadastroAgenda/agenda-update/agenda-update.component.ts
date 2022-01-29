@@ -57,28 +57,15 @@ export class AgendaUpdateComponent implements OnInit {
       }
 
       carregaCombos(){
-        
-        this.serviceUsuario.read(Endpoint.Usuario).subscribe(pr => {
-          this.comboProfissional = pr.filter(x => x.empresaid == this.utilService.Sessao().IdEmpresa )
-        });
-
-        
-        this.serviceUnidade.read(Endpoint.Unidade).subscribe(un => {
-          this.comboUnidade = un.filter(x => x.empresaid == Number(this.utilService.Sessao().IdEmpresa));
-        });
-
-        this.serviceSala.read(Endpoint.Sala).subscribe(sl =>{
-          this.comboSala = sl.filter(x => x.empresaid == Number(this.utilService.Sessao().IdEmpresa));
-        });
-        
-        this.serviceGrupoAGenda.read(Endpoint.GrupoAgenda).subscribe(ga => {
-          this.comboTipoGrupoAgenda = ga.filter(x => x.empresaid == Number(this.utilService.Sessao().IdEmpresa));
-        });
-       
+        this.BuscarUsuario()
+        this.BuscarUnidade();
+        this.BuscarSala();
+        this.BuscarGrupoAgenda();
+      
       } 
 
       UpdateAgenda(){
-        this.agenda.id = this.dialogRef.id
+        this.agenda.id = Number(this.dialogRef.id)
         this.agendaService.update(this.agenda, Endpoint.Agenda).subscribe(() => {
           this.utilService.showMessage("Agenda Atualizada com Sucesso!", false)
           this.utilService.atualizaRota(Aplicacao.Agenda+"?", true)
@@ -90,6 +77,29 @@ export class AgendaUpdateComponent implements OnInit {
 
       fecharPopup(): void {
         this.dialogRef.close();
+      }
+     
+      BuscarUsuario(){
+        this.serviceUsuario.read(Endpoint.Usuario).subscribe(pr => {
+          this.comboProfissional = pr
+        });
+      }
+
+      BuscarUnidade(){
+        this.serviceUnidade.read(Endpoint.Unidade).subscribe(un => {
+          this.comboUnidade = un;
+        });
+      }
+
+      BuscarSala(){
+        this.serviceSala.read(Endpoint.Sala).subscribe(sl =>{
+          this.comboSala = sl.filter(x => x.unidadeid == this.agenda.unidadeid)
+        });
+      }
+      BuscarGrupoAgenda(){
+        this.serviceGrupoAGenda.read(Endpoint.GrupoAgenda).subscribe(ga => {
+          this.comboTipoGrupoAgenda = ga
+        });
       }
 
 }

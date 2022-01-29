@@ -32,9 +32,10 @@ export class AgendaGrupoExcluirComponent implements OnInit {
   }
 
   excluirGrupo(){
-        this.servicoGrupo.delete(Number(this.matdialogRef.id), Endpoint.GrupoAgenda).subscribe(x => {
-          this.servico.showMessage("Grupo Excluido com sucesso!", false);
-        })
+    
+      this.servicoGrupo.delete(Number(this.matdialogRef.id), Endpoint.GrupoAgenda).subscribe(x => {
+        this.servico.showMessage("Grupo Excluido com sucesso!", false);
+      })
   }
 
   fecharPopup(){

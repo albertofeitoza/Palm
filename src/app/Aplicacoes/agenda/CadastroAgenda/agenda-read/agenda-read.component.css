@@ -1,0 +1,58 @@
+.tabelaagenda{
+    width: 100%;
+    background-color: ivory;
+    grid-column-start: auto;
+}
+
+.imagem{
+    max-width:50px;
+    max-height:50px;
+    width: auto;
+    height: auto;
+    border-radius: 50%;
+    border-top-left-radius: 50% 50%;
+    border-top-right-radius: 50% 50%;
+    border-bottom-right-radius: 50% 50%;
+    border-bottom-left-radius: 50% 50%;
+}
+
+
+.edit {
+    margin-right: 15px;
+}
+
+.edit > i{
+    color: #d9cd26;
+}
+.delete > i{
+    color: #e35e6b;
+}
+
+.mat-tab-group {
+    margin-bottom: 48px;
+}
+
+
+.icones{
+    font-size: 20px;
+    width: 150px;
+    vertical-align: middle;
+}
+
+.material-icons {
+    font-size: 20px;
+    margin: 15px;
+}
+
+
+
+.footer .material-icons {
+
+    margin: 15px;
+    margin-left: 10px;
+        
+}
+
+
+
+

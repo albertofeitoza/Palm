@@ -1,8 +1,8 @@
 import { HomeAgendaComponent } from './Aplicacoes/agenda/home-agenda/home-agenda.component';
-import { AgendaReadComponent } from './Aplicacoes/agenda/agenda-read/agenda-read.component';
-import { AgendaDeleteComponent } from './Aplicacoes/agenda/agenda-delete/agenda-delete.component';
-import { AgendaUpdateComponent } from './Aplicacoes/agenda/agenda-update/agenda-update.component';
-import { AgendaCreateComponent } from './Aplicacoes/agenda/agenda-create/agenda-create.component';
+import { AgendaReadComponent } from './Aplicacoes/agenda/CadastroAgenda/agenda-read/agenda-read.component';
+import { AgendaDeleteComponent } from './Aplicacoes/agenda/CadastroAgenda/agenda-delete/agenda-delete.component';
+import { AgendaUpdateComponent } from './Aplicacoes/agenda/CadastroAgenda/agenda-update/agenda-update.component';
+import { AgendaCreateComponent } from './Aplicacoes/agenda/CadastroAgenda/agenda-create/agenda-create.component';
 
 import { Aplicacao } from './Negocio/Aplicacao';
 import { EmpresaDeleteComponent } from './components/empresa/empresa-delete/empresa-delete.component';

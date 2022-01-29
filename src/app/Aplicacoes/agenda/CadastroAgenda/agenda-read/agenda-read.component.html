@@ -16,23 +16,12 @@
                 <a (click)="addUnidade()" mat-menu-item>Unidade</a>              
               </mat-menu>
 
-              <span class="botaoBusca" (click)="buscarAgendamento()" (keypress)="buscarAgendamento()">
-                <i class="material-icons">search</i>
-              </span>
-
-              <input class="textBusca"  name="busca" id="busca" type="text" value="">
       </div>
-         
-              <!--Inserir a tabela aqui-->
+      <!--Inserir a tabela aqui-->
+      <app-agendamentos-read></app-agendamentos-read>
 
-              <div>
-                <h1>Aqui será apresentado os agendamentos</h1>
-              </div>
-              
-              </div>
-
-      <div class="row">
-        <router-outlet></router-outlet>
-      </div>
+    </div>
 </mat-dialog-content>
-  
+
+
+

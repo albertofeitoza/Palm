@@ -18,22 +18,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class EmpresaCreateComponent implements OnInit {
 
  
-empresa : Empresa = {
-    dtCriacao : null,
-    cnpj: null,
-    razaoSocial: null,
-    nomeFantasia: null,
-    inscricaoEstadual: null,
-    inscricaoMunicipal: null,
-    cnes : null,
-    codPIS : null,
-    observacao : null,
-    codCnae : null,
-    empresaPai : null,
-    criadoPor : null,
-    bloqueado : null
-    
-}
+empresa : Empresa = new Empresa();
 
 
 

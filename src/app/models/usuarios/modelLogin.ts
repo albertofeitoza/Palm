@@ -1,3 +1,5 @@
+import { Agenda } from "../Agenda/modelAgenda"
+
 export class Usuario {
 id ? : number
 dtCriacao : Date
@@ -13,4 +15,5 @@ bloqueado : boolean
 empresaid : string
 grupoUsuarioid : string
 profissional : boolean
+agendas : Array<Agenda>
 }

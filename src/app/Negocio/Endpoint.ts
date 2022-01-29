@@ -8,6 +8,7 @@ export enum Endpoint {
     Sala = '/Sala',
     GrupoAgenda = '/GrupoAgenda',
     AgendaHorarios = '/AgendaHorarios',
+    Agendamentos = '/Agendamentos',
     Token = '/Token'
 
 }

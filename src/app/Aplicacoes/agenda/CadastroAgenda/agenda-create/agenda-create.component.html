@@ -124,7 +124,7 @@
                             <i class="material-icons ordem" (click)="AtualizarComboProfissional()" >refresh</i>
                             <i class="material-icons ordem" (click)="novoUsuario()" >person_add</i>
                             <p></p>
-                            <mat-select [(value)]="agenda.Profissionalid" placeholder="Profissional">
+                            <mat-select [(value)]="agenda.usuarioid" placeholder="Profissional">
                                     <mat-option></mat-option>
                                     <mat-option *ngFor="let tipoProf of comboProfissional " [value]="tipoProf.id">
                                         {{tipoProf.nome}}
@@ -137,7 +137,7 @@
                             <i class="material-icons ordem" (click)="AtualizarComboUnidade()" >refresh</i>
                             <i class="material-icons ordem" (click)="novaUnidade()" >house</i>
                             <p></p>
-                            <mat-select [(value)]="agenda.Unidadeid" placeholder="Unidade Atendimento" (selectionChange)="BuscarSala()" >
+                            <mat-select [(value)]="agenda.unidadeid" placeholder="Unidade Atendimento" (selectionChange)="BuscarSala()" >
                                 <mat-option *ngFor="let tipounidade of comboUnidade " [value]="tipounidade.id">
                                     {{tipounidade.nomeUnidade}}
                                 </mat-option>
@@ -147,7 +147,7 @@
                         <mat-form-field>
                           <input matInput placeholder="Sala Atendimento">
                               <p></p>
-                              <mat-select [(value)]="agenda.Salaid" placeholder="Sala Atendimento" >
+                              <mat-select [(value)]="agenda.salaid" placeholder="Sala Atendimento" >
                                   <mat-option *ngFor="let tipoSala of comboSala " [value]="tipoSala.id">
                                       {{tipoSala.nomeSala}}
                                   </mat-option>
@@ -164,7 +164,7 @@
                             <i class="material-icons ordem" (click)="AtualizarComboGrupoAgenda()" >refresh</i>
                             <i class="material-icons ordem" (click)="cadGrupo()" >house</i>
                             <p></p>
-                            <mat-select [(value)]="agenda.GrupoAgendaid" placeholder="Grupo Agenda" >
+                            <mat-select [(value)]="agenda.grupoAgendaid" placeholder="Grupo Agenda" >
                                 <mat-option *ngFor="let tipoGrupo of comboTipoGrupoAgenda " [value]="tipoGrupo.id">
                                     {{tipoGrupo.nomeGrupoAgenda}}
                                 </mat-option>

@@ -64,13 +64,12 @@ export class ServiceAllService <T>{
       );
     }
 
-    delete(id: number, tipo : string) : Observable<T>{
-      const url = `${this.environmentUrl + tipo}/${id}`      
-      return this.http.delete<T>(url, this.loginservice.header()).pipe(
-      map(obj => obj),
-      catchError(e => this.utilService.erroHandler(e))
-      );
-
+    delete (id: number, tipo : string)  : Observable<T> {
+          const url = `${this.environmentUrl + tipo}/${id}`      
+          return this.http.delete<T>(url, this.loginservice.header()).pipe(
+          map(obj => obj),
+          catchError(e => this.utilService.erroHandler(e))
+          )
     }
 
 }

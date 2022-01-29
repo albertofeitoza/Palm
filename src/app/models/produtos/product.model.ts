@@ -1,3 +1,5 @@
+import { Faturamento } from "../Faturamento/Faturamento"
+
 export class Product {
     id ?: number
     dtCriacao : Date
@@ -6,4 +8,5 @@ export class Product {
     valor : number
     empresaid : string
     bloqueado : boolean
+    faturamento : Array<Faturamento>
 }

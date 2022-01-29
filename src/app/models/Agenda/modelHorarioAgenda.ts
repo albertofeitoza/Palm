@@ -1,10 +1,9 @@
 import { Time } from "@angular/common"
 
 export class HorarioAgenda{
-    id: number
+    id?: number
     dtCriacao : Date
-    id_agenda : number
-    id_empresa : number
+    agendaid : number
     intervalo : string
     tipoHorario : number
     diaDasemana : number

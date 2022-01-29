@@ -95,18 +95,7 @@ export class UsuarioUpdateComponent implements OnInit {
                       grpId == TipoUsuario.Master && emp.filter(x => x.id == Number(empId))
                       || grpId == TipoUsuario.Usuario && emp.filter(x => x.id == Number(empId))
                       || emp.filter(x => x.empresaPai == Number(empId));
-                   
     
-      
-    /*  emp.forEach(empresasCarregadas => {
-        
-        if(grpId == TipoUsuario.Administrador)
-          this.empresa.push(empresasCarregadas)
-        else if (grpId == TipoUsuario.Master && empId == empresasCarregadas.id.toString() || grpId == TipoUsuario.Usuario && empId == empresasCarregadas.id.toString() || empId == empresasCarregadas.empresaPai.toString())
-            this.empresa.push(empresasCarregadas)
-        });
-      */  
-
     });
   }
 

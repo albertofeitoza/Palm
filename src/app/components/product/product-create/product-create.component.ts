@@ -22,14 +22,7 @@ export class ProductCreateComponent implements OnInit {
   empresa : Empresa[];
   comboEmpresa : Empresa;
 
-    product : Product = {  
-    dtCriacao : null,
-    criadoPor : null,
-    nome : null,
-    valor : 0,
-    empresaid : null,
-    bloqueado : false,
-    }
+  product : Product = new Product();
 
   constructor(
               private utilService : UtilService,
@@ -53,7 +46,7 @@ export class ProductCreateComponent implements OnInit {
     this.ProdutoEmpresa.read(Endpoint.Produto).subscribe(p => {
       p = p;
 
-      let ativo = p.filter(x => x.nome == this.product.nome && x.empresaid == this.product.empresaid )
+      let ativo = p.filter(x => x.nome == this.product.nome)
       
       if (ativo.length == 0)
       {

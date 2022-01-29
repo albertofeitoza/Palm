@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Agenda } from 'src/app/models/Agenda/modelAgenda';
 import { GrupoAgenda } from 'src/app/models/Agenda/modelGrupoAgenda';
 import { Endpoint } from 'src/app/Negocio/Endpoint';
 import { ServiceAllService } from 'src/app/services/service-all.service';
@@ -25,9 +26,11 @@ grupo : GrupoAgenda = new GrupoAgenda();
 
   criarGrupo(){
 
-    this.grupo.empresaid = Number(this.servico.Sessao().IdEmpresa)
     this.grupo.dtCriacao =  new Date;
+    this.grupo.empresaid =  Number(this.servico.Sessao().IdEmpresa)
     this.grupo.criadoPor = Number(this.servico.Sessao().UsuarioId);
+   
+
     this.servicoGrupo.create(this.grupo, Endpoint.GrupoAgenda).subscribe(() => {
       this.servico.showMessage("Grupo criado com sucesso ! ", false )
     })

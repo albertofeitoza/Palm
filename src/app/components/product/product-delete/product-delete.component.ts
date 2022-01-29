@@ -12,15 +12,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class ProductDeleteComponent implements OnInit {
 
-  product : Product = {
-    id: null,
-    dtCriacao : null,
-    criadoPor : null,
-    nome: null,
-    valor : 0,
-    empresaid : null,
-    bloqueado : null,
-  }
+  product : Product = new Product();
 
   constructor(
               private utilService : UtilService,
