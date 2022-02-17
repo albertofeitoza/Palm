@@ -11,13 +11,21 @@ import { Usuario } from 'src/app/models/usuarios/modelLogin';
 })
 export class AgendamentosCreateComponent implements OnInit {
 
+  colunas = ['id','nome','Protocoloid','tipoAgendamento','futuro','responsavel','atendimento','ura','cpf','rg','telefone','celular','statusAgendamento']  
+  
   agendamento : Agendamentos = new Agendamentos();
+
+  dadosGrid : Agendamentos[];
+  
+  
 
   constructor(
               private dialofRef : MatDialogRef<AgendamentosCreateComponent>,
               ) { }
 
   ngOnInit(): void {
+  this.bucarAgendamentos()
+  
   }
 
   NovoAgendamento(){
@@ -26,6 +34,23 @@ export class AgendamentosCreateComponent implements OnInit {
     
     alert("Teste de cadastro");
   }
+
+  buscarProtocolo(){
+    alert(this.agendamento.protocoloid != null ? "Busca de Protocolo" + this.agendamento.protocoloid : "Informe o Protocolo");
+  }
+
+  buscarPessoa(){
+    alert("Busca de Pessoa" + this.agendamento.nome);
+  }
+
+  bucarAgendamentos(){
+    
+    Agendamentos
+    
+   
+    this.dadosGrid.map(x => (x.id = 1))
+  }
+
 
   fecharPopup(){
     

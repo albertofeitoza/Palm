@@ -28,10 +28,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /*CSS da Aplicação */
 
-.botaoBusca { /*popups*/
+.botaoBusca { 
     float : right;
     font-size: 15px;
     width: 150px;
+    margin-top: 10px;
+    padding-left: 15px;
+}
+
+.botaoBuscaPopups { /*popups*/
+    font-size: 25px;
+    width: 155px;
     margin-top: 10px;
     padding-left: 15px;
 }
@@ -42,22 +49,28 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 	width:100%;
 }
 
-form .mat-form-field{
-    padding-top: 3px;
-    padding-bottom: 3px;
-    margin-top: 3px;
-    border-bottom-width: 3px;
-    border-top-width: 3px;
-
-}
-
 
 button{
     margin : 20px 15px 0 0;
+    padding-left: 20px;
 }
 
 .formularioRow {
-    display: flex;
+    display: flexbox;
     flex-direction: row;
     font-size: 12px;
+}
+
+.mat-form-field-infix{
+    width: auto;
+}
+
+mat-form-field{
+    padding-left: 10px;
+    
+}
+
+/*Cabeçalho das tabelas*/
+table{
+    width: 100%;
 }

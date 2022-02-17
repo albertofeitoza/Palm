@@ -50,7 +50,7 @@ export class AgendamentosReadComponent implements OnInit {
 
   NovoAgendamento(){
 
-    this.servico.Popup("", AgendamentosCreateComponent, '70%', '50%');
+    this.servico.Popup("", AgendamentosCreateComponent, '70%', '80%');
 
         
   }
