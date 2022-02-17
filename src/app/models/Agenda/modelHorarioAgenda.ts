@@ -1,4 +1,7 @@
 import { Time } from "@angular/common"
+import { TimeInterval } from "rxjs"
+import { Timestamp } from "rxjs/internal/operators/timestamp"
+import { Horarios } from "./modeloHorarios"
 
 export class HorarioAgenda{
     id?: number
@@ -11,6 +14,6 @@ export class HorarioAgenda{
     criadoPor : number
     bloqueado : boolean
     naoDisponivel : boolean
-    horainicio : Time
-    horafim : Time
+    horainicio : string
+    horafim : string
 }

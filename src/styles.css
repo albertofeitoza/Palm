@@ -26,13 +26,38 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     color: #fff;
 }
 
+/*CSS da Aplicação */
 
-.botaoBusca {
+.botaoBusca { /*popups*/
     float : right;
     font-size: 15px;
     width: 150px;
     margin-top: 10px;
     padding-left: 15px;
-  
-  }
-  
+}
+
+.rodape{  /*Usar nos rodapés dos popups Botões*/
+    position:absolute;
+	bottom:0;
+	width:100%;
+}
+
+form .mat-form-field{
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-top: 3px;
+    border-bottom-width: 3px;
+    border-top-width: 3px;
+
+}
+
+
+button{
+    margin : 20px 15px 0 0;
+}
+
+.formularioRow {
+    display: flex;
+    flex-direction: row;
+    font-size: 12px;
+}

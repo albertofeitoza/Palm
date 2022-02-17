@@ -92,6 +92,7 @@ export class UtilService {
     const dialogRef = this.dialog.open(T, {
         width : largura,
         height : altura,
+        disableClose : true,
         scrollStrategy,
         id
       });

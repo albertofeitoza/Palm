@@ -1,1 +1,25 @@
-<p>agendamentos-create works!</p>
+<mat-card>
+    <mat-card-title>Novo Agendamento</mat-card-title>
+        <form class="formularioRow" >
+            <mat-form-field appearance="outline">
+                <mat-label>Nome</mat-label>
+                <input matInput placeholder="Nome"
+                [(ngModel)]="agendamento.nome" name="nome">        
+            </mat-form-field>
+
+            <mat-form-field class="my-form-field" appearance="outline">
+                <mat-label>Responsável</mat-label>
+                <input matInput placeholder="Responsável"
+                [(ngModel)]="agendamento.responsavel" name="responsavel">
+            </mat-form-field>
+        </form>
+           
+        <div class="rodape">
+                <button mat-raised-button color="primary" (click)="NovoAgendamento()">
+                    Salvar
+                </button>
+                <button mat-raised-button color="primary"  (click)="fecharPopup()">
+                    Cancelar
+                </button>
+        </div>
+</mat-card>

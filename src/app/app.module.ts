@@ -81,7 +81,10 @@ import { UnidadeSalaDeleteComponent } from './Aplicacoes/agenda/Unidade/Sala/uni
 import { AgendaGrupoCadastroComponent } from './Aplicacoes/agenda/GrupoAgenda/agenda-grupo-cadastro/agenda-grupo-cadastro.component';
 import { AgendaGrupoExcluirComponent } from './Aplicacoes/agenda/GrupoAgenda/agenda-grupo-excluir/agenda-grupo-excluir.component';
 import { AgendaGrupoUpdateComponent } from './Aplicacoes/agenda/GrupoAgenda/agenda-grupo-update/agenda-grupo-update.component';
+
 import { AgendamentosReadComponent } from './Aplicacoes/agenda/Agendamentos/agendamentos-read/agendamentos-read.component';
+import { AgendamentosCreateComponent } from './Aplicacoes/agenda/Agendamentos/agendamentos-create/agendamentos-create.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -128,6 +131,7 @@ import { AgendamentosReadComponent } from './Aplicacoes/agenda/Agendamentos/agen
     AgendaGrupoExcluirComponent,
     AgendaGrupoUpdateComponent,
     AgendamentosReadComponent,
+    AgendamentosCreateComponent,
     
   ],
   imports: [

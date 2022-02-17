@@ -1,12 +1,9 @@
 import { Endpoint } from '../../../../Negocio/Endpoint';
 import { ServiceAllService } from '../../../../services/service-all.service';
 import { Empresa } from '../../../../models/empresa/ModelEmpresa';
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { Aplicacao } from '../../../../Negocio/Aplicacao';
 import { Router } from '@angular/router';
-
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 import { Agenda } from 'src/app/models/Agenda/modelAgenda';
 import { UtilService } from 'src/app/services/util.service';
 import { TipoUsuario, TipoUsuarioSistema } from 'src/app/models/usuarios/enumUsuarios';
@@ -21,12 +18,13 @@ import { AgendaGrupoCadastroComponent } from '../../GrupoAgenda/agenda-grupo-cad
 import { AgendaGrupoUpdateComponent } from '../../GrupoAgenda/agenda-grupo-update/agenda-grupo-update.component';
 import { AgendaGrupoExcluirComponent } from '../../GrupoAgenda/agenda-grupo-excluir/agenda-grupo-excluir.component';
 import { AgendaCadastroUnidadeComponent } from '../../Unidade/agenda-cadastro-unidade/agenda-cadastro-unidade.component';
-import { Horarios } from 'src/app/models/Agenda/modeloHorarios';
 import { HorarioAgenda } from 'src/app/models/Agenda/modelHorarioAgenda';
-import { query } from '@angular/animations';
 import { AgendaDto } from 'src/app/models/Agenda/modelRetornoAgenda';
 import { AgendaDeleteComponent } from '../agenda-delete/agenda-delete.component';
 import { AgendaUpdateComponent } from '../agenda-update/agenda-update.component';
+import { Time } from '@angular/common';
+
+
 
 
 @Component({
@@ -253,6 +251,9 @@ export class AgendaCreateComponent implements OnInit {
   ///HORÁRIOS///////
   CriarHorarios(){
     
+
+
+
     if(this.dadosHorarios.diaDasemana == null)
       this._utilService.showMessage("Informe o dia da Semana", false);
     else if(this.dadosHorarios.tipoHorario == null)
@@ -267,8 +268,9 @@ export class AgendaCreateComponent implements OnInit {
       this.dadosHorarios.dtCriacao = new Date;
       this.dadosHorarios.criadoPor = this._utilService.Sessao().UsuarioId;
       this.dadosHorarios.agendaid = Number(this.agendaSelecionada);
+      
       this._utilService.showMessage("Aguarde Criando os Horários dessa agenda", false);    
-
+   
       this.servicoHorario.create(this.dadosHorarios, Endpoint.AgendaHorarios).subscribe(h => {
         this._utilService.showMessage("Horários Criados como solicitado", false);  
         this.buscarHorarios(this.agendaSelecionada);
