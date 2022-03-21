@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { map } from 'rxjs/operators';
 import { Agendamentos } from 'src/app/models/Agenda/modelAgendamentos';
+import { Pessoa } from 'src/app/models/Pessoa/modelPessoa';
+import { PessoaGrid } from 'src/app/models/Pessoa/modelPessoaGrid';
 import { Usuario } from 'src/app/models/usuarios/modelLogin';
+import { Endpoint } from 'src/app/Negocio/Endpoint';
+import { ServiceAllService } from 'src/app/services/service-all.service';
 
 @Component({
   selector: 'app-agendamentos-create',
@@ -11,16 +16,18 @@ import { Usuario } from 'src/app/models/usuarios/modelLogin';
 })
 export class AgendamentosCreateComponent implements OnInit {
 
-  colunas = ['id','nome','Protocoloid','tipoAgendamento','futuro','responsavel','atendimento','ura','cpf','rg','telefone','celular','statusAgendamento']  
+  colunas = ['id','nome','protocolos','grupoAgenda','agendamentoFuturo','responsavel','ura','cpf','rg','telefone','celular']  
   
-  agendamento : Agendamentos = new Agendamentos();
-
-  dadosGrid : Agendamentos[];
+  pessoa : Pessoa = new Pessoa();
+  campoBusca : any;
+  pessoaGrid : PessoaGrid[];
   
   
 
   constructor(
               private dialofRef : MatDialogRef<AgendamentosCreateComponent>,
+              private servicoPessoa : ServiceAllService<PessoaGrid>
+
               ) { }
 
   ngOnInit(): void {
@@ -29,26 +36,32 @@ export class AgendamentosCreateComponent implements OnInit {
   }
 
   NovoAgendamento(){
-    
-    let teste = this.agendamento;
-    
     alert("Teste de cadastro");
   }
 
   buscarProtocolo(){
-    alert(this.agendamento.protocoloid != null ? "Busca de Protocolo" + this.agendamento.protocoloid : "Informe o Protocolo");
+    
   }
 
   buscarPessoa(){
-    alert("Busca de Pessoa" + this.agendamento.nome);
+  
+    this.servicoPessoa.read(Endpoint.Pessoa).subscribe(p => {
+      this.pessoaGrid = p.filter(x => this.pessoa.nome != null 
+                                ? x.nome.toLowerCase().includes(this.pessoa.nome.toLowerCase()) 
+                                : this.pessoa.responsavel != null 
+                                ? x.responsavel.toLowerCase().includes(this.pessoa.responsavel.toLowerCase()) 
+                                : this.pessoa.rg != null  
+                                ? x.rg.toLowerCase().includes(this.pessoa.rg.toLowerCase()) 
+                                : this.pessoa.cpf != null 
+                                ? x.cpf.toLowerCase().includes(this.pessoa.cpf.toLowerCase()) 
+                                : p);
+    });
+  
   }
 
   bucarAgendamentos(){
     
-    Agendamentos
-    
-   
-    this.dadosGrid.map(x => (x.id = 1))
+ 
   }
 
 
@@ -56,4 +69,6 @@ export class AgendamentosCreateComponent implements OnInit {
     
       this.dialofRef.close();
   }
+
+ 
 }
