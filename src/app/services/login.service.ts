@@ -1,25 +1,19 @@
-import { GrupoUsuario } from './../models/usuarios/GrupoUsuarios';
-import { ServiceAllService } from './service-all.service';
-import { Endpoint } from './../Negocio/Endpoint';
-import { TipoUsuario, TipoUsuarioSistema } from './../models/usuarios/enumUsuarios';
-import { ObjetoToken } from './../models/Token/ObjetoToken';
-import { Empresa } from './../models/empresa/ModelEmpresa';
+import { TipoUsuarioSistema } from './../models/usuarios/enumUsuarios';
 import { Acesso } from '../models/acessoModel';
-import { UtilService } from './util.service';
 
 import { environment } from './../../environments/environment';
 
-import { map, catchError, take, retry } from 'rxjs/operators';
-import { Observable, EMPTY, from, empty, pipe } from 'rxjs';
+import { Observable } from 'rxjs'
+import { map, catchError, take } from 'rxjs/operators';
+
+
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Router } from '@angular/router';
 import { Injectable, EventEmitter  } from '@angular/core';
-import { stringify } from 'querystring';
-import { Token } from '@angular/compiler/src/ml_parser/lexer';
-import { STRING_TYPE } from '@angular/compiler';
-import { Usuario } from '../models/usuarios/modelLogin';
+import { dadosSessao } from '../models/Token/dadosSessao';
+import { Endpoint } from '../Negocio/Endpoint';
+
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -30,13 +24,13 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
+
 export class LoginService {
 
-  title = 'multiple-env-demo';
+  title = '';
   environmentName = '';
-  environmentUrl = 'Debug api';
+  environmentUrl = '';
   acesso : Acesso = new Acesso();
-  objetoToken : ObjetoToken []
 
   private tipoUsuarios = [];
 
@@ -45,24 +39,56 @@ export class LoginService {
   mostrarMenuEmitter = new EventEmitter<boolean>();
   mostrarLoginEmitter = new EventEmitter<boolean>();
   
-
+  sessao : dadosSessao
+  erroLogin : string
   constructor(private router: Router,
-              private snackbar : MatSnackBar,
-              private http: HttpClient,
-              private utilService : UtilService,
-              ) { }
+              private http: HttpClient
+              ) 
+              { 
+                this.environmentName = environment.environmentName;
+                this.environmentUrl =  environment.BASE_URL;
+              }
+              
+   logarSistema(domain : string, usuario : string , senha: string ) {
 
-  logarSistema(response: any) {
+    var query = "?dominio=palm&login=palm&password=palmadmin2021"; 
+
+    this.login(this.sessao, `${Endpoint.Token}${query}`).subscribe(logado => {
+      this.sessao = logado;
+    })
+
+
+    this.mostrarMenuEmitter.emit(true);
+    this.mostrarLoginEmitter.emit(false)
+
+
+    //return this.http.post<dadosSessao>(this.environmentUrl + Endpoint.Token + query, {}).pipe(
+    //  map(obj => (this.sessao = obj)),
+    //  catchError(e => e.message)
+    //  ); 
+                                
+
+                         //        create(T : T, tipo: string) : Observable <T>{
+                         //         return this.http.post<T>(this.environmentUrl + tipo , T, this.loginservice.header()).pipe(
+                         //           map(obj => obj),
+                         //           catchError(e => this.utilService.erroHandler(e))
+                         //         );
+                         //       }
+                            
     
-    try {
+
+    
+    /*
+     
       if (response != null && !response.bloqueado && !response.statusEmpresa && !response.erroLogin )
           {
             this.mostrarMenuEmitter.emit(true);
             this.mostrarLoginEmitter.emit(false)
             this.usuarioAutenticado = true;
             this.router.navigate(['/']);
-
-            localStorage.setItem("tId", response.token )
+            this.key = response.token;  
+    
+           // localStorage.setItem("tId", response.token )
             localStorage.setItem("usId", response.id)
             localStorage.setItem("grpUs", response.grupoUsuarioid)
            
@@ -97,27 +123,47 @@ export class LoginService {
               this.utilService.showMessage("Usuário ou senha Inválido!", true);
         }
       
+
+      
       } catch (e) {
      
           this.utilService.showMessage("Erro de acesso a API" + e.message, true);
       }
+      */
     
   }
+
+ // login(endpoint: string, query : string) : Observable<dadosSessao>{
+ //   return this.http.post<any>(this.environmentUrl + endpoint + query  , this.sessao)
+ 
+   
+//  }
+
+
+login(T : dadosSessao, tipo: string) : Observable <dadosSessao>{
+  return this.http.post<dadosSessao>(this.environmentUrl + tipo , T, {}).pipe(
+    map(obj => obj)
+  );
+}
+
+
+
+
   sairSistema(){
     this.mostrarMenuEmitter.emit(false);
     this.mostrarLoginEmitter.emit(true)
-    localStorage.removeItem("tId");
+    //localStorage.removeItem("tId");
     localStorage.removeItem("usId");
     localStorage.removeItem("grpUs");
     localStorage.removeItem("stUs");
     localStorage.removeItem("empId");
-    this.utilService.showMessage("Até logo! ", false);
+   // this.utilService.showMessage("Até logo! ", false);
     this.router.navigate(['/login']);
   }
 
   LimparCache(){
 
-    localStorage.removeItem("tId");
+   // localStorage.removeItem("tId");
     localStorage.removeItem("usId");
     localStorage.removeItem("grpUs");
     localStorage.removeItem("stUs");
@@ -126,11 +172,11 @@ export class LoginService {
 
   header(){
        
-    var key = localStorage.getItem('tId') != null ? localStorage.getItem('tId').substring(0, localStorage.getItem('tId').length -12)  : null
+  //  var key = localStorage.getItem('tId') != null ? localStorage.getItem('tId').substring(0, localStorage.getItem('tId').length -12)  : null
     var reqHeader = new HttpHeaders({ 
         'Content-Type' : 'application/json; charset=utf-8',
         'Accept'       : 'application/json',
-        'Authorization': 'Bearer ' + key,
+        'Authorization': 'Bearer ' +  this.sessao.accessToken
     })
     
     return { headers: reqHeader };
@@ -142,6 +188,10 @@ export class LoginService {
       this.tipoUsuarios.push(element)
     });
    return this.tipoUsuarios;
+  }
+
+  dadosLogado() {
+      return this.sessao;
   }
   
 }

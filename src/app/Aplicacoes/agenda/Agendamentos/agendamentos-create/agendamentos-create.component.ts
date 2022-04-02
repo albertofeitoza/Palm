@@ -70,5 +70,13 @@ export class AgendamentosCreateComponent implements OnInit {
       this.dialofRef.close();
   }
 
+
+  selecionarPessoa(id){
+    alert("Teste de click " + id);
+  }
+
+  AgendarOrcar(){
+    alert(this.pessoa.nome)
+  }
  
 }

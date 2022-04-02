@@ -15,13 +15,13 @@
            
             <mat-form-field >
                 <input matInput placeholder="senha"
-                [(ngModel)]="usuario.senha" type="password" name="senha" (keypress)="logarSistema($event)">
+                [(ngModel)]="usuario.senha" type="password" name="senha" (keypress)="login($event)">
                 
             </mat-form-field>
         </form>
         
             <div *ngIf="usuario.nome && usuario.login && usuario.senha">
-                <button mat-raised-button (click)="logarSistema($event)"  color="primary"> 
+                <button mat-raised-button (click)="login($event)"  color="primary"> 
                     Login
                 </button> 
             </div>

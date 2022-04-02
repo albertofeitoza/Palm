@@ -96,7 +96,7 @@ export class AgendaCreateComponent implements OnInit {
   
   createAgenda(){
     this.agendaSelecionada = 0;
-     this.agenda.empresaid = Number(this._utilService.Sessao().IdEmpresa)
+     this.agenda.empresaid = Number(this._utilService.Sessao().empresaUsuarioId)
      this._serviceAgenda.create(this.agenda, Endpoint.Agenda).subscribe(ag => {
      this.agenda = ag;
      this.agenda.DtCriacao = new Date;
@@ -111,19 +111,19 @@ export class AgendaCreateComponent implements OnInit {
   }
 
   BuscarSala(){
-    this.carregaComboSala(this._utilService.Sessao().GrupoUsuario, this._utilService.Sessao().IdEmpresa)
+    this.carregaComboSala(this._utilService.Sessao().idGrupoUsuario, this._utilService.Sessao().empresaUsuarioId.toString())
   }
 
   AtualizarComboProfissional(){
-    this.carregaComboProfissional(this._utilService.Sessao().GrupoUsuario, this._utilService.Sessao().IdEmpresa)
+    this.carregaComboProfissional(this._utilService.Sessao().idGrupoUsuario, this._utilService.Sessao().empresaUsuarioId.toString())
   }
 
   carregaCombos(){
 
-    this.carregaComboProfissional(this._utilService.Sessao().GrupoUsuario, this._utilService.Sessao().IdEmpresa)
-      this.carregaComboUnidade(this._utilService.Sessao().GrupoUsuario, this._utilService.Sessao().IdEmpresa);
-      this.carregaComboSala(this._utilService.Sessao().GrupoUsuario, this._utilService.Sessao().IdEmpresa);
-      this.carregaComboGrupoAgenda(this._utilService.Sessao().GrupoUsuario, this._utilService.Sessao().IdEmpresa);
+    this.carregaComboProfissional(this._utilService.Sessao().idGrupoUsuario, this._utilService.Sessao().empresaUsuarioId.toString())
+      this.carregaComboUnidade(this._utilService.Sessao().idGrupoUsuario, this._utilService.Sessao().empresaUsuarioId.toString());
+      this.carregaComboSala(this._utilService.Sessao().idGrupoUsuario, this._utilService.Sessao().empresaUsuarioId.toString());
+      this.carregaComboGrupoAgenda(this._utilService.Sessao().idGrupoUsuario, this._utilService.Sessao().empresaUsuarioId.toString());
   }
 
   carregaComboProfissional(grpId: number , empId: string){
@@ -156,11 +156,11 @@ export class AgendaCreateComponent implements OnInit {
   }
 
   AtualizarComboGrupoAgenda(){
-    this.carregaComboGrupoAgenda(this._utilService.Sessao().GrupoUsuario, this._utilService.Sessao().IdEmpresa);
+    this.carregaComboGrupoAgenda(this._utilService.Sessao().idGrupoUsuario, this._utilService.Sessao().empresaUsuarioId.toString());
   }
 
   AtualizarComboUnidade(){
-    this.carregaComboUnidade(this._utilService.Sessao().GrupoUsuario, this._utilService.Sessao().IdEmpresa);
+    this.carregaComboUnidade(this._utilService.Sessao().idGrupoUsuario, this._utilService.Sessao().empresaUsuarioId.toString());
   }
 
   fecharPopup(): void {
@@ -170,7 +170,7 @@ export class AgendaCreateComponent implements OnInit {
 
   novoUsuario(){
     
-    if(this._utilService.Sessao().GrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().GrupoUsuario == TipoUsuario.Administrador)
+    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador)
     {
         this._utilService.Popup("", UsuarioCreateComponent ,"700px","820px");
     }else{
@@ -266,7 +266,7 @@ export class AgendaCreateComponent implements OnInit {
     this._utilService.showMessage("Selecionar a Agenda para criação de Horários", false);
     else{
       this.dadosHorarios.dtCriacao = new Date;
-      this.dadosHorarios.criadoPor = this._utilService.Sessao().UsuarioId;
+      this.dadosHorarios.criadoPor = this._utilService.Sessao().usuarioId;
       this.dadosHorarios.agendaid = Number(this.agendaSelecionada);
       
       this._utilService.showMessage("Aguarde Criando os Horários dessa agenda", false);    
@@ -324,7 +324,7 @@ export class AgendaCreateComponent implements OnInit {
 
 
   AtualizarAgenda(id : string): void {
-    if(this._utilService.Sessao().GrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().GrupoUsuario == TipoUsuario.Administrador)
+    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador)
     {
       let response  =  this._utilService.Popup(id, AgendaUpdateComponent, '30%','80%' )
       
@@ -335,7 +335,7 @@ export class AgendaCreateComponent implements OnInit {
 
   ExcluirAgenda(id : string): void {
       
-    if(this._utilService.Sessao().GrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().GrupoUsuario == TipoUsuario.Administrador)
+    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador)
       {
         this._utilService.Popup(id, AgendaDeleteComponent,'30%','25%');
       }

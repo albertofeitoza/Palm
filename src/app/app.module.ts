@@ -47,7 +47,6 @@ import { ProductReadComponent } from './components/product/product-read/product-
 import { ProductReadTableprodutosComponent } from './components/product/product-read-tableprodutos/product-read-tableprodutos.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProductUpdateComponent } from './components/product/product-update/product-update.component';
 import { ProductDeleteComponent } from './components/product/product-delete/product-delete.component';
@@ -150,7 +149,6 @@ import { AgendamentosCreateComponent } from './Aplicacoes/agenda/Agendamentos/ag
     MatInputModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule,
     MatMenuModule,
     MatSelectModule,
     ReactiveFormsModule,

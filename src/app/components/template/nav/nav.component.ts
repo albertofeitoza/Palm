@@ -25,7 +25,7 @@ lock = false;
     
   }
 validarAcesso(){
-  this.lock = this.servico.Sessao().GrupoUsuario == TipoUsuario.Administrador ? true : false;
+  this.lock = this.servico.Sessao().idGrupoUsuario == TipoUsuario.Administrador ? true : false;
 }
  
 

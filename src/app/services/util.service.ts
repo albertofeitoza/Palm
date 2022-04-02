@@ -1,8 +1,5 @@
 import { HeaderService } from './../components/template/header/header.service';
-import { ObjetoToken } from './../models/Token/ObjetoToken';
-
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, EMPTY } from 'rxjs';
 import { Component, EventEmitter, Injectable } from '@angular/core';
 import { AbstractControl, Validators } from '@angular/forms';
@@ -10,9 +7,8 @@ import { Router } from '@angular/router';
 import { TipoUsuario } from '../models/usuarios/enumUsuarios';
 import { Overlay } from '@angular/cdk/overlay';
 import { MatDialog } from '@angular/material/dialog';
-import { isNull } from '@angular/compiler/src/output/output_ast';
-import { isNullOrUndefined } from 'util';
-import { Output } from '@angular/core';
+import { LoginService } from './login.service';
+import { MatSnackBar } from '@angular/material/snack-bar'
 
 
 @Injectable({
@@ -20,15 +16,16 @@ import { Output } from '@angular/core';
 })
 export class UtilService {
 
-  constructor(private snackbar : MatSnackBar,
+  constructor(private snackBar: MatSnackBar,
              private http : HttpClient,
              private headerService : HeaderService,
+             private serviceLogin : LoginService,
              private router : Router,
              public overlay : Overlay,
              public dialog : MatDialog,
              ) { }
   showMessage(msg : string, isErro: boolean = false) : void { 
-    this.snackbar.open(msg, 'X' , { 
+    this.snackBar.open(msg, 'X' , { 
       duration : 3000,
       horizontalPosition: "right",
       verticalPosition : "top",
@@ -61,21 +58,34 @@ export class UtilService {
 
   Sessao(){
     
-    let chaveEntrada = this.convertBase64toText("123");
-    
-    var dados =  {
-        IdEmpresa : localStorage.getItem("empId"),
-        GrupoUsuario : Number(localStorage.getItem("grpUs")),
-        UsuarioId : Number(localStorage.getItem("usId")),
-        StatusUsuario : localStorage.getItem("stUs"),
-        TokenSessao : chaveEntrada 
+    return this.serviceLogin.dadosLogado();
+
+    /*
+    var dadosSessao = {
+        IdEmpresa : dados.empresaUsuarioId ,
+        GrupoUsuario : dados.idGrupoUsuario,
+        UsuarioId : dados.usuarioId,
+        StatusUsuario : dados.bloqueado,
+        accessToken : dados.accessToken
+
+        dominio : dados.dominio,
+        nomeUsuario : dados.nomeUsuario
+        usuarioId : dados.usuarioId
+        bloqueado : dados.bloqueado
+        idGrupoUsuario : 
+        empresaUsuarioId : number
+        statusEmpresa : boolean
+        erroLogin : boolean
+        accessToken : string
 
     }
-    return dados
+    return dadosSessao
+
+    */
   }
 
 
-  atualizaRota(rota : string, reload : boolean = false) {
+   atualizaRota(rota : string, reload : boolean = false) {
       
     if (reload) {
         this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {

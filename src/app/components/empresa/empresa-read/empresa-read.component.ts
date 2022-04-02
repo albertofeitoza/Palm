@@ -89,7 +89,7 @@ export class EmpresaReadComponent implements OnInit {
 
   addEmpresa(){
 
-    if(this._utilService.Sessao().GrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().GrupoUsuario == TipoUsuario.Administrador)
+    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador)
     {
         const scrollStrategy = this.overlay.scrollStrategies.reposition();
         const dialogRef = this.dialog.open(EmpresaCreateComponent, {
@@ -110,7 +110,7 @@ export class EmpresaReadComponent implements OnInit {
 
   editarEmpresa(id : string){
 
-    if(this._utilService.Sessao().GrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().GrupoUsuario == TipoUsuario.Administrador)
+    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador)
     {
         const scrollStrategy = this.overlay.scrollStrategies.reposition();
         const dialogRef = this.dialog.open(EmpresaUpdateComponent, {
@@ -133,7 +133,7 @@ export class EmpresaReadComponent implements OnInit {
 
   excluirEmpresa(id : string){
 
-    if(this._utilService.Sessao().GrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().GrupoUsuario == TipoUsuario.Administrador)
+    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador)
     {
         const scrollStrategy = this.overlay.scrollStrategies.reposition();
         const dialogRef = this.dialog.open(EmpresaDeleteComponent, {

@@ -1,13 +1,11 @@
 import { TipoUsuario } from './../../../models/usuarios/enumUsuarios';
-import { Usuario } from './../../../models/usuarios/modelLogin';
 import { UtilService } from './../../../services/util.service';
 import { Endpoint } from './../../../Negocio/Endpoint';
 import { ServiceAllService } from './../../../services/service-all.service';
-import { Router, ActivatedRoute } from '@angular/router';
 import { Empresa } from './../../../models/empresa/ModelEmpresa';
 import { Component, OnInit } from '@angular/core';
 import { cnpj } from 'cpf-cnpj-validator';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-empresa-update',
@@ -26,7 +24,7 @@ export class EmpresaUpdateComponent implements OnInit {
 
   ngOnInit(): void {
  
-  if (Number(this.utilservice.Sessao().GrupoUsuario) == TipoUsuario.Administrador)
+  if (Number(this.utilservice.Sessao().idGrupoUsuario) == TipoUsuario.Administrador)
      this.usuariologado = true;
   
   this.ObterEmpresa();
@@ -35,9 +33,8 @@ export class EmpresaUpdateComponent implements OnInit {
 
 
   atualizarEmpresa() : void {
-    
-    let grpId = Number(this.utilservice.Sessao().GrupoUsuario);
-    if(grpId == TipoUsuario.Usuario)
+        
+    if(Number(this.utilservice.Sessao().idGrupoUsuario) == TipoUsuario.Usuario)
     {
       this.utilservice.showMessage("Você não possui permissão para editar o cadastro de empresas", false)
 

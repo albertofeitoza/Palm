@@ -38,9 +38,9 @@ empresa : Empresa = new Empresa();
 
   cadastrarEmpresa(){
     
-    let grpId = Number(this.utilService.Sessao().GrupoUsuario);
-    let empPai = Number(this.utilService.Sessao().IdEmpresa);
-    this.empresa.criadoPor  = Number(this.utilService.Sessao().UsuarioId);
+    let grpId = Number(this.utilService.Sessao().idGrupoUsuario);
+    let empPai = Number(this.utilService.Sessao().empresaUsuarioId);
+    this.empresa.criadoPor  = Number(this.utilService.Sessao().usuarioId);
     this.empresa.dtCriacao = new Date;
     this.empresa.empresaPai = empPai;
        

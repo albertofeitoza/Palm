@@ -1,22 +1,10 @@
-import { TipoUsuarioSistema } from './../../../models/usuarios/enumUsuarios';
 import { UtilService } from './../../../services/util.service';
-import { GrupoUsuario } from './../../../models/usuarios/GrupoUsuarios';
-import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
-import { map, catchError, take, tap, elementAt } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 import { Endpoint } from './../../../Negocio/Endpoint';
-
 import { Usuario } from './../../../models/usuarios/modelLogin';
 import { ServiceAllService } from './../../../services/service-all.service';
-import { DataSource } from '@angular/cdk/collections';
-import { MatTable } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
-import { MatPaginator } from '@angular/material/paginator';
 import { Empresa } from './../../../models/empresa/ModelEmpresa';
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { __await } from 'tslib';
-import { FooterComponent } from '../../template/footer/footer.component';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';;
 import { TipoUsuario } from 'src/app/models/usuarios/enumUsuarios';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { UsuarioCreateComponent } from '../usuario-create/usuario-create.component';
@@ -59,7 +47,7 @@ export class UsuarioReadComponent implements OnInit {
 
   addUsuario(): void{
     
-    if(this._utilService.Sessao().GrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().GrupoUsuario == TipoUsuario.Administrador)
+    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador)
     {
         const scrollStrategy = this.overlay.scrollStrategies.reposition();
         const dialogRef = this.dialog.open(UsuarioCreateComponent, {
@@ -79,7 +67,7 @@ export class UsuarioReadComponent implements OnInit {
 
   editarUsuario(id : string): void{
     
-    if(this._utilService.Sessao().GrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().GrupoUsuario == TipoUsuario.Administrador)
+    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador)
     {
         const scrollStrategy = this.overlay.scrollStrategies.reposition();
         const dialogRef = this.dialog.open(UsuarioUpdateComponent, {
@@ -100,7 +88,7 @@ export class UsuarioReadComponent implements OnInit {
 
   deletarUsuario(id : string): void{
     
-    if(this._utilService.Sessao().GrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().GrupoUsuario == TipoUsuario.Administrador)
+    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador)
     {
         const scrollStrategy = this.overlay.scrollStrategies.reposition();
         const dialogRef = this.dialog.open(UsuarioDeleteComponent, {
@@ -123,9 +111,9 @@ export class UsuarioReadComponent implements OnInit {
       
       let filtroUsuario = (<HTMLSelectElement>document.getElementById('busca')).value;
 
-      let empId = this._utilService.Sessao().IdEmpresa;
-      let grpId = Number(this._utilService.Sessao().GrupoUsuario);
-      let logado =  Number(this._utilService.Sessao().UsuarioId);
+      let empId = this._utilService.Sessao().empresaUsuarioId;
+      let grpId = Number(this._utilService.Sessao().idGrupoUsuario);
+      let logado =  Number(this._utilService.Sessao().usuarioId);
       this.userAutenticado = grpId == TipoUsuario.Usuario ? false : true;
   
       this.serviceUsuario.read(Endpoint.Usuario).subscribe(u =>{

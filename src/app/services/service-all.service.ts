@@ -4,10 +4,8 @@ import { environment } from '../../environments/environment';
 import { LoginService } from 'src/app/services/login.service';
 import { UtilService } from './util.service';
 import { HttpClient } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Injectable } from '@angular/core';
-import { LocalStorageCache } from '@auth0/auth0-spa-js';
-import { stringify } from 'querystring';
+
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +17,6 @@ export class ServiceAllService <T>{
   environmentUrl = '';
 
   constructor(
-    private snackbar : MatSnackBar,
               private http : HttpClient,
               private utilService: UtilService,
               private loginservice : LoginService
@@ -39,7 +36,7 @@ export class ServiceAllService <T>{
 
     // Buscar todos Get All
     read(tipo: string): Observable<T[]>{
-      let idEmpresa = this.utilService.Sessao().GrupoUsuario == 1 ? 0 : localStorage.getItem('empId');
+      let idEmpresa = this.utilService.Sessao().idGrupoUsuario == 1 ? 0 : localStorage.getItem('empId');
       return this.http.get<T[]>(`${this.environmentUrl + tipo}/?idEmpresa=${idEmpresa}` , this.loginservice.header()).pipe(
         map(obj => obj),
         catchError(e => this.utilService.erroHandler(e))

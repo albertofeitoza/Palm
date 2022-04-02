@@ -27,8 +27,8 @@ grupo : GrupoAgenda = new GrupoAgenda();
   criarGrupo(){
 
     this.grupo.dtCriacao =  new Date;
-    this.grupo.empresaid =  Number(this.servico.Sessao().IdEmpresa)
-    this.grupo.criadoPor = Number(this.servico.Sessao().UsuarioId);
+    this.grupo.empresaid =  Number(this.servico.Sessao().empresaUsuarioId)
+    this.grupo.criadoPor = Number(this.servico.Sessao().usuarioId);
    
 
     this.servicoGrupo.create(this.grupo, Endpoint.GrupoAgenda).subscribe(() => {

@@ -7,8 +7,8 @@ import { LoginService } from './../../services/login.service';
 
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { ObjetoToken } from 'src/app/models/Token/ObjetoToken';
 import { Usuario } from 'src/app/models/usuarios/modelLogin';
+import { dadosSessao } from 'src/app/models/Token/dadosSessao';
 
 @Component({
   selector: 'app-login',
@@ -23,23 +23,19 @@ usuario : Usuario = new Usuario();
 
 constructor(private router :Router,
              private authservice : LoginService,
-             private serviceLogin : ServiceAllService<Usuario>
              ) { }
+
 
   ngOnInit(): void {
   
   }
   
-  logarSistema(keyEvent : any){
+  login(keyEvent : any){
 
     if (keyEvent.which === 13 || keyEvent.which == 1)
     {
-        this.authservice.LimparCache();
-        this.serviceLogin.create(this.usuario, Endpoint.Token).subscribe(response => {
-        let resposta = response;
-        this.authservice.logarSistema(resposta);
-        resposta = null;
-      });
+      this.authservice.logarSistema(this.usuario.nome, this.usuario.login, this.usuario.senha)
     }
   }
+  
 }

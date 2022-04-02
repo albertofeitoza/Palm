@@ -42,7 +42,7 @@ export class AgendaReadComponent implements OnInit {
 
   addNovaAgenda() {
    
-    if(this.servico.Sessao().GrupoUsuario == TipoUsuario.Master || this.servico.Sessao().GrupoUsuario == TipoUsuario.Administrador)
+    if(this.servico.Sessao().idGrupoUsuario == TipoUsuario.Master || this.servico.Sessao().idGrupoUsuario == TipoUsuario.Administrador)
     {
       this.servico.Popup("0",AgendaCreateComponent, '70%','98%' );
 
@@ -55,7 +55,7 @@ export class AgendaReadComponent implements OnInit {
 
   addUnidade(){
     
-    if(this.servico.Sessao().GrupoUsuario == TipoUsuario.Master || this.servico.Sessao().GrupoUsuario == TipoUsuario.Administrador)
+    if(this.servico.Sessao().idGrupoUsuario == TipoUsuario.Master || this.servico.Sessao().idGrupoUsuario == TipoUsuario.Administrador)
       this.servico.Popup("0", AgendaCadastroUnidadeComponent, "800px", "600px", )
     else
       this.servico.showMessage("Solicitar ao um Usuário Master cadastrar a Unidade",true);

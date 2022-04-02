@@ -8,7 +8,7 @@
 </div>
 <mat-card-title>Novo Agendamento</mat-card-title>
         <form class="formularioRow" >
-            <mat-form-field appearance="outline" style="width: 150px; padding-top: 20px" id="txt_busca">
+            <mat-form-field appearance="outline" style="width: 150px; padding-top: 20px" id="txt_busca" >
                 <mat-label>Protocolos</mat-label>
                 <input matInput placeholder="Protocolos">
             </mat-form-field>
@@ -119,14 +119,15 @@
               <tr 
                     mat-row 
                     [class.demo-row-is-clicked]=""
-                    *matRowDef="let row; columns: colunas;">
+                    *matRowDef="let row; columns: colunas;" (dblclick)="selecionarPessoa(row.id)">
+
               </tr>
             </table>
         </div>
 
         <div class="rodape">
-            <button class="button" mat-raised-button color="primary" (click)="NovoAgendamento()">
-                Salvar
+            <button class="button" mat-raised-button color="primary" (click)="AgendarOrcar()">
+                Agendar e Orçar
             </button>
             <button class="button" mat-raised-button color="primary" (click)="fecharPopup()">
                 Cancelar

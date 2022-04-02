@@ -43,7 +43,7 @@ export class EmpresaDeleteComponent implements OnInit {
         }    
         else
         {
-            if (Number(this.utilservice.Sessao().GrupoUsuario) == TipoUsuario.Administrador){
+            if (Number(this.utilservice.Sessao().idGrupoUsuario) == TipoUsuario.Administrador){
               this.serviceEmpresa.delete(this.empresa.id, Endpoint.Empresa).subscribe(()=>{
                 this.mensagem.showMessage("Empresa excluida com sucesso !", false);
                this.utilservice.atualizaRota("empresa")

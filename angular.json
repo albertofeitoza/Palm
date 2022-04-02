@@ -54,9 +54,7 @@
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
-            "scripts": [
-              
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -66,7 +64,6 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -122,6 +119,4 @@
   "cli": {
     "analytics": "d00bc348-1c68-4c1f-b943-5e19273b7029"
   }
-
-  
 }

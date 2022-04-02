@@ -1,12 +1,9 @@
-import { stringify } from 'querystring';
-import { UsuarioReadComponent } from './../usuario-read/usuario-read.component';
 import { Endpoint } from './../../../Negocio/Endpoint';
 import { GrupoUsuario } from './../../../models/usuarios/GrupoUsuarios';
 import { LoginService } from 'src/app/services/login.service';
 import { ServiceAllService } from './../../../services/service-all.service';
 import { TipoUsuario, TipoUsuarioSistema } from './../../../models/usuarios/enumUsuarios';
 import { UtilService } from './../../../services/util.service';
-import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Usuario } from '../../../models/usuarios/modelLogin';
 import { Component, OnInit } from '@angular/core';
@@ -42,7 +39,7 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
               private router : Router) { }
 
   ngOnInit(): void {
-      let grpId = Number(this.utilService.Sessao().GrupoUsuario);
+      let grpId = Number(this.utilService.Sessao().idGrupoUsuario);
       
       if (grpId == TipoUsuario.Administrador)
          this.tipoLogin=true;
@@ -53,7 +50,7 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
   
   createUsuario() : void {
     
-    this.usuario.criadoPor  = Number(this.utilService.Sessao().UsuarioId);
+    this.usuario.criadoPor  = Number(this.utilService.Sessao().usuarioId);
     this.usuario.dtCriacao = new Date;
    
     this.usuario.grupoUsuarioid = this.usuario.grupoUsuarioid.toString().trim() == "Administrador" ? TipoUsuario.Administrador.toString() 
@@ -100,8 +97,8 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
 
   buscarEmpresa() {
    
-    let empId = this.utilService.Sessao().IdEmpresa
-    let grpId = Number(this.utilService.Sessao().GrupoUsuario);
+    let empId = this.utilService.Sessao().empresaUsuarioId
+    let grpId = Number(this.utilService.Sessao().idGrupoUsuario);
 
     this.serviceEmpresa.read(Endpoint.Empresa).subscribe(emp => {
         emp = emp; 
@@ -112,7 +109,7 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
         
             if(grpId == TipoUsuario.Administrador)
               this.empresa.push(empresasCarregadas)
-            else if (grpId == TipoUsuario.Master && empId == empresasCarregadas.empresaPai.toString())
+            else if (grpId == TipoUsuario.Master && empId == empresasCarregadas.empresaPai)
                 this.empresa.push(empresasCarregadas)
             });
     })
@@ -120,7 +117,7 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
 
   alimentarCombo() : void  {
 
-    let grpId = Number(this.utilService.Sessao().GrupoUsuario);
+    let grpId = Number(this.utilService.Sessao().idGrupoUsuario);
 
     for (var tipo in TipoUsuario) {
       if (TipoUsuario.hasOwnProperty(tipo) &&
@@ -139,7 +136,7 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
   }
 
   createGrupoUsuario(){
-    this.criargrupousuario.criadoPor  = Number(this.utilService.Sessao().UsuarioId);
+    this.criargrupousuario.criadoPor  = Number(this.utilService.Sessao().usuarioId);
     this.criargrupousuario.dtCriacao = new Date;
       this.serviceGrupoUsuario.create(this.criargrupousuario, Endpoint.GrupoUsuario).subscribe(() => {
         this.utilService.showMessage('Grupo de Usuário Criado!');

@@ -60,9 +60,9 @@ unidadeSelecionada : number = 0;
   addUnidade(){
     this.unidadeSelecionada = 0;
 
-    this.unidade.criadoPor = this.servico.Sessao().UsuarioId;
+    this.unidade.criadoPor = this.servico.Sessao().usuarioId;
     this.unidade.dtCriacao = new Date;
-    this.unidade.empresaid =  Number(this.servico.Sessao().IdEmpresa);
+    this.unidade.empresaid =  Number(this.servico.Sessao().empresaUsuarioId);
     
     this.ServicoUnidade.create(this.unidade, Endpoint.Unidade).subscribe(() => {
      this.servico.showMessage("Unidade cadastrada com sucesso", false);
@@ -75,8 +75,8 @@ unidadeSelecionada : number = 0;
   buscarUnidade(vlrTxt : string){
     
     this.ServicoUnidade.read(Endpoint.Unidade).subscribe(un => {
-      this.unidades = vlrTxt == null ? un.filter(x => x.empresaid.toString() == this.servico.Sessao().IdEmpresa) :
-                                         un.filter(x => x.empresaid.toString() == this.servico.Sessao().IdEmpresa && x.nomeUnidade.toLowerCase().includes(vlrTxt.toLowerCase()));
+      this.unidades = vlrTxt == null ? un.filter(x => x.empresaid.toString() == this.servico.Sessao().empresaUsuarioId.toString()) :
+                                         un.filter(x => x.empresaid.toString() == this.servico.Sessao().empresaUsuarioId.toString() && x.nomeUnidade.toLowerCase().includes(vlrTxt.toLowerCase()));
     })
     
   }
