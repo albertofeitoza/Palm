@@ -40,7 +40,7 @@ export class LoginService {
   mostrarLoginEmitter = new EventEmitter<boolean>();
   
   sessao : dadosSessao
-  erroLogin : string
+
   constructor(private router: Router,
               private http: HttpClient
               ) 
@@ -49,7 +49,11 @@ export class LoginService {
                 this.environmentUrl =  environment.BASE_URL;
               }
               
-   logarSistema(domain : string, usuario : string , senha: string ) {
+   
+  
+   
+   
+    logarSistema(domain : string, usuario : string , senha: string ) {
 
     var query = "?dominio=palm&login=palm&password=palmadmin2021"; 
 
@@ -146,6 +150,10 @@ login(T : dadosSessao, tipo: string) : Observable <dadosSessao>{
   );
 }
 
+
+isLogedIn () : boolean{
+return this.sessao !== undefined
+}
 
 
 
