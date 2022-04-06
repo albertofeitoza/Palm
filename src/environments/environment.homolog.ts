@@ -1,7 +1,7 @@
 export const environment = {
     production: true,
-    environmentName : "prod",
-    apiUrl : 'http://localhost:8090',
+    environmentName : "homolog",
+    apiUrl : 'http://localhost:8080',
     BASE_URL : '/api'
   };
   
