@@ -4,7 +4,6 @@ import { Endpoint } from './../../Negocio/Endpoint';
 import { ServiceAllService } from './../../services/service-all.service';
 import { HeaderService } from './../../components/template/header/header.service';
 import { Component, OnInit } from '@angular/core';
-import { ok } from 'assert';
 import { Product } from 'src/app/models/produtos/product.model';
 
 @Component({
@@ -14,7 +13,7 @@ import { Product } from 'src/app/models/produtos/product.model';
 })
 export class HomeComponent implements OnInit {
 
-produtos : Product[];
+ produtos : any = [];
 
 
   constructor(private serviceProdutos : ServiceAllService<Product>,
@@ -40,14 +39,10 @@ produtos : Product[];
     let empId = localStorage.getItem("empId");
     let grpId = Number(localStorage.getItem("grpUs"));
 
-    this.serviceProdutos.read(Endpoint.Produto).subscribe(prod => {
-      prod = prod;
-
-      this.produtos = new Array();
-        prod.forEach(element => {
-          if (empId == element.empresaid)
-              this.produtos.push(element)
-        });
+    this.serviceProdutos.read(Endpoint.Produto).subscribe((prod: {} ) => {
+     
+      this.produtos = prod;
+  
     });
   }
 }

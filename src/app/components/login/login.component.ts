@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Usuario } from 'src/app/models/usuarios/modelLogin';
 import { dadosSessao } from 'src/app/models/Token/dadosSessao';
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -17,13 +16,13 @@ import { dadosSessao } from 'src/app/models/Token/dadosSessao';
 })
 export class LoginComponent implements OnInit {
 
-acesso : Acesso = new Acesso();
-usuario : Usuario = new Usuario();
-
+usuario: Usuario = new Usuario()
 
 constructor(private router :Router,
              private authservice : LoginService,
-             ) { }
+             ) {
+              
+             }
 
 
   ngOnInit(): void {
@@ -31,7 +30,7 @@ constructor(private router :Router,
   }
   
   login(keyEvent : any){
-
+    
     if (keyEvent.which === 13 || keyEvent.which == 1)
     {
       this.authservice.logarSistema(this.usuario.nome, this.usuario.login, this.usuario.senha)

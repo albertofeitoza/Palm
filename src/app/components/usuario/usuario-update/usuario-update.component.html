@@ -49,11 +49,11 @@
       
         </form>
 
-        <button *ngIf="usuario.nome && usuario.login && usuario.grupoUsuarioid && usuario.empresaid" mat-raised-button (click)="updateUsuario()" color="primary" > 
+        <button *ngIf="usuario.nome && usuario.login " mat-raised-button > 
             Salvar
         </button>
         
-        <button mat-raised-button (click)="fecharPopup()" color="primary" > 
+        <button mat-raised-button> 
             Voltar
         </button>
 </mat-card>

@@ -2,7 +2,7 @@ import { Endpoint } from './../../../Negocio/Endpoint';
 import { ServiceAllService } from './../../../services/service-all.service';
 import { UtilService } from './../../../services/util.service';
 import { Product } from '../../../models/produtos/product.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -12,7 +12,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class ProductDeleteComponent implements OnInit {
 
-  product : Product = new Product();
+  @Input() product!: Product
 
   constructor(
               private utilService : UtilService,

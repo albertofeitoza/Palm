@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { map } from 'rxjs/operators';
 import { Agendamentos } from 'src/app/models/Agenda/modelAgendamentos';
@@ -18,9 +18,8 @@ export class AgendamentosCreateComponent implements OnInit {
 
   colunas = ['id','nome','protocolos','grupoAgenda','agendamentoFuturo','responsavel','ura','cpf','rg','telefone','celular']  
   
-  pessoa : Pessoa = new Pessoa();
-  campoBusca : any;
-  pessoaGrid : PessoaGrid[];
+ @Input() pessoa!: Pessoa
+ @Input() pessoaGrid!: PessoaGrid[];
   
   
 
@@ -71,7 +70,7 @@ export class AgendamentosCreateComponent implements OnInit {
   }
 
 
-  selecionarPessoa(id){
+  selecionarPessoa(id : any){
     alert("Teste de click " + id);
   }
 

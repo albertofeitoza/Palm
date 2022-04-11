@@ -3,7 +3,7 @@ import { ServiceAllService } from './../../../services/service-all.service';
 import { UtilService } from './../../../services/util.service';
 import { Empresa } from './../../../models/empresa/ModelEmpresa';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Usuario } from './../../../models/usuarios/modelLogin';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
@@ -13,8 +13,10 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./usuario-delete.component.css']
 })
 export class UsuarioDeleteComponent implements OnInit {
-empresa : Empresa
-usuario : Usuario;
+@Input() empresa!: Empresa
+@Input() usuario!: Usuario;
+
+
 
   constructor(private usuarioService : ServiceAllService<Usuario>,
               private empresaService : ServiceAllService<Empresa>,

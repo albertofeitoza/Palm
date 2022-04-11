@@ -12,7 +12,7 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class AgendaGrupoUpdateComponent implements OnInit {
 
-grupo : GrupoAgenda
+grupo : any
 
   constructor(
                 public dialogRef : MatDialogRef<AgendaGrupoUpdateComponent>,

@@ -38,13 +38,12 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatSelectModule} from '@angular/material/select';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatCheckboxModule} from '@angular/material/checkbox';
- import {MatDialogModule} from '@angular/material/dialog';
+import {MatDialogModule} from '@angular/material/dialog';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 
 import { ProductReadComponent } from './components/product/product-read/product-read.component';
-import { ProductReadTableprodutosComponent } from './components/product/product-read-tableprodutos/product-read-tableprodutos.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -80,7 +79,6 @@ import { UnidadeSalaDeleteComponent } from './Aplicacoes/agenda/Unidade/Sala/uni
 import { AgendaGrupoCadastroComponent } from './Aplicacoes/agenda/GrupoAgenda/agenda-grupo-cadastro/agenda-grupo-cadastro.component';
 import { AgendaGrupoExcluirComponent } from './Aplicacoes/agenda/GrupoAgenda/agenda-grupo-excluir/agenda-grupo-excluir.component';
 import { AgendaGrupoUpdateComponent } from './Aplicacoes/agenda/GrupoAgenda/agenda-grupo-update/agenda-grupo-update.component';
-
 import { AgendamentosReadComponent } from './Aplicacoes/agenda/Agendamentos/agendamentos-read/agendamentos-read.component';
 import { AgendamentosCreateComponent } from './Aplicacoes/agenda/Agendamentos/agendamentos-create/agendamentos-create.component';
 
@@ -94,7 +92,6 @@ import { AgendamentosCreateComponent } from './Aplicacoes/agenda/Agendamentos/ag
     ProductCrudComponent,
     ProductCreateComponent,
     ProductReadComponent,
-    ProductReadTableprodutosComponent,
     ProductUpdateComponent,
     ProductDeleteComponent,
     LoginComponent,

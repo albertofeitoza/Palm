@@ -1,12 +1,10 @@
-import { stringify } from 'querystring';
 import { Empresa } from './../../../models/empresa/ModelEmpresa';
 import { Router } from '@angular/router';
 import { Endpoint } from './../../../Negocio/Endpoint';
 import { ServiceAllService } from './../../../services/service-all.service';
 import { UtilService } from './../../../services/util.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Product } from '../../../models/produtos/product.model';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { TipoUsuario } from 'src/app/models/usuarios/enumUsuarios';
 import { MatDialog } from '@angular/material/dialog';
 import { Overlay } from '@angular/cdk/overlay';
@@ -23,8 +21,8 @@ export class ProductReadComponent implements OnInit {
 
 
 
-products: Product[]
-vlrProduto : string = null;
+@Input() products!: Product[]
+@Input() vlrProduto! : string
 
 displayedColumns = ['id','nome', 'valor','empresaid','bloqueado','action']  
 

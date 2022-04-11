@@ -16,7 +16,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class EmpresaDeleteComponent implements OnInit {
 
 
-  empresa : Empresa
+  empresa : any
   constructor(private serviceEmpresa : ServiceAllService<Empresa>,
               private serviceUsuario : ServiceAllService<Usuario>,
               private mensagem : UtilService,
@@ -34,10 +34,10 @@ export class EmpresaDeleteComponent implements OnInit {
     
     let existeUsuario = null;
     
-    this.serviceUsuario.read(Endpoint.Usuario).subscribe(usr => {
-        usr = usr;
-        
-        if (usr.length > 0)
+    this.serviceUsuario.read(Endpoint.Usuario).subscribe((usr: {} ) => {
+      
+        let users = usr; 
+        if (users != null)
         {
           this.mensagem.showMessage("Empresa não pode ser excluida porque possui Dependências de usuários.", false)
         }    
@@ -64,12 +64,8 @@ export class EmpresaDeleteComponent implements OnInit {
    BuscarEmpresa(){
     
     
-    this.serviceEmpresa.readById(this.dialogRef.id, Endpoint.Empresa).subscribe(emp => {
+    this.serviceEmpresa.readById(this.dialogRef.id, Endpoint.Empresa).subscribe((emp:{}) => {
       this.empresa = emp;
-
     })
-
    }
-
-
 }

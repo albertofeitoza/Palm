@@ -5,7 +5,7 @@ import { ServiceAllService } from './../../../services/service-all.service';
 import { Endereco } from './../../../models/endereco/modelEndereco';
 import { Contato } from './../../../models/contato/modelContato';
 import { Empresa } from './../../../models/empresa/ModelEmpresa';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { elementAt } from 'rxjs/operators';
 import { TipoUsuarioSistema } from 'src/app/models/usuarios/enumUsuarios';
 import { MatDialog } from '@angular/material/dialog';
@@ -22,11 +22,11 @@ import { EmpresaDeleteComponent } from '../empresa-delete/empresa-delete.compone
 })
 export class EmpresaReadComponent implements OnInit {
 
-  
-  empresa: Empresa[];
-  empresas: Empresa[];
-  contato : Contato;
-  endereco : Endereco;
+  @Input() empresa!: Empresa[]
+  @Input() empresas!: Empresa[]
+  @Input() contato!: Contato;
+  endereco!: Endereco;
+  //Colunas do GRID
   displayedColumns = ['id','cnpj', 'razaoSocial','nomeFantasia','inscricaoEstadual','inscricaoMunicipal','bloqueado','action']  
 
   constructor(private router : Router,
@@ -38,9 +38,11 @@ export class EmpresaReadComponent implements OnInit {
 
   ngOnInit(): void {
     
-    this.buscarEmpresa();
+    this.buscarEmpresa();      ///revisitar esse método
 
   }
+
+
 
   buscarEmpresa(): void 
   {
@@ -48,17 +50,17 @@ export class EmpresaReadComponent implements OnInit {
     let empId = localStorage.getItem("empId");
     let grpId = Number(localStorage.getItem("grpUs"));
 
-    this.serviceEmpresa.read(Endpoint.Empresa).subscribe(emp => {
-      emp = emp;
+    this.serviceEmpresa.read(Endpoint.Empresa).subscribe((emp: {}) => {
+      let empr = emp;      
 
-      
       this.empresa =  new Array();
 
-          if(grpId == TipoUsuario.Administrador)
+      /*   
+      if(grpId == TipoUsuario.Administrador)
           {
-            emp.forEach(element => {
-            this.empresa.push(element)
-             });
+
+            this.empresa.push(empr)
+
           }
           else if(grpId == TipoUsuario.Master)
           {
@@ -68,7 +70,7 @@ export class EmpresaReadComponent implements OnInit {
             });
 
           }
-
+      */
       let empresaFIltrada = new Array();
       if (filtroEmpresa){
            
@@ -151,6 +153,7 @@ export class EmpresaReadComponent implements OnInit {
     }
     
   }
+
 
 }
   

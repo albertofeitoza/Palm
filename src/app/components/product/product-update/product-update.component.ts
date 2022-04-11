@@ -4,7 +4,7 @@ import { ServiceAllService } from './../../../services/service-all.service';
 import { UtilService } from './../../../services/util.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Product } from '../../../models/produtos/product.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 
@@ -15,7 +15,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class ProductUpdateComponent implements OnInit {
 
-product: Product = new Product()
+@Input() product!: Product
   
 
   constructor(

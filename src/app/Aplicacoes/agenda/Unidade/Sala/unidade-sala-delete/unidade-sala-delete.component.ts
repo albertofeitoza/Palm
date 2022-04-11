@@ -12,7 +12,7 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class UnidadeSalaDeleteComponent implements OnInit {
 
-  sala : Sala
+  sala : any
 
   constructor(
                 public dialog : MatDialogRef <UnidadeSalaDeleteComponent>, 

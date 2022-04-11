@@ -1,6 +1,3 @@
-import { convertActionBinding, ConvertActionBindingResult } from '@angular/compiler/src/compiler_util/expression_converter';
-import { map } from 'rxjs/operators';
-
 export enum TipoUsuario {
     
     Administrador =  Number(localStorage.getItem("grpUsGrpAdm")),

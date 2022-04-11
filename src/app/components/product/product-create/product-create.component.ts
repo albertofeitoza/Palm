@@ -1,15 +1,12 @@
 import { Empresa } from './../../../models/empresa/ModelEmpresa';
-import { Aplicacao, TipoAplicacao } from './../../../Negocio/Aplicacao';
 import { Endpoint } from './../../../Negocio/Endpoint';
 import { ServiceAllService } from './../../../services/service-all.service';
-import { Usuario } from './../../../models/usuarios/modelLogin';
-import { Token } from '@angular/compiler/src/ml_parser/lexer';
-import { stringify } from 'querystring';
 import { UtilService } from './../../../services/util.service';
 import { Product } from '../../../models/produtos/product.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialogRef } from '@angular/material/dialog';
+import { TipoAplicacao } from 'src/app/Negocio/Aplicacao';
 
 @Component({
   selector: 'app-product-create',
@@ -19,10 +16,10 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class ProductCreateComponent implements OnInit {
 
   comboProduto =  [];
-  empresa : Empresa[];
-  comboEmpresa : Empresa;
+  @Input() empresa! : Empresa[];
+  @Input() comboEmpresa! : Empresa;
 
-  product : Product = new Product();
+  @Input() product!: Product
 
   constructor(
               private utilService : UtilService,
@@ -70,7 +67,7 @@ export class ProductCreateComponent implements OnInit {
   buscarProduto(){
     
       TipoAplicacao.forEach(element => {
-        this.comboProduto.push(element)
+        //this.comboProduto.push(element)
       });
      return this.comboProduto;
   }

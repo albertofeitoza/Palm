@@ -6,7 +6,7 @@ import { TipoUsuario, TipoUsuarioSistema } from './../../../models/usuarios/enum
 import { UtilService } from './../../../services/util.service';
 import { Router } from '@angular/router';
 import { Usuario } from '../../../models/usuarios/modelLogin';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Empresa } from './../../../models/empresa/ModelEmpresa';
 import { MatDialogRef } from '@angular/material/dialog';
 
@@ -18,14 +18,14 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class UsuarioCreateComponent implements OnInit {
 
 tipoLogin : boolean = false;
-empresa : Empresa[];
+@Input() empresa!: Empresa[];
 
-dadosEmpresa : Empresa;
-usuario : Usuario = new Usuario();
+@Input() dadosEmpresa! : Empresa;
+@Input() usuario! : Usuario
 
-grupousuario : GrupoUsuario[];
+@Input() grupousuario!: GrupoUsuario[];
 
-criargrupousuario : GrupoUsuario = new GrupoUsuario()
+@Input() criargrupousuario!: GrupoUsuario
 
 comboTipousuario = [];
 
@@ -56,7 +56,7 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
     this.usuario.grupoUsuarioid = this.usuario.grupoUsuarioid.toString().trim() == "Administrador" ? TipoUsuario.Administrador.toString() 
                                 : this.usuario.grupoUsuarioid.toString().trim() == "Sistema" ? TipoUsuario.Sistema.toString()
                                 : this.usuario.grupoUsuarioid.toString().trim() == "Master" ? TipoUsuario.Master.toString()
-                                : this.usuario.grupoUsuarioid.toString() == "Usuario" ? TipoUsuario.Usuario.toString() : null;
+                                : this.usuario.grupoUsuarioid.toString() == "Usuario" ? TipoUsuario.Usuario.toString() : "Usuario";
     
     
 
@@ -68,7 +68,6 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
             if (ativo.length > 0)
             {
               this.utilService.showMessage('Esse Usuário já existe para essa Empresa');
-              this.usuario.login =  null; 
               user =  new Array();
             }else{
            
@@ -123,14 +122,14 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
       if (TipoUsuario.hasOwnProperty(tipo) &&
         (isNaN(parseInt(tipo))) && grpId == TipoUsuario.Administrador ) {
 
-          this.comboTipousuario.push(tipo)
+         // this.comboTipousuario.push(tipo)
           
       }
       else if (TipoUsuario.hasOwnProperty(tipo) &&
       (isNaN(parseInt(tipo))) && grpId == TipoUsuario.Master ){
 
-        if(TipoUsuarioSistema.get(tipo) == TipoUsuario.Master || TipoUsuarioSistema.get(tipo) == TipoUsuario.Usuario)            
-            this.comboTipousuario.push(tipo);
+        //if(TipoUsuarioSistema.get(tipo) == TipoUsuario.Master || TipoUsuarioSistema.get(tipo) == TipoUsuario.Usuario)            
+          //  this.comboTipousuario.push(tipo);
         }
     }
   }

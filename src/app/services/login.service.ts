@@ -30,16 +30,16 @@ export class LoginService {
   title = '';
   environmentName = '';
   environmentUrl = '';
-  acesso : Acesso = new Acesso();
+ // acesso : Acesso = new Acesso();
 
-  private tipoUsuarios = [];
+  private tipoUsuarios: any = [];
 
   private usuarioAutenticado: boolean = false; 
 
   mostrarMenuEmitter = new EventEmitter<boolean>();
   mostrarLoginEmitter = new EventEmitter<boolean>();
   
-  sessao : dadosSessao
+  sessao: any = dadosSessao
 
   constructor(private router: Router,
               private http: HttpClient
@@ -57,14 +57,15 @@ export class LoginService {
 
     var query = "?dominio=palm&login=palm&password=palmadmin2021"; 
 
-    this.login(this.sessao, `${Endpoint.Token}${query}`).subscribe(logado => {
+    this.login(this.sessao, `${Endpoint.Token}${query}`).subscribe((logado:{} ) => {
       this.sessao = logado;
     })
 
-
-    this.mostrarMenuEmitter.emit(true);
-    this.mostrarLoginEmitter.emit(false)
-
+    if(this.isLogedIn())
+    {
+      this.mostrarMenuEmitter.emit(true);
+      this.mostrarLoginEmitter.emit(false)
+    }
 
     //return this.http.post<dadosSessao>(this.environmentUrl + Endpoint.Token + query, {}).pipe(
     //  map(obj => (this.sessao = obj)),

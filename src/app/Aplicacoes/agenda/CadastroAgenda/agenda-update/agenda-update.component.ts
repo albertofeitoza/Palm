@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { endWith, filter } from 'rxjs/operators';
@@ -34,13 +34,13 @@ export class AgendaUpdateComponent implements OnInit {
 
             ) { }
 
-  comboProfissional  : Usuario[];
-  comboUnidade : Unidade[];
-  comboSala : Sala[];
-  comboTipoGrupoAgenda : GrupoAgenda[];
+  @Input() comboProfissional!: Usuario[];
+  @Input() comboUnidade!: Unidade[];
+  @Input() comboSala! : Sala[];
+  @Input() comboTipoGrupoAgenda!: GrupoAgenda[];
 
 
-  agenda : Agenda = new Agenda();
+  @Input() agenda!: Agenda
   
   ngOnInit(): void {
  

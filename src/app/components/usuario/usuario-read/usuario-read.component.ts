@@ -22,7 +22,7 @@ import { UsuarioDeleteComponent } from '../usuario-delete/usuario-delete.compone
 
 export class UsuarioReadComponent implements OnInit {
 
-  usuario : Usuario[];
+  usuario : any
   userAutenticado : boolean = false; 
   
   displayedColumns = ['id','nome','login','empresaid','grupoUsuarioid','bloqueado','action']  
@@ -148,8 +148,8 @@ export class UsuarioReadComponent implements OnInit {
                   for (let index = 0; index <  responseEmpresa.length; index++) {
                     const emp =  responseEmpresa[index];
                     
-                    if(usr.empresaid == emp.id.toString().trim())
-                    {
+                   
+                    
                       empresaID = emp.id;
                       usr.empresaid = emp.razaoSocial;
                       usr.grupoUsuarioid = usr.grupoUsuarioid == localStorage.getItem("grpUsGrpAdm") ? "Administrador"
@@ -189,7 +189,7 @@ export class UsuarioReadComponent implements OnInit {
                             
                           }
 
-                        }
+                        
                   }
           }
       })

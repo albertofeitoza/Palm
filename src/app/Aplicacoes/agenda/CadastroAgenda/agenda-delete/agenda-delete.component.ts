@@ -1,5 +1,4 @@
-import { Route } from '@angular/compiler/src/core';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Agenda } from 'src/app/models/Agenda/modelAgenda';
@@ -14,7 +13,7 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class AgendaDeleteComponent implements OnInit {
 
-  agenda : Agenda = new Agenda();
+  @Input() agenda!: Agenda
   
   constructor(
               public dialgRef : MatDialogRef<AgendaDeleteComponent>,

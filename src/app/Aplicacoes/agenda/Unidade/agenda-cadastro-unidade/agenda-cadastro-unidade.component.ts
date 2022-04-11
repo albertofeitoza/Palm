@@ -1,6 +1,6 @@
 import { getLocaleDateTimeFormat } from '@angular/common';
 import { stringify } from '@angular/compiler/src/util';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Sala } from 'src/app/models/Sala/SalaModel';
 import { Endpoint } from 'src/app/Negocio/Endpoint';
@@ -27,16 +27,16 @@ export class AgendaCadastroUnidadeComponent implements OnInit {
 Colunas = ['id','dtCriacao', 'nomeUnidade','bloqueado','action']
 ColunasSala = ['id','dtCriacao', 'nomeSala', 'ativo','action']
 
-unidade : Unidade = new Unidade
+@Input() unidade!: Unidade 
 
 novaUnidade : boolean = false;
 
-unidades : Unidade[];
+unidades : any;
 atualizarChamada: boolean = false; 
 
-vlrsala : string = null;
+vlrsala : string = "";
 
-salas : Sala[];
+salas : any ;
 unidadeSelecionada : number = 0;
   constructor(
              public dialog : MatDialogRef<AgendaCadastroUnidadeComponent>,
@@ -48,7 +48,7 @@ unidadeSelecionada : number = 0;
 
   ngOnInit(): void {
       this.buscarUnidade("");
-     // this.buscarSala();
+      this.buscarSala();
       
   }
 
@@ -60,10 +60,9 @@ unidadeSelecionada : number = 0;
   addUnidade(){
     this.unidadeSelecionada = 0;
 
-    this.unidade.criadoPor = this.servico.Sessao().usuarioId;
+    this.unidade = this.servico.Sessao().usuarioId;
     this.unidade.dtCriacao = new Date;
     this.unidade.empresaid =  Number(this.servico.Sessao().empresaUsuarioId);
-    
     this.ServicoUnidade.create(this.unidade, Endpoint.Unidade).subscribe(() => {
      this.servico.showMessage("Unidade cadastrada com sucesso", false);
      this.servico.atualizaRota("agenda", true);
@@ -116,11 +115,11 @@ unidadeSelecionada : number = 0;
     this.servico.Popup("",UnidadeSalaCadastroComponent, "500px", "500px");
   }
 
-  UnidadeSelecionada(id){
+  UnidadeSelecionada(id : any){
       this.unidadeSelecionada = id;
   }
 
-  selecionaAba(tab){
+  selecionaAba(tab : any){
       
       if (tab.index == 1)
       {

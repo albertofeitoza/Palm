@@ -14,7 +14,7 @@ import { UtilService } from 'src/app/services/util.service';
 export class AgendaExcluirUnidadeComponent implements OnInit {
 
 
-  unidade : Unidade
+  unidade : any
 
   constructor(
               public dialog : MatDialogRef<AgendaExcluirUnidadeComponent>,

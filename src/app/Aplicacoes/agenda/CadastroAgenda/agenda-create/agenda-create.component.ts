@@ -3,7 +3,6 @@ import { ServiceAllService } from '../../../../services/service-all.service';
 import { Empresa } from '../../../../models/empresa/ModelEmpresa';
 import { Aplicacao } from '../../../../Negocio/Aplicacao';
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
 import { Agenda } from 'src/app/models/Agenda/modelAgenda';
 import { UtilService } from 'src/app/services/util.service';
 import { TipoUsuario, TipoUsuarioSistema } from 'src/app/models/usuarios/enumUsuarios';
@@ -12,7 +11,6 @@ import { Sala } from 'src/app/models/Sala/SalaModel';
 import { GrupoAgenda } from 'src/app/models/Agenda/modelGrupoAgenda';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Usuario } from 'src/app/models/usuarios/modelLogin';
-import { Overlay } from '@angular/cdk/overlay';
 import { UsuarioCreateComponent } from 'src/app/components/usuario/usuario-create/usuario-create.component';
 import { AgendaGrupoCadastroComponent } from '../../GrupoAgenda/agenda-grupo-cadastro/agenda-grupo-cadastro.component';
 import { AgendaGrupoUpdateComponent } from '../../GrupoAgenda/agenda-grupo-update/agenda-grupo-update.component';
@@ -22,9 +20,8 @@ import { HorarioAgenda } from 'src/app/models/Agenda/modelHorarioAgenda';
 import { AgendaDto } from 'src/app/models/Agenda/modelRetornoAgenda';
 import { AgendaDeleteComponent } from '../agenda-delete/agenda-delete.component';
 import { AgendaUpdateComponent } from '../agenda-update/agenda-update.component';
-import { Time } from '@angular/common';
-
-
+import { Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
+import { Overlay } from '@angular/cdk/overlay';
 
 
 @Component({
@@ -34,37 +31,37 @@ import { Time } from '@angular/common';
 })
 export class AgendaCreateComponent implements OnInit {
   
-  agenda : Agenda = new Agenda()
+  agenda : any
   estadoForm : boolean = false;
   agendaSelecionada : number = 0;
 
-  comboProfissional  : Usuario[];
-  comboUnidade : Unidade[];
-  comboSala : Sala[];
-  comboTipoGrupoAgenda : GrupoAgenda[];
-  empresa : Empresa[];
+ comboProfissional : any = new Array();
+  comboUnidade : any = [];
+  comboSala : any = [];
+  comboTipoGrupoAgenda : any = [];
+  empresa : any = [];
 
   //Grupo
-  grupo : GrupoAgenda[]
+  grupo : GrupoAgenda[] = [];
   ColunasGrupo = ['id','dtCriacao','nomeGrupoAgenda','bloqueado','action']
   GrupoSelecionado : number = 0;
 
   //Horários
-  segunda : HorarioAgenda[];
-  terca : HorarioAgenda[];
-  quarta : HorarioAgenda[];
-  quinta : HorarioAgenda[];
-  sexta : HorarioAgenda[];
-  sabado : HorarioAgenda[];
-  domingo : HorarioAgenda[];
+  segunda : HorarioAgenda[] = [];
+  terca : HorarioAgenda[] = [];
+  quarta : HorarioAgenda[] = [];
+  quinta : HorarioAgenda[] = [];
+  sexta : HorarioAgenda[] = [];
+  sabado : HorarioAgenda[] = [];
+  domingo : HorarioAgenda[] = [];
 
   ColunasHorarios = ['Hora','Tempo']
-  dadosHorarios : HorarioAgenda = new HorarioAgenda();
+  dadosHorarios : any
 
 
   Colunas = ['id', 'Agenda','Responsável','Unidade','Sala',
                       'Grupo','Inicio','Fim','bloqueado','action']  
-  agendas : AgendaDto[];
+  agendas : AgendaDto[] = [];
 
   constructor(private route : Router,
               public dialogRef: MatDialogRef <AgendaCreateComponent>, 
@@ -88,7 +85,7 @@ export class AgendaCreateComponent implements OnInit {
       this._utilService.AtualizarMenu(Aplicacao.Agenda,'app_registration','');
     
     if(!this.estadoForm)
-      this.buscarAgenda(null);
+      this.buscarAgenda("");
 
     this.buscarHorarios(this.agendaSelecionada);        
 
@@ -128,15 +125,18 @@ export class AgendaCreateComponent implements OnInit {
 
   carregaComboProfissional(grpId: number , empId: string){
     this.comboProfissional =  new Array();
-    this._serviceUsuario.read(Endpoint.Usuario).subscribe(pro => {
-      pro = this.comboProfissional = grpId == TipoUsuario.Master || grpId == TipoUsuario.Administrador ? this.comboProfissional = pro : null;
+    
+    this._serviceUsuario.read(Endpoint.Usuario).subscribe((data: {} ) => {
+    
+    this.comboProfissional = grpId == TipoUsuario.Master || grpId == TipoUsuario.Administrador ? this.comboProfissional = data : null;
+    
     });
   }
   
   carregaComboUnidade(grpId: number , empId: string){
     this.comboUnidade =  new Array()
-    this._serviceUnidade.read(Endpoint.Unidade).subscribe(un => {
-      un = this.comboUnidade = grpId == TipoUsuario.Master || grpId == TipoUsuario.Administrador ? this.comboUnidade = un: null;
+    this._serviceUnidade.read(Endpoint.Unidade).subscribe((un : {})  =>  {
+     this.comboUnidade = grpId == TipoUsuario.Master || grpId == TipoUsuario.Administrador ? this.comboUnidade = un: null;
     });
   }
 
@@ -150,8 +150,8 @@ export class AgendaCreateComponent implements OnInit {
 
   carregaComboGrupoAgenda(grpId: number , empId: string){
     this.comboTipoGrupoAgenda = new Array();
-    this._serviceGrupoAgenda.read(Endpoint.GrupoAgenda).subscribe(ga => {
-      ga = this.comboTipoGrupoAgenda = grpId == TipoUsuario.Master || grpId == TipoUsuario.Administrador ? this.comboTipoGrupoAgenda = ga.filter(x => x.empresaid .toString() == empId) : null;
+    this._serviceGrupoAgenda.read(Endpoint.GrupoAgenda).subscribe((ga: {}) => {
+      this.comboTipoGrupoAgenda = grpId == TipoUsuario.Master || grpId == TipoUsuario.Administrador ? this.comboTipoGrupoAgenda = ga : null;
     });
   }
 
@@ -165,7 +165,7 @@ export class AgendaCreateComponent implements OnInit {
 
   fecharPopup(): void {
     this.estadoForm = false;
-    this.agenda = new Agenda();
+   
    }
 
   novoUsuario(){

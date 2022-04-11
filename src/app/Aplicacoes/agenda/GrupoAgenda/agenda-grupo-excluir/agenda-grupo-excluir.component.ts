@@ -26,8 +26,8 @@ export class AgendaGrupoExcluirComponent implements OnInit {
   }
 
   buscarGrupo(){
-    this.servicoGrupo.readById(this.matdialogRef.id, Endpoint.GrupoAgenda).subscribe(x => {
-      this.grupo = x;
+    this.servicoGrupo.readById(this.matdialogRef.id, Endpoint.GrupoAgenda).subscribe((x: {}) => {
+
     })
   }
 

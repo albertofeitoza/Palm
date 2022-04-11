@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Agenda } from 'src/app/models/Agenda/modelAgenda';
 import { GrupoAgenda } from 'src/app/models/Agenda/modelGrupoAgenda';
@@ -13,7 +13,7 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class AgendaGrupoCadastroComponent implements OnInit {
 
-grupo : GrupoAgenda = new GrupoAgenda();
+@Input() grupo!: GrupoAgenda
 
   constructor(
               public dialog : MatDialogRef<AgendaGrupoCadastroComponent>,
