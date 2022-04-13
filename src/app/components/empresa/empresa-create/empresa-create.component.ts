@@ -52,11 +52,16 @@ export class EmpresaCreateComponent implements OnInit {
     }else
     {
      if(cnpj.isValid(this.empresa.cnpj)){
-       this.servicoEmpresa.read(Endpoint.Empresa).subscribe(bemp => {
-          bemp = bemp;
-         let retornoEmp = bemp.filter(x => x.cnpj == this.empresa.cnpj)
-         let retornomaster = bemp.filter(x => x.id == empPai);
+       this.servicoEmpresa.read(Endpoint.Empresa).subscribe((bempe:{}) => {
+          
+        let bemp = bempe
+         
+         
+         
+          let retornoEmp = "vazio";
+         let retornomaster = "master";
 
+          
           if (retornoEmp.length == 0 ){
             
             if(grpId == TipoUsuario.Administrador){
@@ -72,17 +77,17 @@ export class EmpresaCreateComponent implements OnInit {
                           this.utilService.atualizaRota("empresa");
                           
                         })
-                }else if (grpId == TipoUsuario.Master && retornomaster.filter(x => x.empresaPai == empPai).length > 0)
+                }else if (grpId == TipoUsuario.Master && retornomaster.length > 0)
                 {
                   
-                  this.servicoEmpresa.create(this.empresa, Endpoint.Empresa).subscribe(emp => {
-                    emp = emp;
+                  this.servicoEmpresa.create(this.empresa, Endpoint.Empresa).subscribe((empe : {}) => {
+                   let emp = empe;
                           
-                    let empresaPai = emp.id;
+                    let empresaPai = "teste";
                           
-                              emp.bloqueado = true;
-                              emp.empresaPai = Number(localStorage.getItem("empId"));
-                              this.servicoEmpresa.update(emp,Endpoint.Empresa).subscribe(() => {})
+                             // emp.bloqueado = true;
+                              //emp.empresaPai = Number(localStorage.getItem("empId"));
+                             // this.servicoEmpresa.update(emp,Endpoint.Empresa).subscribe(() => {})
                        
                             this.utilService.showMessage("Empresa cadastrada com sucesso!",false);
                             this.utilService.atualizaRota("empresa");

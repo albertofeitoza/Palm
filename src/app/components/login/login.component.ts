@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Usuario } from 'src/app/models/usuarios/modelLogin';
 import { dadosSessao } from 'src/app/models/Token/dadosSessao';
+
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

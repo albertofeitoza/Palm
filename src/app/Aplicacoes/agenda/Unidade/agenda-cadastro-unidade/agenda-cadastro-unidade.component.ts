@@ -1,5 +1,4 @@
 import { getLocaleDateTimeFormat } from '@angular/common';
-import { stringify } from '@angular/compiler/src/util';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Sala } from 'src/app/models/Sala/SalaModel';
@@ -60,7 +59,7 @@ unidadeSelecionada : number = 0;
   addUnidade(){
     this.unidadeSelecionada = 0;
 
-    this.unidade = this.servico.Sessao().usuarioId;
+    //this.unidade = this.servico.Sessao().usuarioId;
     this.unidade.dtCriacao = new Date;
     this.unidade.empresaid =  Number(this.servico.Sessao().empresaUsuarioId);
     this.ServicoUnidade.create(this.unidade, Endpoint.Unidade).subscribe(() => {
