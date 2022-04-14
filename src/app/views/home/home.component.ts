@@ -13,7 +13,7 @@ import { Product } from 'src/app/models/produtos/product.model';
 })
 export class HomeComponent implements OnInit {
 
- produtos : any = [];
+ produtos : Product[];
 
 
   constructor(private serviceProdutos : ServiceAllService<Product>,
@@ -35,11 +35,8 @@ export class HomeComponent implements OnInit {
   
   
   ObterComponentes(){
-     
-    let empId = localStorage.getItem("empId");
-    let grpId = Number(localStorage.getItem("grpUs"));
 
-    this.serviceProdutos.read(Endpoint.Produto).subscribe((prod: {} ) => {
+    this.serviceProdutos.read(Endpoint.Produto).subscribe(prod => {
      
       this.produtos = prod;
   

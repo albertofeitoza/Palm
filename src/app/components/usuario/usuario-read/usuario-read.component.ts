@@ -43,11 +43,9 @@ export class UsuarioReadComponent implements OnInit {
      this.getUser();
   }
   
-
-
   addUsuario(): void{
     
-    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador)
+    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
     {
         const scrollStrategy = this.overlay.scrollStrategies.reposition();
         const dialogRef = this.dialog.open(UsuarioCreateComponent, {
@@ -67,7 +65,7 @@ export class UsuarioReadComponent implements OnInit {
 
   editarUsuario(id : string): void{
     
-    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador)
+    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
     {
         const scrollStrategy = this.overlay.scrollStrategies.reposition();
         const dialogRef = this.dialog.open(UsuarioUpdateComponent, {
@@ -88,7 +86,7 @@ export class UsuarioReadComponent implements OnInit {
 
   deletarUsuario(id : string): void{
     
-    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador)
+    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
     {
         const scrollStrategy = this.overlay.scrollStrategies.reposition();
         const dialogRef = this.dialog.open(UsuarioDeleteComponent, {
@@ -111,11 +109,6 @@ export class UsuarioReadComponent implements OnInit {
       
       let filtroUsuario = (<HTMLSelectElement>document.getElementById('busca')).value;
 
-      let empId = this._utilService.Sessao().empresaUsuarioId;
-      let grpId = Number(this._utilService.Sessao().idGrupoUsuario);
-      let logado =  Number(this._utilService.Sessao().usuarioId);
-      this.userAutenticado = grpId == TipoUsuario.Usuario ? false : true;
-  
       this.serviceUsuario.read(Endpoint.Usuario).subscribe(u =>{
         u = u;
         let responseUsuarios = u;
@@ -132,71 +125,13 @@ export class UsuarioReadComponent implements OnInit {
           responseUsuarios = new Array();
           responseUsuarios = usuarioFIltrados;    
         }
-
-        this.serviceEmpresa.read(Endpoint.Empresa).subscribe(e => {
-          e = e;     
-          let responseEmpresa = e;
-
-          this.usuario = new Array();
-          let empresaID = null;
-          let idEmpresa = null;
-          let IdEmpresaPai = null;
-
-          for (let index = 0; index < responseUsuarios.length; index++) {
-            const usr = responseUsuarios[index];
-            
-                  for (let index = 0; index <  responseEmpresa.length; index++) {
-                    const emp =  responseEmpresa[index];
-                    
-                   
-                    
-                      empresaID = emp.id;
-                      usr.empresaid = emp.razaoSocial;
-                      usr.grupoUsuarioid = usr.grupoUsuarioid == localStorage.getItem("grpUsGrpAdm") ? "Administrador"
-                                         : usr.grupoUsuarioid == localStorage.getItem("grpUsGrpsis") ? "Sistema" 
-                                         : usr.grupoUsuarioid == localStorage.getItem("grpUsGrpUs") ? "Usuario" 
-                                         : usr.grupoUsuarioid == localStorage.getItem("grpUsGrpMs") ? "Master" 
-                                         : usr.grupoUsuarioid;
-
-                      idEmpresa = emp.id;
-                      IdEmpresaPai = emp.empresaPai;
-                      
-                        if(grpId == TipoUsuario.Administrador)
-                        {
-                          this.usuario.push(usr);
-                            break;  
-                          }
-                          else if(grpId == TipoUsuario.Master)
-                          { 
-                            if(idEmpresa == empId || IdEmpresaPai == empId && usr.grupoUsuarioid != "Administrador")
-                            {
-                              this.usuario.push(usr);
-                              empresaID = null;
-                              idEmpresa = null;
-                              break;
-                            }
-                          }
-                          else if(grpId == TipoUsuario.Usuario)
-                          { 
-                            
-                            if(idEmpresa == empId && usr.id == logado)
-                            {
-                              this.usuario.push(usr);
-                              empresaID = null;
-                              idEmpresa = null;
-                              break;
-                            }
-                            
-                          }
-
-                        
-                  }
-          }
-      })
-  })
+      });
+    
+  }
+        
    
   
- }
+
   
 
 }

@@ -1,14 +1,16 @@
+import { dadosSessao } from "../Token/dadosSessao";
+
 export enum TipoUsuario {
-    
-    Administrador =  Number(localStorage.getItem("grpUsGrpAdm")),
-    Sistema = Number(localStorage.getItem("grpUsGrpsis")),
-    Usuario = Number(localStorage.getItem("grpUsGrpUs")),
-    Master = Number(localStorage.getItem("grpUsGrpMs")),
+    Administrador = 1,   
+    Sistema = 2,
+    Usuario = 3,
+    Master = 4,
 }
 
 export const TipoUsuarioSistema = new Map<string, number>([
-['Administrador', Number(localStorage.getItem("grpUsGrpAdm"))],
-['Sistema', Number(localStorage.getItem("grpUsGrpsis"))],
-['Usuario', Number(localStorage.getItem("grpUsGrpUs"))],
-['Master', Number(localStorage.getItem("grpUsGrpMs"))]
+['Administrador', Number(1)],
+['Sistema', Number(2)],
+['Usuario', Number(3)],
+['Master', Number(4)]
 ])
+ 

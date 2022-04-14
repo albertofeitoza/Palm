@@ -123,24 +123,24 @@ export class AgendaCreateComponent implements OnInit {
       this.carregaComboGrupoAgenda(this._utilService.Sessao().idGrupoUsuario, this._utilService.Sessao().empresaUsuarioId.toString());
   }
 
-  carregaComboProfissional(grpId: number , empId: string){
+  carregaComboProfissional(grpId: string , empId: string){
     this.comboProfissional =  new Array();
     
     this._serviceUsuario.read(Endpoint.Usuario).subscribe((data: {} ) => {
     
-    this.comboProfissional = grpId == TipoUsuario.Master || grpId == TipoUsuario.Administrador ? this.comboProfissional = data : null;
+    this.comboProfissional = grpId == TipoUsuario.Master.toString() || grpId == TipoUsuario.Administrador.toString() ? this.comboProfissional = data : null;
     
     });
   }
   
-  carregaComboUnidade(grpId: number , empId: string){
+  carregaComboUnidade(grpId: string , empId: string){
     this.comboUnidade =  new Array()
     this._serviceUnidade.read(Endpoint.Unidade).subscribe((un : {})  =>  {
-     this.comboUnidade = grpId == TipoUsuario.Master || grpId == TipoUsuario.Administrador ? this.comboUnidade = un: null;
+     this.comboUnidade = grpId == TipoUsuario.Master.toString() || grpId == TipoUsuario.Administrador.toString() ? this.comboUnidade = un: null;
     });
   }
 
-  carregaComboSala(grpId: number , empId: string){
+  carregaComboSala(grpId: string , empId: string){
     this.comboSala = new Array();
     this._serviceSala.read(Endpoint.Sala).subscribe(sl => {
       this.comboSala = sl.filter(x => x.unidadeid == this.agenda.unidadeid);                      
@@ -148,10 +148,10 @@ export class AgendaCreateComponent implements OnInit {
     
   }
 
-  carregaComboGrupoAgenda(grpId: number , empId: string){
+  carregaComboGrupoAgenda(grpId: string , empId: string){
     this.comboTipoGrupoAgenda = new Array();
     this._serviceGrupoAgenda.read(Endpoint.GrupoAgenda).subscribe((ga: {}) => {
-      this.comboTipoGrupoAgenda = grpId == TipoUsuario.Master || grpId == TipoUsuario.Administrador ? this.comboTipoGrupoAgenda = ga : null;
+      this.comboTipoGrupoAgenda = grpId == TipoUsuario.Master.toString() || grpId == TipoUsuario.Administrador.toString() ? this.comboTipoGrupoAgenda = ga : null;
     });
   }
 
@@ -170,7 +170,7 @@ export class AgendaCreateComponent implements OnInit {
 
   novoUsuario(){
     
-    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador)
+    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
     {
         this._utilService.Popup("", UsuarioCreateComponent ,"700px","820px");
     }else{
@@ -324,7 +324,7 @@ export class AgendaCreateComponent implements OnInit {
 
 
   AtualizarAgenda(id : string): void {
-    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador)
+    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
     {
       let response  =  this._utilService.Popup(id, AgendaUpdateComponent, '30%','80%' )
       
@@ -335,7 +335,7 @@ export class AgendaCreateComponent implements OnInit {
 
   ExcluirAgenda(id : string): void {
       
-    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador)
+    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
       {
         this._utilService.Popup(id, AgendaDeleteComponent,'30%','25%');
       }

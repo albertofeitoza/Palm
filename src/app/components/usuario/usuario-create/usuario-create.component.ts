@@ -102,15 +102,6 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
     this.serviceEmpresa.read(Endpoint.Empresa).subscribe(emp => {
         emp = emp; 
 
-        this.empresa =  new Array()
-
-          emp.forEach(empresasCarregadas => {
-        
-            if(grpId == TipoUsuario.Administrador)
-              this.empresa.push(empresasCarregadas)
-            else if (grpId == TipoUsuario.Master && empId == empresasCarregadas.empresaPai)
-                this.empresa.push(empresasCarregadas)
-            });
     })
   }
 

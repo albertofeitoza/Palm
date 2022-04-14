@@ -5,6 +5,7 @@ import { LoginService } from 'src/app/services/login.service';
 import { UtilService } from './util.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { TipoUsuario, TipoUsuarioSistema } from '../models/usuarios/enumUsuarios';
 
 
 @Injectable({
@@ -36,7 +37,7 @@ export class ServiceAllService <T>{
 
     // Buscar todos Get All
     read(tipo: string): Observable<T[]>{
-      let idEmpresa = this.utilService.Sessao().idGrupoUsuario == 1 ? 0 : localStorage.getItem('empId');
+      let idEmpresa = this.utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString() ? 0 : this.utilService.Sessao().empresaUsuarioId;
       return this.http.get<T[]>(`${this.environmentUrl + tipo}/?idEmpresa=${idEmpresa}` , this.loginservice.header()).pipe(
         map(obj => obj),
         catchError(e => this.utilService.erroHandler(e))

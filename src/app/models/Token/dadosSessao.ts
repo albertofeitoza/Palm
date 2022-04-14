@@ -1,12 +1,12 @@
 export class dadosSessao{
 
     dominio : string
-    usuarioId : number
-    bloqueado : boolean
     nomeUsuario : string
-    idGrupoUsuario : number
-    empresaUsuarioId : number
-    statusEmpresa : boolean
-    erroLogin : boolean
+    usuarioId : string
+    bloqueado : string
+    idGrupoUsuario : string
+    empresaUsuarioId : string
+    statusEmpresa : string
+    erroLogin : string
     accessToken : string
 }

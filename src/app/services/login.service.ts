@@ -1,4 +1,4 @@
-import { TipoUsuarioSistema } from './../models/usuarios/enumUsuarios';
+import { TipoUsuario, TipoUsuarioSistema } from './../models/usuarios/enumUsuarios';
 import { Acesso } from '../models/acessoModel';
 
 import { environment } from './../../environments/environment';
@@ -33,14 +33,12 @@ export class LoginService {
   environmentUrl = '';
  // acesso : Acesso = new Acesso();
 
-  private tipoUsuarios: any = [];
-
-  private usuarioAutenticado: boolean = false; 
+  private tipoUsuarios: TipoUsuario[];
 
   mostrarMenuEmitter = new EventEmitter<boolean>();
   mostrarLoginEmitter = new EventEmitter<boolean>();
   
-  sessao: any 
+  sessao: dadosSessao
 
   constructor(private router: Router,
               private http: HttpClient,
@@ -52,8 +50,10 @@ export class LoginService {
               
     logarSistema(domain : string, usuario : string , senha: string ) {
 
-    this.login(this.sessao, `${Endpoint.Token}?dominio=${domain}&login=${usuario}&password=${senha}`).subscribe((logado:{}) => {
-    this.sessao =  logado;
+    this.sessao = new dadosSessao();
+    
+    this.login(this.sessao, `${Endpoint.Token}?dominio=${domain}&login=${usuario}&password=${senha}`).subscribe(log => {
+    this.sessao = log;
     
         if(this.isLogedIn())
         {
@@ -61,9 +61,7 @@ export class LoginService {
           this.mostrarLoginEmitter.emit(false)
         }
     });
-
-    
-   }
+  }
     
 login(T : dadosSessao, tipo: string) : Observable <dadosSessao>{
   return this.http.post<dadosSessao>(this.environmentUrl + tipo , T, {}).pipe(
@@ -73,7 +71,7 @@ login(T : dadosSessao, tipo: string) : Observable <dadosSessao>{
 
 
 isLogedIn () : boolean{
-  return this.sessao !== undefined && !this.sessao.erroLogin 
+  return this.sessao != undefined && !this.sessao.erroLogin 
 }
 
 
@@ -82,16 +80,16 @@ isLogedIn () : boolean{
     this.mostrarMenuEmitter.emit(false);
     this.mostrarLoginEmitter.emit(true)
     
-    this.sessao = null;
+    this.sessao.accessToken = "";
     this.router.navigate(['/login']);
   }
 
   header(){
-    
+
     var reqHeader = new HttpHeaders({ 
         'Content-Type' : 'application/json; charset=utf-8',
         'Accept'       : 'application/json',
-        'Authorization': 'Bearer ' +  this.sessao.accessToken != null ? this.sessao.accessToken.substring(0, this.sessao.accessToken.length -12)  : null
+        'Authorization': 'Bearer ' +  this.sessao.accessToken != null ? this.sessao.accessToken.substring(0, this.sessao.accessToken.length -12)  : ""
     })
     
     return { headers: reqHeader };

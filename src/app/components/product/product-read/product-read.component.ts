@@ -41,7 +41,7 @@ displayedColumns = ['id','nome', 'valor','empresaid','bloqueado','action']
   addProduto(){
 
     
-    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador)
+    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
     {
         const scrollStrategy = this.overlay.scrollStrategies.reposition();
         const dialogRef = this.dialog.open(ProductCreateComponent, {
@@ -62,7 +62,7 @@ displayedColumns = ['id','nome', 'valor','empresaid','bloqueado','action']
 
   editarProduto(id : string){
     
-    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador)
+    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
     {
         const scrollStrategy = this.overlay.scrollStrategies.reposition();
         const dialogRef = this.dialog.open(ProductUpdateComponent, {
@@ -83,7 +83,7 @@ displayedColumns = ['id','nome', 'valor','empresaid','bloqueado','action']
 
   excluirProdutoEmpresa(id : string){
 
-    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador)
+    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
     {
         const scrollStrategy = this.overlay.scrollStrategies.reposition();
         const dialogRef = this.dialog.open(ProductDeleteComponent, {
