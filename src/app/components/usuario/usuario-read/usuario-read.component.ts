@@ -22,7 +22,7 @@ import { UsuarioDeleteComponent } from '../usuario-delete/usuario-delete.compone
 
 export class UsuarioReadComponent implements OnInit {
 
-  usuario : any
+  usuario : Usuario[]
   userAutenticado : boolean = false; 
   
   displayedColumns = ['id','nome','login','empresaid','grupoUsuarioid','bloqueado','action']  
@@ -110,23 +110,8 @@ export class UsuarioReadComponent implements OnInit {
       let filtroUsuario = (<HTMLSelectElement>document.getElementById('busca')).value;
 
       this.serviceUsuario.read(Endpoint.Usuario).subscribe(u =>{
-        u = u;
-        let responseUsuarios = u;
-
-        let usuarioFIltrados = new Array();
-         
-        if (filtroUsuario){
-           
-          for (let index = 0; index < responseUsuarios.length; index++) {
-            const element = responseUsuarios[index];
-              if (element.nome.toLowerCase().includes(filtroUsuario.toLowerCase()))
-                usuarioFIltrados.push(element);
-          }
-          responseUsuarios = new Array();
-          responseUsuarios = usuarioFIltrados;    
-        }
-      });
-    
+         this.usuario = filtroUsuario != null ? u.filter(x => x.nome.toLowerCase().includes(filtroUsuario.toLowerCase())) : u
+      })
   }
         
    

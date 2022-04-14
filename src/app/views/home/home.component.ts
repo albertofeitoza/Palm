@@ -4,7 +4,7 @@ import { Endpoint } from './../../Negocio/Endpoint';
 import { ServiceAllService } from './../../services/service-all.service';
 import { HeaderService } from './../../components/template/header/header.service';
 import { Component, OnInit } from '@angular/core';
-import { Product } from 'src/app/models/produtos/product.model';
+import { ProdutoEmpresa } from 'src/app/models/produtos/produtoEmpresa.model';
 
 @Component({
   selector: 'app-home',
@@ -13,10 +13,10 @@ import { Product } from 'src/app/models/produtos/product.model';
 })
 export class HomeComponent implements OnInit {
 
- produtos : Product[];
+ produtos : ProdutoEmpresa[];
 
 
-  constructor(private serviceProdutos : ServiceAllService<Product>,
+  constructor(private serviceProdutos : ServiceAllService<ProdutoEmpresa>,
               private headerService : HeaderService,
               private utilService : UtilService
               ) 
@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
   
   ObterComponentes(){
 
-    this.serviceProdutos.read(Endpoint.Produto).subscribe(prod => {
+    this.serviceProdutos.read(Endpoint.ProdutoEmpresa).subscribe(prod => {
      
       this.produtos = prod;
   

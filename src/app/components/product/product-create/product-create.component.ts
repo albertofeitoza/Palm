@@ -2,7 +2,7 @@ import { Empresa } from './../../../models/empresa/ModelEmpresa';
 import { Endpoint } from './../../../Negocio/Endpoint';
 import { ServiceAllService } from './../../../services/service-all.service';
 import { UtilService } from './../../../services/util.service';
-import { Product } from '../../../models/produtos/product.model';
+import { ProdutoEmpresa } from '../../../models/produtos/produtoEmpresa.model';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -15,16 +15,16 @@ import { TipoAplicacao } from 'src/app/Negocio/Aplicacao';
 })
 export class ProductCreateComponent implements OnInit {
 
-  comboProduto =  [];
-  @Input() empresa! : Empresa[];
-  @Input() comboEmpresa! : Empresa;
+ comboProduto : ProdutoEmpresa[] ;
+ empresa : Empresa[];
+ comboEmpresa : Empresa;
 
-  @Input() product!: Product
+  product: ProdutoEmpresa
 
   constructor(
-              private utilService : UtilService,
+              private servico : UtilService,
               private router : Router,
-              private ProdutoEmpresa : ServiceAllService<Product>,
+              private ProdutoEmpresa : ServiceAllService<ProdutoEmpresa>,
               private ServiceEmpresa : ServiceAllService<Empresa>,
               public matDialogref : MatDialogRef<ProductCreateComponent>
                ) { }
@@ -36,24 +36,24 @@ export class ProductCreateComponent implements OnInit {
 
   associarProdutoEmpresa() : void {
 
-    this.product.criadoPor  = Number(localStorage.getItem("usId"));
+    this.product.criadoPor  = 1
     this.product.dtCriacao = new Date;
     this.product.bloqueado = false;
     
-    this.ProdutoEmpresa.read(Endpoint.Produto).subscribe(p => {
+    this.ProdutoEmpresa.read(Endpoint.ProdutoEmpresa).subscribe(p => {
       p = p;
 
       let ativo = p.filter(x => x.nome == this.product.nome)
       
       if (ativo.length == 0)
       {
-        this.ProdutoEmpresa.create(this.product, Endpoint.Produto).subscribe(() => {
-          this.utilService.showMessage('o Produto Criado!');
-          this.utilService.atualizaRota("products")
+        this.ProdutoEmpresa.create(this.product, Endpoint.ProdutoEmpresa).subscribe(() => {
+          this.servico.showMessage('o Produto Criado!');
+          this.servico.atualizaRota("produtoempresa")
           })
       
       }else{
-        this.utilService.showMessage('Esse Produto Já foi cadastrado para essa empresa!');
+        this.servico.showMessage('Esse Produto Já foi cadastrado para essa empresa!');
       }
 
     })
@@ -66,10 +66,9 @@ export class ProductCreateComponent implements OnInit {
 
   buscarProduto(){
     
-      TipoAplicacao.forEach(element => {
-        //this.comboProduto.push(element)
-      });
-     return this.comboProduto;
+    
+
+
   }
   buscarEmpresa(){
     this.ServiceEmpresa.read(Endpoint.Empresa).subscribe(emp => {

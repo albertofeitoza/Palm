@@ -3,7 +3,7 @@ import { Endpoint } from './../../../Negocio/Endpoint';
 import { ServiceAllService } from './../../../services/service-all.service';
 import { UtilService } from './../../../services/util.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Product } from '../../../models/produtos/product.model';
+import { ProdutoEmpresa } from '../../../models/produtos/produtoEmpresa.model';
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
@@ -15,12 +15,12 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class ProductUpdateComponent implements OnInit {
 
-@Input() product!: Product
+@Input() product!: ProdutoEmpresa
   
 
   constructor(
               private utilService : UtilService,
-              private ProdutoService : ServiceAllService<Product>,
+              private ProdutoService : ServiceAllService<ProdutoEmpresa>,
               public matdialogRef : MatDialogRef<ProductUpdateComponent>,
               private route : Router
               ) { }
@@ -34,9 +34,9 @@ export class ProductUpdateComponent implements OnInit {
 
   updateProduct(): void {
     this.product.criadoPor  = Number(localStorage.getItem("usId"));
-      this.ProdutoService.update(this.product, Endpoint.Produto).subscribe(() => {
+      this.ProdutoService.update(this.product, Endpoint.ProdutoEmpresa).subscribe(() => {
       this.utilService.showMessage("Produto Atualizado com Sucesso!")
-      this.utilService.atualizaRota("products", true);
+      this.utilService.atualizaRota("produtoempresa", true);
       this.fecharPopup();
     })
 
@@ -48,7 +48,7 @@ export class ProductUpdateComponent implements OnInit {
    
   }
   buscarProduto() : void {
-      this.ProdutoService.readById(this.matdialogRef.id, Endpoint.Produto).subscribe(product => {
+      this.ProdutoService.readById(this.matdialogRef.id, Endpoint.ProdutoEmpresa).subscribe(product => {
           this.product = product;
       })
   }  

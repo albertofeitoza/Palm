@@ -17,7 +17,7 @@ export class ProductCrudComponent implements OnInit {
     this.headerService.headerData = {
       title : 'Cadastro de Produtos',
       icon : 'storefront',
-      routeUrl : '/products'
+      routeUrl : '/produtoempresa'
     }
 
 
@@ -27,7 +27,7 @@ export class ProductCrudComponent implements OnInit {
   }
 
 navigateToProductsCreate() : void {
-  this.router.navigate(['products/create'])
+  this.router.navigate(['/produtoempresa/create'])
 }
 
 }

@@ -22,10 +22,10 @@ import { EmpresaDeleteComponent } from '../empresa-delete/empresa-delete.compone
 })
 export class EmpresaReadComponent implements OnInit {
 
-  @Input() empresa!: Empresa[]
-  @Input() empresas!: Empresa[]
-  @Input() contato!: Contato;
-  endereco!: Endereco;
+ empresa: Empresa[]
+ empresas: Empresa[]
+ contato: Contato;
+ endereco: Endereco;
   //Colunas do GRID
   displayedColumns = ['id','cnpj', 'razaoSocial','nomeFantasia','inscricaoEstadual','inscricaoMunicipal','bloqueado','action']  
 
@@ -47,47 +47,12 @@ export class EmpresaReadComponent implements OnInit {
   buscarEmpresa(): void 
   {
     let filtroEmpresa = (<HTMLSelectElement>document.getElementById('busca')).value;
-    let empId = localStorage.getItem("empId");
-    let grpId = Number(localStorage.getItem("grpUs"));
-
-    this.serviceEmpresa.read(Endpoint.Empresa).subscribe((emp: {}) => {
-      let empr = emp;      
-
-      this.empresa =  new Array();
-
-      /*   
-      if(grpId == TipoUsuario.Administrador)
-          {
-
-            this.empresa.push(empr)
-
-          }
-          else if(grpId == TipoUsuario.Master)
-          {
-            emp.forEach(master => {
-              if(master.empresaPai.toString()== empId) 
-              this.empresa.push(master)
-            });
-
-          }
-      */
-      let empresaFIltrada = new Array();
-      if (filtroEmpresa){
-           
-        for (let index = 0; index < this.empresa.length; index++) {
-          const element = this.empresa[index];
-            if (element.nomeFantasia.toLowerCase().includes(filtroEmpresa.toLowerCase()))
-            empresaFIltrada.push(element);
-        }
-        this.empresa = new Array();
-        this.empresa = empresaFIltrada;    
-      }else{
-        this.empresa = this.empresa;
-      }
-
-
-    })
-  }
+  
+    this.serviceEmpresa.read(Endpoint.Empresa).subscribe(emp => {
+     
+      this.empresa = filtroEmpresa != null ? emp.filter(x => x.nomeFantasia.toLowerCase().includes(filtroEmpresa.toLowerCase())) : emp
+      })
+    }
 
   addEmpresa(){
 
@@ -130,8 +95,6 @@ export class EmpresaReadComponent implements OnInit {
     }
 
   }
-
-
 
   excluirEmpresa(id : string){
 

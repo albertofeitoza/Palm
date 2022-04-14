@@ -5,7 +5,7 @@
                 <input matInput placeholder="Produto">
                 <p></p>
                 <mat-select [(value)]="product.nome" placeholder="productId" >
-                    <mat-option *ngFor="let produto of comboProduto " [value]="produto">
+                    <mat-option *ngFor="let produto of comboProduto " [value]="produto.nome">
                          {{produto}}
                     </mat-option>
                 </mat-select>

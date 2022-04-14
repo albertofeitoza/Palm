@@ -37,8 +37,10 @@ import { ChamadoDeleteComponent } from './components/chamados/chamado-delete/cha
 const routes: Routes = [
   {path : "", component:HomeComponent },
   {path: "login", component: LoginComponent },
-  //Rotas de Produtos
-  {path: "products", component: ProductCrudComponent },
+  //Rotas de associação de produto a empresa  cadastroproduto
+  {path: "produtoempresa", component: ProductCrudComponent },
+
+  {path: "cadastroproduto", component: ProductCrudComponent },
 
   //Rotas de usuarios
   {path: 'usuarios', component : UsuarioCrudComponent },

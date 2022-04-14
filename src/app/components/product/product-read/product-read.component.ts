@@ -4,7 +4,7 @@ import { Endpoint } from './../../../Negocio/Endpoint';
 import { ServiceAllService } from './../../../services/service-all.service';
 import { UtilService } from './../../../services/util.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { Product } from '../../../models/produtos/product.model';
+import { ProdutoEmpresa } from '../../../models/produtos/produtoEmpresa.model';
 import { TipoUsuario } from 'src/app/models/usuarios/enumUsuarios';
 import { MatDialog } from '@angular/material/dialog';
 import { Overlay } from '@angular/cdk/overlay';
@@ -21,13 +21,13 @@ export class ProductReadComponent implements OnInit {
 
 
 
-@Input() products!: Product[]
-@Input() vlrProduto! : string
+products: ProdutoEmpresa[]
+vlrProduto : string
 
-displayedColumns = ['id','nome', 'valor','empresaid','bloqueado','action']  
+displayedColumns = ['id','nome', 'valor','bloqueado','action']  
 
   constructor(private router : Router,
-              private serviceProduto : ServiceAllService<Product>,
+              private serviceProduto : ServiceAllService<ProdutoEmpresa>,
               private serviceEmpresa : ServiceAllService<Empresa>,
               private _utilService : UtilService,
               public dialog : MatDialog, 
@@ -104,25 +104,10 @@ displayedColumns = ['id','nome', 'valor','empresaid','bloqueado','action']
   }
 
 
-  buscarProduto() : void {
+  buscarProduto() {
 
-    this.serviceProduto.read(Endpoint.Produto).subscribe(product => {
+    this.serviceProduto.read(Endpoint.ProdutoEmpresa).subscribe(product => {
         product = this.vlrProduto == null ?  product : product.filter(x => x.nome.toLowerCase().includes(this.vlrProduto.toLowerCase()))
-
-        this.products = new Array();
-        product.forEach(element => {
-          
-            this.serviceEmpresa.readById(element.empresaid.toString(), Endpoint.Empresa).subscribe(emp => {
-              emp = emp
-              
-              if (emp)
-                element.empresaid = emp.razaoSocial;
-                
-            })
-            
-            this.products.push(element);
-   
-        });
     })
   }
 

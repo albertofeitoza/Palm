@@ -1,7 +1,7 @@
 import { Endpoint } from './../../../Negocio/Endpoint';
 import { ServiceAllService } from './../../../services/service-all.service';
 import { UtilService } from './../../../services/util.service';
-import { Product } from '../../../models/produtos/product.model';
+import { ProdutoEmpresa } from '../../../models/produtos/produtoEmpresa.model';
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
@@ -12,11 +12,11 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class ProductDeleteComponent implements OnInit {
 
-  @Input() product!: Product
+  @Input() product!: ProdutoEmpresa
 
   constructor(
               private utilService : UtilService,
-              private serviceProduto : ServiceAllService<Product>,
+              private serviceProduto : ServiceAllService<ProdutoEmpresa>,
               public dialogRef : MatDialogRef<ProductDeleteComponent> 
               ) { }
 
@@ -26,7 +26,7 @@ export class ProductDeleteComponent implements OnInit {
   
   deleteProduct():void{
       
-    this.serviceProduto.delete(Number(this.dialogRef.id), Endpoint.Produto).subscribe(() => {
+    this.serviceProduto.delete(Number(this.dialogRef.id), Endpoint.ProdutoEmpresa).subscribe(() => {
         this.utilService.showMessage("Produto Excluído com Sucesso!")
       //  this.utilService.atualizaRota("products", true);
       })
@@ -34,7 +34,7 @@ export class ProductDeleteComponent implements OnInit {
   }
 
   buscarProduto(){
-    this.serviceProduto.readById(this.dialogRef.id , Endpoint.Produto).subscribe(product => {
+    this.serviceProduto.readById(this.dialogRef.id , Endpoint.ProdutoEmpresa).subscribe(product => {
       this.product = product;
     });
   }

@@ -24,11 +24,9 @@ lock = false;
     this.auth.sairSistema();
     
   }
-validarAcesso(){
-  
-  if(this.auth.isLogedIn())
-    this.lock = this.servico.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString() ? true : false;
-}
- 
-
+  validarAcesso(){
+    
+    if(this.auth.isLogedIn())
+      this.lock = this.servico.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString() ? true : false;
+  }
 }

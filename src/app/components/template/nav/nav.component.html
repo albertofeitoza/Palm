@@ -21,11 +21,18 @@
                             Empresa
                         </a>
                         <p>
-                        <a *ngIf="lock" mat-list-item routerLink="products" >
+                        <a *ngIf="lock" mat-list-item routerLink="cadastroproduto" >
+                                <i class="material-icons">
+                                    storefront
+                                </i>
+                                Cadastro de Produto
+                        </a>
+                        <p>
+                        <a *ngIf="lock" mat-list-item routerLink="produtoempresa" >
                             <i class="material-icons">
                                 storefront
                             </i>
-                            Produto - Empresa
+                            Associar Produto Empresa
                         </a>
                         <p>
                         <a mat-list-item routerLink="chamados">
