@@ -18,14 +18,14 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class UsuarioCreateComponent implements OnInit {
 
 tipoLogin : boolean = false;
-@Input() empresa!: Empresa[];
+empresa: Empresa[];
 
-@Input() dadosEmpresa! : Empresa;
-@Input() usuario! : Usuario
+dadosEmpresa : Empresa;
+usuario : Usuario = new Usuario();
 
-@Input() grupousuario!: GrupoUsuario[];
+grupousuario: GrupoUsuario[];
 
-@Input() criargrupousuario!: GrupoUsuario
+criargrupousuario: GrupoUsuario
 
 comboTipousuario = [];
 

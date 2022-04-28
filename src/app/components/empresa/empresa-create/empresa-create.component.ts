@@ -18,8 +18,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class EmpresaCreateComponent implements OnInit {
 
  
-  @Input() empresa!: Empresa; 
-
+ empresa: Empresa = new Empresa();
 
   constructor(private utilService : UtilService,
               private router : Router,
@@ -36,37 +35,28 @@ export class EmpresaCreateComponent implements OnInit {
   }
 
   cadastrarEmpresa(){
-    
-    let grpId = Number(this.utilService.Sessao().idGrupoUsuario);
+  
     let empPai = Number(this.utilService.Sessao().empresaUsuarioId);
     this.empresa.criadoPor  = Number(this.utilService.Sessao().usuarioId);
     this.empresa.dtCriacao = new Date;
     this.empresa.empresaPai = empPai;
-       
     this.empresa.bloqueado = false;
     
-    if(grpId == TipoUsuario.Usuario)
+    if(Number(this.utilService.Sessao().idGrupoUsuario) == TipoUsuario.Usuario)
     {
       this.utilService.showMessage("Você não possui permissão para cadastro de empresas", false)
 
     }else
     {
      if(cnpj.isValid(this.empresa.cnpj)){
-       this.servicoEmpresa.read(Endpoint.Empresa).subscribe((bempe:{}) => {
+       this.servicoEmpresa.read(Endpoint.Empresa).subscribe(empc => {
+        empc = empc.filter(x => x.cnpj == this.empresa.cnpj)
           
-        let bemp = bempe
-         
-         
-         
-          let retornoEmp = "vazio";
-         let retornomaster = "master";
-
-          
-          if (retornoEmp.length == 0 ){
+          if (empc.length == 0 ){
             
-            if(grpId == TipoUsuario.Administrador){
+            if(Number(this.utilService.Sessao().idGrupoUsuario) == TipoUsuario.Administrador){
 
-                this.servicoEmpresa.create(this.empresa, Endpoint.Empresa).subscribe((emp: {} ) => {
+                this.servicoEmpresa.create(this.empresa, Endpoint.Empresa).subscribe(emp => {
                         
                   let empresaPai = emp;
                          
@@ -74,13 +64,13 @@ export class EmpresaCreateComponent implements OnInit {
                               this.servicoEmpresa.update(this.empresa,Endpoint.Empresa).subscribe(() => {})
                          
                           this.utilService.showMessage("Empresa cadastrada com sucesso!",false);
-                          this.utilService.atualizaRota("empresa");
                           
                         })
-                }else if (grpId == TipoUsuario.Master && retornomaster.length > 0)
-                {
+            }
+              else if (Number(this.utilService.Sessao().idGrupoUsuario) == TipoUsuario.Master)
+            {
                   
-                  this.servicoEmpresa.create(this.empresa, Endpoint.Empresa).subscribe((empe : {}) => {
+                  this.servicoEmpresa.create(this.empresa, Endpoint.Empresa).subscribe(empe => {
                    let emp = empe;
                           
                     let empresaPai = "teste";
@@ -90,7 +80,6 @@ export class EmpresaCreateComponent implements OnInit {
                              // this.servicoEmpresa.update(emp,Endpoint.Empresa).subscribe(() => {})
                        
                             this.utilService.showMessage("Empresa cadastrada com sucesso!",false);
-                            this.utilService.atualizaRota("empresa");
 
                           })
                 }else{
@@ -99,7 +88,7 @@ export class EmpresaCreateComponent implements OnInit {
           }
           else
            this.utilService.showMessage("Cnpj já cadastrado!",false);
-        });  
+        })  
       }
       else{
         this.utilService.showMessage("Cnpj inválido",false);

@@ -22,6 +22,7 @@ usuario: Usuario = new Usuario()
 
 constructor(private router :Router,
              private authservice : LoginService,
+             private servico : UtilService
              ) {
               
              }
@@ -35,7 +36,7 @@ constructor(private router :Router,
     
     if (keyEvent.which === 13 || keyEvent.which == 1)
     {
-      this.authservice.logarSistema(this.usuario.nome, this.usuario.login, this.usuario.senha)
+     this.authservice.logarSistema(this.usuario.nome, this.usuario.login, this.usuario.senha) 
     }
   }
   

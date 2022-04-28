@@ -14,6 +14,9 @@ import { Injectable, EventEmitter  } from '@angular/core';
 import { dadosSessao } from '../models/Token/dadosSessao';
 import { Endpoint } from '../Negocio/Endpoint';
 import { UtilService } from './util.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+
 
 
 const httpOptions = {
@@ -38,32 +41,42 @@ export class LoginService {
   mostrarMenuEmitter = new EventEmitter<boolean>();
   mostrarLoginEmitter = new EventEmitter<boolean>();
   
-  sessao: dadosSessao
+  sessao: any
 
   constructor(private router: Router,
               private http: HttpClient,
+              private snackBar: MatSnackBar,
               ) 
               { 
                 this.environmentName = environment.environmentName;
                 this.environmentUrl =  environment.BASE_URL;
+                
               }
               
-    logarSistema(domain : string, usuario : string , senha: string ) {
+  logarSistema(domain : string, usuario : string , senha: string ) {
 
     this.sessao = new dadosSessao();
     
-    this.login(this.sessao, `${Endpoint.Token}?dominio=${domain}&login=${usuario}&password=${senha}`).subscribe(log => {
-    this.sessao = log;
+  this.login(this.sessao, `${Endpoint.Token}?dominio=${domain}&login=${usuario}&password=${senha}`).subscribe(log => {
+  this.sessao = log;
     
         if(this.isLogedIn())
         {
           this.mostrarMenuEmitter.emit(true);
           this.mostrarLoginEmitter.emit(false)
+          this.router.navigate(['/']);
+        }
+        else{
+          this.sessao.erroLogin ?           
+              this.showMessage("Usuário ou senha inválido", true) 
+              : this.sessao.bloqueado ? this.showMessage("Usuário bloqueado", true) 
+              : this.sessao.statusEmpresa ? this.showMessage("Empresa bloqueada", true) 
+              : this.showMessage("Verificar os dados de acesso.", true) 
         }
     });
   }
     
-login(T : dadosSessao, tipo: string) : Observable <dadosSessao>{
+ login(T : dadosSessao, tipo: string) : Observable <dadosSessao>{
   return this.http.post<dadosSessao>(this.environmentUrl + tipo , T, {}).pipe(
     map(obj => obj)
   );
@@ -71,11 +84,8 @@ login(T : dadosSessao, tipo: string) : Observable <dadosSessao>{
 
 
 isLogedIn () : boolean{
-  return this.sessao != undefined && !this.sessao.erroLogin 
+  return this.sessao != undefined && !this.sessao.erroLogin && !this.sessao.bloqueado && !this.sessao.statusEmpresa
 }
-
-
-
   sairSistema(){
     this.mostrarMenuEmitter.emit(false);
     this.mostrarLoginEmitter.emit(true)
@@ -106,7 +116,16 @@ isLogedIn () : boolean{
   dadosLogado() {
       return this.sessao;
   }
-  
+
+
+  showMessage(msg : string, isErro: boolean = false) : void { 
+    this.snackBar.open(msg, 'X' , { 
+      duration : 3000,
+      horizontalPosition: "right",
+      verticalPosition : "top",
+      panelClass : isErro ? ['msg-error'] : ['msg-sucess']
+    })
+  }
 }
 
 

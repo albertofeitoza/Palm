@@ -16,7 +16,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class EmpresaDeleteComponent implements OnInit {
 
 
-  empresa : any
+  empresa : Empresa = new Empresa();
+  dadosEmpresa : Empresa
   constructor(private serviceEmpresa : ServiceAllService<Empresa>,
               private serviceUsuario : ServiceAllService<Usuario>,
               private mensagem : UtilService,
@@ -31,40 +32,34 @@ export class EmpresaDeleteComponent implements OnInit {
 
 
   excluirEmpresa(){
-    
-    let existeUsuario = null;
-    
-    this.serviceUsuario.read(Endpoint.Usuario).subscribe((usr: {} ) => {
-      
-        let users = usr; 
-        if (users != null)
-        {
-          this.mensagem.showMessage("Empresa não pode ser excluida porque possui Dependências de usuários.", false)
-        }    
-        else
-        {
-            if (Number(this.utilservice.Sessao().idGrupoUsuario) == TipoUsuario.Administrador){
-              this.serviceEmpresa.delete(this.empresa.id, Endpoint.Empresa).subscribe(()=>{
+   
+    if (Number(this.utilservice.Sessao().idGrupoUsuario) == TipoUsuario.Administrador || 
+        Number(this.utilservice.Sessao().idGrupoUsuario) == TipoUsuario.Master){
+        
+        this.serviceEmpresa.readById(this.empresa.id.toString(), Endpoint.Empresa).subscribe(x => {
+        this.dadosEmpresa = x;
+        
+            this.dadosEmpresa.bloqueado = true;
+              this.serviceEmpresa.update(this.dadosEmpresa, Endpoint.Empresa).subscribe(()=>{
                 this.mensagem.showMessage("Empresa excluida com sucesso !", false);
                this.utilservice.atualizaRota("empresa")
               })
-            }
-              else{
-                this.mensagem.showMessage("Permissão de exclusão negada !", false);
+            
+        })
+    }else{
+      this.mensagem.showMessage("Permissão de exclusão negada !", false);
                 this.utilservice.atualizaRota("empresa")
-              }
-        }
-    });
+    }
   }
+
 
   fecharPopup(){
     this.dialogRef.close();
   }
 
    BuscarEmpresa(){
-    
-    
-    this.serviceEmpresa.readById(this.dialogRef.id, Endpoint.Empresa).subscribe((emp:{}) => {
+   
+    this.serviceEmpresa.readById(this.dialogRef.id, Endpoint.Empresa).subscribe(emp  => {
       this.empresa = emp;
     })
    }

@@ -4,9 +4,9 @@
             <mat-form-field>
                 <input matInput placeholder="Produto">
                 <p></p>
-                <mat-select [(value)]="product.nome" placeholder="productId" >
-                    <mat-option *ngFor="let produto of comboProduto " [value]="produto.nome">
-                         {{produto}}
+                <mat-select [(value)]="produtoEmpresa.produtoid" placeholder="ProdutoId" >
+                    <mat-option *ngFor="let prod of comboProduto" [value]="prod.Id">
+                         {{prod.Nome}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -15,16 +15,17 @@
             <mat-form-field>
                 <input matInput placeholder="Empresa">
                 <p></p>
-                <mat-select [(value)]="product.empresaid" placeholder="EmpresaID" >
+                <mat-select [(value)]="produtoEmpresa.empresaid" placeholder="EmpresaID" >
                     <mat-option *ngFor="let comboEmpresa of empresa" [value]="comboEmpresa.id">
                             {{comboEmpresa.nomeFantasia}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
 
+
             <mat-form-field>
                 <input matInput placeholder="Preço R$"
-                [(ngModel)]="product.valor" name="valor">
+                [(ngModel)]="produtoEmpresa.valor" name="valor">
 
             </mat-form-field>
             

@@ -47,12 +47,21 @@ export class EmpresaReadComponent implements OnInit {
   buscarEmpresa(): void 
   {
     let filtroEmpresa = (<HTMLSelectElement>document.getElementById('busca')).value;
-  
+    
     this.serviceEmpresa.read(Endpoint.Empresa).subscribe(emp => {
      
-      this.empresa = filtroEmpresa != null ? emp.filter(x => x.nomeFantasia.toLowerCase().includes(filtroEmpresa.toLowerCase())) : emp
-      })
-    }
+      if (this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
+      {
+        this.empresa = filtroEmpresa != null ? emp.filter(x => x.nomeFantasia.toLowerCase().includes(filtroEmpresa.toLowerCase())) : emp
+      }
+      else
+      {
+          this.empresa = filtroEmpresa != null ? emp.filter(x => x.nomeFantasia.toLowerCase().includes(filtroEmpresa.toLowerCase())
+              && !x.bloqueado ) : emp.filter(x => !x.bloqueado)
+      }
+    });
+    
+  }
 
   addEmpresa(){
 

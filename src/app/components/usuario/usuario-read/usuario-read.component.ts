@@ -11,6 +11,7 @@ import { UsuarioCreateComponent } from '../usuario-create/usuario-create.compone
 import { Overlay } from '@angular/cdk/overlay';
 import { UsuarioUpdateComponent } from '../usuario-update/usuario-update.component';
 import { UsuarioDeleteComponent } from '../usuario-delete/usuario-delete.component';
+import { viewModelUsuarios } from 'src/app/models/usuarios/modelUsuarios';
 
 
 @Component({
@@ -22,16 +23,16 @@ import { UsuarioDeleteComponent } from '../usuario-delete/usuario-delete.compone
 
 export class UsuarioReadComponent implements OnInit {
 
-  usuario : Usuario[]
+  usuario : viewModelUsuarios[]
   userAutenticado : boolean = false; 
   
-  displayedColumns = ['id','nome','login','empresaid','grupoUsuarioid','bloqueado','action']  
+  displayedColumns = ['id','nome','login','grupoUsuarioid','bloqueado','action']  
  
   constructor(
               public dialog : MatDialog,
               public overlay : Overlay,
               private serviceEmpresa: ServiceAllService<Empresa>,
-              private serviceUsuario : ServiceAllService<Usuario>,
+              private serviceUsuario : ServiceAllService<viewModelUsuarios>,
               private _utilService : UtilService, 
               private router : Router,
 
@@ -40,7 +41,10 @@ export class UsuarioReadComponent implements OnInit {
 
 
   ngOnInit(): void {
-     this.getUser();
+     if(this._utilService.Sessao() != undefined)
+      this.userAutenticado = true
+
+      this.getUser();
   }
   
   addUsuario(): void{
@@ -104,7 +108,6 @@ export class UsuarioReadComponent implements OnInit {
     }
   }
 
-
   async getUser() {
       
       let filtroUsuario = (<HTMLSelectElement>document.getElementById('busca')).value;
@@ -113,12 +116,7 @@ export class UsuarioReadComponent implements OnInit {
          this.usuario = filtroUsuario != null ? u.filter(x => x.nome.toLowerCase().includes(filtroUsuario.toLowerCase())) : u
       })
   }
-        
-   
-  
-
-  
-
+      
 }
 
 

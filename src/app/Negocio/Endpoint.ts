@@ -2,6 +2,7 @@ export enum Endpoint {
     Empresa = '/Empresa',
     GrupoUsuario = '/GrupoUsuario',
     ProdutoEmpresa = '/ProdutoEmpresa',
+    Produto = '/Produto',
     Usuario = '/Usuario',
     Agenda = '/Agenda',
     Unidade = '/Unidade',

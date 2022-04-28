@@ -24,6 +24,7 @@ export class UtilService {
              public overlay : Overlay,
              public dialog : MatDialog,
              ) { }
+  
   showMessage(msg : string, isErro: boolean = false) : void { 
     this.snackBar.open(msg, 'X' , { 
       duration : 3000,
@@ -32,7 +33,7 @@ export class UtilService {
       panelClass : isErro ? ['msg-error'] : ['msg-sucess']
     })
 
-}
+  }
 
   erroHandler(e: any) : Observable<any>{
     let mensagem = e.error;
@@ -40,11 +41,11 @@ export class UtilService {
     return EMPTY 
   }
 
-  convertToBase64(txt : string){
+  convertToBase64(txt : string) : string {
     return btoa(txt);
   }
 
-  convertBase64toText(txt: string){
+  convertBase64toText(txt: string) : string {
     return atob(txt);
 
   }
@@ -57,31 +58,7 @@ export class UtilService {
   }
 
   Sessao(){
-    
     return this.serviceLogin.dadosLogado();
-
-    /*
-    var dadosSessao = {
-        IdEmpresa : dados.empresaUsuarioId ,
-        GrupoUsuario : dados.idGrupoUsuario,
-        UsuarioId : dados.usuarioId,
-        StatusUsuario : dados.bloqueado,
-        accessToken : dados.accessToken
-
-        dominio : dados.dominio,
-        nomeUsuario : dados.nomeUsuario
-        usuarioId : dados.usuarioId
-        bloqueado : dados.bloqueado
-        idGrupoUsuario : 
-        empresaUsuarioId : number
-        statusEmpresa : boolean
-        erroLogin : boolean
-        accessToken : string
-
-    }
-    return dadosSessao
-
-    */
   }
 
 

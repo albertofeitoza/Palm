@@ -18,11 +18,11 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class UsuarioUpdateComponent implements OnInit {
 
- empresa : Empresa[] ;
- @Input() dadosEmpresa! : Empresa;
- @Input() usuario! : Usuario ;
+empresa : Empresa[] ;
+dadosEmpresa : Empresa;
+usuario : Usuario = new Usuario()
   
-  comboTipousuario = [];
+comboTipousuario = [];
 
   constructor(private usarioService : ServiceAllService<Usuario>,
              private empresaService : ServiceAllService<Empresa>,

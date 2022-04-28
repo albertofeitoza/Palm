@@ -40,21 +40,24 @@ export class EmpresaUpdateComponent implements OnInit {
 
     }else
     {
-     if (cnpj.isValid(this.empresa.cnpj)){
-               try {
-                        this.empresaService.update(this.empresa, Endpoint.Empresa).subscribe(()=>{
-                        this.utilservice.showMessage("Empresa atualizada com sucesso", false)
-                        this.utilservice.atualizaRota("empresa");
-                      });
+    
+    if (cnpj.isValid(this.empresa.cnpj)){
+      try {
+                          
+        this.empresa.bloqueado = Number(this.utilservice.Sessao().idGrupoUsuario) == TipoUsuario.Administrador ? this.empresa.bloqueado : false;             
+        this.empresaService.update(this.empresa, Endpoint.Empresa).subscribe(()=>{
+        this.utilservice.showMessage("Empresa atualizada com sucesso", false)
+        
+      });
 
-                    } catch (error) {
-                      this.utilservice.showMessage("Erro na atualização dos dados " + error, true);
-                    }
+      } catch (error) {
+        this.utilservice.showMessage("Erro na atualização dos dados " + error, true);
+      }
 
-      }else{
-        this.utilservice.showMessage("Cnpj Inválido " , false);
-      }
-      }
+    }else{
+      this.utilservice.showMessage("Cnpj Inválido " , false);
+    }
+   }
   }
 
   fecharPopup(){

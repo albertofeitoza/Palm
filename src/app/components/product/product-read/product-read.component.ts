@@ -107,7 +107,7 @@ displayedColumns = ['id','nome', 'valor','bloqueado','action']
   buscarProduto() {
 
     this.serviceProduto.read(Endpoint.ProdutoEmpresa).subscribe(product => {
-        product = this.vlrProduto == null ?  product : product.filter(x => x.nome.toLowerCase().includes(this.vlrProduto.toLowerCase()))
+        this.products = this.vlrProduto == null ?  product : product.filter(x => x.nome.toLowerCase().includes(this.vlrProduto.toLowerCase()))
     })
   }
 

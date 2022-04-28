@@ -7,6 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialogRef } from '@angular/material/dialog';
 import { TipoAplicacao } from 'src/app/Negocio/Aplicacao';
+import { Produto } from 'src/app/models/produtos/Produto';
 
 @Component({
   selector: 'app-product-create',
@@ -15,18 +16,19 @@ import { TipoAplicacao } from 'src/app/Negocio/Aplicacao';
 })
 export class ProductCreateComponent implements OnInit {
 
- comboProduto : ProdutoEmpresa[] ;
+ comboProduto : Produto[] ;
  empresa : Empresa[];
  comboEmpresa : Empresa;
 
-  product: ProdutoEmpresa
+ produtoEmpresa: ProdutoEmpresa = new ProdutoEmpresa();
 
   constructor(
               private servico : UtilService,
               private router : Router,
-              private ProdutoEmpresa : ServiceAllService<ProdutoEmpresa>,
+              private ProdutoEmpresaservice : ServiceAllService<ProdutoEmpresa>,
               private ServiceEmpresa : ServiceAllService<Empresa>,
-              public matDialogref : MatDialogRef<ProductCreateComponent>
+              public matDialogref : MatDialogRef<ProductCreateComponent>,
+              private serviceProduto : ServiceAllService<Produto>
                ) { }
 
   ngOnInit(): void {
@@ -36,20 +38,20 @@ export class ProductCreateComponent implements OnInit {
 
   associarProdutoEmpresa() : void {
 
-    this.product.criadoPor  = 1
-    this.product.dtCriacao = new Date;
-    this.product.bloqueado = false;
-    
-    this.ProdutoEmpresa.read(Endpoint.ProdutoEmpresa).subscribe(p => {
+    this.produtoEmpresa.criadoPor  = Number(this.servico.Sessao().usuarioId);
+    this.produtoEmpresa.dtCriacao = new Date;
+    this.produtoEmpresa.bloqueado = false;
+    this.produtoEmpresa.nome = this.comboProduto.filter(x => x.Id == this.produtoEmpresa.produtoid).map(x => x.Nome).toString().trim();
+
+    this.ProdutoEmpresaservice.read(Endpoint.ProdutoEmpresa).subscribe(p => {
       p = p;
 
-      let ativo = p.filter(x => x.nome == this.product.nome)
+      let ativo = p.filter(x => x.produtoid == this.produtoEmpresa.produtoid && x.empresaid == this.produtoEmpresa.empresaid)
       
       if (ativo.length == 0)
       {
-        this.ProdutoEmpresa.create(this.product, Endpoint.ProdutoEmpresa).subscribe(() => {
+        this.ProdutoEmpresaservice.create(this.produtoEmpresa, Endpoint.ProdutoEmpresa).subscribe(() => {
           this.servico.showMessage('o Produto Criado!');
-          this.servico.atualizaRota("produtoempresa")
           })
       
       }else{
@@ -65,8 +67,9 @@ export class ProductCreateComponent implements OnInit {
   }
 
   buscarProduto(){
-    
-    
+      this.serviceProduto.read(Endpoint.Produto).subscribe(x => {
+        this.comboProduto = x;
+      })
 
 
   }

@@ -40,7 +40,7 @@ const routes: Routes = [
   //Rotas de associação de produto a empresa  cadastroproduto
   {path: "produtoempresa", component: ProductCrudComponent },
 
-  {path: "cadastroproduto", component: ProductCrudComponent },
+  //{path: "cadastroproduto", component: ProductCrudComponent },
 
   //Rotas de usuarios
   {path: 'usuarios', component : UsuarioCrudComponent },
