@@ -7,5 +7,4 @@ export class GrupoUsuario{
     usuarioApp : boolean
     criadoPor : number
     bloqueado : boolean
-    usuarios : Array<Usuario>
 }

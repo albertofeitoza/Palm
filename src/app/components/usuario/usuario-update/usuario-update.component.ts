@@ -7,6 +7,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Usuario } from '../../../models/usuarios/modelLogin';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { map } from 'rxjs';
+import { GrupoUsuario } from 'src/app/models/usuarios/GrupoUsuarios';
 
 
 
@@ -22,13 +24,14 @@ empresa : Empresa[] ;
 dadosEmpresa : Empresa;
 usuario : Usuario = new Usuario()
   
-comboTipousuario = [];
+comboTipousuario : GrupoUsuario[];
 
   constructor(private usarioService : ServiceAllService<Usuario>,
              private empresaService : ServiceAllService<Empresa>,
              private utilService: UtilService,
              private router : Router,
              public dialogRef : MatDialogRef<UsuarioUpdateComponent>,
+             private grupoUsuario : ServiceAllService<GrupoUsuario>,
              ) { }
 
   ngOnInit(): void {
@@ -83,75 +86,45 @@ comboTipousuario = [];
 
   buscarEmpresa() {
     
-    let empId = localStorage.getItem("empId");
-    let grpId = Number(localStorage.getItem("grpUs"));
+    let empId = this.utilService.Sessao().empresaUsuarioId
+    let grpId = this.utilService.Sessao().grupoUsuarioid
 
     this.empresaService.read(Endpoint.Empresa).subscribe(emp => {
-      emp = emp;
+      this.empresa = this.utilService.Sessao().grupoUsuarioid == TipoUsuario.Administrador 
+                      ? emp 
+                      : this.utilService.Sessao().grupoUsuarioid == TipoUsuario.Master 
+                      ? emp.filter(x => x.empresaPai == this.utilService.Sessao().empresaUsuarioId || x.id == this.utilService.Sessao().empresaUsuarioId) : new Array
 
-
-       grpId==TipoUsuario.Administrador ? emp  : 
-                      grpId == TipoUsuario.Master && emp.filter(x => x.id == Number(empId))
-                      || grpId == TipoUsuario.Usuario && emp.filter(x => x.id == Number(empId))
-                      || emp.filter(x => x.empresaPai == Number(empId));
     
     });
   }
 
   buscarUsuario(){
 
-      this.usarioService.readById(this.dialogRef.id, Endpoint.Usuario).subscribe(usuario => {
-      this.usuario = usuario;
+      this.usarioService.readById(this.dialogRef.id, Endpoint.Usuario).subscribe(usr => {
+      this.usuario = usr;
+   
+      this.carregarComboTipoUsuario(); 
 
-      let tipousuario = usuario.grupoUsuarioid;
-      
-      tipousuario ="Administrador";
-      this.usuario.grupoUsuarioid = this.usuario.grupoUsuarioid == TipoUsuario.Administrador.toString() ? "Administrador"
-                                   :this.usuario.grupoUsuarioid == TipoUsuario.Sistema.toString()  ? "Sistema"
-                                   : this.usuario.grupoUsuarioid == TipoUsuario.Usuario.toString()  ? "Usuario" 
-                                   : this.usuario.grupoUsuarioid == TipoUsuario.Master.toString()  ? "Master" 
-                                   : "Usuario" 
-     
-     this.carregarComboTipoUsuario(this.usuario.grupoUsuarioid, tipousuario); 
     });
   }
 
 
 
-  carregarComboTipoUsuario(usuario : string, tipousuario : string) : void  {
-    let grpId = Number(localStorage.getItem("grpUs"));
+  carregarComboTipoUsuario() : void  {
+    
+        this.grupoUsuario.read(Endpoint.GrupoUsuario).subscribe(grp => {
+          this.comboTipousuario = grp;
+        })
 
-    
-      for (var tipo in TipoUsuario) {
-      
-           if (TipoUsuario.hasOwnProperty(tipo) &&
-            (isNaN(parseInt(tipo))) && grpId == TipoUsuario.Administrador ) {
-    
-              //this.comboTipousuario.push(tipo)
-              
-            }
-            else if (TipoUsuario.hasOwnProperty(tipo) &&
-            (isNaN(parseInt(tipo))) && grpId == TipoUsuario.Master ){
-    
-            //if(TipoUsuarioSistema.get(tipo) == TipoUsuario.Master || TipoUsuarioSistema.get(tipo) == TipoUsuario.Usuario)            
-               // this.comboTipousuario.push(tipo);
-          
-            }
-            else if (TipoUsuario.hasOwnProperty(tipo) &&
-            (isNaN(parseInt(tipo))) && grpId == TipoUsuario.Usuario ){
-      
-              //if(TipoUsuarioSistema.get(tipo) == TipoUsuario.Usuario)            
-                 // this.comboTipousuario.push(tipo);
-            }
-            
-          
-          
-      }
+  
   }
  
 
   fecharPopup(): void{
     this.dialogRef.close();
+
+
   }
 
 }

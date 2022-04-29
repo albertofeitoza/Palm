@@ -25,8 +25,8 @@ export class UsuarioReadComponent implements OnInit {
 
   usuario : viewModelUsuarios[]
   userAutenticado : boolean = false; 
-  
-  displayedColumns = ['id','nome','login','grupoUsuarioid','bloqueado','action']  
+
+  displayedColumns = ['id','nome','login','tipo','bloqueado','action']  
  
   constructor(
               public dialog : MatDialog,

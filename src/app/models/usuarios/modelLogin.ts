@@ -1,4 +1,5 @@
 import { Agenda } from "../Agenda/modelAgenda";
+import { GrupoUsuario } from "./GrupoUsuarios";
 
 export class Usuario {
     id: number
@@ -16,6 +17,7 @@ export class Usuario {
     grupoUsuarioid : string
     profissional : boolean
     agendas : Array<Agenda>
+    grupoUsuario : Array<GrupoUsuario>
 
 }
 
