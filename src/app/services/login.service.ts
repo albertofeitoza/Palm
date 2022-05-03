@@ -27,9 +27,6 @@ export class LoginService {
   title = '';
   environmentName = '';
   environmentUrl = '';
- // acesso : Acesso = new Acesso();
-
-  private tipoUsuarios: TipoUsuario[];
 
   mostrarMenuEmitter = new EventEmitter<boolean>();
   mostrarLoginEmitter = new EventEmitter<boolean>();
@@ -102,18 +99,9 @@ isLogedIn () : boolean{
   return { headers: headers };
   }
 
-  TipoUsuarioSistema(){
-    
-    TipoUsuarioSistema.forEach(element => {
-      this.tipoUsuarios.push(element)
-    });
-   return this.tipoUsuarios;
-  }
-
   dadosLogado() {
       return this.sessao;
   }
-
 
   showMessage(msg : string, isErro: boolean = false) : void { 
     this.snackBar.open(msg, 'X' , { 
@@ -124,7 +112,6 @@ isLogedIn () : boolean{
     })
   }
 
-
   convertToBase64(txt : string) : string {
     return btoa(txt);
   }
@@ -133,8 +120,6 @@ isLogedIn () : boolean{
     return atob(txt);
 
   }
-
-
 }
 
 
