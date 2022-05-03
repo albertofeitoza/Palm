@@ -18,13 +18,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 
-
-const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'})
-};
-
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -55,22 +48,22 @@ export class LoginService {
               
   logarSistema(domain : string, usuario : string , senha: string ) {
 
-    this.sessao = new dadosSessao();
+  this.sessao = new dadosSessao();
     
   this.login(this.sessao, `${Endpoint.Token}?dominio=${domain}&login=${usuario}&password=${senha}`).subscribe(log => {
   this.sessao = log;
-    
-        if(this.isLogedIn())
-        {
+
+  if(this.isLogedIn())
+      {
           this.mostrarMenuEmitter.emit(true);
           this.mostrarLoginEmitter.emit(false)
           this.router.navigate(['/']);
-        }
+      }
         else{
-          this.sessao.erroLogin ?           
-              this.showMessage("Usuário ou senha inválido", true) 
-              : this.sessao.bloqueado ? this.showMessage("Usuário bloqueado", true) 
-              : this.sessao.statusEmpresa ? this.showMessage("Empresa bloqueada", true) 
+          this.convertBase64toText(this.sessao.erroLogin) == "True" ?           
+              this.showMessage("Usuário ou senha inválidos", true) 
+              : this.convertBase64toText(this.sessao.bloqueado) == "True" ? this.showMessage("Usuário bloqueado", true) 
+              : this.convertBase64toText(this.sessao.statusEmpresa) == "True" ? this.showMessage("Empresa bloqueada", true) 
               : this.showMessage("Verificar os dados de acesso.", true) 
         }
     });
@@ -82,9 +75,14 @@ export class LoginService {
   );
 }
 
-
 isLogedIn () : boolean{
-  return this.sessao != undefined && !this.sessao.erroLogin && !this.sessao.bloqueado && !this.sessao.statusEmpresa
+
+ let erroLogin : Boolean = false;
+ erroLogin = this.convertBase64toText(this.sessao.erroLogin) == "True" ? true 
+              : this.convertBase64toText(this.sessao.bloqueado) == "True" ? true
+              : this.convertBase64toText(this.sessao.statusEmpresa) == "True" ? true
+              : false
+ return this.sessao != undefined && !erroLogin
 }
   sairSistema(){
     this.mostrarMenuEmitter.emit(false);
@@ -95,14 +93,13 @@ isLogedIn () : boolean{
   }
 
   header(){
+ 
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.sessao.accessToken}`
+    });
 
-    var reqHeader = new HttpHeaders({ 
-        'Content-Type' : 'application/json; charset=utf-8',
-        'Accept'       : 'application/json',
-        'Authorization': 'Bearer ' +  this.sessao.accessToken != null ? this.sessao.accessToken.substring(0, this.sessao.accessToken.length -12)  : ""
-    })
-    
-    return { headers: reqHeader };
+  return { headers: headers };
   }
 
   TipoUsuarioSistema(){
@@ -126,6 +123,18 @@ isLogedIn () : boolean{
       panelClass : isErro ? ['msg-error'] : ['msg-sucess']
     })
   }
+
+
+  convertToBase64(txt : string) : string {
+    return btoa(txt);
+  }
+
+  convertBase64toText(txt: string) : string {
+    return atob(txt);
+
+  }
+
+
 }
 
 

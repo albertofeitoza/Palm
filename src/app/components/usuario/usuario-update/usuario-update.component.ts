@@ -59,16 +59,14 @@ comboTipousuario : GrupoUsuario[];
                 {
                     this.usarioService.update(this.usuario, Endpoint.Usuario).subscribe(() => {
                       this.utilService.showMessage("Usuário Atualizado com Sucesso!")
-                      this.fecharPopup();
-                      this.utilService.atualizaRota("usuario");
+
                     })
                     user =  new Array();
+
                   }else if(grpId == TipoUsuario.Administrador){
                       
                     this.usarioService.update(this.usuario, Endpoint.Usuario).subscribe(() => {
                         this.utilService.showMessage("Usuário Atualizado com Sucesso!")
-                        this.fecharPopup();
-                        this.utilService.atualizaRota("usuario", true);
                         
                       })
                       user =  new Array();
@@ -79,20 +77,16 @@ comboTipousuario : GrupoUsuario[];
                     user =  new Array();
                 }
             })
-
   }
 
   
 
   buscarEmpresa() {
-    
-    let empId = this.utilService.Sessao().empresaUsuarioId
-    let grpId = this.utilService.Sessao().grupoUsuarioid
 
     this.empresaService.read(Endpoint.Empresa).subscribe(emp => {
-      this.empresa = this.utilService.Sessao().grupoUsuarioid == TipoUsuario.Administrador 
+      this.empresa = this.utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador 
                       ? emp 
-                      : this.utilService.Sessao().grupoUsuarioid == TipoUsuario.Master 
+                      : this.utilService.Sessao().idGrupoUsuario == TipoUsuario.Master 
                       ? emp.filter(x => x.empresaPai == this.utilService.Sessao().empresaUsuarioId || x.id == this.utilService.Sessao().empresaUsuarioId) : new Array
 
     
@@ -115,6 +109,8 @@ comboTipousuario : GrupoUsuario[];
     
         this.grupoUsuario.read(Endpoint.GrupoUsuario).subscribe(grp => {
           this.comboTipousuario = grp;
+        
+        
         })
 
   
