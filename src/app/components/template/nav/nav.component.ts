@@ -27,6 +27,6 @@ lock = false;
   validarAcesso(){
     
     if(this.auth.isLogedIn())
-      this.lock = atob(this.servico.Sessao().idGrupoUsuario) == TipoUsuario.Administrador.toString() ? true : false;
+      this.lock = this.servico.Sessao().idGrupoUsuario == TipoUsuario.Administrador ? true : false;
   }
 }

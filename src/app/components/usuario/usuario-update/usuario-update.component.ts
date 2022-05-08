@@ -84,10 +84,10 @@ comboTipousuario : GrupoUsuario[];
   buscarEmpresa() {
 
     this.empresaService.read(Endpoint.Empresa).subscribe(emp => {
-      this.empresa = this.utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador 
+      this.empresa = this.utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString() 
                       ? emp 
-                      : this.utilService.Sessao().idGrupoUsuario == TipoUsuario.Master 
-                      ? emp.filter(x => x.empresaPai == this.utilService.Sessao().empresaUsuarioId || x.id == this.utilService.Sessao().empresaUsuarioId) : new Array
+                      : this.utilService.Sessao().idGrupoUsuario == TipoUsuario.Master.toString()
+                      ? emp.filter(x => x.empresaPai == Number(this.utilService.Sessao().empresaUsuarioId) || x.id == Number(this.utilService.Sessao().empresaUsuarioId)) : new Array
 
     
     });

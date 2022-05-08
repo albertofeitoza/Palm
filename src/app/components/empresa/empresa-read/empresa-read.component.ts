@@ -100,7 +100,7 @@ export class EmpresaReadComponent implements OnInit {
           console.log(`Dialog result: ${result}`);
         });
     }else{
-      this._utilService.showMessage("Você não possui permissão para criação de empresas",true);
+      this._utilService.showMessage("Você não possui permissão para alterar cadastro de empresas",true);
     }
 
   }
@@ -121,7 +121,7 @@ export class EmpresaReadComponent implements OnInit {
           console.log(`Dialog result: ${result}`);
         });
     }else{
-      this._utilService.showMessage("Você não possui permissão para criação de empresas",true);
+      this._utilService.showMessage("Você não possui permissão para Excluir empresa",true);
     }
     
   }

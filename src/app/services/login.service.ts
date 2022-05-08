@@ -31,7 +31,7 @@ export class LoginService {
   mostrarMenuEmitter = new EventEmitter<boolean>();
   mostrarLoginEmitter = new EventEmitter<boolean>();
   
-  sessao: any
+  sessao: dadosSessao
 
   constructor(private router: Router,
               private http: HttpClient,
@@ -100,7 +100,16 @@ isLogedIn () : boolean{
   }
 
   dadosLogado() {
-      return this.sessao;
+ 
+    let dados : any = new dadosSessao();
+        dados.bloqueado = this.convertBase64toText(this.sessao.bloqueado) == "True" ? true : false;
+        dados.dominio = this.convertBase64toText(this.sessao.dominio);
+        dados.empresaUsuarioId = Number(this.convertBase64toText(this.sessao.empresaUsuarioId));
+        dados.idGrupoUsuario = Number(this.convertBase64toText(this.sessao.idGrupoUsuario));
+        dados.nomeUsuario = this.convertBase64toText(this.sessao.nomeUsuario);
+        dados.usuarioId = Number(this.convertBase64toText(this.sessao.usuarioId));
+    
+        return dados;
   }
 
   showMessage(msg : string, isErro: boolean = false) : void { 

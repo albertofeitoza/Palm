@@ -96,11 +96,11 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
 
   buscarEmpresa() {
    
-    let empId = this.utilService.Sessao().empresaUsuarioId
-    let grpId = Number(this.utilService.Sessao().idGrupoUsuario);
+    let empId = Number(this.utilService.convertBase64toText(this.utilService.Sessao().empresaUsuarioId))
+    let grpId = Number(this.utilService.convertBase64toText(this.utilService.Sessao().idGrupoUsuario));
 
     this.serviceEmpresa.read(Endpoint.Empresa).subscribe(emp => {
-        emp = emp; 
+        emp = emp
 
     })
   }

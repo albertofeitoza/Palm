@@ -45,10 +45,10 @@ export class EmpresaCreateComponent implements OnInit {
     if(Number(this.utilService.Sessao().idGrupoUsuario) == TipoUsuario.Usuario)
     {
       this.utilService.showMessage("Você não possui permissão para cadastro de empresas", false)
-
-    }else
+    }
+    else
     {
-     if(cnpj.isValid(this.empresa.cnpj)){
+      if(cnpj.isValid(this.empresa.cnpj)){
        this.servicoEmpresa.read(Endpoint.Empresa).subscribe(empc => {
         empc = empc.filter(x => x.cnpj == this.empresa.cnpj)
           
@@ -73,11 +73,12 @@ export class EmpresaCreateComponent implements OnInit {
                   this.servicoEmpresa.create(this.empresa, Endpoint.Empresa).subscribe(empe => {
                    let emp = empe;
                           
-                    let empresaPai = "teste";
+                    let empresaPai = empe;
                           
-                             // emp.bloqueado = true;
-                              //emp.empresaPai = Number(localStorage.getItem("empId"));
-                             // this.servicoEmpresa.update(emp,Endpoint.Empresa).subscribe(() => {})
+                            emp.bloqueado = true;
+                            emp.empresaPai = Number(this.utilService.Sessao().empresaUsuarioId);
+                            
+                            this.servicoEmpresa.update(emp,Endpoint.Empresa).subscribe(() => {})
                        
                             this.utilService.showMessage("Empresa cadastrada com sucesso!",false);
 

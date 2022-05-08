@@ -37,7 +37,7 @@ export class ServiceAllService <T>{
 
     // Buscar todos Get All
     read(tipo: string): Observable<T[]>{
-      let idEmpresa = atob(this.utilService.Sessao().idGrupoUsuario) == TipoUsuario.Administrador.toString() ? 0 : atob(this.utilService.Sessao().empresaUsuarioId);
+      let idEmpresa = this.utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador ? 0 : this.utilService.Sessao().empresaUsuarioId;
       return this.http.get<T[]>(`${this.environmentUrl + tipo}/?idEmpresa=${idEmpresa}` , this.loginservice.header()).pipe(
         map(obj => obj),
         catchError(e => this.utilService.erroHandler(e))
