@@ -18,12 +18,10 @@ export class AgendamentosCreateComponent implements OnInit {
 
   colunas = ['id','nome','protocolos','grupoAgenda','agendamentoFuturo','responsavel','ura','cpf','rg','telefone','celular']  
   
- @Input() pessoa!: Pessoa
- @Input() pessoaGrid!: PessoaGrid[];
+ pessoa: Pessoa
+ pessoaGrid: PessoaGrid[];
   
-  
-
-  constructor(
+constructor(
               private dialofRef : MatDialogRef<AgendamentosCreateComponent>,
               private servicoPessoa : ServiceAllService<PessoaGrid>
 

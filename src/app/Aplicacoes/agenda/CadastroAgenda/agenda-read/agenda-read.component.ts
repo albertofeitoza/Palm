@@ -34,7 +34,7 @@ export class AgendaReadComponent implements OnInit {
 
   addNovaAgenda() {
    
-    if(this.servico.Sessao().idGrupoUsuario == TipoUsuario.Master.toString() || this.servico.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
+    if(this.servico.Sessao().idGrupoUsuario == TipoUsuario.Master || this.servico.Sessao().idGrupoUsuario == TipoUsuario.Administrador)
     {
       this.servico.Popup("0",AgendaCreateComponent, '70%','98%' );
 

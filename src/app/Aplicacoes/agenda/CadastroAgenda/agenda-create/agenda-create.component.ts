@@ -31,11 +31,11 @@ import { Overlay } from '@angular/cdk/overlay';
 })
 export class AgendaCreateComponent implements OnInit {
   
-  agenda : any
+  agenda : Agenda = new Agenda()
   estadoForm : boolean = false;
   agendaSelecionada : number = 0;
 
- comboProfissional : any = new Array();
+  comboProfissional : any = new Array();
   comboUnidade : any = [];
   comboSala : any = [];
   comboTipoGrupoAgenda : any = [];
@@ -47,16 +47,16 @@ export class AgendaCreateComponent implements OnInit {
   GrupoSelecionado : number = 0;
 
   //Horários
-  segunda : HorarioAgenda[] = [];
-  terca : HorarioAgenda[] = [];
-  quarta : HorarioAgenda[] = [];
-  quinta : HorarioAgenda[] = [];
-  sexta : HorarioAgenda[] = [];
-  sabado : HorarioAgenda[] = [];
-  domingo : HorarioAgenda[] = [];
+  segunda : HorarioAgenda[];
+  terca : HorarioAgenda[];
+  quarta : HorarioAgenda[];
+  quinta : HorarioAgenda[];
+  sexta : HorarioAgenda[];
+  sabado : HorarioAgenda[];
+  domingo : HorarioAgenda[];
 
   ColunasHorarios = ['Hora','Tempo']
-  dadosHorarios : any
+  dadosHorarios : HorarioAgenda = new  HorarioAgenda();
 
 
   Colunas = ['id', 'Agenda','Responsável','Unidade','Sala',
@@ -251,9 +251,8 @@ export class AgendaCreateComponent implements OnInit {
   ///HORÁRIOS///////
   CriarHorarios(){
     
-
-
-
+    
+    
     if(this.dadosHorarios.diaDasemana == null)
       this._utilService.showMessage("Informe o dia da Semana", false);
     else if(this.dadosHorarios.tipoHorario == null)
