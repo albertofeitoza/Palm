@@ -18,7 +18,7 @@ export class AgendamentosCreateComponent implements OnInit {
 
   colunas = ['id','nome','protocolos','grupoAgenda','agendamentoFuturo','responsavel','ura','cpf','rg','telefone','celular']  
   
- pessoa: Pessoa
+ pessoa: Pessoa = new Pessoa();
  pessoaGrid: PessoaGrid[];
   
 constructor(

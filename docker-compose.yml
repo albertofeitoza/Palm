@@ -1,8 +1,13 @@
 version: '2.1'
 
+networks:
+  patterns-network:
+    driver: 'bridge'
+
 services:
   palm:
     image: palm
     build: .
     ports:
       - 8081:80
+

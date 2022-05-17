@@ -26,16 +26,16 @@ export class AgendaCadastroUnidadeComponent implements OnInit {
 Colunas = ['id','dtCriacao', 'nomeUnidade','bloqueado','action']
 ColunasSala = ['id','dtCriacao', 'nomeSala', 'ativo','action']
 
-@Input() unidade!: Unidade 
+unidade : Unidade = new Unidade()
 
 novaUnidade : boolean = false;
 
-unidades : any;
+unidades : Unidade[];
 atualizarChamada: boolean = false; 
 
 vlrsala : string = "";
 
-salas : any ;
+salas : Sala[] ;
 unidadeSelecionada : number = 0;
   constructor(
              public dialog : MatDialogRef<AgendaCadastroUnidadeComponent>,

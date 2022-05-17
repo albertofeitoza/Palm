@@ -13,7 +13,7 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class AgendaGrupoCadastroComponent implements OnInit {
 
-@Input() grupo!: GrupoAgenda
+  grupo: GrupoAgenda = new GrupoAgenda()
 
   constructor(
               public dialog : MatDialogRef<AgendaGrupoCadastroComponent>,

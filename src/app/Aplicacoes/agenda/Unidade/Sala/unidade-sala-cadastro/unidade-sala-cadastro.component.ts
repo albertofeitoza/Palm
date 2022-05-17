@@ -13,9 +13,9 @@ import { UtilService } from 'src/app/services/util.service';
 export class UnidadeSalaCadastroComponent implements OnInit {
 
 
-listasala : any
+listasala : Sala[]
 
-sala : any
+sala : Sala = new Sala()
 
   constructor(
               private servicoSala : ServiceAllService<Sala>,
