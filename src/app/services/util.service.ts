@@ -90,4 +90,25 @@ export class UtilService {
 
   }
 
+  Genero(){
+    let genero =  []
+        genero.push({"id" : 0, "tipo" : "Selecione"})
+        genero.push({"id" : 1, "tipo" : "M"})
+        genero.push({"id" : 2, "tipo" : "F"})
+        genero.push({"id" : 3, "tipo" : "I"})
+    return genero
+  }
+
+  EstCivil(){
+    let estCivil =  []
+        estCivil.push({"id" : 0, "tipo" : "Selecione"})
+        estCivil.push({"id" : 1, "tipo" : "Solteiro"})
+        estCivil.push({"id" : 2, "tipo" : "Casado"})
+        estCivil.push({"id" : 3, "tipo" : "Viúvo"})
+        estCivil.push({"id" : 4, "tipo" : "Separado"})
+
+    return estCivil
+  }
+
+
 }

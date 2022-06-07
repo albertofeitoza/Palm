@@ -163,10 +163,15 @@ export class AgendaCreateComponent implements OnInit {
     this.carregaComboUnidade(this._utilService.Sessao().idGrupoUsuario, this._utilService.Sessao().empresaUsuarioId.toString());
   }
 
-  fecharPopup(): void {
+  EstadoForm(): void {
     this.estadoForm = false;
    
-   }
+  }
+
+  fecharPopup(){
+    this.dialogRef.close();
+
+  }
 
   novoUsuario(){
     

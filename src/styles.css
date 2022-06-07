@@ -28,6 +28,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /*CSS da Aplicação */
 
+.textBusca {
+    float: right;
+    margin-top: 15px;
+}
+
+
 .botaoBusca { 
     float : right;
     font-size: 15px;
@@ -38,8 +44,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .botaoBuscaPopups { /*popups*/
     font-size: 25px;
-    width: 155px;
-    margin-top: 10px;
+    margin-top: 12px;
     padding-left: 15px;
 }
 
@@ -64,16 +69,38 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 mat-form-field{
     padding-left: 9px;
-    
 }
 
-/*Cabeçalho das tabelas*/
+mat-form-field mat-label{
+    font-size: 12px;
+}
+
+mat-form-field mat-label input{
+    font-size: 12px;
+}
+
+
+/*Ajuste de todos os MatFormField
+
+::ng-deep .mat-form-field-flex > .mat-form-field-infix { padding: 0.4em 0px !important;}
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-label { margin-top:-23px;font-size: 16px;}
+::ng-deep label.ng-star-inserted { transform: translateY(-0.59375em) scale(.75) !important; }
+*/
+
+
+/*Cabeçalho das tabelas icone pra fechar os Popups*/
 table{
     width: 100%;
 }
 
 .close{
     float: right;
+    margin-top: 0px;
+    margin-right: 0px;
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.corLinhaGrid {
+    background: aqua;
+  }

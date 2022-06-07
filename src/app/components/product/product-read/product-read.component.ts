@@ -25,6 +25,7 @@ products: ProdutoEmpresa[]
 vlrProduto : string
 
 displayedColumns = ['id','nome', 'valor','bloqueado','action']  
+idSelecionado : Number = 0;
 
   constructor(private router : Router,
               private serviceProduto : ServiceAllService<ProdutoEmpresa>,
@@ -121,4 +122,8 @@ displayedColumns = ['id','nome', 'valor','bloqueado','action']
     }
   }
   
+  selecionaLinha(id : Number){
+    this.idSelecionado = id;
+  }
+
 }

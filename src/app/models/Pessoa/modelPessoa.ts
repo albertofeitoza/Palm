@@ -1,16 +1,15 @@
 export class Pessoa {
-    id ? : number
-    DtCriacao : Date
+    id : number
+    dtCriacao : Date
     nome : string
     tipoPessoa : number
-    cpf : string
+    cpfcnpj : string
     rg : string
     dataNascimento : Date
     responsavel : string
     parentesco : string
     estCivil : number
     sexo : number
-    empresaid : number
-    
+
 }
 

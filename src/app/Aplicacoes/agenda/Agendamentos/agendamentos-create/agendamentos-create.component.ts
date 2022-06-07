@@ -1,3 +1,4 @@
+import { getLocaleDateTimeFormat } from '@angular/common';
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { map } from 'rxjs/operators';
@@ -7,6 +8,10 @@ import { PessoaGrid } from 'src/app/models/Pessoa/modelPessoaGrid';
 import { Usuario } from 'src/app/models/usuarios/modelLogin';
 import { Endpoint } from 'src/app/Negocio/Endpoint';
 import { ServiceAllService } from 'src/app/services/service-all.service';
+import { UtilService } from 'src/app/services/util.service';
+import { DadosAgendamentoComponent } from '../dados-agendamento/dados-agendamento.component';
+import { cpf } from 'cpf-cnpj-validator';
+import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
 
 @Component({
   selector: 'app-agendamentos-create',
@@ -16,44 +21,93 @@ import { ServiceAllService } from 'src/app/services/service-all.service';
 })
 export class AgendamentosCreateComponent implements OnInit {
 
-  colunas = ['id','nome','protocolos','grupoAgenda','agendamentoFuturo','responsavel','ura','cpf','rg','telefone','celular']  
-  
+ colunas = ['id','nome','protocolos','grupoAgenda','agendamentoFuturo','responsavel','ura','cpf','rg','telefone','celular']  
+ 
  pessoa: Pessoa = new Pessoa();
  pessoaGrid: PessoaGrid[];
-  
+ idSelecionado : Number = 0;
+ sexo : any[]
+ estCivil: any[]
+ 
+
 constructor(
               private dialofRef : MatDialogRef<AgendamentosCreateComponent>,
-              private servicoPessoa : ServiceAllService<PessoaGrid>
-
+              private servicoPessoa : ServiceAllService<PessoaGrid>,
+              private servicoCadastroPessoa : ServiceAllService<Pessoa>,
+              private servico : UtilService
+    
               ) { }
 
   ngOnInit(): void {
-  this.bucarAgendamentos()
+  
+
+  this.sexo = this.servico.Genero();
+  this.estCivil = this.servico.EstCivil();
   
   }
-
+  
   NovoAgendamento(){
-    alert("Teste de cadastro");
+      alert("Teste de cadastro");
   }
 
-  buscarProtocolo(){
-    
+  buscarProtocolo(id : any){
+    alert("pessoa" + id);
+  }
+
+  agendamentosFuturo(id : any){
+    alert("Pessoa" + id )
   }
 
   buscarPessoa(){
-  
+    this.idSelecionado = 0;
+    this.pessoaGrid = new Array()
+ 
     this.servicoPessoa.read(Endpoint.Pessoa).subscribe(p => {
-      this.pessoaGrid = p.filter(x => this.pessoa.nome != null 
-                                ? x.nome.toLowerCase().includes(this.pessoa.nome.toLowerCase()) 
-                                : this.pessoa.responsavel != null 
-                                ? x.responsavel.toLowerCase().includes(this.pessoa.responsavel.toLowerCase()) 
-                                : this.pessoa.rg != null  
-                                ? x.rg.toLowerCase().includes(this.pessoa.rg.toLowerCase()) 
-                                : this.pessoa.cpf != null 
-                                ? x.cpf.toLowerCase().includes(this.pessoa.cpf.toLowerCase()) 
-                                : p);
+    this.pessoaGrid = p.filter(x => 
+                                    this.pessoa.nome != null && 
+                                    this.pessoa.responsavel != null && 
+                                    this.pessoa.rg != null && 
+                                    this.pessoa.cpfcnpj != null
+                                  ?  x.nome?.toLowerCase().includes(this.pessoa.nome.toLowerCase()) 
+                                  && x.responsavel?.toLowerCase().includes(this.pessoa.responsavel.toLowerCase())
+                                  && x.rg?.includes(this.pessoa.rg)
+                                  && x.cpf?.includes(this.pessoa.cpfcnpj)
+                                  
+                                  : this.pessoa.nome != null && 
+                                    this.pessoa.responsavel != null && 
+                                    this.pessoa.rg != null 
+                                  ? x.nome?.toLowerCase().includes(this.pessoa.nome.toLowerCase()) 
+                                  && x.responsavel?.toLowerCase().includes(this.pessoa.responsavel.toLowerCase())
+                                  && x.rg?.includes(this.pessoa.rg) 
+                                  
+                                  : this.pessoa.nome != null && 
+                                    this.pessoa.responsavel != null 
+                                  ?  x.nome?.toLowerCase().includes(this.pessoa.nome.toLowerCase()) 
+                                  && x.responsavel?.toLowerCase().includes(this.pessoa.responsavel.toLowerCase()) 
+
+                                  : this.pessoa.responsavel != null && 
+                                    this.pessoa.rg != null && 
+                                    this.pessoa.cpfcnpj != null
+                                  ? x.responsavel?.toLowerCase().includes(this.pessoa.responsavel.toLowerCase())
+                                  && x.rg?.includes(this.pessoa.rg)
+                                  && x.cpf?.includes(this.pessoa.cpfcnpj)
+
+                                  : this.pessoa.rg != null && 
+                                  this.pessoa.cpfcnpj != null
+                                  ? x.rg?.includes(this.pessoa.rg)
+                                  && x.cpf?.includes(this.pessoa.cpfcnpj)
+                                  
+                                  : this.pessoa.nome != null
+                                  ? x.nome?.toLowerCase().includes(this.pessoa.nome.toLowerCase())
+                                  
+                                  : this.pessoa.rg != null
+                                  ? x.rg?.includes(this.pessoa.rg)
+
+                                  : this.pessoa.cpfcnpj != null
+                                  ? x.cpf?.includes(this.pessoa.cpfcnpj)
+                                  
+                                  :p)
     });
-  
   }
 
   bucarAgendamentos(){
@@ -62,18 +116,50 @@ constructor(
   }
 
 
+
   fecharPopup(){
     
       this.dialofRef.close();
   }
 
-
-  selecionarPessoa(id : any){
-    alert("Teste de click " + id);
-  }
-
   AgendarOrcar(){
-    alert(this.pessoa.nome)
+    if(this.idSelecionado > 0)
+    {
+      this.servico.Popup(this.idSelecionado.toString(), DadosAgendamentoComponent, '70%', '80%');
+    } 
+    else
+    {
+      this.pessoa.nome == null 
+              ? this.servico.showMessage("Informar o Nome", false) 
+              :  this.pessoa.cpfcnpj == null ? this.servico.showMessage("Informar o CPF", false) 
+              :  !cpf.isValid(this.pessoa.cpfcnpj.toString()) ? this.servico.showMessage("Cpf Inválido", false)
+              :  this.pessoa.dataNascimento == null ? this.servico.showMessage("Informar o data de nascimento", false) 
+              :  this.pessoa.estCivil == null ? this.servico.showMessage("estado cívil Obrigatório", false) 
+              :  this.pessoa.sexo == null ? this.servico.showMessage("informar o sexo", false) 
+              : this.CadastrarPessoa()
+              
+    }
+      
   }
- 
+
+  LinhaSelecionada(id : Number){
+    if(this.idSelecionado == id)
+      this.idSelecionado = 0
+    else    
+      this.idSelecionado = id;
+  }
+  
+  CadastrarPessoa(){
+    this.pessoa.dtCriacao = new Date
+    this.pessoa.tipoPessoa = 2;
+    this.pessoa.rg = this.pessoa.rg.toString(); 
+    this.pessoa.cpfcnpj = this.pessoa.cpfcnpj.toString(); 
+
+    this.servicoCadastroPessoa.create(this.pessoa, Endpoint.Pessoa).subscribe(p => {
+      this.servico.Popup(p.id?.toString(), DadosAgendamentoComponent, '70%', '80%');
+    })
+    
+
+  }
+
 }

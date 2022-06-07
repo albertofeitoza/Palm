@@ -27,7 +27,7 @@ export class UsuarioReadComponent implements OnInit {
   userAutenticado : boolean = false; 
 
   displayedColumns = ['id','nome','login','tipo','bloqueado','action']  
- 
+  idSelecionado : Number = 0;
   constructor(
               public dialog : MatDialog,
               public overlay : Overlay,
@@ -117,6 +117,9 @@ export class UsuarioReadComponent implements OnInit {
       })
   }
       
+  selecionaLinha(id : Number){
+    this.idSelecionado = id;
+  }
 }
 
 

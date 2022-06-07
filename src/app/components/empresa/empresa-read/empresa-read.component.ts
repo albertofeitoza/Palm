@@ -29,6 +29,8 @@ export class EmpresaReadComponent implements OnInit {
   //Colunas do GRID
   displayedColumns = ['id','cnpj', 'razaoSocial','nomeFantasia','inscricaoEstadual','inscricaoMunicipal','bloqueado','action']  
 
+  idSelecionado : Number =0;
+
   constructor(private router : Router,
               private serviceEmpresa : ServiceAllService<Empresa>,
               public dialog : MatDialog,
@@ -42,6 +44,10 @@ export class EmpresaReadComponent implements OnInit {
 
   }
 
+  selecionaLinha(id : Number)
+  {
+    this.idSelecionado = id
+  }
 
 
   buscarEmpresa(): void 

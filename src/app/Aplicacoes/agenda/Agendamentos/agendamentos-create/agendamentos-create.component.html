@@ -1,4 +1,3 @@
-  
 <div class="close">
   <a (click)="fecharPopup()">
     <i class="material-icons">
@@ -7,50 +6,75 @@
   </a>
 </div>
 <mat-card-title>Novo Agendamento</mat-card-title>
-        <form class="formularioRow" >
-            <mat-form-field appearance="outline" style="width: 150px; padding-top: 20px" id="txt_busca" >
+
+<form class="formularioRow" >
+            <mat-form-field appearance="outline" style="width: 150px;" id="txt_busca" >
                 <mat-label>Protocolos</mat-label>
-                <input matInput placeholder="Protocolos">
+                <input matInput placeholder="Protocolo">
             </mat-form-field>
             
-            <span (click)="buscarProtocolo()">
+            <span (click)="buscarProtocolo('0')">
                 <i class="material-icons botaoBuscaPopups">search</i>
             </span>
             <p >
-           <mat-form-field appearance="outline" style="width: 170px;">
+           <mat-form-field appearance="outline" style="width: 17%;">
                 <mat-label>Nome</mat-label>
-                <input matInput placeholder="Nome"
-                [(ngModel)]="pessoa.nome" name="nome">        
+                <input matInput placeholder="Nome" id="nomePessoa"
+                [(ngModel)]="pessoa.nome" name="nome" (keypress)="buscarPessoa()">        
             </mat-form-field>
         
-            <mat-form-field appearance="outline" style="width: 170px;">
+            <mat-form-field appearance="outline" style="width: 17%;">
                 <mat-label>Responsável</mat-label>
-                <input matInput placeholder="Responsável"
+                <input matInput placeholder="Responsável" id="resposavel"
                 [(ngModel)]="pessoa.responsavel" name="responsavel">
             </mat-form-field>
 
-            <mat-form-field appearance="outline" style="width: 85px;">
+            <mat-form-field appearance="outline" style="width: 9%">
                 <mat-label>RG</mat-label>
-                <input matInput placeholder="RG"
-                [(ngModel)]="pessoa.rg" name="rg">
+                <input matInput placeholder="RG" type="number"
+                [(ngModel)]="pessoa.rg" name="rg" (keypress)="buscarPessoa()">
             </mat-form-field>
 
-            <mat-form-field appearance="outline" style="width: 95px;">
+            <mat-form-field appearance="outline" style="width: 10%;">
                 <mat-label>CPF</mat-label>
-                <input matInput placeholder="CPF"
-                [(ngModel)]="pessoa.cpf" name="cpf">
+                <input matInput placeholder="CPF" type="number"
+                [(ngModel)]="pessoa.cpfcnpj" name="cpf" (keypress)="buscarPessoa()">
             </mat-form-field>
 
-            <mat-form-field appearance="outline" style="width: 95px;">
+            <mat-form-field appearance="outline" style="width: 10%;">
               <mat-label>Data Nascimento</mat-label>
-              <input matInput placeholder="Data Nascimento"
+              <input matInput placeholder="Data Nasc" id="dataNascimento" type="date"
               [(ngModel)]="pessoa.dataNascimento" name="dataNascimento">
           </mat-form-field>
-            <span (click)="buscarPessoa()">
-                <i class="material-icons botaoBuscaPopups">search</i>
-            </span>
-            
-        </form>
+          
+          <mat-form-field appearance="outline" style="width: 9%;">
+            <mat-label>Parentesco</mat-label>
+            <input matInput placeholder="Parentesco" id="parentesco"
+            [(ngModel)]="pessoa.parentesco" name="parentesco">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 9%;">
+              <mat-select [(value)]="pessoa.estCivil" placeholder="EstCivil" id="EstCivil">
+                <mat-option *ngFor="let t of estCivil" [value]="t.id">
+                  {{t.tipo}}
+                </mat-option>
+              </mat-select>
+
+
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 8%;">
+            <mat-select [(value)]="pessoa.sexo" placeholder="Sexo">
+              <mat-option *ngFor="let t of sexo" [value]="t.id">
+                {{t.tipo}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <span (click)="buscarPessoa()" style="width: 4%;">
+            <i class="material-icons botaoBuscaPopups">search</i>
+          </span>
+
 
 
         <div class="mat-elevation-z4" style="height: 300px;overflow: auto;">
@@ -58,7 +82,7 @@
 
               <ng-container matColumnDef="id">
                     <th mat-header-cell *matHeaderCellDef>Id</th>
-                    <td mat-cell *matCellDef="let row">{{row.id}}</td>
+                    <td  mat-cell *matCellDef="let row">{{row.id}}</td>
               </ng-container>
 
               <!-- Name Column -->
@@ -69,7 +93,7 @@
               
               <ng-container matColumnDef="protocolos">
                 <th mat-header-cell *matHeaderCellDef>Protocolos</th>
-                <td mat-cell *matCellDef="let row">{{row.protocolos}}</td>
+                <td mat-cell *matCellDef="let row" (click)="buscarProtocolo(row.id)">{{row.protocolos}}</td>
               </ng-container>
 
               <ng-container matColumnDef="grupoAgenda">
@@ -79,7 +103,7 @@
 
               <ng-container matColumnDef="agendamentoFuturo">
                 <th mat-header-cell *matHeaderCellDef>Agend. Futuro</th>
-                <td mat-cell *matCellDef="let row">{{row.agendamentoFuturo}}</td>
+                <td mat-cell *matCellDef="let row" (click)="agendamentosFuturo(row.id)">{{row.agendamentoFuturo}}</td>
               </ng-container>
 
               <!-- Name Column -->
@@ -119,12 +143,13 @@
               <tr 
                     mat-row 
                     [class.demo-row-is-clicked]=""
-                    *matRowDef="let row; columns: colunas;" (dblclick)="selecionarPessoa(row.id)">
-
+                    *matRowDef="let row; columns: colunas;"
+                    (click)="LinhaSelecionada(row.id)"
+                    [ngClass]="{'corLinhaGrid' : row.id == idSelecionado }">
               </tr>
             </table>
         </div>
-
+</form>
         <div class="rodape">
             <button class="button" mat-raised-button color="primary" (click)="AgendarOrcar()">
                 Agendar e Orçar

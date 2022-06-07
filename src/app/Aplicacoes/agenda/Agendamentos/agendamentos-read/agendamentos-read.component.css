@@ -49,23 +49,6 @@ search {
     margin-left: 10px;
         
 }
-
-
-
-.textBusca {
-    float: right;
-    margin-top: 15px;
-}
-
-.botaoBusca {
-    float :right;
-    font-size: 15px;
-    width: 150px;
-    margin-top: 2px;
-
-}
-
-
 .mat-cell .mat-row:hover {
     cursor: pointer;
     cursor: row-resize;

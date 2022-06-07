@@ -83,10 +83,11 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns">teste</tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      
-      
-
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+        [ngClass]="{'corLinhaGrid' : row.id == idSelecionado}"
+        (click)="selecionaLinha(row.id)"
+        >
+      </tr>
     </table>
 
 </div>

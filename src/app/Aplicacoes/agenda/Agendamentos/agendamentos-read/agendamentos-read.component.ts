@@ -20,6 +20,7 @@ export class AgendamentosReadComponent implements OnInit {
   
   agendamentos : Agendamentos[]
  
+  selected : Number = 0;
   
   constructor(
               private servicoAgendamento : ServiceAllService<Agendamentos>,
@@ -49,9 +50,10 @@ export class AgendamentosReadComponent implements OnInit {
   }
 
   NovoAgendamento(){
-
     this.servico.Popup("", AgendamentosCreateComponent, '70%', '80%');
+  }
 
-        
+  selecionaLinha(id : Number){
+    this.selected = id;
   }
 }

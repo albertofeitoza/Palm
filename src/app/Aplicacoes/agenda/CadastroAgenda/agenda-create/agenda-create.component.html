@@ -1,3 +1,6 @@
+<a (click)="fecharPopup()">
+  <i class="material-icons close">close</i>
+</a>
 <mat-tab-group (selectedTabChange)="selecionaAbaAgenda($event)" >
 <!--Cadastro de AGENDA-->
 <mat-tab label="Cadastro de Agenda" id="labelAgenda">  
@@ -105,7 +108,9 @@
                     
             
                 <tr mat-header-row *matHeaderRowDef="Colunas"></tr>
-                <tr mat-row *matRowDef="let row; columns: Colunas;" (click)="AgendaSelecionada(row.id)"></tr>
+                <tr mat-row *matRowDef="let row; columns: Colunas;" 
+                [ngClass]="{'corLinhaGrid' : row.id == agendaSelecionada} "
+                (click)="AgendaSelecionada(row.id)"></tr>
               </table>
             </div>
           </mat-card>
@@ -201,7 +206,7 @@
                         Salvar
                     </button>
                     
-                    <button mat-raised-button (click)="fecharPopup()" color="primary" > 
+                    <button mat-raised-button (click)="EstadoForm()" color="primary" > 
                         Voltar
                     </button>
             </mat-card>
@@ -474,6 +479,6 @@
 
       </mat-tab>
 
-
+      
 
 </mat-tab-group>
