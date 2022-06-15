@@ -12,6 +12,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { DadosAgendamentoComponent } from '../dados-agendamento/dados-agendamento.component';
 import { cpf } from 'cpf-cnpj-validator';
 import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
+import { PessoaComponent } from 'src/app/components/pessoa/pessoa.component';
 
 @Component({
   selector: 'app-agendamentos-create',
@@ -99,6 +100,9 @@ constructor(
                                   
                                   : this.pessoa.nome != null
                                   ? x.nome?.toLowerCase().includes(this.pessoa.nome.toLowerCase())
+
+                                  : this.pessoa.responsavel != null
+                                  ? x.responsavel?.toLowerCase().includes(this.pessoa.responsavel.toLowerCase())
                                   
                                   : this.pessoa.rg != null
                                   ? x.rg?.includes(this.pessoa.rg)
@@ -127,7 +131,7 @@ constructor(
     {
       this.servico.Popup(this.idSelecionado.toString(), DadosAgendamentoComponent, '70%', '80%');
     } 
-    else
+   /* else
     {
       this.pessoa.nome == null 
               ? this.servico.showMessage("Informar o Nome", false) 
@@ -137,9 +141,9 @@ constructor(
               :  this.pessoa.estCivil == null ? this.servico.showMessage("estado cívil Obrigatório", false) 
               :  this.pessoa.sexo == null ? this.servico.showMessage("informar o sexo", false) 
               : this.CadastrarPessoa()
-              
+
     }
-      
+   */   
   }
 
   LinhaSelecionada(id : Number){
@@ -150,7 +154,8 @@ constructor(
   }
   
   CadastrarPessoa(){
-    this.pessoa.dtCriacao = new Date
+   
+   /* this.pessoa.dtCriacao = new Date
     this.pessoa.tipoPessoa = 2;
     this.pessoa.rg = this.pessoa.rg.toString(); 
     this.pessoa.cpfcnpj = this.pessoa.cpfcnpj.toString(); 
@@ -158,7 +163,10 @@ constructor(
     this.servicoCadastroPessoa.create(this.pessoa, Endpoint.Pessoa).subscribe(p => {
       this.servico.Popup(p.id?.toString(), DadosAgendamentoComponent, '70%', '80%');
     })
-    
+    */
+
+   this.servico.Popup("", PessoaComponent, '70%', '80%')
+
 
   }
 

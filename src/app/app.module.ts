@@ -84,6 +84,7 @@ import { AgendaGrupoUpdateComponent } from './Aplicacoes/agenda/GrupoAgenda/agen
 import { AgendamentosReadComponent } from './Aplicacoes/agenda/Agendamentos/agendamentos-read/agendamentos-read.component';
 import { AgendamentosCreateComponent } from './Aplicacoes/agenda/Agendamentos/agendamentos-create/agendamentos-create.component';
 import { DadosAgendamentoComponent } from './Aplicacoes/agenda/Agendamentos/dados-agendamento/dados-agendamento.component';
+import { PessoaComponent } from './components/pessoa/pessoa.component';
 
 @NgModule({
   declarations: [
@@ -132,6 +133,7 @@ import { DadosAgendamentoComponent } from './Aplicacoes/agenda/Agendamentos/dado
     AgendamentosReadComponent,
     AgendamentosCreateComponent,
     DadosAgendamentoComponent,
+    PessoaComponent,
     
   ],
   imports: [
