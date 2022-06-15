@@ -7,7 +7,7 @@
         {
             "type": "pwa-chrome",
             "request": "launch",
-            "name": "Debug no C",
+            "name": "Debug no Chrome LocalHost",
             "url": "http://localhost:4200",
             "webRoot": "${workspaceFolder}"
         }
