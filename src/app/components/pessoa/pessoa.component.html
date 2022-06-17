@@ -5,13 +5,14 @@
       </i>
     </a>
 </div>
+
 <mat-card>
     <mat-card-title>Cadastro de Pessoa</mat-card-title>
  
 
     <form class="formularioRow" style="margin-top: 10%;">
             
-             <mat-form-field appearance="outline" style="width: 20%;">
+              <mat-form-field appearance="outline" style="width: 20%;">
                   <mat-label>Nome</mat-label>
                   <input matInput placeholder="Nome" id="nomePessoa"
                   [(ngModel)]="pessoa.nome" name="nome">        
@@ -39,46 +40,42 @@
                 <mat-label>Data Nascimento</mat-label>
                 <input matInput placeholder="Data Nasc" id="dataNascimento" type="date"
                 [(ngModel)]="pessoa.dataNascimento" name="dataNascimento">
-            </mat-form-field>
+              </mat-form-field>
             
-            <br />
+              <br />
            
-            <mat-form-field appearance="outline" style="width: 9%;">
-              <mat-label>Parentesco</mat-label>
-              <input matInput placeholder="Parentesco" id="parentesco"
-              [(ngModel)]="pessoa.parentesco" name="parentesco">
-            </mat-form-field>
+              <mat-form-field appearance="outline" style="width: 9%;">
+                <mat-label>Parentesco</mat-label>
+                <input matInput placeholder="Parentesco" id="parentesco"
+                [(ngModel)]="pessoa.parentesco" name="parentesco">
+              </mat-form-field>
   
-            <mat-form-field appearance="outline" style="width: 9%;">
+              <mat-form-field appearance="outline" style="width: 9%;">
                 <mat-select [(value)]="pessoa.estCivil" placeholder="EstCivil" id="EstCivil">
                   <mat-option *ngFor="let t of estCivil" [value]="t.id">
                     {{t.tipo}}
                   </mat-option>
                 </mat-select>
   
-            </mat-form-field>
+              </mat-form-field>
   
-            <mat-form-field appearance="outline" style="width: 8%;">
-              <mat-select [(value)]="pessoa.sexo" placeholder="Sexo">
-                <mat-option *ngFor="let t of sexo" [value]="t.id">
-                  {{t.tipo}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-  
-            <span style="width: 4%;">
-              <i class="material-icons botaoBuscaPopups">search</i>
-            </span>
+              <mat-form-field appearance="outline" style="width: 8%;">
+                <mat-select [(value)]="pessoa.sexo" placeholder="Sexo">
+                  <mat-option *ngFor="let t of sexo" [value]="t.id">
+                    {{t.tipo}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
     </form>
 </mat-card>
-  <div class="rodape">
-              <button class="button" mat-raised-button color="primary" (click)="salvar()">
-                  Agendar e Orçar
-              </button>
-              <button class="button" mat-raised-button color="primary" (click)="fecharPopup()">
-                  Cancelar
-              </button>
-         </div>
+    <div class="rodape">
+      <button class="button" mat-raised-button color="primary" (click)="salvar()">
+        Salvar
+      </button>
+      <button class="button" mat-raised-button color="primary" (click)="fecharPopup()">
+        Cancelar
+      </button>
+    </div>
   
          
   

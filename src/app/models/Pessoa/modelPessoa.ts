@@ -10,6 +10,4 @@ export class Pessoa {
     parentesco : string
     estCivil : number
     sexo : number
-
 }
-

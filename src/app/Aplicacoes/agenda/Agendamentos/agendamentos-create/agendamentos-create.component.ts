@@ -42,8 +42,8 @@ constructor(
   ngOnInit(): void {
   
 
-  this.sexo = this.servico.Genero();
-  this.estCivil = this.servico.EstCivil();
+    this.sexo = this.servico.Genero();
+    this.estCivil = this.servico.EstCivil();
   
   }
   
@@ -119,8 +119,6 @@ constructor(
  
   }
 
-
-
   fecharPopup(){
     
       this.dialofRef.close();
@@ -131,19 +129,6 @@ constructor(
     {
       this.servico.Popup(this.idSelecionado.toString(), DadosAgendamentoComponent, '70%', '80%');
     } 
-   /* else
-    {
-      this.pessoa.nome == null 
-              ? this.servico.showMessage("Informar o Nome", false) 
-              :  this.pessoa.cpfcnpj == null ? this.servico.showMessage("Informar o CPF", false) 
-              :  !cpf.isValid(this.pessoa.cpfcnpj.toString()) ? this.servico.showMessage("Cpf Inválido", false)
-              :  this.pessoa.dataNascimento == null ? this.servico.showMessage("Informar o data de nascimento", false) 
-              :  this.pessoa.estCivil == null ? this.servico.showMessage("estado cívil Obrigatório", false) 
-              :  this.pessoa.sexo == null ? this.servico.showMessage("informar o sexo", false) 
-              : this.CadastrarPessoa()
-
-    }
-   */   
   }
 
   LinhaSelecionada(id : Number){
@@ -154,20 +139,7 @@ constructor(
   }
   
   CadastrarPessoa(){
-   
-   /* this.pessoa.dtCriacao = new Date
-    this.pessoa.tipoPessoa = 2;
-    this.pessoa.rg = this.pessoa.rg.toString(); 
-    this.pessoa.cpfcnpj = this.pessoa.cpfcnpj.toString(); 
-
-    this.servicoCadastroPessoa.create(this.pessoa, Endpoint.Pessoa).subscribe(p => {
-      this.servico.Popup(p.id?.toString(), DadosAgendamentoComponent, '70%', '80%');
-    })
-    */
-
    this.servico.Popup("", PessoaComponent, '70%', '80%')
-
-
   }
 
 }
