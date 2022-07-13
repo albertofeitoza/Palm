@@ -1,8 +1,12 @@
-export interface Telefone {
-    id ?: null
+export class Telefone {
+    id : 0
     dtCriacao : Date
     ddd: string
-    telefone: string
+    numTeleFone: string
+    ramal : string
+    observacao : string
+    tipoTelefone : number
+    contatoid : number
+    criadoPor : number
     bloqueado : boolean
-    idUsuarioCriacao : number
 }
