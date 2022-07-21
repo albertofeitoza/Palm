@@ -7,7 +7,7 @@
 </div>
 
 <mat-card>
-    <mat-card-title>Cadastro de Pessoa</mat-card-title>
+    <mat-card-title> Cadastro de Pessoa</mat-card-title>
 
     <form class="formularioRow" style="margin-top: 5%;">
             
@@ -66,39 +66,54 @@
                 </mat-select>
               </mat-form-field>
               
-              
-              <mat-card-title>Contatos</mat-card-title>
-              
-              <mat-form-field appearance="outline" type="number" style="width: 8%;">
-                <mat-label>DDD</mat-label>
-                <input matInput placeholder="ddd" id="DDD"
-                [(ngModel)]="telefone.ddd" name="ddd">        
-              </mat-form-field>
-
-              <mat-form-field appearance="outline" style="width: 15%;">
-                <mat-label>Telefone</mat-label>
-                <input matInput placeholder="Telefone" id="numTeleFone" type="number" 
-                [(ngModel)]="telefone.numTeleFone" name="numTeleFone">        
-              </mat-form-field>
-
-              <mat-form-field appearance="outline" style="width: 15%;">
-                <mat-label>Ramal</mat-label>
-                <input matInput placeholder="Ramal" id="Ramal" type="number"
-                [(ngModel)]="telefone.ramal" name="ramal">        
-              </mat-form-field>
-              
-                
-              <mat-form-field appearance="outline" style="width: 25%;">
+              <mat-form-field appearance="outline" style="width: 20%;">
                 <mat-label>E-mail</mat-label>
                 <input matInput placeholder="e-mail" id="nomeContato" type="email" 
                 [(ngModel)]="contato.email" name="email">        
               </mat-form-field>
               
-              <mat-form-field appearance="outline" style="width: 25%;">
+              <mat-form-field appearance="outline" style="width: 20%;">
                 <mat-label>Email Secundário</mat-label>
                 <input matInput placeholder="E-mail Secundário" id="email_secundario" type="email"
                 [(ngModel)]="contato.email_secundario" name="email_secundario">        
               </mat-form-field>
+              
+              <mat-card-title> Contato</mat-card-title>
+
+              <mat-form-field appearance="outline" style="width: 15%;">
+                <mat-select [(value)]="telefone.ddd" placeholder="DDD">
+                  <mat-option *ngFor="let t of ddd" [value]="t.id">
+                    {{t.id}} - {{t.tipo}} 
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" style="width: 15%;">
+                <mat-select [(value)]="telefone.tipoTelefone" placeholder="Tipo Telefone">
+                  <mat-option *ngFor="let t of tipoTelefone" [value]="t.id">
+                    {{t.tipo}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+
+              <mat-form-field appearance="outline" style="width: 10%;">
+                <mat-label>Telefone</mat-label>
+                <input matInput placeholder="Telefone" id="numTeleFone" type="number" 
+                [(ngModel)]="telefone.numTeleFone" name="numTeleFone">        
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" style="width: 8%;">
+                <mat-label>Ramal</mat-label>
+                <input matInput placeholder="Ramal" id="Ramal" type="number"
+                [(ngModel)]="telefone.ramal" name="ramal">        
+              </mat-form-field>
+              
+              <span (click)="adicionarTelefone()">
+                <i class="material-icons"> add</i>
+              </span>
+
+
     </form>
 </mat-card>
     <div class="rodape">

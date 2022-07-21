@@ -11,6 +11,8 @@ export enum Endpoint {
     AgendaHorarios = '/AgendaHorarios',
     Agendamentos = '/Agendamentos',
     Pessoa = '/Pessoa',
+    Contato = '/Contato',
+    Telefone = '/Telefone',
     Protocolo = '/Protocolo',
     Token = '/Token'
 

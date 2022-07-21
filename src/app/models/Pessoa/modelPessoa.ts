@@ -1,5 +1,3 @@
-import { Contato } from "../contato/modelContato"
-
 export class Pessoa {
     id : number
     dtCriacao : Date
@@ -12,5 +10,4 @@ export class Pessoa {
     parentesco : string
     estCivil : number
     sexo : number
-    contatos : Contato[]
 }

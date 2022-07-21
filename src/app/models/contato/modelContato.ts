@@ -11,5 +11,4 @@ export class Contato {
     criadoPor : number
     pessoaId : number
     bloqueado : boolean
-    telefones : Telefone[]
 }
