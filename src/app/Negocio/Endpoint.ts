@@ -14,6 +14,7 @@ export enum Endpoint {
     Contato = '/Contato',
     Telefone = '/Telefone',
     Protocolo = '/Protocolo',
+    cep = 'https://viacep.com.br/ws/{0}/json',
     Token = '/Token'
 
 }

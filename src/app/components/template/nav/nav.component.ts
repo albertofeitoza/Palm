@@ -16,7 +16,7 @@ lock = false;
              private servico : UtilService) { }
 
   ngOnInit(): void {
-  this.validarAcesso();
+     this.validarAcesso();
   }
 
   sairSistema(){

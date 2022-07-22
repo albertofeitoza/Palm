@@ -78,8 +78,11 @@
                 [(ngModel)]="contato.email_secundario" name="email_secundario">        
               </mat-form-field>
               
-              <mat-card-title> Contato</mat-card-title>
+              <mat-card-title> Endereço</mat-card-title>
 
+                            
+              
+              <mat-card-title> Telefones</mat-card-title>
               <mat-form-field appearance="outline" style="width: 15%;">
                 <mat-select [(value)]="telefone.ddd" placeholder="DDD">
                   <mat-option *ngFor="let t of ddd" [value]="t.id">

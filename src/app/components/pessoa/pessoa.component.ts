@@ -8,6 +8,7 @@ import { cpf } from 'cpf-cnpj-validator';
 import { TipoPessoa } from 'src/app/Negocio/TipoPessoa';
 import { Contato } from 'src/app/models/contato/modelContato';
 import { Telefone } from 'src/app/models/Telefone/telefoneModel';
+import { cep } from 'src/app/models/CEP/modelBuscaCep';
 
 @Component({
   selector: 'app-pessoa',
@@ -15,33 +16,34 @@ import { Telefone } from 'src/app/models/Telefone/telefoneModel';
   styleUrls: ['./pessoa.component.css']
 })
 export class PessoaComponent implements OnInit {
-  [x: string]: any;
-
+  
   pessoa : Pessoa = new Pessoa()
   contato : Contato = new Contato();
   telefone : Telefone =  new Telefone()
+  cep : cep = new cep();
 
   sexo : any[];
   estCivil : any[];
   tipoTelefone : any[]
   ddd : any[]
+  retornocep : cep[]
 
-  displayedColumns = ['nome', 'email','email_Secundario','website','observacao','padrao','action']  
+  displayedColumns = ['DDD', 'email','email_Secundario','website','observacao','padrao','action']  
   
-  contatos : Contato[] = new Array()
   telefones : Telefone[] = new Array()
 
   constructor(
               private servico : UtilService,
               private dialofRef : MatDialogRef<PessoaComponent>,
               private servicoPessoa : ServiceAllService<Pessoa>,
+              private servicoCep : ServiceAllService<cep>
               
               )
                { }
 
   ngOnInit(): void {
     this.carregaCombos()
-    
+    this.buscaCep(13)
   }
   
   fecharPopup(){
@@ -88,7 +90,6 @@ export class PessoaComponent implements OnInit {
     this.contato.criadoPor = Number(this.servico.Sessao().usuarioId);
     this.contato.pessoaId = 0;
     this.contato.bloqueado = false;
-    this.contatos.push(this.contato)
     
   }
 
@@ -139,6 +140,18 @@ export class PessoaComponent implements OnInit {
     if (this.telefone.ddd != null || this.telefone.numTeleFone != null || this.telefone.tipoTelefone != null )
       return true
       return false
+
+  }
+
+  buscaCep(event : any){
+
+    if(event == 13)
+    {
+        let cep = '09790705'
+        this.servicoCep.buscarExterna(Endpoint.cep.replace('{0}', cep)).subscribe(x => {
+          this.retornocep = x;
+        })
+    }
 
   }
   

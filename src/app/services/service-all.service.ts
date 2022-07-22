@@ -70,4 +70,14 @@ export class ServiceAllService <T>{
           )
     }
 
+// Buscar dados fora da API 
+buscarExterna(url: string): Observable<T[]>{
+  return this.http.get<T[]>(`${url}`).pipe(
+    map(obj => obj),
+    catchError(e => this.utilService.erroHandler(e))
+  ); 
+}
+
+
+
 }

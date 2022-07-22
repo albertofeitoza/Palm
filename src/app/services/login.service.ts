@@ -43,7 +43,7 @@ export class LoginService {
                 
               }
               
-  logarSistema(domain : string, usuario : string , senha: string ) {
+  async logarSistema(domain : string, usuario : string , senha: string ) {
 
   this.sessao = new dadosSessao();
     
