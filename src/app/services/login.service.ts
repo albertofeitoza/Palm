@@ -93,7 +93,11 @@ isLogedIn () : boolean{
  
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.sessao.accessToken}`
+      'Authorization': `Bearer ${this.sessao.accessToken}`,
+      'IdEmpresa' : `${this.convertBase64toText(this.sessao.empresaUsuarioId)}`,
+      'IdUsuario' : `${this.convertBase64toText(this.sessao.usuarioId)}`,
+      'TipoUsuario' : `${this.convertBase64toText(this.sessao.idGrupoUsuario)}`,
+
     });
 
   return { headers: headers };

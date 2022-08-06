@@ -38,6 +38,7 @@ export class ServiceAllService <T>{
     // Buscar todos Get All
     read(tipo: string): Observable<T[]>{
       let idEmpresa = this.utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador ? 0 : this.utilService.Sessao().empresaUsuarioId;
+      //let idEmpresa = this.utilService.Sessao().idGrupoUsuario > 0 ? this.utilService.Sessao().idGrupoUsuario : this.utilService.Sessao().empresaUsuarioId;
       return this.http.get<T[]>(`${this.environmentUrl + tipo}/?idEmpresa=${idEmpresa}` , this.loginservice.header()).pipe(
         map(obj => obj),
         catchError(e => this.utilService.erroHandler(e))
@@ -70,13 +71,13 @@ export class ServiceAllService <T>{
           )
     }
 
-// Buscar dados fora da API 
-buscarExterna(url: string): Observable<T[]>{
-  return this.http.get<T[]>(`${url}`).pipe(
-    map(obj => obj),
-    catchError(e => this.utilService.erroHandler(e))
-  ); 
-}
+    // Buscar CEP fora da API 
+    buscarExterna(url: string): Observable<T>{
+      return this.http.get<T>(`${url}`).pipe(
+        map(obj => obj),
+        catchError(e => this.utilService.erroHandler(e))
+      ); 
+    }
 
 
 

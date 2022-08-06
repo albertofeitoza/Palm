@@ -7,9 +7,9 @@
 </div>
 
 <mat-card>
-    <mat-card-title> Cadastro de Pessoa</mat-card-title>
+    <mat-card-title style="margin-left: 1%;">Cadastro de Pessoa</mat-card-title>
 
-    <form class="formularioRow" style="margin-top: 5%;">
+    <form class="formularioRow" style="margin-top: 0%;">
             
               <mat-form-field appearance="outline" style="width: 25%;">
                   <mat-label>Nome</mat-label>
@@ -35,7 +35,7 @@
                   [(ngModel)]="pessoa.cpfcnpj" name="cpf">
               </mat-form-field>
   
-              <mat-form-field appearance="outline" style="width: 12%;">
+              <mat-form-field appearance="outline" style="width: 15%;">
                 <mat-label>Data Nascimento</mat-label>
                 <input matInput placeholder="Data Nasc" id="dataNascimento" type="date"
                 [(ngModel)]="pessoa.dataNascimento" name="dataNascimento">
@@ -50,15 +50,15 @@
               </mat-form-field>
   
               <mat-form-field appearance="outline" style="width: 15%;">
-                <mat-select [(value)]="pessoa.estCivil" placeholder="EstCivil" id="EstCivil">
-                  <mat-option *ngFor="let t of estCivil" [value]="t.id">
-                    {{t.tipo}}
-                  </mat-option>
-                </mat-select>
+              <mat-select [(value)]="pessoa.estCivil" placeholder="Estado Civil" id="EstCivil">
+                <mat-option *ngFor="let t of estCivil" [value]="t.id">
+                  {{t.tipo}}
+                </mat-option>
+              </mat-select>
   
               </mat-form-field>
   
-              <mat-form-field appearance="outline" style="width: 8%;">
+              <mat-form-field appearance="outline" style="width: 9%;">
                 <mat-select [(value)]="pessoa.sexo" placeholder="Sexo">
                   <mat-option *ngFor="let t of sexo" [value]="t.id">
                     {{t.tipo}}
@@ -66,23 +66,64 @@
                 </mat-select>
               </mat-form-field>
               
-              <mat-form-field appearance="outline" style="width: 20%;">
+              <mat-form-field appearance="outline" style="width: 23%;">
                 <mat-label>E-mail</mat-label>
                 <input matInput placeholder="e-mail" id="nomeContato" type="email" 
                 [(ngModel)]="contato.email" name="email">        
               </mat-form-field>
               
-              <mat-form-field appearance="outline" style="width: 20%;">
+              <mat-form-field appearance="outline" style="width: 23%;">
                 <mat-label>Email Secundário</mat-label>
                 <input matInput placeholder="E-mail Secundário" id="email_secundario" type="email"
                 [(ngModel)]="contato.email_secundario" name="email_secundario">        
               </mat-form-field>
               
-              <mat-card-title> Endereço</mat-card-title>
+              <mat-card-title style="margin-left: 1%;"> Endereço</mat-card-title>
 
-                            
+              <mat-form-field appearance="outline" style="width: 10%;">
+                <mat-label>CEP</mat-label>
+                <input matInput placeholder="CEP - Apenas Números"
+                [(ngModel)]="endereco.cep" name="CEP" maxlength="8" (keypress)="buscaCep($event)">
+              </mat-form-field>     
               
-              <mat-card-title> Telefones</mat-card-title>
+              <mat-form-field appearance="outline" style="width: 25%;">
+                <mat-label>Rua</mat-label>
+                <input matInput placeholder="Rua"
+                [(ngModel)]="endereco.rua" name="rua">        
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" style="width: 8%;">
+                <mat-label>Número</mat-label>
+                <input matInput placeholder="Número" type="number"
+                [(ngModel)]="endereco.numero" name="numero">        
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" style="width: 10%;">
+                <mat-label>Complemento</mat-label>
+                <input matInput placeholder="complemento"
+                [(ngModel)]="endereco.complemento" name="complemento">        
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" style="width: 15%;">
+                <mat-label>Bairro</mat-label>
+                <input matInput placeholder="Bairro"
+                [(ngModel)]="endereco.bairro" name="bairro">        
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" style="width: 5%;">
+                <mat-label>UF</mat-label>
+                <input matInput placeholder="UF"
+                [(ngModel)]="endereco.siglaEstado" name="uf">        
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" style="width: 20%;">
+                <mat-label>Cidade</mat-label>
+                <input matInput placeholder="Cidade"
+                [(ngModel)]="endereco.cidade" name="cidade">        
+              </mat-form-field>
+
+              <mat-card-title style="margin-left: 1%;"> Telefones</mat-card-title>
+
               <mat-form-field appearance="outline" style="width: 15%;">
                 <mat-select [(value)]="telefone.ddd" placeholder="DDD">
                   <mat-option *ngFor="let t of ddd" [value]="t.id">
@@ -100,7 +141,7 @@
               </mat-form-field>
 
 
-              <mat-form-field appearance="outline" style="width: 10%;">
+              <mat-form-field appearance="outline" style="width: 20%;">
                 <mat-label>Telefone</mat-label>
                 <input matInput placeholder="Telefone" id="numTeleFone" type="number" 
                 [(ngModel)]="telefone.numTeleFone" name="numTeleFone">        
@@ -111,12 +152,78 @@
                 <input matInput placeholder="Ramal" id="Ramal" type="number"
                 [(ngModel)]="telefone.ramal" name="ramal">        
               </mat-form-field>
-              
+
+              <mat-form-field appearance="outline" style="width: 35%;">
+                <mat-label>Observação</mat-label>
+                <input matInput placeholder="Observacao" id="observacao"
+                [(ngModel)]="telefone.observacao" name="observacao">        
+              </mat-form-field>
+
               <span (click)="adicionarTelefone()">
-                <i class="material-icons"> add</i>
+                <strong><i class="material-icons">add</i></strong>
               </span>
 
-
+              <div class="mat-elevation-z4" style="height: 140px;overflow: auto;">
+                <table mat-table [dataSource]="telefones"  class="mat-elevation-z8 demo-table">
+                  <!-- Id Column -->
+                 
+                  <ng-container matColumnDef="ddd" style="height: 30px;">
+                    <th mat-header-cell *matHeaderCellDef>DDD</th>
+                    <td mat-cell *matCellDef="let row">{{row.ddd}}</td>
+                  </ng-container>
+          
+                  <ng-container matColumnDef="numTeleFone">
+                    <th mat-header-cell *matHeaderCellDef>Núm Telefone</th>
+                    <td mat-cell *matCellDef="let row">{{row.numTeleFone}}</td>
+                  </ng-container>
+          
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="ramal">
+                    <th mat-header-cell *matHeaderCellDef>Ramal</th>
+                    <td mat-cell *matCellDef="let row">{{row.ramal}}</td>
+                  </ng-container>
+                  
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="observacao">
+                    <th mat-header-cell *matHeaderCellDef>Observação</th>
+                    <td mat-cell *matCellDef="let row">{{row.observacao}}</td>
+                  </ng-container>
+            
+                   <!-- Name Column -->
+                   <ng-container matColumnDef="tipoTelefone">
+                    <th mat-header-cell *matHeaderCellDef>Tipo Telefone</th>
+                    <td mat-cell *matCellDef="let row">{{row.tipoTelefone}}</td>
+                  </ng-container>
+                   
+                  <!-- Coluna de Ações -->
+                  <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef>Ações</th>
+                    <td mat-cell *matCellDef="let row">
+                      
+                        <a (click)="RemoveTelefone(row)" class="delete">
+                            <i class="material-icons">
+                                delete
+                            </i>
+                        </a>
+                        
+            
+                    </td>
+                  </ng-container>
+                      
+              
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr 
+                        mat-row 
+                        [class.demo-row-is-clicked]="" 
+                        *matRowDef="let row; columns: displayedColumns;"
+                        (click)="selecionaLinha(row.id)"
+                        [ngClass]="{'corLinhaGrid' : row.id == selected}"
+                        >
+                      </tr>
+          
+                </table>
+          
+            </div>
     </form>
 </mat-card>
     <div class="rodape">

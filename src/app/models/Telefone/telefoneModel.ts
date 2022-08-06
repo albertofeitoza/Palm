@@ -1,5 +1,5 @@
 export class Telefone {
-    id : 0
+    id : number
     dtCriacao : Date
     ddd: string
     numTeleFone: string
