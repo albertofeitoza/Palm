@@ -73,8 +73,6 @@ export class EmpresaCreateComponent implements OnInit {
                   this.servicoEmpresa.create(this.empresa, Endpoint.Empresa).subscribe(empe => {
                    let emp = empe;
                           
-                    let empresaPai = empe;
-                          
                             emp.bloqueado = true;
                             emp.empresaPai = Number(this.utilService.Sessao().empresaUsuarioId);
                             
@@ -88,7 +86,7 @@ export class EmpresaCreateComponent implements OnInit {
                 }
           }
           else
-           this.utilService.showMessage("Cnpj já cadastrado!",false);
+           this.utilService.showMessage(`Esse cnpj já está cadastrado para empresa ${ empc.map(x => x.nomeFantasia) } e o Status está ${ empc.map(x => x.bloqueado ? 'Inativo' : 'Ativo' )}`,false);
         })  
       }
       else{

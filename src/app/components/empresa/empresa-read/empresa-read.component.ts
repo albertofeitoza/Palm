@@ -53,19 +53,10 @@ export class EmpresaReadComponent implements OnInit {
   buscarEmpresa(): void 
   {
     let filtroEmpresa = (<HTMLSelectElement>document.getElementById('busca')).value;
-    
-    this.serviceEmpresa.read(Endpoint.Empresa).subscribe(emp => {
-     
-      if (this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
-      {
+      
+      this.serviceEmpresa.read(Endpoint.Empresa).subscribe(emp => {
         this.empresa = filtroEmpresa != null ? emp.filter(x => x.nomeFantasia.toLowerCase().includes(filtroEmpresa.toLowerCase())) : emp
-      }
-      else
-      {
-          this.empresa = filtroEmpresa != null ? emp.filter(x => x.nomeFantasia.toLowerCase().includes(filtroEmpresa.toLowerCase())
-              && !x.bloqueado ) : emp.filter(x => !x.bloqueado)
-      }
-    });
+      })
     
   }
 
@@ -73,16 +64,19 @@ export class EmpresaReadComponent implements OnInit {
 
     if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
     {
-        const scrollStrategy = this.overlay.scrollStrategies.reposition();
-        const dialogRef = this.dialog.open(EmpresaCreateComponent, {
-          width : '700px',
-          height : '730px',
-          scrollStrategy
+        
+      this._utilService.Popup("", EmpresaCreateComponent, '730px', '730px')
+      
+      // const scrollStrategy = this.overlay.scrollStrategies.reposition();
+        // const dialogRef = this.dialog.open(EmpresaCreateComponent, {
+        //   width : '700px',
+        //   height : '730px',
+        //   scrollStrategy
 
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          console.log(`Dialog result: ${result}`);
-        });
+        // });
+        // dialogRef.afterClosed().subscribe(result => {
+        //   console.log(`Dialog result: ${result}`);
+        // });
     }else{
       this._utilService.showMessage("Você não possui permissão para criação de empresas",true);
     }

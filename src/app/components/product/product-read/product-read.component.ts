@@ -24,7 +24,7 @@ export class ProductReadComponent implements OnInit {
 products: ProdutoEmpresa[]
 vlrProduto : string
 
-displayedColumns = ['id','nome', 'valor','bloqueado','action']  
+displayedColumns = ['id','nome', 'nomeEmpresa', 'valor','bloqueado','action']  
 idSelecionado : Number = 0;
 
   constructor(private router : Router,

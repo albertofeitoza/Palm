@@ -38,10 +38,13 @@ export class ProductCreateComponent implements OnInit {
 
   associarProdutoEmpresa() : void {
 
+    debugger
     this.produtoEmpresa.criadoPor  = Number(this.servico.Sessao().usuarioId);
     this.produtoEmpresa.dtCriacao = new Date;
     this.produtoEmpresa.bloqueado = false;
     this.produtoEmpresa.nome = this.comboProduto.filter(x => x.Id == this.produtoEmpresa.produtoid).map(x => x.Nome).toString().trim();
+    
+
 
     this.ProdutoEmpresaservice.read(Endpoint.ProdutoEmpresa).subscribe(p => {
       p = p;
@@ -67,7 +70,8 @@ export class ProductCreateComponent implements OnInit {
   }
 
   buscarProduto(){
-      this.serviceProduto.read(Endpoint.Produto).subscribe(x => {
+    debugger  
+    this.serviceProduto.read(Endpoint.Produto).subscribe(x => {
         this.comboProduto = x;
       })
 

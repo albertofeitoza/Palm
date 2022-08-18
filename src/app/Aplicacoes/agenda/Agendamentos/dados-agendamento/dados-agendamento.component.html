@@ -3,20 +3,20 @@
       close
     </i>
 </a>
-
+<h5>Dados Pessoais</h5>
 <mat-form-field appearance="outline" style="width: 170px;">
     <mat-label>Protocolo</mat-label>
     <input matInput placeholder="Protocolo"
     [(ngModel)]="protocolo.id" name="protocolo" disabled="true">        
 </mat-form-field>
          <form>
-            <mat-form-field appearance="outline" style="width: 170px;">
+            <mat-form-field appearance="outline" style="width: 200px;">
                 <mat-label>Nome</mat-label>
                 <input matInput placeholder="Nome"
                 [(ngModel)]="pessoa.nome" name="nome">        
             </mat-form-field>
         
-            <mat-form-field appearance="outline" style="width: 170px;">
+            <mat-form-field appearance="outline" style="width: 200px;">
                 <mat-label>Responsável</mat-label>
                 <input matInput placeholder="Responsável"
                 [(ngModel)]="pessoa.responsavel" name="responsavel">
@@ -40,9 +40,13 @@
               [(ngModel)]="pessoa.dataNascimento" name="dataNascimento">
             </mat-form-field>
             <span (click)="editarPessoa()">
-                <i class="material-icons botaoBuscaPopups">search</i>
+                <i class="material-icons botaoBuscaPopups">save</i>
             </span>
         </form>
+
+<app-pessoa></app-pessoa>
+
+
 <h5>CONTATOS</h5>
 
 <span>

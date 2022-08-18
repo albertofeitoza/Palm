@@ -44,14 +44,14 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
       if (grpId == TipoUsuario.Administrador)
          this.tipoLogin=true;
 
-      this.alimentarCombo();
+      this.carregaCombos();
       this.buscarEmpresa();
   }
   
   createUsuario() : void {
-    
-    this.usuario.criadoPor  = Number(this.utilService.Sessao().usuarioId);
-    this.usuario.dtCriacao = new Date;
+   
+   this.usuario.criadoPor  = Number(this.utilService.Sessao().usuarioId);
+   this.usuario.dtCriacao = new Date;
    
     this.usuario.grupoUsuarioid = this.usuario.grupoUsuarioid.toString().trim() == "Administrador" ? TipoUsuario.Administrador.toString() 
                                 : this.usuario.grupoUsuarioid.toString().trim() == "Sistema" ? TipoUsuario.Sistema.toString()
@@ -100,12 +100,12 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
     let grpId = Number(this.utilService.convertBase64toText(this.utilService.Sessao().idGrupoUsuario));
 
     this.serviceEmpresa.read(Endpoint.Empresa).subscribe(emp => {
-        emp = emp
+      this.empresa = emp
 
     })
   }
 
-  alimentarCombo() : void  {
+  carregaCombos() : void  {
 
     let grpId = Number(this.utilService.Sessao().idGrupoUsuario);
 

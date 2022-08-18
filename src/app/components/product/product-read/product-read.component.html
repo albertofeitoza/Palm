@@ -25,7 +25,13 @@
         <th mat-header-cell *matHeaderCellDef>Nome</th>
         <td mat-cell *matCellDef="let row">{{row.nome}}</td>
       </ng-container>
-      
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="nomeEmpresa">
+        <th mat-header-cell *matHeaderCellDef>Empresa</th>
+        <td mat-cell *matCellDef="let row">{{row.nomeEmpresa}}</td>
+      </ng-container>
+
        <!-- Name Price -->
        <ng-container matColumnDef="valor">
         <th mat-header-cell *matHeaderCellDef>Preço</th>

@@ -5,6 +5,7 @@ export class ProdutoEmpresa {
     dtCriacao : Date
     criadoPor : number
     nome: string
+    nomeEmpresa : string
     valor : number
     empresaid : string
     produtoid : number
