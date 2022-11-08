@@ -5,6 +5,8 @@ import { Pessoa } from 'src/app/models/Pessoa/modelPessoa';
 import { Endpoint } from 'src/app/Negocio/Endpoint';
 import { ServiceAllService } from 'src/app/services/service-all.service';
 import { UtilService } from 'src/app/services/util.service';
+import { PessoaUpdateComponent } from 'src/app/components/pessoa/pessoa-update/pessoa-update.component';
+import { PessoaComponent } from 'src/app/components/pessoa/pessoa.component';
 
 @Component({
   selector: 'app-dados-agendamento',
@@ -60,13 +62,8 @@ export class DadosAgendamentoComponent implements OnInit {
   }
 
   editarPessoa(){
-
+      this.servico.Popup(this.pessoa.id.toString(), PessoaComponent, '70%' , '80%')
    
-   
-    this.servicePessoa.update(this.pessoa, Endpoint.Pessoa).subscribe(x => {
-     this.servico.showMessage("Cadastro editado", false); 
-   })
-
   }
 
 

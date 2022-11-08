@@ -21,7 +21,7 @@ export class ProductReadComponent implements OnInit {
 
 
 
-products: ProdutoEmpresa[]
+products: ProdutoEmpresa[] 
 vlrProduto : string
 
 displayedColumns = ['id','nome', 'nomeEmpresa', 'valor','bloqueado','action']  

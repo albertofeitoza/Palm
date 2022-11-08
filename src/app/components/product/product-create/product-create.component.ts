@@ -18,13 +18,10 @@ export class ProductCreateComponent implements OnInit {
 
  comboProduto : Produto[] ;
  empresa : Empresa[];
- comboEmpresa : Empresa;
-
  produtoEmpresa: ProdutoEmpresa = new ProdutoEmpresa();
 
   constructor(
               private servico : UtilService,
-              private router : Router,
               private ProdutoEmpresaservice : ServiceAllService<ProdutoEmpresa>,
               private ServiceEmpresa : ServiceAllService<Empresa>,
               public matDialogref : MatDialogRef<ProductCreateComponent>,
@@ -38,31 +35,23 @@ export class ProductCreateComponent implements OnInit {
 
   associarProdutoEmpresa() : void {
 
-    debugger
     this.produtoEmpresa.criadoPor  = Number(this.servico.Sessao().usuarioId);
     this.produtoEmpresa.dtCriacao = new Date;
     this.produtoEmpresa.bloqueado = false;
     this.produtoEmpresa.nome = this.comboProduto.filter(x => x.Id == this.produtoEmpresa.produtoid).map(x => x.Nome).toString().trim();
-    
-
+    this.produtoEmpresa.nomeEmpresa = this.empresa.filter(x => x.id == Number(this.produtoEmpresa.empresaid)).map(x => x.nomeFantasia).toString();
 
     this.ProdutoEmpresaservice.read(Endpoint.ProdutoEmpresa).subscribe(p => {
-      p = p;
-
       let ativo = p.filter(x => x.produtoid == this.produtoEmpresa.produtoid && x.empresaid == this.produtoEmpresa.empresaid)
-      
       if (ativo.length == 0)
       {
         this.ProdutoEmpresaservice.create(this.produtoEmpresa, Endpoint.ProdutoEmpresa).subscribe(() => {
-          this.servico.showMessage('o Produto Criado!');
+          this.servico.showMessage(' Produto Criado!');
           })
-      
       }else{
-        this.servico.showMessage('Esse Produto Já foi cadastrado para essa empresa!');
+        this.servico.showMessage('Já existe o cadastrado desse produto para essa empresa!');
       }
-
     })
-    
   }
 
   fecharPopup() : void {

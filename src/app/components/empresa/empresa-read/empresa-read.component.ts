@@ -64,23 +64,10 @@ export class EmpresaReadComponent implements OnInit {
 
     if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
     {
-        
       this._utilService.Popup("", EmpresaCreateComponent, '730px', '730px')
-      
-      // const scrollStrategy = this.overlay.scrollStrategies.reposition();
-        // const dialogRef = this.dialog.open(EmpresaCreateComponent, {
-        //   width : '700px',
-        //   height : '730px',
-        //   scrollStrategy
-
-        // });
-        // dialogRef.afterClosed().subscribe(result => {
-        //   console.log(`Dialog result: ${result}`);
-        // });
     }else{
       this._utilService.showMessage("Você não possui permissão para criação de empresas",true);
     }
-
   }
 
 
@@ -88,17 +75,7 @@ export class EmpresaReadComponent implements OnInit {
 
     if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
     {
-        const scrollStrategy = this.overlay.scrollStrategies.reposition();
-        const dialogRef = this.dialog.open(EmpresaUpdateComponent, {
-          width : '700px',
-          height : '750px',
-          scrollStrategy,
-          id
-
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          console.log(`Dialog result: ${result}`);
-        });
+      this._utilService.Popup(id, EmpresaUpdateComponent, "700px", "750px")
     }else{
       this._utilService.showMessage("Você não possui permissão para alterar cadastro de empresas",true);
     }
@@ -109,24 +86,11 @@ export class EmpresaReadComponent implements OnInit {
 
     if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
     {
-        const scrollStrategy = this.overlay.scrollStrategies.reposition();
-        const dialogRef = this.dialog.open(EmpresaDeleteComponent, {
-          width : '500',
-          height : '200px',
-          scrollStrategy,
-          id
-
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          console.log(`Dialog result: ${result}`);
-        });
+      this._utilService.Popup(id, EmpresaDeleteComponent, "700px", "200px")
     }else{
       this._utilService.showMessage("Você não possui permissão para Excluir empresa",true);
     }
-    
   }
-
-
 }
   
 

@@ -13,6 +13,7 @@ import { DadosAgendamentoComponent } from '../dados-agendamento/dados-agendament
 import { cpf } from 'cpf-cnpj-validator';
 import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
 import { PessoaComponent } from 'src/app/components/pessoa/pessoa.component';
+import { PessoaUpdateComponent } from 'src/app/components/pessoa/pessoa-update/pessoa-update.component';
 
 @Component({
   selector: 'app-agendamentos-create',
@@ -22,7 +23,7 @@ import { PessoaComponent } from 'src/app/components/pessoa/pessoa.component';
 })
 export class AgendamentosCreateComponent implements OnInit {
 
- colunas = ['id','nome','protocolos','grupoAgenda','agendamentoFuturo','responsavel','ura','cpf','rg','telefone','celular']  
+ colunas = ['id','nome','protocolos','grupoAgenda','agendamentoFuturo','responsavel','ura','cpf','rg','telefone','celular','action'] 
  
  pessoa: Pessoa = new Pessoa();
  pessoaGrid: PessoaGrid[];
@@ -141,5 +142,12 @@ constructor(
   CadastrarPessoa(){
    this.servico.Popup("", PessoaComponent, '70%', '80%')
   }
+
+  EditarPessoa(id : Number){
+  
+    this.servico.Popup(id.toString(), PessoaUpdateComponent, '70%', '80%')
+  
+  }
+
 
 }

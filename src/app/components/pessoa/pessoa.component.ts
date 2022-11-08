@@ -52,6 +52,13 @@ export class PessoaComponent implements OnInit {
   ngOnInit(): void {
     this.carregaCombos()
     this.atualizarGrid();
+    this.buscarDadosPessoa(this.dialofRef.id);
+
+  }
+  
+  
+  buscarDadosPessoa(id: string) {
+    throw new Error('Method not implemented.');
   }
   
   fecharPopup(){
