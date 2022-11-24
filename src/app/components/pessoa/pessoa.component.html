@@ -144,8 +144,8 @@
 
               <mat-form-field appearance="outline" style="width: 20%;">
                 <mat-label>Telefone</mat-label>
-                <input matInput placeholder="Telefone" id="numTeleFone" type="number" 
-                [(ngModel)]="telefone.numTeleFone" name="numTeleFone">        
+                <input matInput placeholder="Telefone" id="numTelefone" type="number" 
+                [(ngModel)]="telefone.numTelefone" name="numTelefone">        
               </mat-form-field>
 
               <mat-form-field appearance="outline" style="width: 8%;">
@@ -173,9 +173,9 @@
                     <td mat-cell *matCellDef="let row">{{row.ddd}}</td>
                   </ng-container>
           
-                  <ng-container matColumnDef="numTeleFone">
+                  <ng-container matColumnDef="numTelefone">
                     <th mat-header-cell *matHeaderCellDef>Núm Telefone</th>
-                    <td mat-cell *matCellDef="let row">{{row.numTeleFone}}</td>
+                    <td mat-cell *matCellDef="let row">{{row.numTelefone}}</td>
                   </ng-container>
           
                   <!-- Name Column -->

@@ -35,7 +35,7 @@ export class PessoaComponent implements OnInit {
 
   telefones : Telefone[] = new Array()
   
-  displayedColumns = ['ddd', 'numTeleFone','ramal','observacao','tipoTelefone','action']  
+  displayedColumns = ['ddd', 'numTelefone','ramal','observacao','tipoTelefone','action']  
   
   constructor(
               private servico : UtilService,
@@ -43,9 +43,8 @@ export class PessoaComponent implements OnInit {
               private servicoPessoa : ServiceAllService<Pessoa>,
               private servicoContato : ServiceAllService<Contato>,
               private servicoTelefone : ServiceAllService<Telefone>,
-              private servicoCep : ServiceAllService<cep>
-          
-              
+              private servicoCep : ServiceAllService<cep>,
+              private servicoEndereco : ServiceAllService<PessoaEndereco>
               )
                { }
 
@@ -69,12 +68,17 @@ export class PessoaComponent implements OnInit {
     if (this.ValidarDados(false) )
     {
       this.dadosPessoa();
-     
+      //cadastro da Pessoa
       this.servicoPessoa.create(this.pessoa, Endpoint.Pessoa).subscribe(p => {
         this.dadosContato(p.id)
+        //criando Contato
         this.servicoContato.create(this.contato, Endpoint.Contato).subscribe(c => {
           this.cadastrarTelefones(c.id);
         });
+
+        this.endereco.pessoaId = p.id;
+        this.servicoEndereco.create(this.endereco, Endpoint.PessoaEndereco ).subscribe(x => {})
+
         this.fecharPopup();
       })
     }
@@ -102,15 +106,15 @@ export class PessoaComponent implements OnInit {
 
   adicionarTelefone(){
     
-    if(this.ValidarDados(true) && Number(this.telefone.ddd) > 0 && Number(this.telefone.tipoTelefone) > 0 && this.telefone.numTeleFone != null )
+    if(this.ValidarDados(true) && Number(this.telefone.ddd) > 0 && Number(this.telefone.tipoTelefone) > 0 && this.telefone.numTelefone != null )
     {
         let ddd = this.telefone.ddd != null ? this.telefone.ddd.toString() : "";
-        let numTeleFone = this.telefone.numTeleFone != null ? this.telefone.numTeleFone.toString() : "";
+        let numTeleFone = this.telefone.numTelefone != null ? this.telefone.numTelefone.toString() : "";
         let ramal = this.telefone.ramal != null ? this.telefone.ramal.toString() : ""
         this.telefone.id = this.telefones.length + 1
         this.telefone.dtCriacao = new Date;
         this.telefone.ddd = ddd
-        this.telefone.numTeleFone = numTeleFone
+        this.telefone.numTelefone = numTeleFone
         this.telefone.ramal = ramal
         this.telefone.tipoTelefone = this.telefone.tipoTelefone > 0 ? this.telefone.tipoTelefone : 1 ;
         this.telefone.bloqueado = false;
@@ -126,7 +130,7 @@ export class PessoaComponent implements OnInit {
   cadastrarTelefones(idContato : any){
     this.telefones.forEach(t => {
       t.id = 0;
-      t.contatoid = idContato;
+      t.contatoId = idContato;
       this.servicoTelefone.create(t, Endpoint.Telefone).subscribe(t => {})
       this.servico.showMessage("Pessoa cadastrada ", false)
     });
@@ -165,10 +169,10 @@ export class PessoaComponent implements OnInit {
       :  this.endereco.bairro == null ? this.servico.showMessage("Informar o bairro", false) 
       :  this.endereco.siglaEstado == null ? this.servico.showMessage("Informar a sigla do estado", false) 
       :  this.endereco.cidade == null ? this.servico.showMessage("Informar a cidade", false) 
-      :  this.telefone.ddd != null && !addTelefone || this.telefone.tipoTelefone != null && !addTelefone || this.telefone.numTeleFone != null && !addTelefone ?  this.servico.showMessage("Adicionar o Telefone", false )
+      :  this.telefone.ddd != null && !addTelefone || this.telefone.tipoTelefone != null && !addTelefone || this.telefone.numTelefone != null && !addTelefone ?  this.servico.showMessage("Adicionar o Telefone", false )
       :  this.telefone.ddd == null && addTelefone || Number(this.telefone.ddd) == 0  && addTelefone ?  this.servico.showMessage("Informe o DDD", false )
       :  this.telefone.tipoTelefone == null && addTelefone || Number(this.telefone.tipoTelefone) == 0 && addTelefone ?  this.servico.showMessage("Informe o tipo deTelefone", false )
-      :  this.telefone.numTeleFone == null && addTelefone ?  this.servico.showMessage("Informe o número do Telefone", false )
+      :  this.telefone.numTelefone == null && addTelefone ?  this.servico.showMessage("Informe o número do Telefone", false )
       : status =  true;
       return status
   }

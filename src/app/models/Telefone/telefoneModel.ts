@@ -2,11 +2,11 @@ export class Telefone {
     id : number
     dtCriacao : Date
     ddd: string
-    numTeleFone: string
+    numTelefone: string 
     ramal : string
     observacao : string
     tipoTelefone : number
-    contatoid : number
+    contatoId : number
     criadoPor : number
     bloqueado : boolean
 }
