@@ -78,6 +78,12 @@ export class ServiceAllService <T>{
       ); 
     }
 
+    loginSistema(T : T, tipo: string) : Observable <T>{
+      return this.http.post<T>(this.environmentUrl + tipo , T).pipe(
+        map(obj => obj),
+        catchError(e => this.utilService.erroHandler(e))
+      );
+    }
 
 
 }
