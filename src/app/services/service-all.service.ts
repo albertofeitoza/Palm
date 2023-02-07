@@ -21,9 +21,13 @@ export class ServiceAllService <T>{
               private http : HttpClient,
               private utilService: UtilService,
               private loginservice : LoginService
-              ) {
+              ) 
+              {
                 this.environmentName = environment.environmentName;
                 this.environmentUrl =  environment.BASE_URL;
+
+                
+
               }
 
 
@@ -35,42 +39,39 @@ export class ServiceAllService <T>{
       );
     }
 
-    // Buscar todos Get All
-    read(tipo: string): Observable<T[]>{
+    read(componente: string): Observable<T[]>{
       //let idEmpresa = this.utilService.Sessao().idGrupoUsuario > 0 ? this.utilService.Sessao().idGrupoUsuario : this.utilService.Sessao().empresaUsuarioId;
-      return this.http.get<T[]>(`${this.environmentUrl + tipo}` , this.loginservice.header()).pipe(
+      return this.http.get<T[]>(`${this.environmentUrl + componente}` , this.loginservice.header()).pipe(
         map(obj => obj),
         catchError(e => this.utilService.erroHandler(e))
       ); 
     }
 
-    //Buscar um cadastro por id
-    readById(id: string, tipo: string): Observable<T>{
-    const url = `${this.environmentUrl + tipo}/${id}`
+    readById(id: string, componente: string): Observable<T>{
+    const url = `${this.environmentUrl + componente}/${id}`
 
       return this.http.get<T>(url, this.loginservice.header()).pipe(
         map(obj => obj),
         catchError(e => this.utilService.erroHandler(e))
       );
     }
-
-    // Atualizar Produto 
-    update(T: T, tipo: string): Observable<T> {    
-    return this.http.put<T>(this.environmentUrl + tipo, T, this.loginservice.header()).pipe(
+  
+    update(T: T, componente: string): Observable<T> {    
+    return this.http.put<T>(this.environmentUrl + componente, T, this.loginservice.header()).pipe(
       map(obj => obj),
       catchError(e => this.utilService.erroHandler(e))
       );
     }
 
-    delete (id: number, tipo : string)  : Observable<T> {
-          const url = `${this.environmentUrl + tipo}/${id}`      
+    delete (id: number, componente : string)  : Observable<T> {
+          const url = `${this.environmentUrl + componente}/${id}`      
           return this.http.delete<T>(url, this.loginservice.header()).pipe(
           map(obj => obj),
           catchError(e => this.utilService.erroHandler(e))
           )
     }
 
-    // Buscar CEP fora da API 
+    // Buscar CEP na internet
     buscarExterna(url: string): Observable<T>{
       return this.http.get<T>(`${url}`).pipe(
         map(obj => obj),
@@ -79,7 +80,7 @@ export class ServiceAllService <T>{
     }
 
     loginSistema(T : T, tipo: string) : Observable <T>{
-      return this.http.post<T>(this.environmentUrl + tipo , T).pipe(
+      return this.http.post<T>(this.environmentUrl + tipo , T,).pipe(
         map(obj => obj),
         catchError(e => this.utilService.erroHandler(e))
       );

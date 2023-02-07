@@ -30,7 +30,7 @@ export class LoginService {
   sessao: dadosSessao
 
   constructor(private router: Router,
-              private snackBar: MatSnackBar,
+              private snackBar: MatSnackBar
               ) {}
               
   logarSistema(sessao : any ) {
@@ -70,6 +70,8 @@ isLogedIn () : boolean{
   }
 
   header(){
+    
+        
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.sessao.accessToken}`,

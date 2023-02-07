@@ -15,8 +15,7 @@ import { concat, map } from 'rxjs';
 
 @Component({
   selector: 'app-pessoa-update',
-  templateUrl: './pessoa-update.component.html',
-  styleUrls: ['./pessoa-update.component.css']
+  templateUrl: './pessoa-update.component.html'
 })
 export class PessoaUpdateComponent implements OnInit {
 
@@ -69,18 +68,21 @@ export class PessoaUpdateComponent implements OnInit {
               
               let telefones = te.filter(x => x.contatoId == idContato)
               
-              telefones.forEach(element => {
-                    this.telefones.push(element);
-              });
-              this.atualizarGrid()
+              // telefones.forEach(element => {
+              //       this.telefones.push(element);
+              // });
+              // this.atualizarGrid()
               
-             this.servicoEndereco.read(Endpoint.PessoaEndereco).subscribe(p => {
-                this.endereco = p.filter(x => x.pessoaId == pe.id)[0] != null ? p.filter(x => x.pessoaId == pe.id)[0] : this.endereco = new PessoaEndereco();
-              })
-            })
+            //  this.servicoEndereco.read(Endpoint.PessoaEndereco).subscribe(p => {
+            //   let end = p;  
+              
+              
+            //   this.endereco = p.filter(x => x.pessoaId == pe.id)[0] != null ? p.filter(x => x.pessoaId == pe.id)[0] : this.endereco = new PessoaEndereco();
+             //s })
+            //})
         })
+      })
     })
-   
   }
   
   fecharPopup(){
@@ -220,7 +222,7 @@ export class PessoaUpdateComponent implements OnInit {
   buscaCep(event : any){
     if(event.which == 13 )
     {
-      this.servicoCep.buscarExterna(Endpoint.cep.replace('{0}', this.endereco.cep)).subscribe(ret => {
+      this.servicoCep.buscarExterna(Endpoint.cep.replace('{0}', this.endereco.cep.toString())).subscribe(ret => {
           if(ret.logradouro != null)
           {
             this.endereco.rua = ret.logradouro

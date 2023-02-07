@@ -1,0 +1,50 @@
+
+
+<div *ngIf="enable">
+    <mat-card-title style="margin-left: 1%;"> Endereço</mat-card-title>
+
+    <form class="formularioRow" style="margin-top: 0%;">
+        <mat-form-field appearance="outline" style="width: 10%;">
+            <mat-label>CEP</mat-label>
+            <input matInput placeholder="CEP - Apenas Números" [(ngModel)]="endereco.cep" name="CEP" maxlength="8"
+                (keypress)="buscaCep($event)">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" style="width: 25%;">
+            <mat-label>Rua</mat-label>
+            <input matInput placeholder="Rua" [(ngModel)]="endereco.rua" name="rua">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" style="width: 8%;">
+            <mat-label>Número</mat-label>
+            <input matInput placeholder="Número" type="number" [(ngModel)]="endereco.numero" name="numero">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" style="width: 10%;">
+            <mat-label>Complemento</mat-label>
+            <input matInput placeholder="complemento" [(ngModel)]="endereco.complemento" name="complemento">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" style="width: 15%;">
+            <mat-label>Bairro</mat-label>
+            <input matInput placeholder="Bairro" [(ngModel)]="endereco.bairro" name="bairro">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" style="width: 5%;">
+            <mat-label>UF</mat-label>
+            <input matInput placeholder="UF" [(ngModel)]="endereco.siglaEstado" name="uf">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" style="width: 17%;">
+            <mat-label>Cidade</mat-label>
+            <input matInput placeholder="Cidade" [(ngModel)]="endereco.cidade" name="cidade">
+        </mat-form-field>
+        
+        <span (click)="salvar()">
+            <strong>
+                <i *ngIf="!enderecoEnable" class="material-icons">save</i>
+                 <i *ngIf="enderecoEnable" class="material-icons">refresh</i>
+            </strong>
+        </span>
+    </form>
+</div>

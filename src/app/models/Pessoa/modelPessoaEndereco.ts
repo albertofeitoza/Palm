@@ -2,7 +2,7 @@ export class PessoaEndereco{
     id ?: number
     dtCriacao: Date
     pessoaId: number
-    cep: string
+    cep: number
     rua: string
     numero: string
     complemento: string

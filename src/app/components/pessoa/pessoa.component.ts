@@ -10,7 +10,7 @@ import { Contato } from 'src/app/models/contato/modelContato';
 import { Telefone } from 'src/app/models/Telefone/telefoneModel';
 import { cep } from 'src/app/models/CEP/modelBuscaCep';
 import { PessoaEndereco } from 'src/app/models/Pessoa/modelPessoaEndereco';
-import { Observable, observable } from 'rxjs';
+import { map, Observable, observable } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
@@ -20,13 +20,14 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class PessoaComponent implements OnInit {
   
-  pessoa : Pessoa = new Pessoa()
-  contato : Contato = new Contato();
+  pessoa : Pessoa = new Pessoa() 
+  contato : Contato = new Contato()
+
   endereco : PessoaEndereco = new PessoaEndereco();
   telefone : Telefone =  new Telefone()
   cep : cep = new cep();
-
   selected : number = 0;
+  enableComponent : boolean = false
 
   sexo : any[];
   estCivil : any[];
@@ -50,59 +51,59 @@ export class PessoaComponent implements OnInit {
 
   ngOnInit(): void {
     this.carregaCombos()
-    this.atualizarGrid();
-    this.buscarDadosPessoa(this.dialofRef.id);
-
-  }
-  
-  
-  buscarDadosPessoa(id: string) {
-    throw new Error('Method not implemented.');
   }
   
   fecharPopup(){
     this.dialofRef.close();
   }
 
-  salvar(){
+  async salvar() {
     if (this.ValidarDados(false) )
     {
-      this.dadosPessoa();
-      //cadastro da Pessoa
-      this.servicoPessoa.create(this.pessoa, Endpoint.Pessoa).subscribe(p => {
-        this.dadosContato(p.id)
-        //criando Contato
-        this.servicoContato.create(this.contato, Endpoint.Contato).subscribe(c => {
-          this.cadastrarTelefones(c.id);
-        });
 
-        this.endereco.pessoaId = p.id;
-        this.servicoEndereco.create(this.endereco, Endpoint.PessoaEndereco ).subscribe(x => {})
-
-        this.fecharPopup();
+      var idPessoa = 0;
+      this.pessoa.dtCriacao = new Date;
+      this.pessoa.tipoPessoa = TipoPessoa.PessoaFisica;
+      let rg = this.pessoa.rg.toString()
+      let cpf = this.pessoa.cpfcnpj.toString()
+      this.pessoa.rg = rg
+      this.pessoa.cpfcnpj = cpf
+        this.contato.dtCriacao = new Date;
+        this.contato.nome = this.pessoa.nome,
+        this.contato.padrao = true
+        this.contato.pessoaId = this.pessoa.id
+        this.contato.email = this.contato.email
+        this.contato.email_secundario = this.contato.email_secundario
+        this.contato.bloqueado = false;
+        this.pessoa.contato = this.contato
+        
+      await this.servicoPessoa.create(this.pessoa, Endpoint.Pessoa).subscribe(x => {
+            this.pessoa = x;
+            this.contato = x.contato
+            this.enableComponent = true
       })
     }
   }
-
-  dadosPessoa() : void {
-    this.pessoa.dtCriacao = new Date;
-    this.pessoa.tipoPessoa = TipoPessoa.PessoaFisica;
-    let rg = this.pessoa.rg.toString()
-    let cpf = this.pessoa.cpfcnpj.toString()
-    this.pessoa.rg = rg
-    this.pessoa.cpfcnpj = cpf
+  
+  CadastrarTelefones(idContato : any){
+    this.telefones.forEach(t => {
+      t.id = 0;
+      t.contatoId = idContato;
+      this.servicoTelefone.create(t, Endpoint.Telefone).subscribe(x => {x = x})
+    });
   }
 
-  dadosContato(id : any) : void {
-    
-    this.contato.dtCriacao = new Date;
-    this.contato.padrao = true;
-    this.contato.nome = this.pessoa.nome;
-    this.contato.criadoPor = Number(this.servico.Sessao().usuarioId);
-    this.contato.bloqueado = false;
-    this.contato.pessoaId = id;
-    
-  }
+  CadastrarEndereços(idPessoa : any) : Observable<PessoaEndereco> {
+    this.endereco.id = 0;
+        this.endereco.pessoaId = idPessoa;
+        this.endereco.dtCriacao = new Date;
+        this.endereco.numero.toString();
+        this.endereco.cep
+        this.endereco.criadoPor = Number(this.servico.Sessao().usuarioId);
+        return this.servicoEndereco.create(this.endereco, Endpoint.PessoaEndereco )
+  
+  
+      }
 
   adicionarTelefone(){
     
@@ -123,19 +124,9 @@ export class PessoaComponent implements OnInit {
         this.atualizarGrid();
         this.telefone = new Telefone()  
     }
-    
-
   }
 
-  cadastrarTelefones(idContato : any){
-    this.telefones.forEach(t => {
-      t.id = 0;
-      t.contatoId = idContato;
-      this.servicoTelefone.create(t, Endpoint.Telefone).subscribe(t => {})
-      this.servico.showMessage("Pessoa cadastrada ", false)
-    });
-  }
-
+  
   atualizarGrid(){
     let newList = this.telefones.slice()
     this.telefones = newList
@@ -149,8 +140,6 @@ export class PessoaComponent implements OnInit {
   carregaCombos(){
     this.sexo = this.servico.Genero()
     this.estCivil = this.servico.EstCivil();
-    this.tipoTelefone = this.servico.TipoTelefone();
-    this.ddd = this.servico.Ddds();
   }
 
   ValidarDados(addTelefone : Boolean) : Boolean {
@@ -163,16 +152,16 @@ export class PessoaComponent implements OnInit {
       :  this.pessoa.dataNascimento == null ? this.servico.showMessage("Informar o data de nascimento", false) 
       :  this.pessoa.estCivil == null ? this.servico.showMessage("estado cívil Obrigatório", false) 
       :  this.pessoa.sexo == null ? this.servico.showMessage("informar o sexo", false) 
-      :  this.endereco.cep == null ? this.servico.showMessage("Informar o Cep e pressionar enter", false) 
-      :  this.endereco.rua == null ? this.servico.showMessage("Informar a rua", false) 
-      :  this.endereco.numero == null ? this.servico.showMessage("Informar o número", false) 
-      :  this.endereco.bairro == null ? this.servico.showMessage("Informar o bairro", false) 
-      :  this.endereco.siglaEstado == null ? this.servico.showMessage("Informar a sigla do estado", false) 
-      :  this.endereco.cidade == null ? this.servico.showMessage("Informar a cidade", false) 
-      :  this.telefone.ddd != null && !addTelefone || this.telefone.tipoTelefone != null && !addTelefone || this.telefone.numTelefone != null && !addTelefone ?  this.servico.showMessage("Adicionar o Telefone", false )
-      :  this.telefone.ddd == null && addTelefone || Number(this.telefone.ddd) == 0  && addTelefone ?  this.servico.showMessage("Informe o DDD", false )
-      :  this.telefone.tipoTelefone == null && addTelefone || Number(this.telefone.tipoTelefone) == 0 && addTelefone ?  this.servico.showMessage("Informe o tipo deTelefone", false )
-      :  this.telefone.numTelefone == null && addTelefone ?  this.servico.showMessage("Informe o número do Telefone", false )
+      // :  this.endereco.cep == null ? this.servico.showMessage("Informar o Cep e pressionar enter", false) 
+      // :  this.endereco.rua == null ? this.servico.showMessage("Informar a rua", false) 
+      // :  this.endereco.numero == null ? this.servico.showMessage("Informar o número", false) 
+      // :  this.endereco.bairro == null ? this.servico.showMessage("Informar o bairro", false) 
+      // :  this.endereco.siglaEstado == null ? this.servico.showMessage("Informar a sigla do estado", false) 
+      // :  this.endereco.cidade == null ? this.servico.showMessage("Informar a cidade", false) 
+      // :  this.telefone.ddd != null && !addTelefone || this.telefone.tipoTelefone != null && !addTelefone || this.telefone.numTelefone != null && !addTelefone ?  this.servico.showMessage("Adicionar o Telefone", false )
+      // :  this.telefone.ddd == null && addTelefone || Number(this.telefone.ddd) == 0  && addTelefone ?  this.servico.showMessage("Informe o DDD", false )
+      // :  this.telefone.tipoTelefone == null && addTelefone || Number(this.telefone.tipoTelefone) == 0 && addTelefone ?  this.servico.showMessage("Informe o tipo deTelefone", false )
+      // :  this.telefone.numTelefone == null && addTelefone ?  this.servico.showMessage("Informe o número do Telefone", false )
       : status =  true;
       return status
   }
@@ -184,7 +173,7 @@ export class PessoaComponent implements OnInit {
   buscaCep(event : any){
     if(event.which == 13 )
     {
-      this.servicoCep.buscarExterna(Endpoint.cep.replace('{0}', this.endereco.cep)).subscribe(ret => {
+      this.servicoCep.buscarExterna(Endpoint.cep.replace('{0}', this.endereco.cep.toString())).subscribe(ret => {
           if(ret.logradouro != null)
           {
             this.endereco.rua = ret.logradouro
