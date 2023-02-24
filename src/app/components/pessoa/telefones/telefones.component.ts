@@ -31,25 +31,32 @@ export class TelefonesComponent implements OnInit {
     this.carregaCombos()
     this.atualizarGrid();
   }
-
-  selecionaLinha(id : any)
-  {
-
-  }
+  
   Salvar(){
-
-    this.telefone.contatoId = this.idContato;
-    this.telefone.dtCriacao = new Date;
-    this.telefone.criadoPor = this.servico.Sessao().usuarioId;
-    this.servicoTelefone.create(this.telefone, Endpoint.Telefone).subscribe(x => 
-    { 
-      this.servico.showMessage("Telefone Adicionado",false) 
-    })
-
+    if (this.ValidarDadosTelefone())
+    {
+      this.telefone.id = 0;  
+      this.telefone.dtCriacao = new Date;
+      let telefone = this.telefone.numTelefone.toString()
+      this.telefone.numTelefone = telefone
+      this.telefone.contatoId = this.idContato;
+      this.telefone.criadoPor = this.servico.Sessao().usuarioId;
+      Number(this.telefone.tipoTelefone) 
+      this.telefone.bloqueado = false;
+      
+          this.servicoTelefone.create(this.telefone, Endpoint.Telefone).subscribe(x => 
+          { 
+            this.servico.showMessage("Telefone Adicionado",false) 
+            this.telefone = new Telefone()
+            this.atualizarGrid();
+          })
+    }
   }
 
-  RemoveTelefone(row : any){
-
+  RemoveTelefone(id : number){
+    this.servicoTelefone.delete(id, Endpoint.Telefone).subscribe(() => {
+      this.atualizarGrid()
+    })
   }
 
   carregaCombos(){
@@ -58,13 +65,28 @@ export class TelefonesComponent implements OnInit {
   }
 
   atualizarGrid(){  
-    // let newList = this.telefones.slice()
-    // this.telefones = newList
     this.servicoTelefone.read(Endpoint.Telefone).subscribe(x => {
+      x.forEach(t => {
+        t.tipoTelefone = 
+                          t.tipoTelefone == "1" ? "Residencial"
+                            : t.tipoTelefone == "2" ? "Celular"
+                              : t.tipoTelefone == "3" ? "Comercial" : "";
+      });
       this.telefones = x.filter(x => x.contatoId == this.idContato)
     })
-
-
   }
-  
+
+  ValidarDadosTelefone() : Boolean {
+    let status = false;
+      this.telefone.ddd == null || this.telefone.tipoTelefone == null || this.telefone.numTelefone == null ?  this.servico.showMessage("Informar o Telefone", false )
+      :  this.telefone.ddd == null || Number(this.telefone.ddd) == 0  ?  this.servico.showMessage("Informe o DDD", false )
+      :  this.telefone.tipoTelefone == null || Number(this.telefone.tipoTelefone) == 0 ?  this.servico.showMessage("Informe o tipo deTelefone", false )
+      :  this.telefone.numTelefone == null ?  this.servico.showMessage("Informe o número do Telefone", false )
+      :  status = true;
+      return status
+  }
+
+  selecionaLinha(id : any){
+    this.selected = id
+  }
 }

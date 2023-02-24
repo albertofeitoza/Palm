@@ -1,5 +1,3 @@
-
-
 <div *ngIf="enable">
     <mat-card-title style="margin-left: 1%;"> Endereço</mat-card-title>
 
@@ -12,7 +10,7 @@
 
         <mat-form-field appearance="outline" style="width: 25%;">
             <mat-label>Rua</mat-label>
-            <input matInput placeholder="Rua" [(ngModel)]="endereco.rua" name="rua">
+            <input matInput placeholder="Rua" [(ngModel)]="endereco.rua" name="rua" disabled="{{disableForm}}">
         </mat-form-field>
 
         <mat-form-field appearance="outline" style="width: 8%;">
@@ -22,7 +20,7 @@
 
         <mat-form-field appearance="outline" style="width: 10%;">
             <mat-label>Complemento</mat-label>
-            <input matInput placeholder="complemento" [(ngModel)]="endereco.complemento" name="complemento">
+            <input matInput placeholder="complemento" [(ngModel)]="endereco.complemento" name="complemento" >
         </mat-form-field>
 
         <mat-form-field appearance="outline" style="width: 15%;">
@@ -32,18 +30,17 @@
 
         <mat-form-field appearance="outline" style="width: 5%;">
             <mat-label>UF</mat-label>
-            <input matInput placeholder="UF" [(ngModel)]="endereco.siglaEstado" name="uf">
+            <input matInput placeholder="UF" [(ngModel)]="endereco.siglaEstado" name="uf" disabled="{{disableForm}}">
         </mat-form-field>
 
         <mat-form-field appearance="outline" style="width: 17%;">
             <mat-label>Cidade</mat-label>
-            <input matInput placeholder="Cidade" [(ngModel)]="endereco.cidade" name="cidade">
+            <input matInput placeholder="Cidade" [(ngModel)]="endereco.cidade" name="cidade" disabled="{{disableForm}}">
         </mat-form-field>
         
-        <span (click)="salvar()">
+        <span style="padding-left: 10px;"  (click)="salvar()">
             <strong>
-                <i *ngIf="!enderecoEnable" class="material-icons">save</i>
-                 <i *ngIf="enderecoEnable" class="material-icons">refresh</i>
+                <i class="material-icons">save</i>
             </strong>
         </span>
     </form>

@@ -1,26 +1,12 @@
 export class Telefone {
     id : number
     dtCriacao : Date
-    ddd: string
+    ddd: number
     numTelefone: string 
-    ramal : string
+    ramal : number
     observacao : string
-    tipoTelefone : number
+    tipoTelefone : string
     contatoId : number
     criadoPor : number
     bloqueado : boolean
 }
-
-
-// {
-//     "id": 0,
-//     "dtCriacao": "2023-01-31T22:00:32.837Z",
-//     "ddd": 0,
-//     "numTelefone": "string",
-//     "ramal": 0,
-//     "observacao": "string",
-//     "tipoTelefone": 0,
-//     "contatoId": 0,
-//     "criadoPor": 0,
-//     "bloqueado": true
-//   }

@@ -6,7 +6,6 @@
     </a>
 </div>
 
-<mat-card>
     <mat-card-title style="margin-left: 1%;">Atualizar cadastro</mat-card-title>
 
     <form class="formularioRow" style="margin-top: 0%;">
@@ -36,7 +35,7 @@
                   [(ngModel)]="pessoa.cpfcnpj" name="cpf">
               </mat-form-field>
   
-              <mat-form-field appearance="outline" style="width: 15%;">
+              <mat-form-field appearance="outline" style="width: 12%;">
                 <mat-label>Data Nascimento</mat-label>
                 <input matInput placeholder="Data Nasc" id="dataNascimento" maxlength="10" type="datetime" 
                 [ngModel]="pessoa.dataNascimento|date:'dd/MM/yyyy'" name="dataNascimento">
@@ -73,26 +72,21 @@
                 [(ngModel)]="contato.email" name="email">        
               </mat-form-field>
               
-              <mat-form-field appearance="outline" style="width: 23%;">
+              <mat-form-field appearance="outline" style="width: 20%;">
                 <mat-label>Email Secundário</mat-label>
                 <input matInput placeholder="E-mail Secundário" id="email_secundario" type="email"
                 [(ngModel)]="contato.email_secundario" name="email_secundario">        
               </mat-form-field>
-              
-              Endereço
-              <!-- <app-pessoa-endereco [idPessoa] = pessoa.id></app-pessoa-endereco>
 
-              <app-telefones [idPessoa] = pessoa.id ></app-telefones> -->
+              <span style="padding-left: 10px;" (click)="salvar()">
+                <strong>
+                  <i class="material-icons">save</i>
+                </strong>
+              </span>
+              
+              <app-pessoa-endereco [enable]="true" [idPessoa]="pessoa.id"></app-pessoa-endereco>
+              <app-telefones [enable]="true" [idContato]="contato.id" ></app-telefones>
     </form>
-</mat-card>
-    <div class="rodape">
-      <button class="button" mat-raised-button color="primary" (click)="salvar()">
-        Salvar
-      </button>
-      <button class="button" mat-raised-button color="primary" (click)="fecharPopup()">
-        Cancelar
-      </button>
-    </div>
-  
+
          
   

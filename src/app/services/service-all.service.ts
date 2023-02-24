@@ -32,23 +32,23 @@ export class ServiceAllService <T>{
 
 
     //Criar Cadastro
-    create(T : T, tipo: string) : Observable <T>{
-      return this.http.post<T>(this.environmentUrl + tipo , T, this.loginservice.header()).pipe(
+    create(T : T, endpoint: string) : Observable <T>{
+      return this.http.post<T>(this.environmentUrl + endpoint , T, this.loginservice.header()).pipe(
         map(obj => obj),
         catchError(e => this.utilService.erroHandler(e))
       );
     }
 
-    read(componente: string): Observable<T[]>{
+    read(endpoint: string): Observable<T[]>{
       //let idEmpresa = this.utilService.Sessao().idGrupoUsuario > 0 ? this.utilService.Sessao().idGrupoUsuario : this.utilService.Sessao().empresaUsuarioId;
-      return this.http.get<T[]>(`${this.environmentUrl + componente}` , this.loginservice.header()).pipe(
+      return this.http.get<T[]>(`${this.environmentUrl + endpoint}` , this.loginservice.header()).pipe(
         map(obj => obj),
         catchError(e => this.utilService.erroHandler(e))
       ); 
     }
 
-    readById(id: string, componente: string): Observable<T>{
-    const url = `${this.environmentUrl + componente}/${id}`
+    readById(id: string, endpoint: string): Observable<T>{
+    const url = `${this.environmentUrl + endpoint}/${id}`
 
       return this.http.get<T>(url, this.loginservice.header()).pipe(
         map(obj => obj),
@@ -56,15 +56,15 @@ export class ServiceAllService <T>{
       );
     }
   
-    update(T: T, componente: string): Observable<T> {    
-    return this.http.put<T>(this.environmentUrl + componente, T, this.loginservice.header()).pipe(
+    update(T: T, endpoint: string): Observable<T> {    
+    return this.http.put<T>(this.environmentUrl + endpoint, T, this.loginservice.header()).pipe(
       map(obj => obj),
       catchError(e => this.utilService.erroHandler(e))
       );
     }
 
-    delete (id: number, componente : string)  : Observable<T> {
-          const url = `${this.environmentUrl + componente}/${id}`      
+    delete (id: number, endpoint : string)  : Observable<T> {
+          const url = `${this.environmentUrl + endpoint}/${id}`      
           return this.http.delete<T>(url, this.loginservice.header()).pipe(
           map(obj => obj),
           catchError(e => this.utilService.erroHandler(e))
@@ -79,12 +79,10 @@ export class ServiceAllService <T>{
       ); 
     }
 
-    loginSistema(T : T, tipo: string) : Observable <T>{
-      return this.http.post<T>(this.environmentUrl + tipo , T,).pipe(
+    loginSistema(T : T, endpoint: string) : Observable <T>{
+      return this.http.post<T>(this.environmentUrl + endpoint , T,).pipe(
         map(obj => obj),
         catchError(e => this.utilService.erroHandler(e))
       );
     }
-
-
 }

@@ -6,7 +6,7 @@
     </a>
 </div>
 
-<mat-card style="height: 87%;">
+<!-- <mat-card style="height: 87%; margin-top: 30px;"> -->
     <mat-card-title style="margin-left: 1%;">Cadastro de Pessoa</mat-card-title>
 
     <form class="formularioRow" style="margin-top: 0%;">
@@ -78,22 +78,13 @@
                 [(ngModel)]="contato.email_secundario" name="email_secundario">        
               </mat-form-field>
 
-              <span (click)="salvar()">
+              <span style="padding-left: 10px;" (click)="salvar()">
                 <strong>
-                  <i *ngIf="!enableComponent" class="material-icons">save</i>
-                  <i *ngIf="enableComponent" class="material-icons">refresh</i>
+                  <i class="material-icons">save</i>
                 </strong>
               </span>
               
               <app-pessoa-endereco [enable]="enableComponent" [idPessoa]="pessoa.id"></app-pessoa-endereco>
               <app-telefones [enable]="enableComponent" [idContato]="contato.id" ></app-telefones>
     </form>
-</mat-card>
-<div class="rodape">
-  <button class="button" mat-raised-button color="primary" (click)="fecharPopup()">
-    Cancelar
-  </button>
-</div>
-  
-         
-  
+<!-- </mat-card> -->

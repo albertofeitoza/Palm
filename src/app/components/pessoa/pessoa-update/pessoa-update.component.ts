@@ -40,7 +40,6 @@ export class PessoaUpdateComponent implements OnInit {
               private servico : UtilService,
               private dialofRef : MatDialogRef<PessoaComponent>,
               private servicoPessoa : ServiceAllService<Pessoa>,
-              private servicoContato : ServiceAllService<Contato>,
               private servicoTelefone : ServiceAllService<Telefone>,
               private servicoEndereco : ServiceAllService<PessoaEndereco>,
               private servicoCep : ServiceAllService<cep>
@@ -50,7 +49,6 @@ export class PessoaUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.carregaCombos()
-    this.atualizarGrid();
     this.buscarDadosPessoa(this.dialofRef.id);
 
   }
@@ -59,29 +57,7 @@ export class PessoaUpdateComponent implements OnInit {
   buscarDadosPessoa(id: string) {
     this.servicoPessoa.readById(id, Endpoint.Pessoa).subscribe(pe =>{
       this.pessoa = pe;
-
-      this.servicoContato.read(Endpoint.Contato).subscribe(co => {                 
-              
-          let idContato = co.filter(x => x.pessoaId == pe.id).map(c => c.id)[0];
-          
-            this.servicoTelefone.read(Endpoint.Telefone).subscribe(te => {
-              
-              let telefones = te.filter(x => x.contatoId == idContato)
-              
-              // telefones.forEach(element => {
-              //       this.telefones.push(element);
-              // });
-              // this.atualizarGrid()
-              
-            //  this.servicoEndereco.read(Endpoint.PessoaEndereco).subscribe(p => {
-            //   let end = p;  
-              
-              
-            //   this.endereco = p.filter(x => x.pessoaId == pe.id)[0] != null ? p.filter(x => x.pessoaId == pe.id)[0] : this.endereco = new PessoaEndereco();
-             //s })
-            //})
-        })
-      })
+      this.contato = pe.contato
     })
   }
   
@@ -92,97 +68,25 @@ export class PessoaUpdateComponent implements OnInit {
   salvar(){
     if (this.ValidarDados(false) )
     {
-      this.dadosPessoa();
-     
-      this.servicoPessoa.update(this.pessoa, Endpoint.Pessoa).subscribe(p => {
-        this.dadosContato(p.id)
-        this.servicoContato.update(this.contato, Endpoint.Contato).subscribe(c => {
-          this.cadastrarTelefones(c.id);
+      let rg = this.pessoa.rg == null ? "" : this.pessoa.rg.toString()
+      let cpf = this.pessoa.cpfcnpj.toString()
+      this.pessoa.rg = rg
+      this.pessoa.cpfcnpj = cpf
+        this.contato.nome = this.pessoa.nome,
+        this.contato.padrao = true
+        this.contato.pessoaId = this.pessoa.id
+        this.contato.email = this.contato.email
+        this.contato.email_secundario = this.contato.email_secundario
+        this.contato.bloqueado = false;
+        this.pessoa.contato = this.contato
+
+        this.servicoPessoa.update(this.pessoa, Endpoint.Pessoa).subscribe(x => {
+          this.servico.showMessage("Dados pessoais atualizados", false)
         });
-
-
-
-        if(this.endereco.id == null)  
-        {
-          this.servicoEndereco.create(this.endereco, Endpoint.PessoaEndereco).subscribe(e => {
-            this.endereco = e;
-          })
-        }
-        else
-        {
-          this.endereco.pessoaId = this.pessoa.id;
-
-          this.servicoEndereco.update(this.endereco, Endpoint.PessoaEndereco).subscribe(x => {
-            this.endereco = x;
-          })
-        }
-          
-       // this.fecharPopup();
-      })
     }
   }
 
-  dadosPessoa() : void {
-    this.pessoa.dtCriacao = new Date;
-    this.pessoa.tipoPessoa = TipoPessoa.PessoaFisica;
-    let rg = this.pessoa.rg.toString()
-    let cpf = this.pessoa.cpfcnpj.toString()
-    this.pessoa.rg = rg
-    this.pessoa.cpfcnpj = cpf
-  }
-
-  dadosContato(id : any) : void {
-    
-    this.contato.dtCriacao = new Date;
-    this.contato.padrao = true;
-    this.contato.nome = this.pessoa.nome;
-    this.contato.criadoPor = Number(this.servico.Sessao().usuarioId);
-    this.contato.bloqueado = false;
-    this.contato.pessoaId = id;
-    
-  }
-
-  adicionarTelefone(){
-    
-    if(this.ValidarDados(true) && Number(this.telefone.ddd) > 0 && Number(this.telefone.tipoTelefone) > 0 && this.telefone.numTelefone != null )
-    {
-        let ddd = this.telefone.ddd != null ? this.telefone.ddd.toString() : "";
-        let numTeleFone = this.telefone.tipoTelefone != null ? this.telefone.numTelefone.toString() : "";
-        let ramal = this.telefone.ramal != null ? this.telefone.ramal.toString() : ""
-        this.telefone.id = this.telefones.length + 1
-        this.telefone.dtCriacao = new Date;
-        this.telefone.ddd = ddd
-        this.telefone.numTelefone = numTeleFone
-        this.telefone.ramal = ramal
-        this.telefone.tipoTelefone = this.telefone.tipoTelefone > 0 ? this.telefone.tipoTelefone : 1 ;
-        this.telefone.bloqueado = false;
-        this.telefone.criadoPor = this.servico.Sessao().usuarioId
-        this.telefones.push(this.telefone);
-        this.atualizarGrid();
-        this.telefone = new Telefone()  
-    }
-    
-
-  }
-
-  cadastrarTelefones(idContato : any){
-    this.telefones.forEach(t => {
-      t.id = 0;
-      t.contatoId = idContato;
-      this.servicoTelefone.create(t, Endpoint.Telefone).subscribe(t => {})
-      this.servico.showMessage("Pessoa cadastrada ", false)
-    });
-  }
-
-  atualizarGrid(){
-    let newList = this.telefones.slice()
-    this.telefones = newList
-  }
-
-  RemoveTelefone(item : any){    
-    this.telefones.splice(this.telefones.indexOf(item), 1);
-    this.atualizarGrid()
-  }
+  
 
   carregaCombos(){
     this.sexo = this.servico.Genero()
@@ -201,16 +105,16 @@ export class PessoaUpdateComponent implements OnInit {
       :  this.pessoa.dataNascimento == null ? this.servico.showMessage("Informar o data de nascimento", false) 
       :  this.pessoa.estCivil == null ? this.servico.showMessage("estado cívil Obrigatório", false) 
       :  this.pessoa.sexo == null ? this.servico.showMessage("informar o sexo", false) 
-      :  this.endereco.cep == null ? this.servico.showMessage("Informar o Cep e pressionar enter", false) 
-      :  this.endereco.rua == null ? this.servico.showMessage("Informar a rua", false) 
-      :  this.endereco.numero == null ? this.servico.showMessage("Informar o número", false) 
-      :  this.endereco.bairro == null ? this.servico.showMessage("Informar o bairro", false) 
-      :  this.endereco.siglaEstado == null ? this.servico.showMessage("Informar a sigla do estado", false) 
-      :  this.endereco.cidade == null ? this.servico.showMessage("Informar a cidade", false) 
-      :  this.telefone.ddd != null && !addTelefone || this.telefone.tipoTelefone != null && !addTelefone || this.telefone.numTelefone != null && !addTelefone ?  this.servico.showMessage("Adicionar o Telefone", false )
-      :  this.telefone.ddd == null && addTelefone || Number(this.telefone.ddd) == 0  && addTelefone ?  this.servico.showMessage("Informe o DDD", false )
-      :  this.telefone.tipoTelefone == null && addTelefone || Number(this.telefone.tipoTelefone) == 0 && addTelefone ?  this.servico.showMessage("Informe o tipo deTelefone", false )
-      :  this.telefone.numTelefone == null && addTelefone ?  this.servico.showMessage("Informe o número do Telefone", false )
+      // :  this.endereco.cep == null ? this.servico.showMessage("Informar o Cep e pressionar enter", false) 
+      // :  this.endereco.rua == null ? this.servico.showMessage("Informar a rua", false) 
+      // :  this.endereco.numero == null ? this.servico.showMessage("Informar o número", false) 
+      // :  this.endereco.bairro == null ? this.servico.showMessage("Informar o bairro", false) 
+      // :  this.endereco.siglaEstado == null ? this.servico.showMessage("Informar a sigla do estado", false) 
+      // :  this.endereco.cidade == null ? this.servico.showMessage("Informar a cidade", false) 
+      // :  this.telefone.ddd != null && !addTelefone || this.telefone.tipoTelefone != null && !addTelefone || this.telefone.numTelefone != null && !addTelefone ?  this.servico.showMessage("Adicionar o Telefone", false )
+      // :  this.telefone.ddd == null && addTelefone || Number(this.telefone.ddd) == 0  && addTelefone ?  this.servico.showMessage("Informe o DDD", false )
+      // :  this.telefone.tipoTelefone == null && addTelefone || Number(this.telefone.tipoTelefone) == 0 && addTelefone ?  this.servico.showMessage("Informe o tipo deTelefone", false )
+      // :  this.telefone.numTelefone == null && addTelefone ?  this.servico.showMessage("Informe o número do Telefone", false )
       : status =  true;
       return status
   }

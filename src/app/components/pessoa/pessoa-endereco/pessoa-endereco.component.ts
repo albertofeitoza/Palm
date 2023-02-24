@@ -5,6 +5,7 @@ import { Endpoint } from 'src/app/Negocio/Endpoint';
 import { ServiceAllService } from 'src/app/services/service-all.service';
 import { UtilService } from 'src/app/services/util.service';
 import { PessoaUpdateComponent } from 'src/app/components/pessoa/pessoa-update/pessoa-update.component';
+import { Telefone } from 'src/app/models/Telefone/telefoneModel';
 
 @Component({
   selector: 'app-pessoa-endereco',
@@ -15,13 +16,14 @@ export class PessoaEnderecoComponent implements OnInit {
  @Input() idPessoa : number;
  @Input() enable : boolean
  @Input() enderecoEnable : boolean = false
-  endereco : PessoaEndereco = new PessoaEndereco();
-  cep : cep = new cep();
+ @Input() disableForm : boolean = false;
+  
+ endereco : PessoaEndereco = new PessoaEndereco();
+ cep : cep = new cep();
 
   constructor(private servico : UtilService,
               private servicoCep : ServiceAllService<cep>,
-              private servicoEndereco : ServiceAllService<PessoaEndereco>
-              
+              private servicoEndereco : ServiceAllService<PessoaEndereco>,
               ) { }
 
   ngOnInit(): void {
@@ -29,7 +31,16 @@ export class PessoaEnderecoComponent implements OnInit {
   }
 
   BuscarEndereco(){
-   
+   this.servicoEndereco.read(Endpoint.PessoaEndereco).subscribe(x => {
+    let endereco =  x.filter(x => x.pessoaId == this.idPessoa)[0];
+    endereco.cep = Number(endereco.cep)
+    this.endereco = endereco
+      this.enderecoEnable = true;
+   })
+  }
+
+  BuscarTelefones(){
+
   }
   buscaCep(event : any){
     if(event.which == 13 )
@@ -41,9 +52,11 @@ export class PessoaEnderecoComponent implements OnInit {
             this.endereco.bairro = ret.bairro
             this.endereco.cidade = ret.localidade
             this.endereco.siglaEstado = ret.uf
+            this.disableForm = true;
           }
           else{
             this.servico.showMessage("Não foi possível encontrar o CEP informado", false) 
+            this.disableForm = false;
           }
       });
     }
@@ -54,10 +67,22 @@ export class PessoaEnderecoComponent implements OnInit {
     this.endereco.dtCriacao = new Date;
     this.endereco.criadoPor = Number(this.servico.Sessao().usuarioId)
     this.endereco.numero = this.endereco.numero.toString()
-    this.servicoEndereco.create(this.endereco, Endpoint.PessoaEndereco).subscribe(x => {
-      this.servico.showMessage("Endereço adicionado com sucesso", false)
-      this.enderecoEnable = true;
-    });
-  }
 
+    if(this.endereco.id == null)
+    {
+      
+      this.servicoEndereco.create(this.endereco, Endpoint.PessoaEndereco).subscribe(x => {
+        this.servico.showMessage("Endereço adicionado com sucesso", false)
+        this.enderecoEnable = true;
+      });
+
+
+    }else
+    {
+      this.servicoEndereco.update(this.endereco, Endpoint.PessoaEndereco).subscribe(x => {
+        this.servico.showMessage("Endereço Atualizado com sucesso", false)
+        this.enderecoEnable = true;
+      });
+    }
+  }
 }

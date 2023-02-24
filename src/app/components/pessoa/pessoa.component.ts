@@ -60,11 +60,10 @@ export class PessoaComponent implements OnInit {
   async salvar() {
     if (this.ValidarDados(false) )
     {
-
       var idPessoa = 0;
       this.pessoa.dtCriacao = new Date;
       this.pessoa.tipoPessoa = TipoPessoa.PessoaFisica;
-      let rg = this.pessoa.rg.toString()
+      let rg = this.pessoa.rg == null ? "" : this.pessoa.rg.toString()
       let cpf = this.pessoa.cpfcnpj.toString()
       this.pessoa.rg = rg
       this.pessoa.cpfcnpj = cpf
@@ -85,14 +84,9 @@ export class PessoaComponent implements OnInit {
     }
   }
   
-  CadastrarTelefones(idContato : any){
-    this.telefones.forEach(t => {
-      t.id = 0;
-      t.contatoId = idContato;
-      this.servicoTelefone.create(t, Endpoint.Telefone).subscribe(x => {x = x})
-    });
-  }
 
+
+  
   CadastrarEndereços(idPessoa : any) : Observable<PessoaEndereco> {
     this.endereco.id = 0;
         this.endereco.pessoaId = idPessoa;
@@ -104,38 +98,6 @@ export class PessoaComponent implements OnInit {
   
   
       }
-
-  adicionarTelefone(){
-    
-    if(this.ValidarDados(true) && Number(this.telefone.ddd) > 0 && Number(this.telefone.tipoTelefone) > 0 && this.telefone.numTelefone != null )
-    {
-        let ddd = this.telefone.ddd != null ? this.telefone.ddd.toString() : "";
-        let numTeleFone = this.telefone.numTelefone != null ? this.telefone.numTelefone.toString() : "";
-        let ramal = this.telefone.ramal != null ? this.telefone.ramal.toString() : ""
-        this.telefone.id = this.telefones.length + 1
-        this.telefone.dtCriacao = new Date;
-        this.telefone.ddd = ddd
-        this.telefone.numTelefone = numTeleFone
-        this.telefone.ramal = ramal
-        this.telefone.tipoTelefone = this.telefone.tipoTelefone > 0 ? this.telefone.tipoTelefone : 1 ;
-        this.telefone.bloqueado = false;
-        this.telefone.criadoPor = this.servico.Sessao().usuarioId
-        this.telefones.push(this.telefone);
-        this.atualizarGrid();
-        this.telefone = new Telefone()  
-    }
-  }
-
-  
-  atualizarGrid(){
-    let newList = this.telefones.slice()
-    this.telefones = newList
-  }
-
-  RemoveTelefone(item : any){    
-    this.telefones.splice(this.telefones.indexOf(item), 1);
-    this.atualizarGrid()
-  }
 
   carregaCombos(){
     this.sexo = this.servico.Genero()
@@ -158,10 +120,6 @@ export class PessoaComponent implements OnInit {
       // :  this.endereco.bairro == null ? this.servico.showMessage("Informar o bairro", false) 
       // :  this.endereco.siglaEstado == null ? this.servico.showMessage("Informar a sigla do estado", false) 
       // :  this.endereco.cidade == null ? this.servico.showMessage("Informar a cidade", false) 
-      // :  this.telefone.ddd != null && !addTelefone || this.telefone.tipoTelefone != null && !addTelefone || this.telefone.numTelefone != null && !addTelefone ?  this.servico.showMessage("Adicionar o Telefone", false )
-      // :  this.telefone.ddd == null && addTelefone || Number(this.telefone.ddd) == 0  && addTelefone ?  this.servico.showMessage("Informe o DDD", false )
-      // :  this.telefone.tipoTelefone == null && addTelefone || Number(this.telefone.tipoTelefone) == 0 && addTelefone ?  this.servico.showMessage("Informe o tipo deTelefone", false )
-      // :  this.telefone.numTelefone == null && addTelefone ?  this.servico.showMessage("Informe o número do Telefone", false )
       : status =  true;
       return status
   }
