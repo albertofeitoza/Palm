@@ -1,39 +1,68 @@
-<a (click)="fecharPopup()">
-    <i class="material-icons close">
-      close
-    </i>
-</a>
-<h5>Dados Pessoais</h5>
-<mat-form-field appearance="outline" style="width: 170px;">
-    <mat-label>Protocolo</mat-label>
-    <input matInput placeholder="Protocolo"
-    [(ngModel)]="protocolo.id" name="protocolo" disabled="true">        
-</mat-form-field>
-         <form>
-            <mat-form-field appearance="outline" style="width: 200px;">
-                <mat-label>Nome</mat-label>
-                <input matInput placeholder="Nome"
-                [(ngModel)]="pessoa.nome" name="nome">        
-            </mat-form-field>
-        
-            <mat-form-field appearance="outline" style="width: 200px;">
-                <mat-label>Responsável</mat-label>
-                <input matInput placeholder="Responsável"
-                [(ngModel)]="pessoa.responsavel" name="responsavel">
-            </mat-form-field>
 
-            <mat-form-field appearance="outline" style="width: 100px; height: 80px;">
-                <mat-label>CPF</mat-label>
-                <input matInput placeholder="CPF"
-                [(ngModel)]="pessoa.cpfcnpj" name="cpf">
-            </mat-form-field>
+<div class="close">
+    <a (click)="fecharPopup()">
+        <i class="material-icons">
+            close
+        </i>
+    </a>
+</div>
+<h1 class="close">PROT.: {{protocolo.id}}</h1>
+<br>
+<hr />
+<h3>Dados do Agendamento</h3>
+<form>
+    <mat-form-field appearance="outline" style="width: 17%;">
+        <mat-label>Nome</mat-label>
+        <input matInput placeholder="Nome" id="nomePessoa"
+        [(ngModel)]="agendamento.nome" name="nome">        
+    </mat-form-field>
 
-            <span (click)="editarPessoa()">
-                <i class="material-icons botaoBuscaPopups">edit</i>
-            </span>
-        </form>
+    <mat-form-field appearance="outline" style="width: 17%;">
+        <mat-label>Responsável</mat-label>
+        <input matInput placeholder="Responsável" id="resposavel"
+        [(ngModel)]="agendamento.responsavel" name="responsavel">
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline" style="width: 9%">
+        <mat-label>RG</mat-label>
+        <input matInput placeholder="RG" type="number"
+        [(ngModel)]="agendamento.rg" name="rg">
+    </mat-form-field>
 
-<!-- <app-pessoa></app-pessoa> -->
+    <mat-form-field appearance="outline" style="width: 10%;">
+        <mat-label>CPF</mat-label>
+        <input matInput placeholder="CPF" type="number"
+        [(ngModel)]="agendamento.cpf" name="cpf">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 9%">
+        <mat-label>Tel. Res</mat-label>
+        <input matInput placeholder="Telefone" type="number"
+        [(ngModel)]="agendamento.telefone" name="telefone">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 9%">
+        <mat-label>Tel. Cel</mat-label>
+        <input matInput placeholder="Celular" type="number"
+        [(ngModel)]="agendamento.celular" name="celular">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 12%;">
+        <mat-label>Data Nascimento</mat-label>
+        <input matInput placeholder="Data Nasc" id="dataNascimento" maxlength="10" type="datetime" 
+        [ngModel]="agendamento.dataNascimento|date:'dd/MM/yyyy'" name="dataNascimento">
+      </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 9%">
+        <mat-label>E-Mail</mat-label>
+        <input matInput placeholder="email" type="text"
+        [(ngModel)]="agendamento.email" name="email">
+    </mat-form-field>
+</form>
+
+<!-- 
+<app-pessoa-endereco [enable]="true" [idPessoa]="pessoa.id"></app-pessoa-endereco>
+<app-telefones [enable]="true" [idContato]="pessoa.contato.id" ></app-telefones> -->
 
 
 <h5>CONTATOS</h5>

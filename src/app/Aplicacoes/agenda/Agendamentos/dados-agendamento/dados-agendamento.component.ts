@@ -7,6 +7,9 @@ import { ServiceAllService } from 'src/app/services/service-all.service';
 import { UtilService } from 'src/app/services/util.service';
 import { PessoaUpdateComponent } from 'src/app/components/pessoa/pessoa-update/pessoa-update.component';
 import { PessoaComponent } from 'src/app/components/pessoa/pessoa.component';
+import { Agendamentos } from 'src/app/models/Agenda/modelAgendamentos';
+import { Telefone } from 'src/app/models/Telefone/telefoneModel';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-dados-agendamento',
@@ -16,13 +19,14 @@ import { PessoaComponent } from 'src/app/components/pessoa/pessoa.component';
 export class DadosAgendamentoComponent implements OnInit {
   
   protocolo : Protocolo = new Protocolo()
-  pessoa : Pessoa = new Pessoa()
-
+  //pessoa : Pessoa = new Pessoa()
+  agendamento : Agendamentos = new Agendamentos();
 
   constructor(
               private dialofRef : MatDialogRef<DadosAgendamentoComponent>,
               private servicoProtocolo : ServiceAllService<Protocolo>,
               private servicePessoa : ServiceAllService<Pessoa>,
+              private serviceTelefone : ServiceAllService<Telefone>,
               private servico : UtilService
              ) { }
 
@@ -44,25 +48,35 @@ export class DadosAgendamentoComponent implements OnInit {
    
     this.servicoProtocolo.create(this.protocolo, Endpoint.Protocolo).subscribe(x => {
       this.protocolo = x;
-      this.servico.showMessage(`Protocolo Gerado com Sucesso ${x.id }, informar ao cliente.`)
     })
 
   }
 
   buscaPessoa(){
-    this.servicePessoa.readById(this.dialofRef.id, Endpoint.Pessoa).subscribe(x => {
-      this.pessoa = x;
+    this.servicePessoa.readById(this.dialofRef.id, Endpoint.Pessoa).subscribe(ret => {
+      this.agendamento.nome = ret.nome;
+      this.agendamento.responsavel = ret.responsavel;
+      this.agendamento.rg = ret.rg;
+      this.agendamento.cpf = ret.cpfcnpj;
+      this.agendamento.dataNascimento = ret.dataNascimento;
+      this.agendamento.email = ret.contato.email
+
+      this.serviceTelefone.read(Endpoint.Telefone).subscribe(tel => {
+        let telefones  = tel.filter(x => x.contatoId == ret.contato.id);
+        this.agendamento.telefone = telefones!= null && telefones.filter(x => x.tipoTelefone == "1") ? Number(telefones.filter(x => x.tipoTelefone =="1").map(x => x.numTelefone)) : 0;
+        this.agendamento.celular = telefones!= null && telefones.filter(x => x.tipoTelefone == "2") ? Number(telefones.filter(x => x.tipoTelefone =="2").map(x => x.numTelefone)) : 0;
+      });
     })
   }
   
-
-
   fecharPopup(){
     this.dialofRef.close()
+
+
   }
 
   editarPessoa(){
-      this.servico.Popup(this.pessoa.id.toString(), PessoaComponent, '70%' , '80%')
+      //this.servico.Popup(this.pessoa.id.toString(), PessoaUpdateComponent, '70%' , '80%')
    
   }
 
