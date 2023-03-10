@@ -271,7 +271,7 @@ export class AgendaCreateComponent implements OnInit {
     else{
       this.dadosHorarios.dtCriacao = new Date;
       this.dadosHorarios.criadoPor = this._utilService.Sessao().usuarioId;
-      this.dadosHorarios.agendaid = Number(this.agendaSelecionada);
+      this.dadosHorarios.Agendaid = Number(this.agendaSelecionada);
       
       this._utilService.showMessage("Aguarde Criando os Horários dessa agenda", false);    
    
@@ -300,13 +300,26 @@ export class AgendaCreateComponent implements OnInit {
     if(id > 0)
     {
       this.servicoHorario.read(Endpoint.AgendaHorarios).subscribe(x => {
-        this.domingo = x.filter(x => x.diaDasemana == 1 && x.agendaid == id);
-        this.segunda = x.filter(x => x.diaDasemana == 2 && x.agendaid == id);
-        this.terca = x.filter(x => x.diaDasemana == 3 && x.agendaid == id);
-        this.quarta = x.filter(x => x.diaDasemana == 4 && x.agendaid == id);
-        this.quinta = x.filter(x => x.diaDasemana == 5 && x.agendaid == id);
-        this.sexta = x.filter(x => x.diaDasemana == 6 && x.agendaid == id);
-        this.sabado = x.filter(x => x.diaDasemana == 7 && x.agendaid == id);
+        this.domingo = new Array()
+        this.domingo = x.filter(x => x.diaDasemana == 1 && x.Agendaid == id);
+        
+        this.segunda = new Array()
+        this.segunda = x.filter(x => x.diaDasemana == 2 && x.Agendaid == id);
+        
+        this.terca = new Array()
+        this.terca = x.filter(x => x.diaDasemana == 3 && x.Agendaid == id);
+        
+        this.quarta = new Array()
+        this.quarta = x.filter(x => x.diaDasemana == 4 && x.Agendaid == id);
+        
+        this.quinta = new Array()
+        this.quinta = x.filter(x => x.diaDasemana == 5 && x.Agendaid == id);
+        
+        this.sexta = new Array()
+        this.sexta = x.filter(x => x.diaDasemana == 6 && x.Agendaid == id);
+        
+        this.sabado = new Array()
+        this.sabado = x.filter(x => x.diaDasemana == 7 && x.Agendaid == id);
       });
     }
   }

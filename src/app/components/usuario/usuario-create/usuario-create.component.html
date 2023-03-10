@@ -37,8 +37,8 @@
                 <input matInput placeholder="Tipo de Usuário">
                 <p></p>
                 <mat-select [(value)]="usuario.grupoUsuarioid" placeholder="tipousuario" >
-                    <mat-option *ngFor="let tipo of comboTipousuario " [value]="tipo">
-                        {{tipo}}
+                    <mat-option *ngFor="let tipo of grupousuario " [value]="tipo.id">
+                        {{tipo.nome}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>

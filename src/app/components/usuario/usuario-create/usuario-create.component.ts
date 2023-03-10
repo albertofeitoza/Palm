@@ -27,7 +27,7 @@ grupousuario: GrupoUsuario[];
 
 criargrupousuario: GrupoUsuario
 
-comboTipousuario = [];
+
 
 constructor(  private serviceUsuario : ServiceAllService<Usuario>,
               private serviceEmpresa : ServiceAllService<Empresa>,
@@ -45,7 +45,7 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
          this.tipoLogin=true;
 
       this.carregaCombos();
-      this.buscarEmpresa();
+      this.carregaEmpresa();
   }
   
   createUsuario() : void {
@@ -94,42 +94,18 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
     this.dialogRef.close();
   }
 
-  buscarEmpresa() {
-   
-    let empId = Number(this.utilService.convertBase64toText(this.utilService.Sessao().empresaUsuarioId))
-    let grpId = Number(this.utilService.convertBase64toText(this.utilService.Sessao().idGrupoUsuario));
-
-    this.serviceEmpresa.read(Endpoint.Empresa).subscribe(emp => {
-      this.empresa = emp
-
-    })
-  }
-
   carregaCombos() : void  {
 
-    let grpId = Number(this.utilService.Sessao().idGrupoUsuario);
+    this.serviceGrupoUsuario.read(Endpoint.GrupoUsuario).subscribe(u => {
+      this.grupousuario = u;
+  
+    });
 
-    for (var tipo in TipoUsuario) {
-      if (TipoUsuario.hasOwnProperty(tipo) &&
-        (isNaN(parseInt(tipo))) && grpId == TipoUsuario.Administrador ) {
+ }
 
-         // this.comboTipousuario.push(tipo)
-          
-      }
-      else if (TipoUsuario.hasOwnProperty(tipo) &&
-      (isNaN(parseInt(tipo))) && grpId == TipoUsuario.Master ){
-
-        //if(TipoUsuarioSistema.get(tipo) == TipoUsuario.Master || TipoUsuarioSistema.get(tipo) == TipoUsuario.Usuario)            
-          //  this.comboTipousuario.push(tipo);
-        }
-    }
-  }
-
-  createGrupoUsuario(){
-    this.criargrupousuario.criadoPor  = Number(this.utilService.Sessao().usuarioId);
-    this.criargrupousuario.dtCriacao = new Date;
-      this.serviceGrupoUsuario.create(this.criargrupousuario, Endpoint.GrupoUsuario).subscribe(() => {
-        this.utilService.showMessage('Grupo de Usuário Criado!');
-      })
+  carregaEmpresa() : void {
+    this.serviceEmpresa.read(Endpoint.Empresa).subscribe(emp => {
+      this.empresa = emp
+    })
   }
 }

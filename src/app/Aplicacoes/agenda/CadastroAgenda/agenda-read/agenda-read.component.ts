@@ -36,7 +36,7 @@ export class AgendaReadComponent implements OnInit {
    
     if(this.servico.Sessao().idGrupoUsuario == TipoUsuario.Master || this.servico.Sessao().idGrupoUsuario == TipoUsuario.Administrador)
     {
-      this.servico.Popup("0",AgendaCreateComponent, '70%','98%' );
+      this.servico.Popup("0",AgendaCreateComponent, '80%','98%' );
 
     }else{
       this.servico.showMessage("Solicitar ao um Usuário Master para criar Nova Agenda!",true);

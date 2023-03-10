@@ -1,7 +1,7 @@
 export class HorarioAgenda{
     id?: number
     dtCriacao : Date 
-    agendaid : number
+    Agendaid : number
     intervalo : string
     tipoHorario : number
     diaDasemana : number
