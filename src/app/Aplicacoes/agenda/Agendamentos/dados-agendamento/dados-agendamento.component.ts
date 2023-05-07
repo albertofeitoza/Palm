@@ -19,8 +19,12 @@ import { map } from 'rxjs';
 export class DadosAgendamentoComponent implements OnInit {
   
   protocolo : Protocolo = new Protocolo()
-  //pessoa : Pessoa = new Pessoa()
   agendamento : Agendamentos = new Agendamentos();
+  
+  idPessoa : Number
+  idTelefoneRes : Number
+  idTelefoneCel : Number
+  idContato : Number
 
   constructor(
               private dialofRef : MatDialogRef<DadosAgendamentoComponent>,
@@ -62,7 +66,14 @@ export class DadosAgendamentoComponent implements OnInit {
       this.agendamento.email = ret.contato.email
 
       this.serviceTelefone.read(Endpoint.Telefone).subscribe(tel => {
+
         let telefones  = tel.filter(x => x.contatoId == ret.contato.id);
+        
+        this.idPessoa = ret.id;
+        this.idContato =  ret.contato.id
+        this.idTelefoneRes = telefones!= null && telefones.filter(x => x.tipoTelefone == "1") ? Number(telefones.filter(x => x.tipoTelefone =="1").map(x => Number(x.id))) : 0;
+        this.idTelefoneCel = telefones!= null && telefones.filter(x => x.tipoTelefone == "2") ? Number(telefones.filter(x => x.tipoTelefone =="2").map(x => Number(x.id))) : 0;
+        
         this.agendamento.telefone = telefones!= null && telefones.filter(x => x.tipoTelefone == "1") ? Number(telefones.filter(x => x.tipoTelefone =="1").map(x => x.numTelefone)) : 0;
         this.agendamento.celular = telefones!= null && telefones.filter(x => x.tipoTelefone == "2") ? Number(telefones.filter(x => x.tipoTelefone =="2").map(x => x.numTelefone)) : 0;
       });
@@ -75,9 +86,10 @@ export class DadosAgendamentoComponent implements OnInit {
 
   }
 
-  editarPessoa(){
+  AtualizarDados(){
       //this.servico.Popup(this.pessoa.id.toString(), PessoaUpdateComponent, '70%' , '80%')
-   
+   alert('Telefone residencial' + this.agendamento.telefone)
+   alert('Telefone residencial' + this.agendamento.celular)
   }
 
 

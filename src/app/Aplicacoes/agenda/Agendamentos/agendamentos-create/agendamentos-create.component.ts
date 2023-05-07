@@ -128,7 +128,7 @@ constructor(
   AgendarOrcar(){
     if(this.idSelecionado > 0)
     {
-      this.servico.Popup(this.idSelecionado.toString(), DadosAgendamentoComponent, '70%', '80%');
+      this.servico.Popup(this.idSelecionado.toString(), DadosAgendamentoComponent, '75%', '80%');
     } 
   }
 
