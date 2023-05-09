@@ -17,12 +17,6 @@
         [(ngModel)]="agendamento.nome" name="nome">        
     </mat-form-field>
 
-    <!-- <mat-form-field appearance="outline" style="width: 17%;">
-        <mat-label>Responsável</mat-label>
-        <input matInput placeholder="Responsável" id="resposavel"
-        [(ngModel)]="agendamento.responsavel" name="responsavel">
-    </mat-form-field> -->
-    
     <mat-form-field appearance="outline" style="width: 11%">
         <mat-label>RG</mat-label>
         <input matInput placeholder="RG" type="number"
@@ -61,21 +55,34 @@
     <span (click)="AtualizarDados()" >
         <i class="material-icons botao">save</i>
     </span>
-</form>
-
-<!-- 
-<app-pessoa-endereco [enable]="true" [idPessoa]="pessoa.id"></app-pessoa-endereco>
-<app-telefones [enable]="true" [idContato]="pessoa.contato.id" ></app-telefones> -->
-
-
-<h5>CONTATOS</h5>
-
-<span>
-    <i class="material-icons botaoBuscaPopups">search</i>
-</span>
 
 <h5>FILTROS</h5>
 <hr />
-<span>
-    <i class="material-icons botaoBuscaPopups">search</i>
-</span>
+<mat-form-field appearance="outline" style="width: 13%;">
+    <mat-label>Período</mat-label>
+    <mat-select [(value)]="idPeriodo" placeholder="Qualquer período" (selectionChange)="AtualizaPeriodo()">
+        <mat-option  *ngFor="let period  of periodo" [value]="period.id">
+            {{period.horario}} 
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+
+<mat-form-field appearance="outline" style="width: 5%;">
+    <mat-label>Hora Início</mat-label>
+        <input matInput placeholder="Hora Início" id="horaInicio" 
+        [ngModel]="filtros.horaInicioPeriodo" name="horaInicioPeriodo">        
+</mat-form-field>
+
+<mat-form-field appearance="outline" style="width: 5%;">
+    <mat-label>Hora Fim</mat-label>
+        <input matInput placeholder="Hora Fim" id="horaFim" 
+        [(ngModel)]="filtros.horaFimPeriodo" name="horaFimPeriodo" >        
+</mat-form-field>
+
+<mat-form-field appearance="outline" style="width: 10%; height: 10px;">
+    <mat-label>Data</mat-label>
+    <input matInput placeholder="Data" id="DataPeriodo" maxlength="10" type="datetime" 
+    [ngModel]="filtros.data|date:'dd/MM/yyyy'" name="data">
+  </mat-form-field>
+
+</form>
