@@ -5,11 +5,9 @@ export class Protocolo{
     dtCriacao: Date
     tipo: Number
     descricao: string
-    usuarioid: Number
-    empresaid: Number
     criadoPor: Number
     pessoaid: Number
-    pessoa : Pessoa 
+    statusProtocolo : number 
     
     
 }

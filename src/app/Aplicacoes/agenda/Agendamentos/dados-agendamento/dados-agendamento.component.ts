@@ -10,6 +10,8 @@ import { PessoaComponent } from 'src/app/components/pessoa/pessoa.component';
 import { Agendamentos } from 'src/app/models/Agenda/modelAgendamentos';
 import { Telefone } from 'src/app/models/Telefone/telefoneModel';
 import { map } from 'rxjs';
+import { FormatListNumberedRtlOutlined } from '@material-ui/icons';
+import { FiltroBuscaTelaAgendamento } from 'src/app/models/Filtros/filtros';
 
 @Component({
   selector: 'app-dados-agendamento',
@@ -20,11 +22,20 @@ export class DadosAgendamentoComponent implements OnInit {
   
   protocolo : Protocolo = new Protocolo()
   agendamento : Agendamentos = new Agendamentos();
+  filtros : FiltroBuscaTelaAgendamento = new FiltroBuscaTelaAgendamento();
+  
+  periodo : any = [
+    {"id" : "1", "horario":"Qualquer Horário"},
+    {"id" : "2", "horario":"Manhã"},
+    {"id" : "3", "horario":"Tarde"},
+  ]
   
   idPessoa : Number
   idTelefoneRes : Number
   idTelefoneCel : Number
   idContato : Number
+  
+  idPeriodo : Number
 
   constructor(
               private dialofRef : MatDialogRef<DadosAgendamentoComponent>,
@@ -37,6 +48,7 @@ export class DadosAgendamentoComponent implements OnInit {
   ngOnInit(): void {
     this.buscaPessoa();
     this.criarProtocolo()  
+
   
   }
   
@@ -46,9 +58,8 @@ export class DadosAgendamentoComponent implements OnInit {
     this.protocolo.tipo = 0;
     this.protocolo.criadoPor = this.servico.Sessao().usuarioId;
     this.protocolo.descricao = "Agendamento";
-    this.protocolo.empresaid = this.servico.Sessao().empresaUsuarioId;
     this.protocolo.pessoaid = Number(this.dialofRef.id)
-    
+    this.protocolo.statusProtocolo = 0
    
     this.servicoProtocolo.create(this.protocolo, Endpoint.Protocolo).subscribe(x => {
       this.protocolo = x;
@@ -90,6 +101,37 @@ export class DadosAgendamentoComponent implements OnInit {
       //this.servico.Popup(this.pessoa.id.toString(), PessoaUpdateComponent, '70%' , '80%')
    alert('Telefone residencial' + this.agendamento.telefone)
    alert('Telefone residencial' + this.agendamento.celular)
+  }
+
+
+  AtualizaPeriodo(){
+
+    switch (Number(this.idPeriodo)) {
+      case 1:
+          this.filtros.horaInicioPeriodo = "00:00"
+          this.filtros.horaFimPeriodo = "23:59"
+          this.filtros.data = new Date
+        break;
+    
+      case 2:
+          this.filtros.horaInicioPeriodo = "06:00"
+          this.filtros.horaFimPeriodo = "12:00"  
+          this.filtros.data = new Date
+        break;
+
+      case 3:
+        this.filtros.horaInicioPeriodo = "12:00"
+        this.filtros.horaFimPeriodo = "20:00"
+        this.filtros.data = new Date
+      break;
+
+      default:
+        this.filtros.horaInicioPeriodo = "00:00"
+        this.filtros.horaFimPeriodo = "23:59"
+        this.filtros.data = new Date
+      break;
+    }
+    
   }
 
 
