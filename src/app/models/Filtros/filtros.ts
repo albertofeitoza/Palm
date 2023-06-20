@@ -4,4 +4,5 @@ export class FiltroBuscaTelaAgendamento{
     data : Date
     tipoHorario : Number
     unidade : number
+    nomeUnidade : string
 }

@@ -5,13 +5,12 @@ import { Pessoa } from 'src/app/models/Pessoa/modelPessoa';
 import { Endpoint } from 'src/app/Negocio/Endpoint';
 import { ServiceAllService } from 'src/app/services/service-all.service';
 import { UtilService } from 'src/app/services/util.service';
-import { PessoaUpdateComponent } from 'src/app/components/pessoa/pessoa-update/pessoa-update.component';
-import { PessoaComponent } from 'src/app/components/pessoa/pessoa.component';
 import { Agendamentos } from 'src/app/models/Agenda/modelAgendamentos';
 import { Telefone } from 'src/app/models/Telefone/telefoneModel';
 import { map } from 'rxjs';
 import { FormatListNumberedRtlOutlined } from '@material-ui/icons';
 import { FiltroBuscaTelaAgendamento } from 'src/app/models/Filtros/filtros';
+import { AgendamentoCatalogoServicos } from 'src/app/models/Agenda/modelAgendamentoSevico';
 
 @Component({
   selector: 'app-dados-agendamento',
@@ -23,7 +22,16 @@ export class DadosAgendamentoComponent implements OnInit {
   protocolo : Protocolo = new Protocolo()
   agendamento : Agendamentos = new Agendamentos();
   filtros : FiltroBuscaTelaAgendamento = new FiltroBuscaTelaAgendamento();
-  
+  dadosAgendamentos : AgendamentoCatalogoServicos[] = new Array();
+  codServico : any ;
+  nomeServico : any;
+
+   
+  displayedColumns = ['Id','Nome', 'Codigo','CodigoBarras','QrCode','Seg','Ter','Qua','Qui','Sex','Sab','Dom','Valor','action']  
+  idSelecionado : Number =0;
+  selected : number = 0;
+
+
   periodo : any = [
     {"id" : "1", "horario":"Qualquer Horário"},
     {"id" : "2", "horario":"Manhã"},
@@ -47,8 +55,8 @@ export class DadosAgendamentoComponent implements OnInit {
 
   ngOnInit(): void {
     this.buscaPessoa();
-    this.criarProtocolo()  
-
+    this.criarProtocolo();  
+    this.AtualizaPeriodo();
   
   }
   
@@ -134,5 +142,31 @@ export class DadosAgendamentoComponent implements OnInit {
     
   }
 
+  buscarUnidade(event : any){
+    if(event.which === 13){
+      
+    }
+      
+  }
+
+  Atender(id : any){
+    alert('Realizar atendimento.')
+
+    // Ao atender Guardar Numero de atendimento. e guardar os dados na Faturamento
+
+  }
+
+  selecionaLinha(id : any){
+    this.idSelecionado = 0;
+    this.idSelecionado = id > 0 ? this.idSelecionado = id : 0;
+  }
+
+  buscarServico(codServico : any){
+
+  }
+
+  AdicionarServico(){
+    
+  }
 
 }

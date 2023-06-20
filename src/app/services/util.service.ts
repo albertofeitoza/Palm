@@ -16,6 +16,10 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 })
 export class UtilService {
 
+  popupId : string = "";
+  nomePopup : string = "";
+  idsSelecionados : any = [];
+
   constructor(private snackBar: MatSnackBar,
              private http : HttpClient,
              private headerService : HeaderService,
@@ -60,7 +64,7 @@ export class UtilService {
   Sessao(){
     return this.serviceLogin.dadosLogado();
   }
-
+  
 
    atualizaRota(rota : string, reload : boolean = false) {
       
@@ -84,7 +88,11 @@ export class UtilService {
         id
       });
       dialogRef.afterClosed().subscribe(result => {
-        console.log(`Dialog result: ${result}`);
+        //console.log(`Dialog result: ${result}`);
+
+        this.popupId = id;
+        this.nomePopup = "";
+        this.idsSelecionados.push(result.Id)
       
       });
 
@@ -194,5 +202,20 @@ export class UtilService {
     return ddd;
 
   }
+
+  retornoDadosPopup(){
+    let dados = [
+      {
+        "id" : "",
+
+
+    
+      }
+
+    ]
+    
+  }
+
+
 
 }
