@@ -1,6 +1,6 @@
 import { HeaderService } from './../components/template/header/header.service';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { Observable, EMPTY } from 'rxjs';
+import { Observable, EMPTY, catchError, map } from 'rxjs';
 import { Component, EventEmitter, Injectable } from '@angular/core';
 import { AbstractControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -77,25 +77,17 @@ export class UtilService {
   
     }
 
-  Popup(id : string, T : any, largura : string, altura: string ) {
+  Popup(id : string, componenteOrigem : any, largura : string, altura: string ){
    
     const scrollStrategy = this.overlay.scrollStrategies.reposition();
-    const dialogRef = this.dialog.open(T, {
+    const dialogRef = this.dialog.open(componenteOrigem, {
         width : largura,
         height : altura,
         disableClose : true,
         scrollStrategy,
         id
       });
-      dialogRef.afterClosed().subscribe(result => {
-        //console.log(`Dialog result: ${result}`);
-
-        this.popupId = id;
-        this.nomePopup = "";
-        this.idsSelecionados.push(result.Id)
-      
-      });
-
+    //dialogRef.afterClosed().subscribe(() => { })
   }
 
   Genero(){

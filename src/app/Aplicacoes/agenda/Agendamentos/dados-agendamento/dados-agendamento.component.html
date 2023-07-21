@@ -103,7 +103,7 @@
   
   <mat-form-field appearance="outline" style="width: 10%">
       <mat-label>Cód Serviço</mat-label>
-      <input matInput placeholder="Cod Serviço" (keypress)="buscarServico($event)"
+      <input matInput placeholder="Cod Serviço" (keypress)="AdicionarServico($event)"
       [(ngModel)]="codServico" name="codserviço">
   </mat-form-field>
 
@@ -112,7 +112,7 @@
     [(ngModel)]="nomeServico" name="nomeServiço">
   </mat-form-field>
 
-  <a (click)="AdicionarServico()" class="delete">
+  <a (click)="AdicionarServico($event )" class="delete">
     <i class="material-icons">
         add
     </i>

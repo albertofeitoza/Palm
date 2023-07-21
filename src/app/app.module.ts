@@ -1,6 +1,5 @@
 import { LoginService } from './services/login.service';
 import { UtilService } from './services/util.service';
-
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
 
@@ -33,7 +32,7 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatListModule } from "@angular/material/list";
 import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from "@angular/material/button";
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
@@ -44,11 +43,9 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
-
 import { ProductReadComponent } from './components/product/product-read/product-read.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProductUpdateComponent } from './components/product/product-update/product-update.component';
 import { ProductDeleteComponent } from './components/product/product-delete/product-delete.component';
 import { RedDirective } from './diretivas/red.directive';
@@ -89,6 +86,9 @@ import { PessoaUpdateComponent } from './components/pessoa/pessoa-update/pessoa-
 import { PessoaEnderecoComponent } from './components/pessoa/pessoa-endereco/pessoa-endereco.component';
 import { PessoaContatosComponent } from './components/pessoa/pessoa-contatos/pessoa-contatos.component';
 import { TelefonesComponent } from './components/pessoa/telefones/telefones.component';
+import { PopupConfirmacaoComponent } from './components/Popups/popup-confirmacao/popup-confirmacao.component';
+import { PopupSelecaoIdsComponent } from './components/Popups/popup-selecao-ids/popup-selecao-ids.component';
+import { PopupErroComponent } from './components/Popups/popup-erro/popup-erro.component';
 
 @NgModule({
   declarations: [
@@ -142,6 +142,9 @@ import { TelefonesComponent } from './components/pessoa/telefones/telefones.comp
     PessoaEnderecoComponent,
     PessoaContatosComponent,
     TelefonesComponent,
+    PopupConfirmacaoComponent,
+    PopupSelecaoIdsComponent,
+    PopupErroComponent,
     
   ],
   imports: [

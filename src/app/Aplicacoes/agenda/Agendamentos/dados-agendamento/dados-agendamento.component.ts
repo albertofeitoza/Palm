@@ -11,6 +11,7 @@ import { map } from 'rxjs';
 import { FormatListNumberedRtlOutlined } from '@material-ui/icons';
 import { FiltroBuscaTelaAgendamento } from 'src/app/models/Filtros/filtros';
 import { AgendamentoCatalogoServicos } from 'src/app/models/Agenda/modelAgendamentoSevico';
+import { PopupSelecaoIdsComponent } from 'src/app/components/Popups/popup-selecao-ids/popup-selecao-ids.component';
 
 @Component({
   selector: 'app-dados-agendamento',
@@ -161,12 +162,10 @@ export class DadosAgendamentoComponent implements OnInit {
     this.idSelecionado = id > 0 ? this.idSelecionado = id : 0;
   }
 
-  buscarServico(codServico : any){
-
-  }
-
-  AdicionarServico(){
+  AdicionarServico(event : any){
     
+    this.servico.Popup("", PopupSelecaoIdsComponent, '45%', '45%')
+
   }
 
 }

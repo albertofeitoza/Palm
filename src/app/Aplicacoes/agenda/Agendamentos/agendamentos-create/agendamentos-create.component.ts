@@ -121,15 +121,15 @@ constructor(
   }
 
   fecharPopup(){
-    
-      this.dialofRef.close();
+      
+      this.dialofRef.close()
+
   }
 
   AgendarOrcar(){
-    if(this.idSelecionado > 0)
-    {
-      this.servico.Popup(this.idSelecionado.toString(), DadosAgendamentoComponent, '75%', '80%');
-    } 
+    if(this.idSelecionado)
+       this.servico.Popup(this.idSelecionado.toString(), DadosAgendamentoComponent, '75%', '80%')
+  
   }
 
   LinhaSelecionada(id : Number){
