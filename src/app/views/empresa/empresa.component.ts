@@ -13,9 +13,4 @@ export class EmpresaComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  navigateToEmpresaCreate() : void {
-    this.router.navigate(['empresa/create'])
-  }
-
-
 }

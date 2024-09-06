@@ -75,19 +75,26 @@
       <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
       <mat-cell *matCellDef="let row">
 
-        <a class="cursor" (click)="EditarEmpresa(row.id)" class="edit">
-          <i class="material-icons">
+        <a (click)="EditarEmpresa(row.id)">
+          <i class="material-icons edit cursor">
             edit
           </i>
         </a>
-        <a class="cursor" (click)="ExcluirEmpresa(row.id)" class="delete">
-          <i class="material-icons">
-            delete
+        <a (click)="Usuarios(row.id)">
+          <i class="material-icons delete cursor ">
+            people
           </i>
         </a>
+
+        <a (click)="Produtos(row.id)">
+          <i class="material-icons delete cursor ">
+            checklist
+          </i>
+        </a>
+
       </mat-cell>
     </ng-container>
-    
+
     <mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'corLinhaGrid' : row.id == idSelecionado}"
       (click)="selecionaLinha(row.id)">
     </mat-row>

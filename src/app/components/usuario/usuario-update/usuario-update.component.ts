@@ -46,14 +46,14 @@ comboTipousuario : GrupoUsuario[];
                                         : this.usuario.grupoUsuarioid == "Master" ? TipoUsuario.MasterEmpresa.toString()
                                         : "Usuario" 
           
-            this.usarioService.read(Endpoint.Usuario).subscribe(user => {
+            this.usarioService.read(Endpoint.Usuarios).subscribe(user => {
               user = user;
                                     
               let ativo = user.filter(x => x.login.toLowerCase() == this.usuario.login.toLowerCase() && x.empresaid == this.usuario.empresaid && x.id == this.usuario.id);
           
                 if (ativo.length > 0 )
                 {
-                    this.usarioService.update(this.usuario, Endpoint.Usuario).subscribe(() => {
+                    this.usarioService.update(this.usuario, Endpoint.Usuarios).subscribe(() => {
                       this.utilService.showMessage("Usuário Atualizado com Sucesso!")
 
                     })
@@ -61,7 +61,7 @@ comboTipousuario : GrupoUsuario[];
 
                   }else if(grpId == TipoUsuario.Administrador){
                       
-                    this.usarioService.update(this.usuario, Endpoint.Usuario).subscribe(() => {
+                    this.usarioService.update(this.usuario, Endpoint.Usuarios).subscribe(() => {
                         this.utilService.showMessage("Usuário Atualizado com Sucesso!")
                         
                       })
@@ -91,7 +91,7 @@ comboTipousuario : GrupoUsuario[];
 
   buscarUsuario(){
 
-      this.usarioService.readById(this.dialogRef.id, Endpoint.Usuario).subscribe(usr => {
+      this.usarioService.readById(this.dialogRef.id, Endpoint.Usuarios).subscribe(usr => {
       this.usuario = usr;
    
       this.carregarComboTipoUsuario(); 

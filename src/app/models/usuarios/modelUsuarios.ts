@@ -1,12 +1,9 @@
-export class viewModelUsuarios {
-
-    id: number
-    nome: string
-    login: string
-    tipo: string
-    bloqueado: string
+export class ViewUsuarios {
+    id: number;
+    nomeUsuario: string;
+    ativo: boolean;
+    tipoUsuario: number;
 }
-
 export class DadosLogados {
     IdUsuario: number;
     NomeUsuarioLogado: string;

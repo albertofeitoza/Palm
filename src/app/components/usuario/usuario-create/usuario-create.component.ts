@@ -1,3 +1,4 @@
+import { Usuario } from 'src/app/models/usuarios/modelLogin';
 import { Endpoint } from './../../../Negocio/Endpoint';
 import { GrupoUsuario } from './../../../models/usuarios/GrupoUsuarios';
 import { LoginService } from 'src/app/services/login.service';
@@ -5,7 +6,6 @@ import { ServiceAllService } from './../../../services/service-all.service';
 import { TipoUsuario, TipoUsuarioSistema } from './../../../models/usuarios/enumUsuarios';
 import { UtilService } from './../../../services/util.service';
 import { Router } from '@angular/router';
-import { Usuario } from '../../../models/usuarios/modelLogin';
 import { Component, OnInit, Input } from '@angular/core';
 import { Empresa } from './../../../models/empresa/ModelEmpresa';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -59,7 +59,7 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
     
     
 
-    this.serviceUsuario.read(Endpoint.Usuario).subscribe(user => {
+    this.serviceUsuario.read(Endpoint.Usuarios).subscribe(user => {
       user = user;
 
       let ativo = user.filter(x => x.login.toLowerCase() == this.usuario.login.toLowerCase());
@@ -73,7 +73,7 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
               this.serviceEmpresa.readById(this.usuario.empresaid, Endpoint.Empresa).subscribe(emp => {
                 emp = emp;
                 if (!emp.status){
-                  this.serviceUsuario.create(this.usuario, Endpoint.Usuario).subscribe(() => {
+                  this.serviceUsuario.create(this.usuario, Endpoint.Usuarios).subscribe(() => {
                     this.utilService.showMessage('Usuário Criado!');
                   });
                 }

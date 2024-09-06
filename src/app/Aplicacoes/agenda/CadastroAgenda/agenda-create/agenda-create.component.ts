@@ -126,7 +126,7 @@ export class AgendaCreateComponent implements OnInit {
   carregaComboProfissional(grpId: string , empId: string){
     this.comboProfissional =  new Array();
     
-    this._serviceUsuario.read(Endpoint.Usuario).subscribe((data: {} ) => {
+    this._serviceUsuario.read(Endpoint.Usuarios).subscribe((data: {} ) => {
     
     this.comboProfissional = grpId == TipoUsuario.MasterEmpresa.toString() || grpId == TipoUsuario.Administrador.toString() ? this.comboProfissional = data : null;
     

@@ -19,12 +19,12 @@ table{
     margin-right: 15px;
 }
 
-.edit > i{
+.edit {
     color: #d9cd26;
 }
-.delete > i{
+.delete{
     color: #e35e6b;
-    margin-left: 30px;
+    margin-left: 15px;
 }
 
 .mat-tab-group {

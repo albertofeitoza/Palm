@@ -1,17 +1,16 @@
 import { Endpoint } from './../../../Negocio/Endpoint';
 import { Router } from '@angular/router';
 import { ServiceAllService } from './../../../services/service-all.service';
-import { Endereco } from './../../../models/endereco/modelEndereco';
-import { Contato } from './../../../models/contato/modelContato';
 import { Empresa, ViewEmpresas } from './../../../models/empresa/ModelEmpresa';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UtilService } from 'src/app/services/util.service';
 import { Overlay } from '@angular/cdk/overlay';
 import { LoginService } from 'src/app/services/login.service';
-import { DadosLogados } from 'src/app/models/usuarios/modelUsuarios';
 import { TipoUsuario } from 'src/app/models/usuarios/enumUsuarios';
-import { EmpresaCreateComponent } from '../empresa-create/empresa-create.component';
+import { EmpresaCreateComponent } from '../modal/empresa-create/empresa-create.component';
+import { UsuarioReadComponent } from '../../usuario/usuario-read/usuario-read.component';
+import { ProductReadComponent } from '../../product/product-read/product-read.component';
 
 @Component({
   selector: 'app-empresa-read',
@@ -81,15 +80,15 @@ export class EmpresaReadComponent implements OnInit {
     }
   }
 
-  public ExcluirEmpresa(id: string): void {
-
-    // if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.MasterEmpresa.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
-    // {
-    //   this._utilService.Popup(id, EmpresaDeleteComponent, "700px", "200px")
-    // }else{
-    //   this._utilService.showMessage("Você não possui permissão para Excluir empresa",true);
-    // }
+  public Usuarios(id: number): void {
+    this._utilService.Popup(id, UsuarioReadComponent, "auto", "auto")
   }
+
+
+  public Produtos(id: number): void {
+    this._utilService.Popup(id, ProductReadComponent, "auto", "auto")
+  }
+
 }
 
 

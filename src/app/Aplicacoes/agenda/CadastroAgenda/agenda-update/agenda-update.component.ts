@@ -80,7 +80,7 @@ export class AgendaUpdateComponent implements OnInit {
       }
      
       BuscarUsuario(){
-        this.serviceUsuario.read(Endpoint.Usuario).subscribe(pr => {
+        this.serviceUsuario.read(Endpoint.Usuarios).subscribe(pr => {
           this.comboProfissional = pr
         });
       }

@@ -1,17 +1,8 @@
-import { UtilService } from './../../../services/util.service';
-import { Router } from '@angular/router';
 import { Endpoint } from './../../../Negocio/Endpoint';
-import { Usuario } from './../../../models/usuarios/modelLogin';
 import { ServiceAllService } from './../../../services/service-all.service';
-import { Empresa } from './../../../models/empresa/ModelEmpresa';
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';;
-import { TipoUsuario } from 'src/app/models/usuarios/enumUsuarios';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { UsuarioCreateComponent } from '../usuario-create/usuario-create.component';
-import { Overlay } from '@angular/cdk/overlay';
-import { UsuarioUpdateComponent } from '../usuario-update/usuario-update.component';
-import { UsuarioDeleteComponent } from '../usuario-delete/usuario-delete.component';
-import { viewModelUsuarios } from 'src/app/models/usuarios/modelUsuarios';
+import { Component, OnInit } from '@angular/core';;
+import { MatDialogRef } from '@angular/material/dialog';
+import { ViewUsuarios } from 'src/app/models/usuarios/modelUsuarios';
 
 
 @Component({
@@ -23,32 +14,23 @@ import { viewModelUsuarios } from 'src/app/models/usuarios/modelUsuarios';
 
 export class UsuarioReadComponent implements OnInit {
 
-  usuario : viewModelUsuarios[]
-  userAutenticado : boolean = false; 
+  usuarios: ViewUsuarios[] = new Array()
+  userAutenticado: boolean = false;
+  displayedColumns = ['id', 'nomeUsuario', 'tipoUsuario', 'ativo', 'action']
+  idSelecionado: Number = 0;
 
-  displayedColumns = ['id','nome','login','tipo','bloqueado','action']  
-  idSelecionado : Number = 0;
   constructor(
-              public dialog : MatDialog,
-              public overlay : Overlay,
-              private serviceEmpresa: ServiceAllService<Empresa>,
-              private serviceUsuario : ServiceAllService<viewModelUsuarios>,
-              private _utilService : UtilService, 
-              private router : Router,
-
-             ) 
-             { }
+    private serviceApi: ServiceAllService<any>,
+    public dialofRef: MatDialogRef<UsuarioReadComponent>,
+  ) { }
 
 
   ngOnInit(): void {
-     if(this._utilService.Sessao() != undefined)
-      this.userAutenticado = true
-
-      this.getUser();
+    this.BuscarUsuarios();
   }
-  
-  addUsuario(): void{
-    
+
+  addUsuario(): void {
+
     // if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.MasterEmpresa.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
     // {
     //     const scrollStrategy = this.overlay.scrollStrategies.reposition();
@@ -67,8 +49,8 @@ export class UsuarioReadComponent implements OnInit {
   }
 
 
-  editarUsuario(id : string): void{
-    
+  public EditarUsuario(id: number): void {
+
     // if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.MasterEmpresa.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
     // {
     //     const scrollStrategy = this.overlay.scrollStrategies.reposition();
@@ -86,38 +68,17 @@ export class UsuarioReadComponent implements OnInit {
     //   this._utilService.showMessage("Você não possui permissão para criação de usuários",true);
     // }
   }
+  public BuscarUsuarios(): void {
 
+    let filtroUsuario = (<HTMLSelectElement>document.getElementById('busca')).value;
 
-  deletarUsuario(id : string): void{
-    
-    // if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.MasterEmpresa.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
-    // {
-    //     const scrollStrategy = this.overlay.scrollStrategies.reposition();
-    //     const dialogRef = this.dialog.open(UsuarioDeleteComponent, {
-    //       width : '500px',
-    //       height : '260px',
-    //       scrollStrategy,
-    //       id
-
-    //     });
-    //     dialogRef.afterClosed().subscribe(result => {
-    //       console.log(`Dialog result: ${result}`);
-    //     });
-    // }else{
-    //   this._utilService.showMessage("Você não possui permissão para criação de usuários",true);
-    // }
-  }
-
-  async getUser() {
-      
-      let filtroUsuario = (<HTMLSelectElement>document.getElementById('busca')).value;
-
-      this.serviceUsuario.read(Endpoint.Usuario).subscribe(u =>{
-         this.usuario = filtroUsuario != null ? u.filter(x => x.nome.toLowerCase().includes(filtroUsuario.toLowerCase())) : u
+    this.serviceApi.read(Endpoint.Usuarios + `/estabelecimento/${this.dialofRef.id}`)
+      .subscribe((result: ViewUsuarios[]) => {
+        this.usuarios = filtroUsuario != null ? result.filter(x => x.nomeUsuario.toLowerCase().includes(filtroUsuario.toLowerCase())) : result
       })
   }
-      
-  selecionaLinha(id : Number){
+
+  selecionaLinha(id: Number) {
     this.idSelecionado = id;
   }
 }

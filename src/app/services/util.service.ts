@@ -78,13 +78,13 @@ export class UtilService {
 
   }
 
-  Popup(id: any, componenteOrigem: any, largura: string, altura: string) {
+  Popup(id: any, componenteOrigem: any, largura: string, altura: string, disableclose: boolean = false) {
 
     const scrollStrategy = this.overlay.scrollStrategies.reposition();
     const dialogRef = this.dialog.open(componenteOrigem, {
       width: largura,
       height: altura,
-      disableClose: true,
+      disableClose: disableclose,
       scrollStrategy,
       id
     });
