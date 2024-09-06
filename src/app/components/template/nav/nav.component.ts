@@ -10,7 +10,7 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
-opened = false;
+opened = true;
 unlockadm = false;  
 lockMaster = false;
   constructor(private auth: LoginService,
