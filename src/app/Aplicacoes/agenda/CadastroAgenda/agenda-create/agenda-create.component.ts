@@ -92,15 +92,15 @@ export class AgendaCreateComponent implements OnInit {
   }
   
   createAgenda(){
-    this.agendaSelecionada = 0;
-     this.agenda.empresaid = Number(this._utilService.Sessao().empresaUsuarioId)
-     this._serviceAgenda.create(this.agenda, Endpoint.Agenda).subscribe(ag => {
-     this.agenda = ag;
-     this.agenda.DtCriacao = new Date;
-     this._utilService.showMessage("Agenda cadastrada com sucesso!",false);
-     this.route.navigate(['home-component'])
-     });
-        this.route.navigate(['home-component'])
+    // this.agendaSelecionada = 0;
+    //  this.agenda.empresaid = Number(this._utilService.Sessao().empresaUsuarioId)
+    //  this._serviceAgenda.create(this.agenda, Endpoint.Agenda).subscribe(ag => {
+    //  this.agenda = ag;
+    //  this.agenda.DtCriacao = new Date;
+    //  this._utilService.showMessage("Agenda cadastrada com sucesso!",false);
+    //  this.route.navigate(['home-component'])
+    //  });
+    //     this.route.navigate(['home-component'])
   }
 
   cancel(){
@@ -108,19 +108,19 @@ export class AgendaCreateComponent implements OnInit {
   }
 
   BuscarSala(){
-    this.carregaComboSala(this._utilService.Sessao().idGrupoUsuario, this._utilService.Sessao().empresaUsuarioId.toString())
+    // this.carregaComboSala(this._utilService.Sessao().idGrupoUsuario, this._utilService.Sessao().empresaUsuarioId.toString())
   }
 
   AtualizarComboProfissional(){
-    this.carregaComboProfissional(this._utilService.Sessao().idGrupoUsuario, this._utilService.Sessao().empresaUsuarioId.toString())
+    // this.carregaComboProfissional(this._utilService.Sessao().idGrupoUsuario, this._utilService.Sessao().empresaUsuarioId.toString())
   }
 
   carregaCombos(){
 
-    this.carregaComboProfissional(this._utilService.Sessao().idGrupoUsuario, this._utilService.Sessao().empresaUsuarioId.toString())
-      this.carregaComboUnidade(this._utilService.Sessao().idGrupoUsuario, this._utilService.Sessao().empresaUsuarioId.toString());
-      this.carregaComboSala(this._utilService.Sessao().idGrupoUsuario, this._utilService.Sessao().empresaUsuarioId.toString());
-      this.carregaComboGrupoAgenda(this._utilService.Sessao().idGrupoUsuario, this._utilService.Sessao().empresaUsuarioId.toString());
+  //   this.carregaComboProfissional(this._utilService.Sessao().idGrupoUsuario, this._utilService.Sessao().empresaUsuarioId.toString())
+  //     this.carregaComboUnidade(this._utilService.Sessao().idGrupoUsuario, this._utilService.Sessao().empresaUsuarioId.toString());
+  //     this.carregaComboSala(this._utilService.Sessao().idGrupoUsuario, this._utilService.Sessao().empresaUsuarioId.toString());
+  //     this.carregaComboGrupoAgenda(this._utilService.Sessao().idGrupoUsuario, this._utilService.Sessao().empresaUsuarioId.toString());
   }
 
   carregaComboProfissional(grpId: string , empId: string){
@@ -128,7 +128,7 @@ export class AgendaCreateComponent implements OnInit {
     
     this._serviceUsuario.read(Endpoint.Usuario).subscribe((data: {} ) => {
     
-    this.comboProfissional = grpId == TipoUsuario.Master.toString() || grpId == TipoUsuario.Administrador.toString() ? this.comboProfissional = data : null;
+    this.comboProfissional = grpId == TipoUsuario.MasterEmpresa.toString() || grpId == TipoUsuario.Administrador.toString() ? this.comboProfissional = data : null;
     
     });
   }
@@ -136,7 +136,7 @@ export class AgendaCreateComponent implements OnInit {
   carregaComboUnidade(grpId: string , empId: string){
     this.comboUnidade =  new Array()
     this._serviceUnidade.read(Endpoint.Unidade).subscribe((un : {})  =>  {
-     this.comboUnidade = grpId == TipoUsuario.Master.toString() || grpId == TipoUsuario.Administrador.toString() ? this.comboUnidade = un: null;
+     this.comboUnidade = grpId == TipoUsuario.MasterEmpresa.toString() || grpId == TipoUsuario.Administrador.toString() ? this.comboUnidade = un: null;
     });
   }
 
@@ -151,16 +151,16 @@ export class AgendaCreateComponent implements OnInit {
   carregaComboGrupoAgenda(grpId: string , empId: string){
     this.comboTipoGrupoAgenda = new Array();
     this._serviceGrupoAgenda.read(Endpoint.GrupoAgenda).subscribe((ga: {}) => {
-      this.comboTipoGrupoAgenda = grpId == TipoUsuario.Master.toString() || grpId == TipoUsuario.Administrador.toString() ? this.comboTipoGrupoAgenda = ga : null;
+      this.comboTipoGrupoAgenda = grpId == TipoUsuario.MasterEmpresa.toString() || grpId == TipoUsuario.Administrador.toString() ? this.comboTipoGrupoAgenda = ga : null;
     });
   }
 
   AtualizarComboGrupoAgenda(){
-    this.carregaComboGrupoAgenda(this._utilService.Sessao().idGrupoUsuario, this._utilService.Sessao().empresaUsuarioId.toString());
+    // this.carregaComboGrupoAgenda(this._utilService.Sessao().idGrupoUsuario, this._utilService.Sessao().empresaUsuarioId.toString());
   }
 
   AtualizarComboUnidade(){
-    this.carregaComboUnidade(this._utilService.Sessao().idGrupoUsuario, this._utilService.Sessao().empresaUsuarioId.toString());
+    // this.carregaComboUnidade(this._utilService.Sessao().idGrupoUsuario, this._utilService.Sessao().empresaUsuarioId.toString());
   }
 
   EstadoForm(): void {
@@ -175,12 +175,12 @@ export class AgendaCreateComponent implements OnInit {
 
   novoUsuario(){
     
-    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
-    {
-        this._utilService.Popup("", UsuarioCreateComponent ,"700px","820px");
-    }else{
-      this._utilService.showMessage("Solicitar ao um Usuário Master para criar Nova Agenda!",true);
-    }
+    // if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.MasterEmpresa.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
+    // {
+    //     this._utilService.Popup("", UsuarioCreateComponent ,"700px","820px");
+    // }else{
+    //   this._utilService.showMessage("Solicitar ao um Usuário Master para criar Nova Agenda!",true);
+    // }
   }
 
   selecionaAbaAgenda(tab : any){
@@ -258,31 +258,31 @@ export class AgendaCreateComponent implements OnInit {
     
     
     
-    if(this.dadosHorarios.diaDasemana == null)
-      this._utilService.showMessage("Informe o dia da Semana", false);
-    else if(this.dadosHorarios.tipoHorario == null)
-      this._utilService.showMessage("Informe o tipo de horário", false);
-    else if(this.dadosHorarios.intervalo == null)
-      this._utilService.showMessage("Intervalo de tempo Obrigatório", false);
-    else if (this.dadosHorarios.horainicio == null || this.dadosHorarios.horafim == null)
-      this._utilService.showMessage("Informar inicio e fim da geração de Horas", false);
-    else if (this.agendaSelecionada == 0)  
-    this._utilService.showMessage("Selecionar a Agenda para criação de Horários", false);
-    else{
-      this.dadosHorarios.dtCriacao = new Date;
-      this.dadosHorarios.criadoPor = this._utilService.Sessao().usuarioId;
-      this.dadosHorarios.Agendaid = Number(this.agendaSelecionada);
+    // if(this.dadosHorarios.diaDasemana == null)
+    //   this._utilService.showMessage("Informe o dia da Semana", false);
+    // else if(this.dadosHorarios.tipoHorario == null)
+    //   this._utilService.showMessage("Informe o tipo de horário", false);
+    // else if(this.dadosHorarios.intervalo == null)
+    //   this._utilService.showMessage("Intervalo de tempo Obrigatório", false);
+    // else if (this.dadosHorarios.horainicio == null || this.dadosHorarios.horafim == null)
+    //   this._utilService.showMessage("Informar inicio e fim da geração de Horas", false);
+    // else if (this.agendaSelecionada == 0)  
+    // this._utilService.showMessage("Selecionar a Agenda para criação de Horários", false);
+    // else{
+    //   this.dadosHorarios.dtCriacao = new Date;
+    //   this.dadosHorarios.criadoPor = this._utilService.Sessao().usuarioId;
+    //   this.dadosHorarios.Agendaid = Number(this.agendaSelecionada);
       
-      this._utilService.showMessage("Aguarde Criando os Horários dessa agenda", false);    
+    //   this._utilService.showMessage("Aguarde Criando os Horários dessa agenda", false);    
    
-      this.servicoHorario.create(this.dadosHorarios, Endpoint.AgendaHorarios).subscribe(h => {
-        this._utilService.showMessage("Horários Criados como solicitado", false);  
-        this.buscarHorarios(this.agendaSelecionada);
-      });
+    //   this.servicoHorario.create(this.dadosHorarios, Endpoint.AgendaHorarios).subscribe(h => {
+    //     this._utilService.showMessage("Horários Criados como solicitado", false);  
+    //     this.buscarHorarios(this.agendaSelecionada);
+    //   });
 
       
-    }
-    this.buscarHorarios(this.agendaSelecionada);
+    // }
+    // this.buscarHorarios(this.agendaSelecionada);
   }
 
   selecionarHorários(){
@@ -341,25 +341,25 @@ export class AgendaCreateComponent implements OnInit {
 
 
   AtualizarAgenda(id : string): void {
-    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
-    {
-      let response  =  this._utilService.Popup(id, AgendaUpdateComponent, '30%','80%' )
+    // if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.MasterEmpresa.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
+    // {
+    //   let response  =  this._utilService.Popup(id, AgendaUpdateComponent, '30%','80%' )
       
-      }else{
-        this._utilService.showMessage("Solicitar ao um Usuário Master para Editar os  dados da Agenda!",true);
-      }   
+    //   }else{
+    //     this._utilService.showMessage("Solicitar ao um Usuário Master para Editar os  dados da Agenda!",true);
+    //   }   
   }
 
   ExcluirAgenda(id : string): void {
       
-    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
-      {
-        this._utilService.Popup(id, AgendaDeleteComponent,'30%','25%');
-      }
-      else
-      {
-        this._utilService.showMessage("Solicitar ao um Usuário Master para Excluir a Agenda!",true);
-      }
+    // if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.MasterEmpresa.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
+    //   {
+    //     this._utilService.Popup(id, AgendaDeleteComponent,'30%','25%');
+    //   }
+    //   else
+    //   {
+    //     this._utilService.showMessage("Solicitar ao um Usuário Master para Excluir a Agenda!",true);
+    //   }
   }
 
   AgendaSelecionada(id : any){

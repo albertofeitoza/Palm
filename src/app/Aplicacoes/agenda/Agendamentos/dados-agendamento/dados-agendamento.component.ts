@@ -63,16 +63,16 @@ export class DadosAgendamentoComponent implements OnInit {
   
   criarProtocolo(){
    
-    this.protocolo.dtCriacao = new Date;
-    this.protocolo.tipo = 0;
-    this.protocolo.criadoPor = this.servico.Sessao().usuarioId;
-    this.protocolo.descricao = "Agendamento";
-    this.protocolo.pessoaid = Number(this.dialofRef.id)
-    this.protocolo.statusProtocolo = 0
+    // this.protocolo.dtCriacao = new Date;
+    // this.protocolo.tipo = 0;
+    // this.protocolo.criadoPor = this.servico.Sessao().usuarioId;
+    // this.protocolo.descricao = "Agendamento";
+    // this.protocolo.pessoaid = Number(this.dialofRef.id)
+    // this.protocolo.statusProtocolo = 0
    
-    this.servicoProtocolo.create(this.protocolo, Endpoint.Protocolo).subscribe(x => {
-      this.protocolo = x;
-    })
+    // this.servicoProtocolo.create(this.protocolo, Endpoint.Protocolo).subscribe(x => {
+    //   this.protocolo = x;
+    // })
 
   }
 

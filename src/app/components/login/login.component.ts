@@ -7,7 +7,8 @@ import { LoginService } from './../../services/login.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Usuario } from 'src/app/models/usuarios/modelLogin';
-import { dadosSessao } from 'src/app/models/Token/dadosSessao';
+
+import { Login } from 'src/app/models/login';
 
 
 @Component({
@@ -17,27 +18,21 @@ import { dadosSessao } from 'src/app/models/Token/dadosSessao';
 })
 export class LoginComponent implements OnInit {
 
-usuario: Usuario = new Usuario()
-constructor(private router :Router,
-             private authservice : LoginService,
-             private servico : UtilService,
-             private autenticacao : ServiceAllService<Usuario>
-             ) {
-              
-             }
+  sessao: Login = new Login();
+
+  constructor(private router: Router,
+    private auth: LoginService,
+  ) { }
 
 
-  ngOnInit(): void {
-  
+  ngOnInit():void {
+ 
   }
-  
-  login(keyEvent : any){
-    
-    if (keyEvent.which === 13 || keyEvent.which == 1)
-    {
-      this.autenticacao.loginSistema(this.usuario, Endpoint.Token).subscribe(data => {
-        this.authservice.logarSistema(data) 
-      });
+
+  login(keyEvent: any) {
+
+    if (keyEvent.which === 13 || keyEvent.which == 1) {
+      this.auth.loginSistema(this.sessao)
     }
   }
 }

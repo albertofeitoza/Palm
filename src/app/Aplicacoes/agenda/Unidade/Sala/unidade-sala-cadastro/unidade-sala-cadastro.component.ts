@@ -32,13 +32,13 @@ sala : Sala = new Sala()
 
   addSala(){
 
-    this.sala.unidadeid= Number(this.dialog.id);
-    this.sala.dtCriacao = new Date;
-    this.sala.criadoPor = this.servico.Sessao().usuarioId;
+    // this.sala.unidadeid= Number(this.dialog.id);
+    // this.sala.dtCriacao = new Date;
+    // this.sala.criadoPor = this.servico.Sessao().usuarioId;
 
-    this.servicoSala.create(this.sala, Endpoint.Sala).subscribe(() => {
-      this.servico.showMessage("Sala Cadastrada com sucesso", false);
-    })
+    // this.servicoSala.create(this.sala, Endpoint.Sala).subscribe(() => {
+    //   this.servico.showMessage("Sala Cadastrada com sucesso", false);
+    // })
 
 
   }

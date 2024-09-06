@@ -42,64 +42,64 @@ idSelecionado : Number = 0;
   addProduto(){
 
     
-    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
-    {
-        const scrollStrategy = this.overlay.scrollStrategies.reposition();
-        const dialogRef = this.dialog.open(ProductCreateComponent, {
-          width : '500',
-          height : '400px',
-          scrollStrategy,
+    // if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.MasterEmpresa.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
+    // {
+    //     const scrollStrategy = this.overlay.scrollStrategies.reposition();
+    //     const dialogRef = this.dialog.open(ProductCreateComponent, {
+    //       width : '500',
+    //       height : '400px',
+    //       scrollStrategy,
 
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          console.log(`Dialog result: ${result}`);
-        });
-    }else{
-      this._utilService.showMessage("Você não possui permissão para criação de empresas",true);
-    }
+    //     });
+    //     dialogRef.afterClosed().subscribe(result => {
+    //       console.log(`Dialog result: ${result}`);
+    //     });
+    // }else{
+    //   this._utilService.showMessage("Você não possui permissão para criação de empresas",true);
+    // }
 
 
   }
 
   editarProduto(id : string){
     
-    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
-    {
-        const scrollStrategy = this.overlay.scrollStrategies.reposition();
-        const dialogRef = this.dialog.open(ProductUpdateComponent, {
-          width : '400px',
-          height : '360px',
-          scrollStrategy,
-          id
+    // if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
+    // {
+    //     const scrollStrategy = this.overlay.scrollStrategies.reposition();
+    //     const dialogRef = this.dialog.open(ProductUpdateComponent, {
+    //       width : '400px',
+    //       height : '360px',
+    //       scrollStrategy,
+    //       id
 
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          console.log(`Dialog result: ${result}`);
-        });
-    }else{
-      this._utilService.showMessage("Você não possui permissão para associar produtos a uma empresa",true);
-    }
+    //     });
+    //     dialogRef.afterClosed().subscribe(result => {
+    //       console.log(`Dialog result: ${result}`);
+    //     });
+    // }else{
+    //   this._utilService.showMessage("Você não possui permissão para associar produtos a uma empresa",true);
+    // }
   }
 
 
   excluirProdutoEmpresa(id : string){
 
-    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
-    {
-        const scrollStrategy = this.overlay.scrollStrategies.reposition();
-        const dialogRef = this.dialog.open(ProductDeleteComponent, {
-          width : '400px',
-          height : '240px',
-          scrollStrategy,
-          id
+    // if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
+    // {
+    //     const scrollStrategy = this.overlay.scrollStrategies.reposition();
+    //     const dialogRef = this.dialog.open(ProductDeleteComponent, {
+    //       width : '400px',
+    //       height : '240px',
+    //       scrollStrategy,
+    //       id
 
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          console.log(`Dialog result: ${result}`);
-        });
-    }else{
-      this._utilService.showMessage("Você não possui permissão para associar produtos a uma empresa",true);
-    }
+    //     });
+    //     dialogRef.afterClosed().subscribe(result => {
+    //       console.log(`Dialog result: ${result}`);
+    //     });
+    // }else{
+    //   this._utilService.showMessage("Você não possui permissão para associar produtos a uma empresa",true);
+    // }
 
 
   }

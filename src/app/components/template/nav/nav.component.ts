@@ -11,7 +11,8 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class NavComponent implements OnInit {
 opened = false;
-lock = false;  
+unlockadm = false;  
+lockMaster = false;
   constructor(private auth: LoginService,
              private servico : UtilService) { }
 
@@ -26,7 +27,15 @@ lock = false;
   }
   validarAcesso(){
     
-    if(this.auth.isLogedIn())
-      this.lock = this.servico.Sessao().idGrupoUsuario == TipoUsuario.Administrador ? true : false;
+    if(this.auth.dadosUsuario.TipoUsuarioLogado === 1){
+      this.unlockadm = true;
+    }
+
+    if(this.auth.dadosUsuario.TipoUsuarioLogado === 2){
+      this.unlockadm = true;
+      this.lockMaster = true;
+    }
+
+   
   }
 }

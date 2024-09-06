@@ -1,10 +1,8 @@
-import { dadosSessao } from "../Token/dadosSessao";
 
 export enum TipoUsuario {
     Administrador = 1,   
-    Sistema = 2,
-    Usuario = 3,
-    Master = 4,
+    MasterEmpresa = 2,
+    Usuario = 3
 }
 
 export const TipoUsuarioSistema = new Map<string, number>([

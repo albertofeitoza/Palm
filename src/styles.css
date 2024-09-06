@@ -1,7 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 
 .red {
@@ -9,18 +16,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 }
 
-.v-middle{
+.v-middle {
 
     vertical-align: middle;
 }
 
-.msg-sucess{
+.msg-sucess {
 
     background-color: #27a745;
     color: #fff;
 }
 
-.msg-error{
+.msg-error {
 
     background-color: #e36e6b;
     color: #fff;
@@ -34,27 +41,29 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 
-.botaoBusca { 
-    float : right;
+.botaoBusca {
+    float: right;
     font-size: 15px;
     width: 150px;
     margin-top: 10px;
     padding-left: 15px;
 }
 
-.botaoBuscaPopups { /*popups*/
+.botaoBuscaPopups {
+    /*popups*/
     font-size: 25px;
     margin-top: 12px;
     padding-left: 15px;
 }
 
-.rodape{  /*Usar nos rodapés dos popups Botões*/
-   float: right;
+.rodape {
+    /*Usar nos rodapés dos popups Botões*/
+    float: right;
 }
 
 .rodape .button {
     margin-top: 15px;
-    margin-left : 15px;
+    margin-left: 15px;
 }
 
 .formularioRow {
@@ -63,19 +72,19 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     font-size: 12px;
 }
 
-.mat-form-field-infix{
+.mat-form-field-infix {
     width: auto;
 }
 
-mat-form-field{
+mat-form-field {
     padding-left: 9px;
 }
 
-mat-form-field mat-label{
+mat-form-field mat-label {
     font-size: 12px;
 }
 
-mat-form-field mat-label input{
+mat-form-field mat-label input {
     font-size: 12px;
 }
 
@@ -89,19 +98,31 @@ mat-form-field mat-label input{
 
 
 /*Cabeçalho das tabelas icone pra fechar os Popups*/
-table{
+table {
     width: 100%;
 }
 
-.close{
+.close {
     float: right;
     margin-top: 0px;
     margin-right: 0px;
     padding: 0px;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 .corLinhaGrid {
     background: aqua;
-  }
+}
+
+.cursor {
+    cursor: pointer;
+}

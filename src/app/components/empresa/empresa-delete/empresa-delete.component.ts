@@ -33,23 +33,23 @@ export class EmpresaDeleteComponent implements OnInit {
 
   excluirEmpresa(){
    
-    if (Number(this.utilservice.Sessao().idGrupoUsuario) == TipoUsuario.Administrador || 
-        Number(this.utilservice.Sessao().idGrupoUsuario) == TipoUsuario.Master){
+    // if (Number(this.utilservice.Sessao().idGrupoUsuario) == TipoUsuario.Administrador || 
+    //     Number(this.utilservice.Sessao().idGrupoUsuario) == TipoUsuario.MasterEmpresa){
         
-        this.serviceEmpresa.readById(this.empresa.id.toString(), Endpoint.Empresa).subscribe(x => {
-        this.dadosEmpresa = x;
+    //     this.serviceEmpresa.readById(this.empresa.id.toString(), Endpoint.Empresa).subscribe(x => {
+    //     this.dadosEmpresa = x;
         
-            this.dadosEmpresa.bloqueado = true;
-              this.serviceEmpresa.update(this.dadosEmpresa, Endpoint.Empresa).subscribe(()=>{
-                this.mensagem.showMessage("Empresa excluida com sucesso !", false);
-               this.utilservice.atualizaRota("empresa")
-              })
+    //         this.dadosEmpresa.bloqueado = true;
+    //           this.serviceEmpresa.update(this.dadosEmpresa, Endpoint.Empresa).subscribe(()=>{
+    //             this.mensagem.showMessage("Empresa excluida com sucesso !", false);
+    //            this.utilservice.atualizaRota("empresa")
+    //           })
             
-        })
-    }else{
-      this.mensagem.showMessage("Permissão de exclusão negada !", false);
-                this.utilservice.atualizaRota("empresa")
-    }
+    //     })
+    // }else{
+    //   this.mensagem.showMessage("Permissão de exclusão negada !", false);
+    //             this.utilservice.atualizaRota("empresa")
+    // }
   }
 
 

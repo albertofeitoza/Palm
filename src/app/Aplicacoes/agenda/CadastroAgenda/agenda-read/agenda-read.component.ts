@@ -34,23 +34,23 @@ export class AgendaReadComponent implements OnInit {
 
   addNovaAgenda() {
    
-    if(this.servico.Sessao().idGrupoUsuario == TipoUsuario.Master || this.servico.Sessao().idGrupoUsuario == TipoUsuario.Administrador)
-    {
-      this.servico.Popup("0",AgendaCreateComponent, '80%','98%' );
+    // if(this.servico.Sessao().idGrupoUsuario == TipoUsuario.MasterEmpresa || this.servico.Sessao().idGrupoUsuario == TipoUsuario.Administrador)
+    // {
+    //   this.servico.Popup("0",AgendaCreateComponent, '80%','98%' );
 
-    }else{
-      this.servico.showMessage("Solicitar ao um Usuário Master para criar Nova Agenda!",true);
-    }
+    // }else{
+    //   this.servico.showMessage("Solicitar ao um Usuário Master para criar Nova Agenda!",true);
+    // }
 
 
   }
 
   addUnidade(){
     
-    if(this.servico.Sessao().idGrupoUsuario == TipoUsuario.Master.toString() || this.servico.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
-      this.servico.Popup("0", AgendaCadastroUnidadeComponent, "800px", "600px", )
-    else
-      this.servico.showMessage("Solicitar ao um Usuário Master cadastrar a Unidade",true);
+    // if(this.servico.Sessao().idGrupoUsuario == TipoUsuario.MasterEmpresa.toString() || this.servico.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
+    //   this.servico.Popup("0", AgendaCadastroUnidadeComponent, "800px", "600px", )
+    // else
+    //   this.servico.showMessage("Solicitar ao um Usuário Master cadastrar a Unidade",true);
   }
 
 }

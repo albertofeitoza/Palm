@@ -33,24 +33,24 @@ export class TelefonesComponent implements OnInit {
   }
   
   Salvar(){
-    if (this.ValidarDadosTelefone())
-    {
-      this.telefone.id = 0;  
-      this.telefone.dtCriacao = new Date;
-      let telefone = this.telefone.numTelefone.toString()
-      this.telefone.numTelefone = telefone
-      this.telefone.contatoId = this.idContato;
-      this.telefone.criadoPor = this.servico.Sessao().usuarioId;
-      Number(this.telefone.tipoTelefone) 
-      this.telefone.bloqueado = false;
+    // if (this.ValidarDadosTelefone())
+    // {
+    //   this.telefone.id = 0;  
+    //   this.telefone.dtCriacao = new Date;
+    //   let telefone = this.telefone.numTelefone.toString()
+    //   this.telefone.numTelefone = telefone
+    //   this.telefone.contatoId = this.idContato;
+    //   this.telefone.criadoPor = this.servico.Sessao().usuarioId;
+    //   Number(this.telefone.tipoTelefone) 
+    //   this.telefone.bloqueado = false;
       
-          this.servicoTelefone.create(this.telefone, Endpoint.Telefone).subscribe(x => 
-          { 
-            this.servico.showMessage("Telefone Adicionado",false) 
-            this.telefone = new Telefone()
-            this.atualizarGrid();
-          })
-    }
+    //       this.servicoTelefone.create(this.telefone, Endpoint.Telefone).subscribe(x => 
+    //       { 
+    //         this.servico.showMessage("Telefone Adicionado",false) 
+    //         this.telefone = new Telefone()
+    //         this.atualizarGrid();
+    //       })
+    // }
   }
 
   RemoveTelefone(id : number){

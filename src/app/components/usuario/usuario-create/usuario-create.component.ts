@@ -39,10 +39,10 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
               private router : Router) { }
 
   ngOnInit(): void {
-      let grpId = Number(this.utilService.Sessao().idGrupoUsuario);
+      // let grpId = Number(this.utilService.Sessao().idGrupoUsuario);
       
-      if (grpId == TipoUsuario.Administrador)
-         this.tipoLogin=true;
+      // if (grpId == TipoUsuario.Administrador)
+      //    this.tipoLogin=true;
 
       this.carregaCombos();
       this.carregaEmpresa();
@@ -50,12 +50,11 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
   
   createUsuario() : void {
    
-   this.usuario.criadoPor  = Number(this.utilService.Sessao().usuarioId);
+  //  this.usuario.criadoPor  = Number(this.utilService.Sessao().usuarioId);
    this.usuario.dtCriacao = new Date;
    
     this.usuario.grupoUsuarioid = this.usuario.grupoUsuarioid.toString().trim() == "Administrador" ? TipoUsuario.Administrador.toString() 
-                                : this.usuario.grupoUsuarioid.toString().trim() == "Sistema" ? TipoUsuario.Sistema.toString()
-                                : this.usuario.grupoUsuarioid.toString().trim() == "Master" ? TipoUsuario.Master.toString()
+                                : this.usuario.grupoUsuarioid.toString().trim() == "MasterEmpresa" ? TipoUsuario.MasterEmpresa.toString()
                                 : this.usuario.grupoUsuarioid.toString() == "Usuario" ? TipoUsuario.Usuario.toString() : "Usuario";
     
     
@@ -73,7 +72,7 @@ constructor(  private serviceUsuario : ServiceAllService<Usuario>,
            
               this.serviceEmpresa.readById(this.usuario.empresaid, Endpoint.Empresa).subscribe(emp => {
                 emp = emp;
-                if (!emp.bloqueado){
+                if (!emp.status){
                   this.serviceUsuario.create(this.usuario, Endpoint.Usuario).subscribe(() => {
                     this.utilService.showMessage('Usuário Criado!');
                   });

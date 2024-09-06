@@ -1,4 +1,4 @@
 export enum TipoPessoa{
-    PessoaJuridica = 1,
-    PessoaFisica = 2
+    PessoaFisica = 1,
+    PessoaJuridica = 2,
 }

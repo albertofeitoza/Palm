@@ -42,9 +42,8 @@ comboTipousuario : GrupoUsuario[];
    
         let grpId = Number(localStorage.getItem("grpUs"));
         this.usuario.grupoUsuarioid = this.usuario.grupoUsuarioid == "Administrador" ? TipoUsuario.Administrador.toString() 
-                                        :this.usuario.grupoUsuarioid == "Sistema" ? TipoUsuario.Sistema.toString()
                                         : this.usuario.grupoUsuarioid == "Usuario" ? TipoUsuario.Usuario.toString()
-                                        : this.usuario.grupoUsuarioid == "Master" ? TipoUsuario.Master.toString()
+                                        : this.usuario.grupoUsuarioid == "Master" ? TipoUsuario.MasterEmpresa.toString()
                                         : "Usuario" 
           
             this.usarioService.read(Endpoint.Usuario).subscribe(user => {
@@ -80,14 +79,14 @@ comboTipousuario : GrupoUsuario[];
 
   buscarEmpresa() {
 
-    this.empresaService.read(Endpoint.Empresa).subscribe(emp => {
-      this.empresa = this.utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString() 
-                      ? emp 
-                      : this.utilService.Sessao().idGrupoUsuario == TipoUsuario.Master.toString()
-                      ? emp.filter(x => x.empresaPai == Number(this.utilService.Sessao().empresaUsuarioId) || x.id == Number(this.utilService.Sessao().empresaUsuarioId)) : new Array
+    // this.empresaService.read(Endpoint.Empresa).subscribe(emp => {
+    //   this.empresa = this.utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString() 
+    //                   ? emp 
+    //                   : this.utilService.Sessao().idGrupoUsuario == TipoUsuario.MasterEmpresa.toString()
+    //                   ? emp.filter(x => x.empresaPai == Number(this.utilService.Sessao().empresaUsuarioId) || x.id == Number(this.utilService.Sessao().empresaUsuarioId)) : new Array
 
     
-    });
+    // });
   }
 
   buscarUsuario(){

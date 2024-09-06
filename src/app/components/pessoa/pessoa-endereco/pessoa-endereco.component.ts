@@ -63,26 +63,26 @@ export class PessoaEnderecoComponent implements OnInit {
   }
 
   salvar(){
-    this.endereco.pessoaId = this.idPessoa;
-    this.endereco.dtCriacao = new Date;
-    this.endereco.criadoPor = Number(this.servico.Sessao().usuarioId)
-    this.endereco.numero = this.endereco.numero.toString()
+  //   this.endereco.pessoaId = this.idPessoa;
+  //   this.endereco.dtCriacao = new Date;
+  //   this.endereco.criadoPor = Number(this.servico.Sessao().usuarioId)
+  //   this.endereco.numero = this.endereco.numero.toString()
 
-    if(this.endereco.id == null)
-    {
+  //   if(this.endereco.id == null)
+  //   {
       
-      this.servicoEndereco.create(this.endereco, Endpoint.PessoaEndereco).subscribe(x => {
-        this.servico.showMessage("Endereço adicionado com sucesso", false)
-        this.enderecoEnable = true;
-      });
+  //     this.servicoEndereco.create(this.endereco, Endpoint.PessoaEndereco).subscribe(x => {
+  //       this.servico.showMessage("Endereço adicionado com sucesso", false)
+  //       this.enderecoEnable = true;
+  //     });
 
 
-    }else
-    {
-      this.servicoEndereco.update(this.endereco, Endpoint.PessoaEndereco).subscribe(x => {
-        this.servico.showMessage("Endereço Atualizado com sucesso", false)
-        this.enderecoEnable = true;
-      });
-    }
-  }
+  //   }else
+  //   {
+  //     this.servicoEndereco.update(this.endereco, Endpoint.PessoaEndereco).subscribe(x => {
+  //       this.servico.showMessage("Endereço Atualizado com sucesso", false)
+  //       this.enderecoEnable = true;
+  //     });
+  //   }
+   }
 }

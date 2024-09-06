@@ -1,19 +1,17 @@
-import { TipoUsuario } from './../../../models/usuarios/enumUsuarios';
 import { Endpoint } from './../../../Negocio/Endpoint';
 import { Router } from '@angular/router';
 import { ServiceAllService } from './../../../services/service-all.service';
 import { Endereco } from './../../../models/endereco/modelEndereco';
 import { Contato } from './../../../models/contato/modelContato';
-import { Empresa } from './../../../models/empresa/ModelEmpresa';
+import { Empresa, ViewEmpresas } from './../../../models/empresa/ModelEmpresa';
 import { Component, OnInit, Input } from '@angular/core';
-import { elementAt } from 'rxjs/operators';
-import { TipoUsuarioSistema } from 'src/app/models/usuarios/enumUsuarios';
 import { MatDialog } from '@angular/material/dialog';
-import { EmpresaCreateComponent } from '../empresa-create/empresa-create.component';
 import { UtilService } from 'src/app/services/util.service';
 import { Overlay } from '@angular/cdk/overlay';
-import { EmpresaUpdateComponent } from '../empresa-update/empresa-update.component';
-import { EmpresaDeleteComponent } from '../empresa-delete/empresa-delete.component';
+import { LoginService } from 'src/app/services/login.service';
+import { DadosLogados } from 'src/app/models/usuarios/modelUsuarios';
+import { TipoUsuario } from 'src/app/models/usuarios/enumUsuarios';
+import { EmpresaCreateComponent } from '../empresa-create/empresa-create.component';
 
 @Component({
   selector: 'app-empresa-read',
@@ -22,80 +20,81 @@ import { EmpresaDeleteComponent } from '../empresa-delete/empresa-delete.compone
 })
 export class EmpresaReadComponent implements OnInit {
 
- empresa: Empresa[]
- empresas: Empresa[]
- contato: Contato;
- endereco: Endereco;
+  empresa: Empresa[] = new Array();
+  empresas: ViewEmpresas[] = new Array();
+  //contato: Contato;
+  //endereco: Endereco;
   //Colunas do GRID
-  displayedColumns = ['id','cnpj', 'razaoSocial','nomeFantasia','inscricaoEstadual','inscricaoMunicipal','bloqueado','action']  
+  displayedColumns = ['id', 'cpfCnpj', 'razaoSocial', 'nomeFantasia', 'inscricaoEstadual', 'inscricaoMunicipal', 'status', 'action']
 
-  idSelecionado : Number =0;
+  idSelecionado: Number = 0;
 
-  constructor(private router : Router,
-              private serviceEmpresa : ServiceAllService<Empresa>,
-              public dialog : MatDialog,
-              private _utilService : UtilService,
-              private overlay : Overlay
-             ) { }
-
-  ngOnInit(): void {
-    
-    this.buscarEmpresa();      ///revisitar esse método
-
+  constructor(private router: Router,
+    private serviceEmpresa: ServiceAllService<Empresa>,
+    public dialog: MatDialog,
+    private _utilService: UtilService,
+    private overlay: Overlay,
+    private auth: LoginService
+  ) {
   }
 
-  selecionaLinha(id : Number)
-  {
+  ngOnInit(): void {
+    this.buscarEmpresa();
+  }
+
+  selecionaLinha(id: Number) {
     this.idSelecionado = id
   }
 
 
-  buscarEmpresa(): void 
-  {
+  public buscarEmpresa(): void {
     let filtroEmpresa = (<HTMLSelectElement>document.getElementById('busca')).value;
-      
-      this.serviceEmpresa.read(Endpoint.Empresa).subscribe(emp => {
-        this.empresa = filtroEmpresa != null ? emp.filter(x => x.nomeFantasia.toLowerCase().includes(filtroEmpresa.toLowerCase())) : emp
-      })
-    
+
+    this.serviceEmpresa.read(Endpoint.Empresa + `/estabelecimento/${this.auth.dadosUsuario.EmpresaId}`).subscribe(emp => {
+      this.empresas = filtroEmpresa != null ? emp.filter(x => x.razaoSocial.toLowerCase().includes(filtroEmpresa.toLowerCase())) : emp
+    })
+
   }
 
-  addEmpresa(){
+  public CadastrarEmpresa(): void {
 
-    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
-    {
-      this._utilService.Popup("", EmpresaCreateComponent, '730px', '730px')
-    }else{
-      this._utilService.showMessage("Você não possui permissão para criação de empresas",true);
+    if (this.auth.dadosUsuario.TipoUsuarioLogado == TipoUsuario.Administrador || this.auth.dadosUsuario.TipoUsuarioLogado == TipoUsuario.MasterEmpresa) {
+      this._utilService.Popup("", EmpresaCreateComponent, '730px', 'auto')
+        .subscribe(() => {
+          this.buscarEmpresa();
+        })
+    } else {
+      this._utilService.showMessage("Você não possui permissão para criação de empresas", true);
     }
   }
 
 
-  editarEmpresa(id : string){
+  public EditarEmpresa(id: number): void {
 
-    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
-    {
-      this._utilService.Popup(id, EmpresaUpdateComponent, "700px", "750px")
-    }else{
-      this._utilService.showMessage("Você não possui permissão para alterar cadastro de empresas",true);
+    if (this.auth.dadosUsuario.TipoUsuarioLogado == TipoUsuario.Administrador || this.auth.dadosUsuario.TipoUsuarioLogado == TipoUsuario.MasterEmpresa) {
+      this._utilService.Popup(id, EmpresaCreateComponent, "730px", "auto")
+        .subscribe(() => {
+          this.buscarEmpresa();
+        })
+    } else {
+      this._utilService.showMessage("Você não possui permissão para alterar cadastro de empresas", true);
     }
-
   }
 
-  excluirEmpresa(id : string){
+  public ExcluirEmpresa(id: string): void {
 
-    if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Master.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
-    {
-      this._utilService.Popup(id, EmpresaDeleteComponent, "700px", "200px")
-    }else{
-      this._utilService.showMessage("Você não possui permissão para Excluir empresa",true);
-    }
+    // if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.MasterEmpresa.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
+    // {
+    //   this._utilService.Popup(id, EmpresaDeleteComponent, "700px", "200px")
+    // }else{
+    //   this._utilService.showMessage("Você não possui permissão para Excluir empresa",true);
+    // }
   }
 }
-  
 
 
-      
+
+
 
 
 

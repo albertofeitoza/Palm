@@ -110,5 +110,8 @@
       }
     }
   },
-  "defaultProject": "palm"
+  "defaultProject": "palm",
+  "cli": {
+    "analytics": "5fe2dcf6-eff5-4cbe-a889-f642c8f1ecbc"
+  }
 }

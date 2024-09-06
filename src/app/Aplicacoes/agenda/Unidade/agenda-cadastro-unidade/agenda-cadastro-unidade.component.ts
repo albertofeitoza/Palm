@@ -57,25 +57,25 @@ unidadeSelecionada : number = 0;
   }
 
   addUnidade(){
-    this.unidadeSelecionada = 0;
+  //   this.unidadeSelecionada = 0;
 
-    //this.unidade = this.servico.Sessao().usuarioId;
-    this.unidade.dtCriacao = new Date;
-    this.unidade.empresaid =  Number(this.servico.Sessao().empresaUsuarioId);
-    this.ServicoUnidade.create(this.unidade, Endpoint.Unidade).subscribe(() => {
-     this.servico.showMessage("Unidade cadastrada com sucesso", false);
-     this.servico.atualizaRota("agenda", true);
-     this.novaUnidade = false;
-   })
+  //   //this.unidade = this.servico.Sessao().usuarioId;
+  //   this.unidade.dtCriacao = new Date;
+  //   this.unidade.empresaid =  Number(this.servico.Sessao().empresaUsuarioId);
+  //   this.ServicoUnidade.create(this.unidade, Endpoint.Unidade).subscribe(() => {
+  //    this.servico.showMessage("Unidade cadastrada com sucesso", false);
+  //    this.servico.atualizaRota("agenda", true);
+  //    this.novaUnidade = false;
+  //  })
 
   }
 
   buscarUnidade(vlrTxt : string){
     
-    this.ServicoUnidade.read(Endpoint.Unidade).subscribe(un => {
-      this.unidades = vlrTxt == null ? un.filter(x => x.empresaid.toString() == this.servico.Sessao().empresaUsuarioId.toString()) :
-                                         un.filter(x => x.empresaid.toString() == this.servico.Sessao().empresaUsuarioId.toString() && x.nomeUnidade.toLowerCase().includes(vlrTxt.toLowerCase()));
-    })
+    // this.ServicoUnidade.read(Endpoint.Unidade).subscribe(un => {
+    //   this.unidades = vlrTxt == null ? un.filter(x => x.empresaid.toString() == this.servico.Sessao().empresaUsuarioId.toString()) :
+    //                                      un.filter(x => x.empresaid.toString() == this.servico.Sessao().empresaUsuarioId.toString() && x.nomeUnidade.toLowerCase().includes(vlrTxt.toLowerCase()));
+    // })
     
   }
 

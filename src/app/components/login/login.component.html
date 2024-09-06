@@ -2,25 +2,24 @@
     <mat-card-title><i class="material-icons">account_box</i></mat-card-title>
         <form>
             <mat-form-field > 
-                <input matInput placeholder="Chave Empresa" 
-                 [(ngModel)]="usuario.nome" name="name" placeholder="Empresa">
+                <input matInput [(ngModel)]="sessao.dominio" name="name" placeholder="ID Empresa">
                  
             </mat-form-field>
 
             <mat-form-field > 
                 <input matInput placeholder="login" 
-                 [(ngModel)]="usuario.login" name="name" placeholder="login">
+                 [(ngModel)]="sessao.usuario" name="name" placeholder="login">
                  
             </mat-form-field>
            
             <mat-form-field >
                 <input matInput placeholder="senha"
-                [(ngModel)]="usuario.senha" type="password" name="senha" (keypress)="login($event)">
+                [(ngModel)]="sessao.senha" type="password" name="senha" (keypress)="login($event)">
                 
             </mat-form-field>
         </form>
         
-            <div *ngIf="usuario.nome && usuario.login && usuario.senha">
+            <div *ngIf="sessao.usuario && sessao.senha">
                 <button mat-raised-button (click)="login($event)"  color="primary"> 
                     Login
                 </button> 

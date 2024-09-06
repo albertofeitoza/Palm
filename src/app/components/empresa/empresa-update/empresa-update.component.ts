@@ -24,8 +24,8 @@ export class EmpresaUpdateComponent implements OnInit {
 
   ngOnInit(): void {
  
-  if (Number(this.utilservice.Sessao().idGrupoUsuario) == TipoUsuario.Administrador)
-     this.usuariologado = true;
+  // if (Number(this.utilservice.Sessao().idGrupoUsuario) == TipoUsuario.Administrador)
+  //    this.usuariologado = true;
   
   this.ObterEmpresa();
   
@@ -34,30 +34,30 @@ export class EmpresaUpdateComponent implements OnInit {
 
   atualizarEmpresa() : void {
         
-    if(Number(this.utilservice.Sessao().idGrupoUsuario) == TipoUsuario.Usuario)
-    {
-      this.utilservice.showMessage("Você não possui permissão para editar o cadastro de empresas", false)
+    // if(Number(this.utilservice.Sessao().idGrupoUsuario) == TipoUsuario.Usuario)
+    // {
+    //   this.utilservice.showMessage("Você não possui permissão para editar o cadastro de empresas", false)
 
-    }else
-    {
+    // }else
+    // {
     
-    if (cnpj.isValid(this.empresa.cnpj)){
-      try {
+    // if (cnpj.isValid(this.empresa.cnpj)){
+    //   try {
                           
-        this.empresa.bloqueado = Number(this.utilservice.Sessao().idGrupoUsuario) == TipoUsuario.Administrador ? this.empresa.bloqueado : false;             
-        this.empresaService.update(this.empresa, Endpoint.Empresa).subscribe(()=>{
-        this.utilservice.showMessage("Empresa atualizada com sucesso", false)
+    //     this.empresa.bloqueado = Number(this.utilservice.Sessao().idGrupoUsuario) == TipoUsuario.Administrador ? this.empresa.bloqueado : false;             
+    //     this.empresaService.update(this.empresa, Endpoint.Empresa).subscribe(()=>{
+    //     this.utilservice.showMessage("Empresa atualizada com sucesso", false)
         
-      });
+    //   });
 
-      } catch (error) {
-        this.utilservice.showMessage("Erro na atualização dos dados " + error, true);
-      }
+    //   } catch (error) {
+    //     this.utilservice.showMessage("Erro na atualização dos dados " + error, true);
+    //   }
 
-    }else{
-      this.utilservice.showMessage("Cnpj Inválido " , false);
-    }
-   }
+    // }else{
+    //   this.utilservice.showMessage("Cnpj Inválido " , false);
+    // }
+   //}
   }
 
   fecharPopup(){

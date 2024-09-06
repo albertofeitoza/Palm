@@ -87,17 +87,17 @@ export class PessoaComponent implements OnInit {
 
 
   
-  CadastrarEndereços(idPessoa : any) : Observable<PessoaEndereco> {
-    this.endereco.id = 0;
-        this.endereco.pessoaId = idPessoa;
-        this.endereco.dtCriacao = new Date;
-        this.endereco.numero.toString();
-        this.endereco.cep
-        this.endereco.criadoPor = Number(this.servico.Sessao().usuarioId);
-        return this.servicoEndereco.create(this.endereco, Endpoint.PessoaEndereco )
+  CadastrarEndereços(idPessoa : any) {
+    // this.endereco.id = 0;
+    //     this.endereco.pessoaId = idPessoa;
+    //     this.endereco.dtCriacao = new Date;
+    //     this.endereco.numero.toString();
+    //     this.endereco.cep
+    //     this.endereco.criadoPor = Number(this.servico.Sessao().usuarioId);
+    //     return this.servicoEndereco.create(this.endereco, Endpoint.PessoaEndereco )
   
   
-      }
+  }
 
   carregaCombos(){
     this.sexo = this.servico.Genero()
@@ -105,23 +105,17 @@ export class PessoaComponent implements OnInit {
   }
 
   ValidarDados(addTelefone : Boolean) : Boolean {
-    let status = false;
-      this.pessoa.nome == null 
-      ? this.servico.showMessage("Informar o Nome", false)  
-      :  this.pessoa.cpfcnpj == null ? this.servico.showMessage("Informar o CPF", false) 
-      :  !cpf.isValid(this.pessoa.cpfcnpj.toString()) ? this.servico.showMessage("Cpf Inválido", false)
-      :  this.pessoa.cpfcnpj.toString().length > 11 ? this.servico.showMessage("Apenas pessoa física é permitido", false)
-      :  this.pessoa.dataNascimento == null ? this.servico.showMessage("Informar o data de nascimento", false) 
-      :  this.pessoa.estCivil == null ? this.servico.showMessage("estado cívil Obrigatório", false) 
-      :  this.pessoa.sexo == null ? this.servico.showMessage("informar o sexo", false) 
-      // :  this.endereco.cep == null ? this.servico.showMessage("Informar o Cep e pressionar enter", false) 
-      // :  this.endereco.rua == null ? this.servico.showMessage("Informar a rua", false) 
-      // :  this.endereco.numero == null ? this.servico.showMessage("Informar o número", false) 
-      // :  this.endereco.bairro == null ? this.servico.showMessage("Informar o bairro", false) 
-      // :  this.endereco.siglaEstado == null ? this.servico.showMessage("Informar a sigla do estado", false) 
-      // :  this.endereco.cidade == null ? this.servico.showMessage("Informar a cidade", false) 
-      : status =  true;
-      return status
+    // let status = false;
+    //   this.pessoa.nome == null 
+    //   ? this.servico.showMessage("Informar o Nome", false)  
+    //   :  this.pessoa.cpfcnpj == null ? this.servico.showMessage("Informar o CPF", false) 
+    //   :  !cpf.isValid(this.pessoa.cpfcnpj.toString()) ? this.servico.showMessage("Cpf Inválido", false)
+    //   :  this.pessoa.cpfcnpj.toString().length > 11 ? this.servico.showMessage("Apenas pessoa física é permitido", false)
+    //   :  this.pessoa.dataNascimento == null ? this.servico.showMessage("Informar o data de nascimento", false) 
+    //   :  this.pessoa.estCivil == null ? this.servico.showMessage("estado cívil Obrigatório", false) 
+    //   :  this.pessoa.sexo == null ? this.servico.showMessage("informar o sexo", false) 
+    //   :  return status
+    return false
   }
 
   selecionaLinha(id : any){

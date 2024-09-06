@@ -14,7 +14,7 @@
                 <i class="material-icons">storefront</i>
                 
                 <mat-menu #menu="matMenu">
-                        <a mat-list-item routerLink="empresa" >
+                        <a *ngIf="unlockadm" mat-list-item routerLink="empresa" >
                             <i class="material-icons">
                                 reorder
                             </i>
@@ -22,7 +22,7 @@
                         </a>
                         <p>
                         <p>
-                        <a *ngIf="lock" mat-list-item routerLink="produtoempresa" >
+                        <a *ngIf="unlockadm && !lockMaster" mat-list-item routerLink="produtoempresa" >
                             <i class="material-icons">
                                 storefront
                             </i>

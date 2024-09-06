@@ -26,14 +26,14 @@ export class AgendaGrupoCadastroComponent implements OnInit {
 
   criarGrupo(){
 
-    this.grupo.dtCriacao =  new Date;
-    this.grupo.empresaid =  Number(this.servico.Sessao().empresaUsuarioId)
-    this.grupo.criadoPor = Number(this.servico.Sessao().usuarioId);
+    // this.grupo.dtCriacao =  new Date;
+    // this.grupo.empresaid =  Number(this.servico.Sessao().empresaUsuarioId)
+    // this.grupo.criadoPor = Number(this.servico.Sessao().usuarioId);
    
 
-    this.servicoGrupo.create(this.grupo, Endpoint.GrupoAgenda).subscribe(() => {
-      this.servico.showMessage("Grupo criado com sucesso ! ", false )
-    })
+    // this.servicoGrupo.create(this.grupo, Endpoint.GrupoAgenda).subscribe(() => {
+    //   this.servico.showMessage("Grupo criado com sucesso ! ", false )
+    // })
   }
 
   fecharPopup(){
