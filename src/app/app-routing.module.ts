@@ -7,31 +7,25 @@ import { LoginComponent } from './components/login/login.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { HomeComponent } from "./views/home/home.component";
-import { ProductCrudComponent } from "./views/product-crud/product-crud.component";
-import { UsuarioCrudComponent } from './views/usuario-crud/usuario-crud.component';
+import { HomeComponent } from "./components/home/home.component";
 
 
 
-import { ChamadoCrudComponent } from './views/chamado-crud/chamado-crud.component';
 import { EmpresaReadComponent } from './components/empresa/empresa-read/empresa-read.component';
+import { ChamadoReadComponent } from './components/chamados/chamado-read/chamado-read.component';
+import { ProductReadComponent } from './components/product/product-read/product-read.component';
 
 
 //Rotas de componentes Negócio
 
 const routes: Routes = [
-  {path : "", component:HomeComponent },
+  {path : '', component:HomeComponent },
   {path: "login", component: LoginComponent },
   //Rotas de associação de produto a empresa  cadastroproduto
-  {path: "produtoempresa", component: ProductCrudComponent },
-
-  //{path: "cadastroproduto", component: ProductCrudComponent },
-
+  {path: "produtoempresa", component: ProductReadComponent },
   //Rotas de usuarios
-  {path: 'usuarios', component : UsuarioCrudComponent },
-
   //Rotas de chamados
-  {path: "chamados", component : ChamadoCrudComponent },
+  {path: "chamados", component : ChamadoReadComponent },
 
   //Rotas de empresa
   {path: "empresa", component : EmpresaReadComponent },

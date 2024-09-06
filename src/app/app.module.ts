@@ -1,5 +1,4 @@
 import { LoginService } from './services/login.service';
-import { UtilService } from './services/util.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
 
@@ -10,15 +9,13 @@ import { HeaderComponent } from './components/template/header/header.component';
 import { FooterComponent } from './components/template/footer/footer.component';
 import { NavComponent } from './components/template/nav/nav.component';
 
-import { HomeComponent } from './views/home/home.component';
-import { ProductCrudComponent } from './views/product-crud/product-crud.component';
-import { UsuarioCrudComponent } from './views/usuario-crud/usuario-crud.component';
+import { HomeComponent } from './components/home/home.component';
 
 import { ProductCreateComponent } from './components/product/product-create/product-create.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import localePt from '@angular/common/locales/pt';
-import { registerLocaleData } from  '@angular/common';
+import { registerLocaleData } from '@angular/common';
 import { LoginComponent } from './components/login/login.component';
 
 
@@ -35,14 +32,14 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatSelectModule} from '@angular/material/select';
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatDialogModule} from '@angular/material/dialog';
-import {FlexLayoutModule} from '@angular/flex-layout';
-import {MatIconModule} from '@angular/material/icon';
-import {MatDividerModule} from '@angular/material/divider';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
 import { ProductReadComponent } from './components/product/product-read/product-read.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -54,12 +51,10 @@ import { UsuarioReadComponent } from './components/usuario/usuario-read/usuario-
 import { UsuarioCreateComponent } from './components/usuario/usuario-create/usuario-create.component';
 import { UsuarioDeleteComponent } from './components/usuario/usuario-delete/usuario-delete.component';
 import { UsuarioUpdateComponent } from './components/usuario/usuario-update/usuario-update.component';
-import { ChamadoCrudComponent } from './views/chamado-crud/chamado-crud.component';
 import { ChamadoCreateComponent } from './components/chamados/chamado-create/chamado-create.component';
 import { ChamadoUpdateComponent } from './components/chamados/chamado-update/chamado-update.component';
 import { ChamadoDeleteComponent } from './components/chamados/chamado-delete/chamado-delete.component';
 import { ChamadoReadComponent } from './components/chamados/chamado-read/chamado-read.component';
-import { EmpresaComponent } from './views/empresa/empresa.component';
 import { EmpresaCreateComponent } from './components/empresa/modal/empresa-create/empresa-create.component';
 import { EmpresaUpdateComponent } from './components/empresa/empresa-update/empresa-update.component';
 import { EmpresaReadComponent } from './components/empresa/empresa-read/empresa-read.component';
@@ -96,25 +91,20 @@ import { PopupErroComponent } from './components/Popups/popup-erro/popup-erro.co
     FooterComponent,
     NavComponent,
     HomeComponent,
-    ProductCrudComponent,
-    ProductCreateComponent,
     ProductReadComponent,
     ProductUpdateComponent,
     ProductDeleteComponent,
     LoginComponent,
     RedDirective,
-    UsuarioCrudComponent,
     UsuarioComponent,
     UsuarioReadComponent,
     UsuarioCreateComponent,
     UsuarioDeleteComponent,
     UsuarioUpdateComponent,
-    ChamadoCrudComponent,
     ChamadoCreateComponent,
     ChamadoUpdateComponent,
     ChamadoDeleteComponent,
     ChamadoReadComponent,
-    EmpresaComponent,
     EmpresaCreateComponent,
     EmpresaUpdateComponent,
     EmpresaReadComponent,
@@ -123,6 +113,7 @@ import { PopupErroComponent } from './components/Popups/popup-erro/popup-erro.co
     AgendaCreateComponent,
     AgendaReadComponent,
     HomeAgendaComponent,
+    ProductCreateComponent,
     AgendaCadastroUnidadeComponent,
     AgendaAlterarUnidadeComponent,
     AgendaExcluirUnidadeComponent,
@@ -143,7 +134,7 @@ import { PopupErroComponent } from './components/Popups/popup-erro/popup-erro.co
     PopupConfirmacaoComponent,
     PopupSelecaoIdsComponent,
     PopupErroComponent,
-    
+
   ],
   imports: [
     BrowserModule,
@@ -171,17 +162,17 @@ import { PopupErroComponent } from './components/Popups/popup-erro/popup-erro.co
     MatIconModule,
     MatDividerModule,
   ],
-  providers: 
-  [
-    {
-    provide : LOCALE_ID,
-    useValue : 'pt-BR',
-    },
-  [
-    LoginService,
-  ],
- ],
-  
+  providers:
+    [
+      {
+        provide: LOCALE_ID,
+        useValue: 'pt-BR',
+      },
+      [
+        LoginService,
+      ],
+    ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
