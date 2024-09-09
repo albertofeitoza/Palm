@@ -56,7 +56,6 @@ import { ChamadoUpdateComponent } from './components/chamados/chamado-update/cha
 import { ChamadoDeleteComponent } from './components/chamados/chamado-delete/chamado-delete.component';
 import { ChamadoReadComponent } from './components/chamados/chamado-read/chamado-read.component';
 import { EmpresaCreateComponent } from './components/empresa/modal/empresa-create/empresa-create.component';
-import { EmpresaUpdateComponent } from './components/empresa/empresa-update/empresa-update.component';
 import { EmpresaReadComponent } from './components/empresa/empresa-read/empresa-read.component';
 import { AgendaUpdateComponent } from './Aplicacoes/agenda/CadastroAgenda/agenda-update/agenda-update.component';
 import { AgendaDeleteComponent } from './Aplicacoes/agenda/CadastroAgenda/agenda-delete/agenda-delete.component';
@@ -106,7 +105,6 @@ import { PopupErroComponent } from './components/Popups/popup-erro/popup-erro.co
     ChamadoDeleteComponent,
     ChamadoReadComponent,
     EmpresaCreateComponent,
-    EmpresaUpdateComponent,
     EmpresaReadComponent,
     AgendaUpdateComponent,
     AgendaDeleteComponent,

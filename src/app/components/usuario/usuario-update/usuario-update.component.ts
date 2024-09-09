@@ -40,39 +40,39 @@ comboTipousuario : GrupoUsuario[];
  
   updateUsuario() : void {
    
-        let grpId = Number(localStorage.getItem("grpUs"));
-        this.usuario.grupoUsuarioid = this.usuario.grupoUsuarioid == "Administrador" ? TipoUsuario.Administrador.toString() 
-                                        : this.usuario.grupoUsuarioid == "Usuario" ? TipoUsuario.Usuario.toString()
-                                        : this.usuario.grupoUsuarioid == "Master" ? TipoUsuario.MasterEmpresa.toString()
-                                        : "Usuario" 
+        // let grpId = Number(localStorage.getItem("grpUs"));
+        // this.usuario.grupoUsuarioid = this.usuario.grupoUsuarioid == "Administrador" ? TipoUsuario.Administrador.toString() 
+        //                                 : this.usuario.grupoUsuarioid == "Usuario" ? TipoUsuario.Usuario.toString()
+        //                                 : this.usuario.grupoUsuarioid == "Master" ? TipoUsuario.MasterEmpresa.toString()
+        //                                 : "Usuario" 
           
-            this.usarioService.read(Endpoint.Usuarios).subscribe(user => {
-              user = user;
+        //     this.usarioService.read(Endpoint.Usuarios).subscribe(user => {
+        //       user = user;
                                     
-              let ativo = user.filter(x => x.login.toLowerCase() == this.usuario.login.toLowerCase() && x.empresaid == this.usuario.empresaid && x.id == this.usuario.id);
+        //       let ativo = user.filter(x => x.login.toLowerCase() == this.usuario.login.toLowerCase() && x.empresaid == this.usuario.empresaid && x.id == this.usuario.id);
           
-                if (ativo.length > 0 )
-                {
-                    this.usarioService.update(this.usuario, Endpoint.Usuarios).subscribe(() => {
-                      this.utilService.showMessage("Usuário Atualizado com Sucesso!")
+        //         if (ativo.length > 0 )
+        //         {
+        //             this.usarioService.update(this.usuario, Endpoint.Usuarios).subscribe(() => {
+        //               this.utilService.showMessage("Usuário Atualizado com Sucesso!")
 
-                    })
-                    user =  new Array();
+        //             })
+        //             user =  new Array();
 
-                  }else if(grpId == TipoUsuario.Administrador){
+        //           }else if(grpId == TipoUsuario.Administrador){
                       
-                    this.usarioService.update(this.usuario, Endpoint.Usuarios).subscribe(() => {
-                        this.utilService.showMessage("Usuário Atualizado com Sucesso!")
+        //             this.usarioService.update(this.usuario, Endpoint.Usuarios).subscribe(() => {
+        //                 this.utilService.showMessage("Usuário Atualizado com Sucesso!")
                         
-                      })
-                      user =  new Array();
-                  }else{
+        //               })
+        //               user =  new Array();
+        //           }else{
 
-                    this.utilService.showMessage('A empresa do Usuário não pode ser Alterada', false);
+        //             this.utilService.showMessage('A empresa do Usuário não pode ser Alterada', false);
 
-                    user =  new Array();
-                }
-            })
+        //             user =  new Array();
+        //         }
+        //     })
   }
 
   

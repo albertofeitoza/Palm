@@ -6,7 +6,7 @@
   </span>
 </div>
 <div>
-  <span (click)="addUsuario()">
+  <span (click)="CadastrarUsuario()">
     <i class="material-icons">person_add</i>
   </span>
 </div>
@@ -27,7 +27,7 @@
 
     <ng-container matColumnDef="tipoUsuario">
       <mat-header-cell *matHeaderCellDef>Tipo de Usuário</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.tipoUsuario}}</mat-cell>
+      <mat-cell *matCellDef="let row">{{row.tipoUsuario === 1 ? 'Administrador' : row.tipoUsuario === 2 ? 'Master' : row.tipoUsuario === 3 ? 'Usuário' : '' }}</mat-cell>
     </ng-container>
 
     <!-- status -->

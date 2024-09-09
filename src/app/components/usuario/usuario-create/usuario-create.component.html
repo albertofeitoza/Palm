@@ -1,71 +1,33 @@
 <mat-card>
     <h1>Cadastro de Usuário</h1>
     <form>
-            <mat-form-field>
-                <input matInput placeholder="Nome" 
-                [(ngModel)]="usuario.nome" name="nome">
+        <mat-form-field>
+            <input matInput placeholder="Nome" [(ngModel)]="usuario.nomeUsuario" name="nome">
 
-            </mat-form-field>
+        </mat-form-field>
 
-            <mat-form-field>
-                <input matInput placeholder="Login"
-                [(ngModel)]="usuario.login" name="login">
-            </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Senha" type="password" [(ngModel)]="usuario.senha" name="senha">
+        </mat-form-field>
 
-            <mat-form-field>
-                <input matInput placeholder="Senha" type="password"
-                [(ngModel)]="usuario.senha" name="senha">
-            </mat-form-field>
-
-            <mat-form-field>
-                <input matInput placeholder="Crachá"
-                [(ngModel)]="usuario.cracha" name="cracha">
-            </mat-form-field>
-
-            <mat-form-field *ngIf="tipoLogin">
-                <input matInput placeholder="Usuario de Sistema">
-                    <input name="usuariosisteja" [(ngModel)]="usuario.bolSistema" [checked]="usuario.bolSistema" type="checkbox">
-            </mat-form-field>
-
-            <mat-form-field>
-                <input matInput placeholder="Reseta Senha">
-                    <input name="usuariresetasenha" [(ngModel)]="usuario.bolResetaSenha" [checked]="usuario.bolResetaSenha" type="checkbox">
-            </mat-form-field>
-
-            
-            <mat-form-field>
-                <input matInput placeholder="Tipo de Usuário">
-                <p></p>
-                <mat-select [(value)]="usuario.grupoUsuarioid" placeholder="tipousuario" >
-                    <mat-option *ngFor="let tipo of grupousuario " [value]="tipo.id">
-                        {{tipo.nome}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-
-            <mat-form-field>
-                <input matInput placeholder="Empresa">
-                <p></p>
-                <mat-select [(value)]="usuario.empresaid" placeholder="EmpresaID" >
-                    <mat-option *ngFor="let dadosEmpresa of empresa" [value]="dadosEmpresa.id">
-                    {{dadosEmpresa.nomeFantasia}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-
-            <mat-form-field>
-                <input matInput placeholder="Profissional">
-                    <input name="usuarioProfissional" [(ngModel)]="usuario.profissional" [checked]="usuario.profissional" type="checkbox">
-            </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Tipo de Usuário">
+            <p></p>
+            <mat-select [(value)]="usuario.tipoUsuario" placeholder="tipousuario">
+                <mat-option *ngFor="let us of tipoUsuario " [value]="us.id">
+                    {{us.tipo}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
 
     </form>
-            <button *ngIf="usuario.nome && usuario.login && usuario.senha && usuario.grupoUsuarioid && usuario.empresaid" mat-raised-button (click)="createUsuario()" color="primary" > 
-                Salvar
-            </button>
-  
-            <button mat-raised-button (click)="fecharPopup()" color="primary" > 
-                Voltar
-            </button>
-  
- 
+    <button *ngIf="usuario.nomeUsuario && usuario.senha" mat-raised-button (click)="fecharPopup(true)" color="primary">
+        Salvar
+    </button>
+
+    <button mat-raised-button (click)="fecharPopup(false)" color="primary">
+        Voltar
+    </button>
+
+
 </mat-card>

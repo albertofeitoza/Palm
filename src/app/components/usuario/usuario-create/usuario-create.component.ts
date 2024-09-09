@@ -17,94 +17,52 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class UsuarioCreateComponent implements OnInit {
 
-tipoLogin : boolean = false;
-empresa: Empresa[];
+  tipoLogin: boolean = false;
+  empresa: Empresa[];
+  tipoUsuario: any[]
 
-dadosEmpresa : Empresa;
-usuario : Usuario = new Usuario();
-
-grupousuario: GrupoUsuario[];
-
-criargrupousuario: GrupoUsuario
+  dadosEmpresa: Empresa;
+  usuario: Usuario = new Usuario();
 
 
+  constructor(private serviceUsuario: ServiceAllService<any>,
+    private utilService: UtilService,
+    private serviceLogin: LoginService,
+    public dialogRef: MatDialogRef<UsuarioCreateComponent>,
 
-constructor(  private serviceUsuario : ServiceAllService<Usuario>,
-              private serviceEmpresa : ServiceAllService<Empresa>,
-              private serviceGrupoUsuario : ServiceAllService<GrupoUsuario>,
-              private utilService : UtilService,
-              private serviceLogin : LoginService,
-              public dialogRef: MatDialogRef <UsuarioCreateComponent>, 
-              
-              private router : Router) { }
+    private router: Router) { }
 
   ngOnInit(): void {
-      // let grpId = Number(this.utilService.Sessao().idGrupoUsuario);
-      
-      // if (grpId == TipoUsuario.Administrador)
-      //    this.tipoLogin=true;
 
-      this.carregaCombos();
-      this.carregaEmpresa();
+    this.carregaCombos();
+    this.carregaEmpresa();
   }
-  
-  createUsuario() : void {
-   
-  //  this.usuario.criadoPor  = Number(this.utilService.Sessao().usuarioId);
-   this.usuario.dtCriacao = new Date;
-   
-    this.usuario.grupoUsuarioid = this.usuario.grupoUsuarioid.toString().trim() == "Administrador" ? TipoUsuario.Administrador.toString() 
-                                : this.usuario.grupoUsuarioid.toString().trim() == "MasterEmpresa" ? TipoUsuario.MasterEmpresa.toString()
-                                : this.usuario.grupoUsuarioid.toString() == "Usuario" ? TipoUsuario.Usuario.toString() : "Usuario";
+
+  public fecharPopup(salvar : boolean): void {
     
+    if(salvar){
+      this.usuario.empresaId = Number(this.dialogRef.id);
+      this.usuario.pessoaId = 0
+      this.usuario.ativo = true;
+      this.dialogRef.close(this.usuario);
+    } else {
+      this.dialogRef.close();
+    }
     
-
-    this.serviceUsuario.read(Endpoint.Usuarios).subscribe(user => {
-      user = user;
-
-      let ativo = user.filter(x => x.login.toLowerCase() == this.usuario.login.toLowerCase());
-           
-            if (ativo.length > 0)
-            {
-              this.utilService.showMessage('Esse Usuário já existe para essa Empresa');
-              user =  new Array();
-            }else{
-           
-              this.serviceEmpresa.readById(this.usuario.empresaid, Endpoint.Empresa).subscribe(emp => {
-                emp = emp;
-                if (!emp.status){
-                  this.serviceUsuario.create(this.usuario, Endpoint.Usuarios).subscribe(() => {
-                    this.utilService.showMessage('Usuário Criado!');
-                  });
-                }
-                else
-                {
-                  this.utilService.showMessage(`Não pode ser criado Usuário para empresa ${emp.razaoSocial} porque essa empresa está bloqueada.`, false);
-                }
-              });
-              
-              user =  new Array();
-            }
-
-    })
   }
 
-  fecharPopup(): void{
-    this.dialogRef.close();
+  private carregaCombos(): void {
+    if(this.serviceLogin.dadosUsuario.TipoUsuarioLogado == TipoUsuario.Administrador){
+      this.tipoUsuario = this.utilService.TipoUsuario();
+    }
+
+    if(this.serviceLogin.dadosUsuario.TipoUsuarioLogado == TipoUsuario.MasterEmpresa){
+      this.tipoUsuario = this.utilService.TipoUsuario().filter(x => x.id > 1);
+    }
+
   }
 
-  carregaCombos() : void  {
+  carregaEmpresa(): void {
 
-    this.serviceGrupoUsuario.read(Endpoint.GrupoUsuario).subscribe(u => {
-      this.grupousuario = u;
-  
-    });
-
- }
-
-  carregaEmpresa() : void {
-    this.serviceEmpresa.read(Endpoint.Empresa).subscribe(emp => {
-      this.empresa = emp
-    })
   }
 }

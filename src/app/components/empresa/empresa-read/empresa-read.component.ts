@@ -81,7 +81,7 @@ export class EmpresaReadComponent implements OnInit {
   }
 
   public Usuarios(id: number): void {
-    this._utilService.Popup(id, UsuarioReadComponent, "auto", "auto")
+    this._utilService.Popup(id, UsuarioReadComponent, "50%", "40%")
   }
 
 

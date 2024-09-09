@@ -205,6 +205,16 @@ export class UtilService {
     return tipoPessoa
   }
 
+  TipoUsuario() {
+    let tipoUsuario = []
+    tipoUsuario.push({ "id": 0, "tipo": "Selecione" })
+    tipoUsuario.push({ "id": 1, "tipo": "Administrador" })
+    tipoUsuario.push({ "id": 2, "tipo": "MasterEmpresa" })
+    tipoUsuario.push({ "id": 3, "tipo": "Usuario" })
+    return tipoUsuario
+  }
+
+
 
   retornoDadosPopup() {
     let dados = [

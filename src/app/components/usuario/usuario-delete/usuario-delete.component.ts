@@ -32,15 +32,15 @@ export class UsuarioDeleteComponent implements OnInit {
 carregaUsuario(){
 
   
-  this.usuarioService.readById(this.dialogRef.id, Endpoint.Usuarios).subscribe(usuario => {
-    this.usuario = usuario;
+  // this.usuarioService.readById(this.dialogRef.id, Endpoint.Usuarios).subscribe(usuario => {
+  //   this.usuario = usuario;
     
-    this.buscarEmpresa().subscribe(empresa =>{
-      this.empresa = empresa;
-      this.usuario.empresaid = this.empresa.nomeFantasia;
+  //   this.buscarEmpresa().subscribe(empresa =>{
+  //     this.empresa = empresa;
+  //     this.usuario.empresaid = this.empresa.nomeFantasia;
      
-    });
-  })
+  //   });
+  // })
 
 }
 
@@ -58,6 +58,6 @@ carregaUsuario(){
   }
 
   buscarEmpresa(){
-    return this.empresaService.readById(this.usuario.empresaid, Endpoint.Empresa);
+   // return this.empresaService.readById(this.usuario.empresaid, Endpoint.Empresa);
   }
 }
