@@ -24,6 +24,8 @@ import { LoginComponent } from './components/login/login.component';
 registerLocaleData(localePt);
 
 //Modulos Material
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatListModule } from "@angular/material/list";
@@ -74,14 +76,16 @@ import { AgendaGrupoUpdateComponent } from './Aplicacoes/agenda/GrupoAgenda/agen
 import { AgendamentosReadComponent } from './Aplicacoes/agenda/Agendamentos/agendamentos-read/agendamentos-read.component';
 import { AgendamentosCreateComponent } from './Aplicacoes/agenda/Agendamentos/agendamentos-create/agendamentos-create.component';
 import { DadosAgendamentoComponent } from './Aplicacoes/agenda/Agendamentos/dados-agendamento/dados-agendamento.component';
-import { PessoaComponent } from './components/pessoa/pessoa.component';
-import { PessoaUpdateComponent } from './components/pessoa/pessoa-update/pessoa-update.component';
 import { PessoaEnderecoComponent } from './components/pessoa/pessoa-endereco/pessoa-endereco.component';
 import { PessoaContatosComponent } from './components/pessoa/pessoa-contatos/pessoa-contatos.component';
 import { TelefonesComponent } from './components/pessoa/telefones/telefones.component';
 import { PopupConfirmacaoComponent } from './components/Popups/popup-confirmacao/popup-confirmacao.component';
 import { PopupSelecaoIdsComponent } from './components/Popups/popup-selecao-ids/popup-selecao-ids.component';
 import { PopupErroComponent } from './components/Popups/popup-erro/popup-erro.component';
+import { PessoaReadComponent } from './components/pessoa/pessoa-read/pessoa-read.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { PessoaCreateComponent } from './components/pessoa/modal/pessoa-create/pessoa-create.component';
 
 @NgModule({
   declarations: [
@@ -124,14 +128,15 @@ import { PopupErroComponent } from './components/Popups/popup-erro/popup-erro.co
     AgendamentosReadComponent,
     AgendamentosCreateComponent,
     DadosAgendamentoComponent,
-    PessoaComponent,
-    PessoaUpdateComponent,
     PessoaEnderecoComponent,
     PessoaContatosComponent,
     TelefonesComponent,
     PopupConfirmacaoComponent,
     PopupSelecaoIdsComponent,
     PopupErroComponent,
+    PessoaReadComponent,
+    PessoaCreateComponent,
+    
 
   ],
   imports: [
@@ -159,6 +164,11 @@ import { PopupErroComponent } from './components/Popups/popup-erro/popup-erro.co
     FlexLayoutModule,
     MatIconModule,
     MatDividerModule,
+    MatTooltipModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatAutocompleteModule,
+    MatAutocompleteModule
   ],
   providers:
     [

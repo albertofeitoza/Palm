@@ -9,8 +9,9 @@ import { Overlay } from '@angular/cdk/overlay';
 import { LoginService } from 'src/app/services/login.service';
 import { TipoUsuario } from 'src/app/models/usuarios/enumUsuarios';
 import { EmpresaCreateComponent } from '../modal/empresa-create/empresa-create.component';
-import { UsuarioReadComponent } from '../../usuario/usuario-read/usuario-read.component';
 import { ProductReadComponent } from '../../product/product-read/product-read.component';
+import { PessoaReadComponent } from '../../pessoa/pessoa-read/pessoa-read.component';
+import { UsuarioReadComponent } from '../../usuario/usuario-read/usuario-read.component';
 
 @Component({
   selector: 'app-empresa-read',
@@ -80,10 +81,13 @@ export class EmpresaReadComponent implements OnInit {
     }
   }
 
-  public Usuarios(id: number): void {
-    this._utilService.Popup(id, UsuarioReadComponent, "50%", "40%")
+  public Pessoas(id: number): void {
+    this._utilService.Popup(id, PessoaReadComponent, "70%", "50%")
   }
 
+  public Usuarios(id: number): void {
+    this._utilService.Popup(id, UsuarioReadComponent, "70%", "60%")
+  }
 
   public Produtos(id: number): void {
     this._utilService.Popup(id, ProductReadComponent, "auto", "auto")

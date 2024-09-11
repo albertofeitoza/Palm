@@ -30,35 +30,55 @@ export class UsuarioReadComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.BuscarUsuarios();
+    this.BuscarUsuarios('');
   }
 
   public CadastrarUsuario(): void {
 
-    this.serviceUtil.Popup("", UsuarioCreateComponent, "45%", '40%')
-    .subscribe(res => {
-      
-      let resultado = res;
-    
+    const dados = {
+      acao: 'idEmpresa',
+      id: this.dialofRef.id
+    }
 
-    
-    });
-    
+    this.serviceUtil.Popup('', UsuarioCreateComponent, "35%", '55%', false, dados)
+      .subscribe(() => {
+        this.BuscarUsuarios('');
+      });
   }
-
-
   public EditarUsuario(id: number): void {
 
-    
+    const dados = {
+      acao: 'idIsuario',
+      id: id
+    }
+    this.serviceUtil.Popup('', UsuarioCreateComponent, "35%", '60%', false, dados)
+      .subscribe(() => {
+        this.BuscarUsuarios('');
+      });
+
   }
-  public BuscarUsuarios(): void {
 
-    let filtroUsuario = (<HTMLSelectElement>document.getElementById('busca')).value;
 
-    this.serviceApi.read(Endpoint.Usuarios + `/estabelecimento/${this.dialofRef.id}`)
+  public BuscarUsuarios(event: any): void {
+    
+    // let filtroUsuario = (<HTMLSelectElement>document.getElementById('busca')).value;
+
+    let filtro = (<HTMLSelectElement>document.getElementById('buscartexto')).value
+    
+    if (event.which === 13 || event.which ===  1)
+    {
+      this.serviceApi.read(Endpoint.Usuarios + `/estabelecimento/${this.dialofRef.id}`)
       .subscribe((result: ViewUsuarios[]) => {
-        this.usuarios = filtroUsuario != null ? result.filter(x => x.nomeUsuario.toLowerCase().includes(filtroUsuario.toLowerCase())) : result
+        this.usuarios = filtro != null ? result.filter(x => x.nomeUsuario.toLowerCase().includes(filtro.toLowerCase())) : result
       })
+
+    } else {
+      this.serviceApi.read(Endpoint.Usuarios + `/estabelecimento/${this.dialofRef.id}`)
+      .subscribe((result: ViewUsuarios[]) => {
+        this.usuarios = result
+      })
+    }
+   
   }
 
   selecionaLinha(id: Number) {

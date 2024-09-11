@@ -12,7 +12,7 @@ import { UtilService } from 'src/app/services/util.service';
 export class NavComponent implements OnInit {
 opened = true;
 unlockadm = false;  
-lockMaster = false;
+unlockMaster = false;
   constructor(private auth: LoginService,
              private servico : UtilService) { }
 
@@ -32,8 +32,7 @@ lockMaster = false;
     }
 
     if(this.auth.dadosUsuario.TipoUsuarioLogado === 2){
-      this.unlockadm = true;
-      this.lockMaster = true;
+      this.unlockMaster = true;
     }
 
    

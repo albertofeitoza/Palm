@@ -4,8 +4,6 @@ import { PessoaEndereco } from 'src/app/models/Pessoa/modelPessoaEndereco';
 import { Endpoint } from 'src/app/Negocio/Endpoint';
 import { ServiceAllService } from 'src/app/services/service-all.service';
 import { UtilService } from 'src/app/services/util.service';
-import { PessoaUpdateComponent } from 'src/app/components/pessoa/pessoa-update/pessoa-update.component';
-import { Telefone } from 'src/app/models/Telefone/telefoneModel';
 
 @Component({
   selector: 'app-pessoa-endereco',

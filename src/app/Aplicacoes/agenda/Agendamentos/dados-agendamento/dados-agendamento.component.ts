@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Protocolo } from 'src/app/models/Protocolo/modelProtocolo';
-import { Pessoa } from 'src/app/models/Pessoa/modelPessoa';
+import { Pessoa } from 'src/app/models/Pessoa/Pessoa';
 import { Endpoint } from 'src/app/Negocio/Endpoint';
 import { ServiceAllService } from 'src/app/services/service-all.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -12,6 +12,7 @@ import { FormatListNumberedRtlOutlined } from '@material-ui/icons';
 import { FiltroBuscaTelaAgendamento } from 'src/app/models/Filtros/filtros';
 import { AgendamentoCatalogoServicos } from 'src/app/models/Agenda/modelAgendamentoSevico';
 import { PopupSelecaoIdsComponent } from 'src/app/components/Popups/popup-selecao-ids/popup-selecao-ids.component';
+import { Contato } from 'src/app/models/contato/modelContato';
 
 @Component({
   selector: 'app-dados-agendamento',
@@ -81,16 +82,16 @@ export class DadosAgendamentoComponent implements OnInit {
       this.agendamento.nome = ret.nome;
       this.agendamento.responsavel = ret.responsavel;
       this.agendamento.rg = ret.rg;
-      this.agendamento.cpf = ret.cpfcnpj;
+      this.agendamento.cpf = ret.cpf;
       this.agendamento.dataNascimento = ret.dataNascimento;
-      this.agendamento.email = ret.contato.email
+      // this.agendamento.email = ret.contato.email
 
       this.serviceTelefone.read(Endpoint.Telefone).subscribe(tel => {
 
-        let telefones  = tel.filter(x => x.contatoId == ret.contato.id);
+        let telefones  = new Array()  // tel.filter(x => x.contatoId == ret.contato.id);
         
         this.idPessoa = ret.id;
-        this.idContato =  ret.contato.id
+        // this.idContato =  ret.contato.id
         this.idTelefoneRes = telefones!= null && telefones.filter(x => x.tipoTelefone == "1") ? Number(telefones.filter(x => x.tipoTelefone =="1").map(x => Number(x.id))) : 0;
         this.idTelefoneCel = telefones!= null && telefones.filter(x => x.tipoTelefone == "2") ? Number(telefones.filter(x => x.tipoTelefone =="2").map(x => Number(x.id))) : 0;
         

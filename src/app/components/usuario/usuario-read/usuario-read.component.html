@@ -1,7 +1,9 @@
+<div style="text-align: center;">
+  <h1>Usuários</h1>
+</div>
 <div>
-  <input class="search" name="busca" id="busca" type="text" value="">
-
-  <span (click)="BuscarUsuarios()">
+  <input class="search" id="buscartexto" type="text" value="" (keypress)="BuscarUsuarios($event)">
+  <span (click)="BuscarUsuarios($event)">
     <i class="material-icons">search</i>
   </span>
 </div>

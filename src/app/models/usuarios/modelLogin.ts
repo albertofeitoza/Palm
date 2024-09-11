@@ -1,5 +1,6 @@
+
 export class Usuario {
-    id: number;
+    id: number = 0;
     empresaId: number;
     pessoaId: number;
     nomeUsuario: string;
@@ -8,6 +9,8 @@ export class Usuario {
     sessao: string;
     ativo: boolean;
     tipoUsuario: number;
+    email: string;
+
 }
 
 

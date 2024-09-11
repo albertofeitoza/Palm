@@ -80,9 +80,15 @@
             edit
           </i>
         </a>
+        <a (click)="Pessoas(row.id)">
+          <i matTooltip="Pessoas" class="material-icons delete cursor ">
+            groups
+          </i>
+        </a>
+
         <a (click)="Usuarios(row.id)">
-          <i class="material-icons delete cursor ">
-            people
+          <i matTooltip="Usuários" class="material-icons delete cursor ">
+            manage_accounts
           </i>
         </a>
 

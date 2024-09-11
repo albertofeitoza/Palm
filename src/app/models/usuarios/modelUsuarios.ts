@@ -3,6 +3,9 @@ export class ViewUsuarios {
     nomeUsuario: string;
     ativo: boolean;
     tipoUsuario: number;
+    email: string;
+    empresaId: number;
+    pessoaId: number;
 }
 export class DadosLogados {
     IdUsuario: number;

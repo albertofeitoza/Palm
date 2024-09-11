@@ -1,9 +1,17 @@
 <mat-card>
     <h1>Cadastro de Usuário</h1>
-    <form>
-        <mat-form-field>
-            <input matInput placeholder="Nome" [(ngModel)]="usuario.nomeUsuario" name="nome">
 
+    <form>
+        <mat-form-field >
+            <mat-select [disabled]="usuario.id > 0" [(value)]="usuario.pessoaId" placeholder="Selecione a Pessoa">
+                <mat-option *ngFor="let pe of pessoas" [value]="pe.id">
+                    {{pe.nome}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input [disabled]="usuario.id > 0" matInput placeholder="Login" [(ngModel)]="usuario.nomeUsuario" name="login">
         </mat-form-field>
 
         <mat-form-field>
@@ -13,19 +21,30 @@
         <mat-form-field>
             <input matInput placeholder="Tipo de Usuário">
             <p></p>
-            <mat-select [(value)]="usuario.tipoUsuario" placeholder="tipousuario">
+            <mat-select [disabled]="usuario.id > 0" [(value)]="usuario.tipoUsuario" placeholder="tipousuario">
                 <mat-option *ngFor="let us of tipoUsuario " [value]="us.id">
                     {{us.tipo}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
 
+        <mat-form-field>
+            <input matInput placeholder="e-mail" [(ngModel)]="usuario.email" name="email">
+        </mat-form-field>
+
+
+        <mat-form-field *ngIf="usuario.id > 0">
+            <mat-label>Ativo</mat-label>
+            <input matInput placeholder="Ativo">
+            <input name="ativo" [(ngModel)]="usuario.ativo" [checked]="usuario.ativo" type="checkbox">
+        </mat-form-field>
     </form>
-    <button *ngIf="usuario.nomeUsuario && usuario.senha" mat-raised-button (click)="fecharPopup(true)" color="primary">
+    <button *ngIf="usuario.pessoaId > 0 && usuario.nomeUsuario && usuario.senha && usuario.email" mat-raised-button
+        (click)="Salvar()" color="primary">
         Salvar
     </button>
 
-    <button mat-raised-button (click)="fecharPopup(false)" color="primary">
+    <button mat-raised-button (click)="fecharPopup()" color="primary">
         Voltar
     </button>
 

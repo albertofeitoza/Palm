@@ -1,0 +1,93 @@
+<div style="text-align: center;">
+  <h1>Pessoas</h1>
+</div>
+
+<div style="display: flex;" class="row">
+
+  <div class="row ">
+    <span (click)="CadastrarPessoa()">
+      <i class="material-icons">person_add</i>
+    </span>
+  </div>
+
+  <div class="row" style="padding-left:84%;padding-bottom: 2%;">
+    <input class="search" id="buscartexto" type="text" value="" (keypress)="SelecionarPessoa($event)">
+
+    <span (click)="SelecionarPessoa($event)">
+      <i style="vertical-align: bottom;" class="material-icons">search</i>
+    </span>
+  </div>
+</div>
+
+<div class="mat-elevation-z4">
+  <table mat-table [dataSource]="pessoas">
+    <!-- Id Column -->
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="nome">
+      <mat-header-cell *matHeaderCellDef>Nome</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.nome}}</mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="rg">
+      <mat-header-cell *matHeaderCellDef>RG</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.rg}}</mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="cpf">
+      <mat-header-cell *matHeaderCellDef>Cpf</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.cpf}}</mat-cell>
+    </ng-container>
+
+    <!-- Name Price -->
+    <ng-container matColumnDef="dataNascimento">
+      <mat-header-cell *matHeaderCellDef>Data de Nascimento</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.dataNascimento | date:'dd/MM/yyyy'}}</mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="excluido">
+      <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <div *ngIf="row.excluido ">
+          <i class="material-icons">
+            lock
+          </i>
+        </div>
+        <div *ngIf="!row.excluido">
+          <i class="material-icons">
+            lock_open
+          </i>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Coluna de Ações -->
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+
+        <a (click)="EditarPessoa(row.id)">
+          <i class="material-icons edit cursor">
+            edit
+          </i>
+        </a>
+
+      </mat-cell>
+    </ng-container>
+
+    <mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'corLinhaGrid' : row.id == idSelecionado}"
+      (click)="selecionaLinha(row.id)">
+    </mat-row>
+  </table>
+
+</div>

@@ -1,4 +1,4 @@
-import { Pessoa } from "../Pessoa/modelPessoa"
+import { Pessoa } from "../Pessoa/Pessoa"
 
 export class Protocolo{
     id: Number
