@@ -1,10 +1,11 @@
+import { PermissaoUsuario } from './../../models/produtos/produtoEmpresa.model';
 import { UtilService } from '../../services/util.service';
-import { TipoUsuario } from '../../models/usuarios/enumUsuarios';
 import { Endpoint } from '../../Negocio/Endpoint';
 import { ServiceAllService } from '../../services/service-all.service';
 import { HeaderService } from '../template/header/header.service';
 import { Component, OnInit } from '@angular/core';
-import { ProdutoEmpresa } from 'src/app/models/produtos/produtoEmpresa.model';
+import { Solucoes } from 'src/app/models/produtos/produtoEmpresa.model';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-home',
@@ -13,33 +14,32 @@ import { ProdutoEmpresa } from 'src/app/models/produtos/produtoEmpresa.model';
 })
 export class HomeComponent implements OnInit {
 
- produtos : ProdutoEmpresa[];
+  solucoes: Solucoes[] = new Array();
 
 
-  constructor(private serviceProdutos : ServiceAllService<ProdutoEmpresa>,
-              private headerService : HeaderService,
-              private utilService : UtilService
-              ) 
-              {
-               // this.headerService.headerData = {
-               //  title : 'Início',
-              //    icon : 'home',
-              //    routeUrl : ''
-               // }
-              }
+  constructor(private serviceSolucoes: ServiceAllService<any>,
+    private headerService: HeaderService,
+    private utilService: UtilService,
+    private auth: LoginService
+  ) {
+    // this.headerService.headerData = {
+    //  title : 'Início',
+    //    icon : 'home',
+    //    routeUrl : ''
+    // }
+  }
 
   ngOnInit(): void {
-    this.ObterComponentes();
-    this.utilService.AtualizarMenu("Início","home",'');
+    this.ObterSolucoes();
+    this.utilService.AtualizarMenu("Início", "home", '');
   }
-  
-  
-  ObterComponentes(){
 
-    this.serviceProdutos.read(Endpoint.ProdutoEmpresa).subscribe(prod => {
-     
-      this.produtos = prod;
-  
-    });
+
+  private ObterSolucoes(): void {
+
+    this.serviceSolucoes.read(Endpoint.SolucoesEmpresa + `/estabelecimento/${this.auth.dadosUsuario.EmpresaId}/${this.auth.dadosUsuario.IdUsuario}`)
+      .subscribe((solucoes: Solucoes[]) => {
+        this.solucoes = solucoes
+      });
   }
 }

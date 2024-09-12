@@ -103,11 +103,11 @@ comboTipousuario : GrupoUsuario[];
 
   carregarComboTipoUsuario() : void  {
     
-        this.grupoUsuario.read(Endpoint.GrupoUsuario).subscribe(grp => {
-          this.comboTipousuario = grp;
+        // this.grupoUsuario.read(Endpoint.GrupoUsuario).subscribe(grp => {
+        //   this.comboTipousuario = grp;
         
         
-        })
+        // })
 
   
   }

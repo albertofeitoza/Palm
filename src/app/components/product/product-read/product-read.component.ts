@@ -4,7 +4,6 @@ import { Endpoint } from './../../../Negocio/Endpoint';
 import { ServiceAllService } from './../../../services/service-all.service';
 import { UtilService } from './../../../services/util.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { ProdutoEmpresa } from '../../../models/produtos/produtoEmpresa.model';
 import { TipoUsuario } from 'src/app/models/usuarios/enumUsuarios';
 import { MatDialog } from '@angular/material/dialog';
 import { Overlay } from '@angular/cdk/overlay';
@@ -19,16 +18,15 @@ import { ProductDeleteComponent } from '../product-delete/product-delete.compone
 })
 export class ProductReadComponent implements OnInit {
 
-
-
-products: ProdutoEmpresa[] 
 vlrProduto : string
+
+products: any
 
 displayedColumns = ['id','nome', 'nomeEmpresa', 'valor','bloqueado','action']  
 idSelecionado : Number = 0;
 
   constructor(private router : Router,
-              private serviceProduto : ServiceAllService<ProdutoEmpresa>,
+              private serviceProduto : ServiceAllService<any>,
               private serviceEmpresa : ServiceAllService<Empresa>,
               private _utilService : UtilService,
               public dialog : MatDialog, 
@@ -107,9 +105,9 @@ idSelecionado : Number = 0;
 
   buscarProduto() {
 
-    this.serviceProduto.read(Endpoint.ProdutoEmpresa).subscribe(product => {
-        this.products = this.vlrProduto == null ?  product : product.filter(x => x.nome.toLowerCase().includes(this.vlrProduto.toLowerCase()))
-    })
+    // this.serviceProduto.read(Endpoint.ProdutoEmpresa).subscribe(product => {
+    //     this.products = this.vlrProduto == null ?  product : product.filter(x => x.nome.toLowerCase().includes(this.vlrProduto.toLowerCase()))
+    // })
   }
 
   selecionarProduto(KeyEvent : any){

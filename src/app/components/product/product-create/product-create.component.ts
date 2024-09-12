@@ -2,7 +2,6 @@ import { Empresa } from './../../../models/empresa/ModelEmpresa';
 import { Endpoint } from './../../../Negocio/Endpoint';
 import { ServiceAllService } from './../../../services/service-all.service';
 import { UtilService } from './../../../services/util.service';
-import { ProdutoEmpresa } from '../../../models/produtos/produtoEmpresa.model';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -18,11 +17,10 @@ export class ProductCreateComponent implements OnInit {
 
  comboProduto : Produto[] ;
  empresa : Empresa[];
- produtoEmpresa: ProdutoEmpresa = new ProdutoEmpresa();
-
+ produtoEmpresa: any
   constructor(
               private servico : UtilService,
-              private ProdutoEmpresaservice : ServiceAllService<ProdutoEmpresa>,
+              private ProdutoEmpresaservice : ServiceAllService<any>,
               private ServiceEmpresa : ServiceAllService<Empresa>,
               public matDialogref : MatDialogRef<ProductCreateComponent>,
               private serviceProduto : ServiceAllService<Produto>
