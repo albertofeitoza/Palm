@@ -8,17 +8,17 @@
 
 <div class="content">
     <div fxLayout="row wrap" fxLayoutGap="16px grid">
-      <div fxFlex="10%" fxFlex.xs="100%" fxFlex.sm="33%"  *ngFor="let prod of produtos">
+      <div fxFlex="10%" fxFlex.xs="100%" fxFlex.sm="33%"  *ngFor="let sol of solucoes">
         <mat-card  class="tamanhoCard">
             <mat-card-header></mat-card-header>
                 <mat-card-title>
-                    {{prod.nome}} 
-                    <a *ngIf="!prod.bloqueado" mat-list-item routerLink="{{prod.nome}}" >
+                    {{sol.solucaoNome}} 
+                    <a *ngIf="sol.ativo" mat-list-item routerLink="{{sol.solucaoRota}}" >
                         <i class="material-icons" >
                             schedule
                         </i>
                     </a>
-                    <a *ngIf="prod.bloqueado" >
+                    <a *ngIf="!sol.ativo" >
                         <i class="material-icons" >
                             block
                         </i>
@@ -32,4 +32,4 @@
     </div>
   </div>
 
-  <!-- <div *ngIf="produtos.length === 0" class="produtos" >Você não possui, nenhuma das nossas soluções entre em contato. </div> -->
+  <div *ngIf="solucoes.length === 0" class="produtos" >Você não possui acesso a nenhuma das nossas soluções entre em contato. </div>
