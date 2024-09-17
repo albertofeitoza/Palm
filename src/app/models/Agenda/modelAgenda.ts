@@ -1,16 +1,16 @@
+
 export class Agenda {
-    id : number
-    DtCriacao: Date 
-    nomeAgenda: string
-    usuarioid: string
-    empresaid: number
-    unidadeid : number
-    salaid : number
-    substituicao: Boolean
-    grupoAgendaid: number
-    vigenciaInicio: Date
-    vigenciaFim: Date
-    considerarFeriado: Boolean
-    bloqueado: Boolean
-    
+    id:                number;
+    dtCriacao:         Date;
+    nomeAgenda:        string;
+    empresaId:         number;
+    unidadeId:         number;
+    salaId:            number;
+    pessoaId:          number;
+    substituicao:      boolean;
+    grupoAgendaId:     number;
+    vigenciaInicio:    Date;
+    vigenciaFim:       Date;
+    considerarFeriado: boolean;
+    bloqueado:         boolean;
 }

@@ -11,10 +11,12 @@ export class Agendamentos {
     telefone: number
     celular: number
     email: string
-    agendaid: number
+    agendaId: number
     empresaid: number
     statusAgendamento: number
-    protocoloid : number
+    protocoloId : number
     criadoPor: number
+    pessoaId: number
+    agendaHorariosId: number
+    ura: number
 }
-

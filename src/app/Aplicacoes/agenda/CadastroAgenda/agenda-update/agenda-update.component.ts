@@ -93,7 +93,7 @@ export class AgendaUpdateComponent implements OnInit {
 
       BuscarSala(){
         this.serviceSala.read(Endpoint.Sala).subscribe(sl =>{
-          this.comboSala = sl.filter(x => x.unidadeid == this.agenda.unidadeid)
+          this.comboSala = sl.filter(x => x.unidadeid == this.agenda.unidadeId)
         });
       }
       BuscarGrupoAgenda(){

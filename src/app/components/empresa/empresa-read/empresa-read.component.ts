@@ -81,16 +81,20 @@ export class EmpresaReadComponent implements OnInit {
     }
   }
 
-  public Pessoas(id: number): void {
-    this._utilService.Popup(id, PessoaReadComponent, "70%", "50%")
+  public Pessoas(row: any): void {
+    if (!row.status) {
+      return this._utilService.showMessage("Empresa desativada", true);
+    }
+
+    this._utilService.Popup(row.id, PessoaReadComponent, "70%", "50%")
   }
 
   public Usuarios(id: number): void {
     this._utilService.Popup(id, UsuarioReadComponent, "70%", "60%")
   }
 
-  public Produtos(id: number): void {
-    this._utilService.Popup(id, ProductReadComponent, "auto", "auto")
+  public Solucoes(id: number): void {
+    this._utilService.Popup(id, ProductReadComponent, "70%", "50%")
   }
 
 }

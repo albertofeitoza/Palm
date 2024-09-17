@@ -215,21 +215,10 @@ export class UtilService {
     return tipoUsuario
   }
 
-
-
-  retornoDadosPopup() {
-    let dados = [
-      {
-        "id": "",
-
-
-
-      }
-
-    ]
-
+  YesNO() {
+    let yesno = []
+    yesno.push({ "id": false, "tipo": "Sim" })
+    yesno.push({ "id": true, "tipo": "Não" })
+    return yesno
   }
-
-
-
 }

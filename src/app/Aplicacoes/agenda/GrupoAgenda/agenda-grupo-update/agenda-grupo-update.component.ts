@@ -12,33 +12,36 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class AgendaGrupoUpdateComponent implements OnInit {
 
-grupo : any
+  grupo: GrupoAgenda = new GrupoAgenda();
 
   constructor(
-                public dialogRef : MatDialogRef<AgendaGrupoUpdateComponent>,
-                private servico : UtilService,
-                private servicoGrupo : ServiceAllService<GrupoAgenda>
-              ) { }
+    public dialogRef: MatDialogRef<AgendaGrupoUpdateComponent>,
+    private servico: UtilService,
+    private servicoGrupo: ServiceAllService<GrupoAgenda>
+  ) { }
 
   ngOnInit(): void {
     this.buscarGrupo()
   }
 
-  buscarGrupo(){
-        this.servicoGrupo.readById(this.dialogRef.id, Endpoint.GrupoAgenda).subscribe(x => {
-          this.grupo = x;
-        })
+  buscarGrupo() {
+    this.servicoGrupo.readById(this.dialogRef.id, Endpoint.GrupoAgenda)
+      .subscribe(x => {
+        this.grupo = x;
+      })
   }
 
-  editarGrupo(){
-    this.servicoGrupo.update(this.grupo, Endpoint.GrupoAgenda).subscribe(()=> {
+  editarGrupo() {
+    this.servicoGrupo.create(this.grupo, Endpoint.GrupoAgenda)
+      .subscribe(() => {
         this.servico.showMessage("Grupo Alterado com sucesso", false)
-    });
+        this.fecharPopup();
+      });
 
   }
 
-  fecharPopup(){
-      this.dialogRef.close()
+  fecharPopup() {
+    this.dialogRef.close()
   }
 
 }

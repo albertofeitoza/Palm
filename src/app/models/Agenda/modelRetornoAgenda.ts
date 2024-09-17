@@ -1,4 +1,4 @@
-export interface AgendaDto {
+export class AgendaDto {
     id ?: null
     dtCriacao: string 
     empresaId : number

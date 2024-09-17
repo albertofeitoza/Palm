@@ -14,7 +14,7 @@
                         <input matInput placeholder="Profissional" >
                         <p></p>
                     <mat-select 
-                           [(value)]="agenda.usuarioid" placeholder="Unidade Atendimento">
+                           [(value)]="agenda.pessoaId" placeholder="Unidade Atendimento">
                          <mat-option *ngFor="let ret of comboProfissional " [value]="ret.id">
                                <!-- {{ret.nome}} -->
                         </mat-option>
@@ -24,7 +24,7 @@
                 <mat-form-field>
                     <input matInput placeholder="Unidade Atendimento">
                     <p></p>
-                    <mat-select [(value)]="agenda.unidadeid" (selectionChange)="BuscarSala()" placeholder="Unidade Atendimento">
+                    <mat-select [(value)]="agenda.unidadeId" (selectionChange)="BuscarSala()" placeholder="Unidade Atendimento">
                         <mat-option *ngFor="let tipounidade of comboUnidade " [value]="tipounidade.id">
                             {{tipounidade.nomeUnidade}}
                         </mat-option>
@@ -35,7 +35,7 @@
                 <mat-form-field>
                     <input matInput placeholder="Sala Atendimento">
                     <p></p>
-                    <mat-select [(value)]="agenda.salaid" placeholder="Sala Atendimento">
+                    <mat-select [(value)]="agenda.salaId" placeholder="Sala Atendimento">
                         <mat-option *ngFor="let sala of comboSala " [value]="sala.id">
                             {{sala.nomeSala}}
                         </mat-option>
@@ -51,7 +51,7 @@
                 <mat-form-field>
                     <input matInput placeholder="Grupo Agenda">
                     <p></p>
-                    <mat-select [(value)]="agenda.grupoAgendaid" placeholder="Grupo Agenda" >
+                    <mat-select [(value)]="agenda.grupoAgendaId" placeholder="Grupo Agenda" >
                         <mat-option *ngFor="let tipoGrupo of comboTipoGrupoAgenda " [value]="tipoGrupo.id">
                             {{tipoGrupo.nomeGrupoAgenda}}
                         </mat-option>

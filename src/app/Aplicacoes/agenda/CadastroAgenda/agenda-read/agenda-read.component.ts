@@ -9,6 +9,7 @@ import { AgendaCreateComponent } from '../agenda-create/agenda-create.component'
 import { Overlay } from '@angular/cdk/overlay';
 import { TipoUsuario } from 'src/app/models/usuarios/enumUsuarios';
 import { AgendaCadastroUnidadeComponent } from '../../Unidade/agenda-cadastro-unidade/agenda-cadastro-unidade.component';
+import { LoginService } from 'src/app/services/login.service';
 
 
 
@@ -24,7 +25,7 @@ export class AgendaReadComponent implements OnInit {
               public dialog: MatDialog,
               public overlay : Overlay,
               private servico : UtilService,
-              private _repAgenda : ServiceAllService<AgendaDto>,
+              private auth : LoginService
 
              ) { }
 
@@ -34,23 +35,23 @@ export class AgendaReadComponent implements OnInit {
 
   addNovaAgenda() {
    
-    // if(this.servico.Sessao().idGrupoUsuario == TipoUsuario.MasterEmpresa || this.servico.Sessao().idGrupoUsuario == TipoUsuario.Administrador)
-    // {
-    //   this.servico.Popup("0",AgendaCreateComponent, '80%','98%' );
+    if(this.auth.dadosUsuario.TipoUsuarioLogado == TipoUsuario.MasterEmpresa || this.auth.dadosUsuario.TipoUsuarioLogado == TipoUsuario.Administrador)
+    {
+      this.servico.Popup("0",AgendaCreateComponent, '80%','98%' );
 
-    // }else{
-    //   this.servico.showMessage("Solicitar ao um Usuário Master para criar Nova Agenda!",true);
-    // }
+    }else{
+      this.servico.showMessage("Solicitar ao um Usuário Master para criar Nova Agenda!",true);
+    }
 
 
   }
 
   addUnidade(){
     
-    // if(this.servico.Sessao().idGrupoUsuario == TipoUsuario.MasterEmpresa.toString() || this.servico.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
-    //   this.servico.Popup("0", AgendaCadastroUnidadeComponent, "800px", "600px", )
-    // else
-    //   this.servico.showMessage("Solicitar ao um Usuário Master cadastrar a Unidade",true);
+    if(this.auth.dadosUsuario.TipoUsuarioLogado == TipoUsuario.MasterEmpresa || this.auth.dadosUsuario.TipoUsuarioLogado == TipoUsuario.Administrador)
+      this.servico.Popup("0", AgendaCadastroUnidadeComponent, "800px", "600px", )
+    else
+      this.servico.showMessage("Solicitar ao um Usuário Master cadastrar a Unidade",true);
   }
 
 }

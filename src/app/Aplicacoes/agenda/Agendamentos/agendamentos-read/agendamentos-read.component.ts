@@ -14,46 +14,47 @@ import { AgendamentosCreateComponent } from '../agendamentos-create/agendamentos
 })
 export class AgendamentosReadComponent implements OnInit {
 
-  
-  displayedColumns = ['id','horaAgendada','nome','responsavel','cpf','rg','dataNascimento',
-  'telefone','celular','email','Agendaid','Protocoloid','StatusAgendamento','action']  
-  
-  agendamentos : Agendamentos[]
- 
-  selected : Number = 0;
-  
+
+  displayedColumns = ['id', 'horaAgendada', 'nome', 'responsavel', 'cpf', 'rg', 'dataNascimento',
+    'telefone', 'celular', 'email', 'Agendaid', 'Protocoloid', 'StatusAgendamento', 'action']
+
+  agendamentos: Agendamentos[] = new Array();
+
+  selected: Number = 0;
+
   constructor(
-              private servicoAgendamento : ServiceAllService<Agendamentos>,
-              private servico : UtilService
-              ) { }
+    private servicoAgendamento: ServiceAllService<Agendamentos>,
+    private servico: UtilService,
+  ) { }
 
   ngOnInit(): void {
     this.buscarAgendamento();
-  
+
   }
 
-  buscarAgendamento(){
+  buscarAgendamento() {
 
-      this.servicoAgendamento.read(Endpoint.Agendamentos).subscribe(a => {
-        this.agendamentos = a;
+    this.servicoAgendamento.read(Endpoint.Agendamentos + `/estabelecimento/${this.servico.Sessao().EmpresaId}`)
+      .subscribe((result : Agendamentos[]) => {
+        this.agendamentos = result;
       })
 
   }
-  
-  EditarAgendamento(id : any){
+
+  EditarAgendamento(id: any) {
 
   }
 
 
-  ExcluirAgendamento(id : any){
+  ExcluirAgendamento(id: any) {
 
   }
 
-  NovoAgendamento(){
+  NovoAgendamento() {
     this.servico.Popup("", AgendamentosCreateComponent, '70%', '80%');
   }
 
-  selecionaLinha(id : Number){
+  selecionaLinha(id: Number) {
     this.selected = id;
   }
 }
