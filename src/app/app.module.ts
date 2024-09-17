@@ -86,6 +86,7 @@ import { PessoaReadComponent } from './components/pessoa/pessoa-read/pessoa-read
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { PessoaCreateComponent } from './components/pessoa/modal/pessoa-create/pessoa-create.component';
+import { DetalhesDiasDisponiveisAgendaComponent } from './Aplicacoes/agenda/CadastroAgenda/agenda-create/modal/detalhes-dias-disponiveis-agenda/detalhes-dias-disponiveis-agenda.component';
 
 @NgModule({
   declarations: [
@@ -136,6 +137,7 @@ import { PessoaCreateComponent } from './components/pessoa/modal/pessoa-create/p
     PopupErroComponent,
     PessoaReadComponent,
     PessoaCreateComponent,
+    DetalhesDiasDisponiveisAgendaComponent,
     
 
   ],
