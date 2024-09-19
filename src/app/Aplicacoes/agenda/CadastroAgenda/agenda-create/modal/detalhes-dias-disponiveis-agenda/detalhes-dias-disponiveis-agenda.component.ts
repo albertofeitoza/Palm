@@ -17,6 +17,7 @@ export class DetalhesDiasDisponiveisAgendaComponent implements OnInit {
   ColunasDetalhes = ['id', 'hora', 'intervalo', 'tipoHorario', 'diaDasemana', 'naoDisponivel', 'bloqueadoEmTela'];
   detalhes: HorarioAgenda[] = new Array();
   comboDisponivel: any;
+  comboBloqueadoEmtela: any;
 
   dados: any
 
@@ -28,13 +29,16 @@ export class DetalhesDiasDisponiveisAgendaComponent implements OnInit {
 
   ngOnInit(): void {
     this.dados = this.dialogRef._containerInstance._config.data.object;
-    this.CarregaCombos()
+    this.CarregaCombos();
+    this.CarregarTela();
+
   }
 
 
 
-  CarregaCombos() {
-    this.comboDisponivel = this.serviceUtil.YesNO();
+  private CarregaCombos(): void {
+    this.comboDisponivel = this.serviceUtil.YesNO(true);
+    this.comboBloqueadoEmtela = this.serviceUtil.YesNO(false);
   }
 
   private CarregarTela(): void {
@@ -45,22 +49,26 @@ export class DetalhesDiasDisponiveisAgendaComponent implements OnInit {
   }
 
 
-  public AlterarStatus(row: any): void {
+  private Refresh(): void {
 
-    this.serviceApi.update(row, Endpoint.AgendaHorarios)
-      .subscribe(() => {
-
-        this.CarregarTela();
-        this.serviceUtil.showMessage("Registro atualizado com sucesso!");
-      }, (err) => {
-        this.CarregarTela();
-        this.serviceUtil.showMessage(`Erro: ${err.message}`);
-      }, () => {
-        this.CarregarTela();
-        this.serviceUtil.showMessage("Erro");
-      })
-
+    this.serviceApi.read(Endpoint.AgendaHorarios + `/agenda/${this.dados.agendaId}`)
+      .subscribe((result: HorarioAgenda[]) => {
+        this.detalhes = [...result.filter(x => x.data == this.dados.dataSelecionada)];
+      });
   }
 
+
+  public AlterarStatus(row: any): void {
+    this.serviceApi.update(row, Endpoint.AgendaHorarios)
+      .subscribe(() => {
+        this.Refresh();
+        this.serviceUtil.showMessage("Registro atualizado com sucesso!");
+      }
+        , (err) => {
+          this.Refresh();
+        }, () => {
+          this.Refresh();
+        })
+  }
 
 }

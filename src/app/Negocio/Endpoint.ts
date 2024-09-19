@@ -8,7 +8,8 @@ export enum Endpoint {
     SolucoesEmpresa = '/SolucoesEmpresa',
 
 
-    Produto = '/Produto',
+    CatalogoServico = '/CatalogoServico',
+    AgendaCatalogoServico = '/AgendaCatalogoServico',
     
     Agenda = '/Agenda',
     Unidade = '/Unidade',

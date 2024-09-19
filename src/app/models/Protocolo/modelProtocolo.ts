@@ -1,13 +1,10 @@
-import { Pessoa } from "../Pessoa/Pessoa"
-
-export class Protocolo{
-    id: Number
-    dtCriacao: Date
-    tipo: Number
-    descricao: string
-    criadoPor: Number
-    pessoaid: Number
-    statusProtocolo : number 
-    
-    
+export class Protocolo {
+    id: number = 0;
+    dtCriacao: Date;
+    tipoProtocolo: number;
+    descricao: string = '';
+    criadoPor: number;
+    pessoaId: number;
+    empresaId: number;
+    statusProtocolo: number;
 }

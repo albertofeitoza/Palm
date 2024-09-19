@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-popup-confirmacao',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PopupConfirmacaoComponent implements OnInit {
 
-  constructor() { }
+  mensagem = '';
+
+
+  constructor(private matdialogRef: MatDialogRef<PopupConfirmacaoComponent>
+
+  ) { }
 
   ngOnInit(): void {
+    this.mensagem = this.matdialogRef._containerInstance._config.data.object;
+  }
+
+  public FecharPopup(confirm: boolean): void {
+    this.matdialogRef.close(confirm)
   }
 
 }

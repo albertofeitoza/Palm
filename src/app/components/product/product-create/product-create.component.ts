@@ -58,7 +58,7 @@ export class ProductCreateComponent implements OnInit {
 
   buscarProduto(){
     debugger  
-    this.serviceProduto.read(Endpoint.Produto).subscribe(x => {
+    this.serviceProduto.read(Endpoint.CatalogoServico).subscribe(x => {
         this.comboProduto = x;
       })
 

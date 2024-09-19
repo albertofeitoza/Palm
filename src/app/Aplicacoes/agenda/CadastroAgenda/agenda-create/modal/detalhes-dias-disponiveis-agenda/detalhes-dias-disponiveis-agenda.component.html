@@ -42,7 +42,7 @@
     <ng-container matColumnDef="naoDisponivel">
       <mat-header-cell *matHeaderCellDef><b>Disponível</b></mat-header-cell>
       <mat-cell *matCellDef="let row">
-        <mat-select [(value)]="row.naoDisponivel" (selectionChange)="AlterarStatus(row)">
+        <mat-select style="padding-left: 30px;" [(value)]="row.naoDisponivel" (selectionChange)="AlterarStatus(row)">
           <mat-option *ngFor="let dp of comboDisponivel" [value]="dp.id" >
             {{dp.tipo}}
           </mat-option>
@@ -53,7 +53,13 @@
     <ng-container matColumnDef="bloqueadoEmTela">
       <mat-header-cell *matHeaderCellDef><b>Bloqueado em Tela</b></mat-header-cell>
       <mat-cell *matCellDef="let row">
-        <mat-icon *ngIf="row.bloqueadoEmTela">done_all</mat-icon>
+        <mat-select style="padding-left: 30px;" [(value)]="row.bloqueadoEmTela" (selectionChange)="AlterarStatus(row)">
+          <mat-option *ngFor="let bt of comboBloqueadoEmtela" [value]="bt.id" >
+            {{bt.tipo}}
+          </mat-option>
+        </mat-select>
+
+
       </mat-cell>
     </ng-container>
   </table>

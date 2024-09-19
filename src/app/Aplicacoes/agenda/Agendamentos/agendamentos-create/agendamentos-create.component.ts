@@ -11,134 +11,140 @@ import { DadosAgendamentoComponent } from '../dados-agendamento/dados-agendament
   selector: 'app-agendamentos-create',
   templateUrl: './agendamentos-create.component.html',
   styleUrls: ['./agendamentos-create.component.css']
-  
+
 })
 export class AgendamentosCreateComponent implements OnInit {
 
- colunas = ['id','nome','protocolos','grupoAgenda','agendamentoFuturo','responsavel','ura','cpf','rg','telefone','celular','action'] 
- 
- pessoa: Pessoa = new Pessoa();
- pessoaGrid: PessoaGrid[];
- idSelecionado : Number = 0;
- sexo : any[]
- estCivil: any[]
- 
+  colunas = ['id', 'nome', 'protocolos', 'grupoAgenda', 'agendamentoFuturo', 'responsavel', 'ura', 'cpf', 'rg', 'telefone', 'celular', 'action']
 
-constructor(
-              private dialofRef : MatDialogRef<AgendamentosCreateComponent>,
-              private servicoPessoa : ServiceAllService<PessoaGrid>,
-              private servicoCadastroPessoa : ServiceAllService<Pessoa>,
-              private servico : UtilService
-    
-              ) { }
+  pessoa: Pessoa = new Pessoa();
+  pessoas: PessoaGrid[] = new Array();
+  idSelecionado: Number = 0;
+  sexo: any[]
+  estCivil: any[]
+
+
+  constructor(
+    private dialofRef: MatDialogRef<AgendamentosCreateComponent>,
+    private serviceApi: ServiceAllService<any>,
+    private servicoCadastroPessoa: ServiceAllService<Pessoa>,
+    private servico: UtilService
+
+  ) { }
 
   ngOnInit(): void {
-  
-
     this.sexo = this.servico.Genero();
     this.estCivil = this.servico.EstCivil();
-  
-  }
-  
-  NovoAgendamento(){
-      alert("Teste de cadastro");
+    this.BuscarPessoas()
+
   }
 
-  buscarProtocolo(id : any){
+  NovoAgendamento() {
+    alert("Teste de cadastro");
+  }
+
+  buscarProtocolo(id: any) {
     alert("pessoa" + id);
   }
 
-  agendamentosFuturo(id : any){
-    alert("Pessoa" + id )
+  agendamentosFuturo(id: any) {
+    alert("Pessoa" + id)
   }
 
-  buscarPessoa(){
+  public BuscarPessoas(): void {
     this.idSelecionado = 0;
-    this.pessoaGrid = new Array()
- 
-    this.servicoPessoa.read(Endpoint.Pessoa).subscribe(p => {
-    this.pessoaGrid = p.filter(x => 
-                                    this.pessoa.nome != null && 
-                                    this.pessoa.responsavel != null && 
-                                    this.pessoa.rg != null && 
-                                    this.pessoa.cpf != null
-                                  ?  x.nome?.toLowerCase().includes(this.pessoa.nome.toLowerCase()) 
-                                  && x.responsavel?.toLowerCase().includes(this.pessoa.responsavel.toLowerCase())
-                                  && x.rg?.includes(this.pessoa.rg)
-                                  && x.cpf?.includes(this.pessoa.cpf)
-                                  
-                                  : this.pessoa.nome != null && 
-                                    this.pessoa.responsavel != null && 
-                                    this.pessoa.rg != null 
-                                  ? x.nome?.toLowerCase().includes(this.pessoa.nome.toLowerCase()) 
-                                  && x.responsavel?.toLowerCase().includes(this.pessoa.responsavel.toLowerCase())
-                                  && x.rg?.includes(this.pessoa.rg) 
-                                  
-                                  : this.pessoa.nome != null && 
-                                    this.pessoa.responsavel != null 
-                                  ?  x.nome?.toLowerCase().includes(this.pessoa.nome.toLowerCase()) 
-                                  && x.responsavel?.toLowerCase().includes(this.pessoa.responsavel.toLowerCase()) 
-
-                                  : this.pessoa.responsavel != null && 
-                                    this.pessoa.rg != null && 
-                                    this.pessoa.cpf != null
-                                  ? x.responsavel?.toLowerCase().includes(this.pessoa.responsavel.toLowerCase())
-                                  && x.rg?.includes(this.pessoa.rg)
-                                  && x.cpf?.includes(this.pessoa.cpf)
-
-                                  : this.pessoa.rg != null && 
-                                  this.pessoa.cpf != null
-                                  ? x.rg?.includes(this.pessoa.rg)
-                                  && x.cpf?.includes(this.pessoa.cpf)
-                                  
-                                  : this.pessoa.nome != null
-                                  ? x.nome?.toLowerCase().includes(this.pessoa.nome.toLowerCase())
-
-                                  : this.pessoa.responsavel != null
-                                  ? x.responsavel?.toLowerCase().includes(this.pessoa.responsavel.toLowerCase())
-                                  
-                                  : this.pessoa.rg != null
-                                  ? x.rg?.includes(this.pessoa.rg)
-
-                                  : this.pessoa.cpf != null
-                                  ? x.cpf?.includes(this.pessoa.cpf)
-                                  
-                                  :p)
-    });
-  }
-
-  bucarAgendamentos(){
     
- 
+
+    this.serviceApi.read(Endpoint.Pessoa + `/estabelecimento/${this.servico.Sessao().EmpresaId}`)
+      .subscribe(p => {
+        this.pessoas = p.filter(x =>
+          this.pessoa.nome != null &&
+            this.pessoa.responsavel != null &&
+            this.pessoa.rg != null &&
+            this.pessoa.cpf != null
+            ? x.nome?.toLowerCase().includes(this.pessoa.nome.toLowerCase())
+            && x.responsavel?.toLowerCase().includes(this.pessoa.responsavel.toLowerCase())
+            && x.rg?.includes(this.pessoa.rg)
+            && x.cpf?.includes(this.pessoa.cpf)
+
+            : this.pessoa.nome != null &&
+              this.pessoa.responsavel != null &&
+              this.pessoa.rg != null
+              ? x.nome?.toLowerCase().includes(this.pessoa.nome.toLowerCase())
+              && x.responsavel?.toLowerCase().includes(this.pessoa.responsavel.toLowerCase())
+              && x.rg?.includes(this.pessoa.rg)
+
+              : this.pessoa.nome != null &&
+                this.pessoa.responsavel != null
+                ? x.nome?.toLowerCase().includes(this.pessoa.nome.toLowerCase())
+                && x.responsavel?.toLowerCase().includes(this.pessoa.responsavel.toLowerCase())
+
+                : this.pessoa.responsavel != null &&
+                  this.pessoa.rg != null &&
+                  this.pessoa.cpf != null
+                  ? x.responsavel?.toLowerCase().includes(this.pessoa.responsavel.toLowerCase())
+                  && x.rg?.includes(this.pessoa.rg)
+                  && x.cpf?.includes(this.pessoa.cpf)
+
+                  : this.pessoa.rg != null &&
+                    this.pessoa.cpf != null
+                    ? x.rg?.includes(this.pessoa.rg)
+                    && x.cpf?.includes(this.pessoa.cpf)
+
+                    : this.pessoa.nome != null
+                      ? x.nome?.toLowerCase().includes(this.pessoa.nome.toLowerCase())
+
+                      : this.pessoa.responsavel != null
+                        ? x.responsavel?.toLowerCase().includes(this.pessoa.responsavel.toLowerCase())
+
+                        : this.pessoa.rg != null
+                          ? x.rg?.includes(this.pessoa.rg)
+
+                          : this.pessoa.cpf != null
+                            ? x.cpf?.includes(this.pessoa.cpf)
+
+                            : p)
+      });
   }
 
-  fecharPopup(){
-      
-      this.dialofRef.close()
+  bucarAgendamentos() {
+
 
   }
 
-  AgendarOrcar(){
-    if(this.idSelecionado)
-       this.servico.Popup(this.idSelecionado.toString(), DadosAgendamentoComponent, '75%', '80%')
-  
+  fecharPopup() {
+
+    this.dialofRef.close()
+
   }
 
-  LinhaSelecionada(id : Number){
-    if(this.idSelecionado == id)
+  AgendarOrcar() {
+    if (this.idSelecionado)
+      this.servico.Popup(this.idSelecionado.toString(), DadosAgendamentoComponent, '75%', '80%', true)
+    .subscribe(result => {
+
+      let retorno = result;
+
+
+    });
+
+  }
+
+  LinhaSelecionada(id: Number) {
+    if (this.idSelecionado == id)
       this.idSelecionado = 0
-    else    
+    else
       this.idSelecionado = id;
   }
-  
-  CadastrarPessoa(){
-  //  this.servico.Popup("", PessoaComponent, '70%', '80%')
+
+  CadastrarPessoa() {
+    //  this.servico.Popup("", PessoaComponent, '70%', '80%')
   }
 
-  EditarPessoa(id : Number){
-  
+  EditarPessoa(id: Number) {
+
     // this.servico.Popup(id.toString(), PessoaUpdateComponent, '70%', '80%')
-  
+
   }
 
 

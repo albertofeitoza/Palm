@@ -9,20 +9,20 @@ import { Unidade } from 'src/app/models/Unidade/unidadeModel';
 import { Sala } from 'src/app/models/Sala/SalaModel';
 import { GrupoAgenda } from 'src/app/models/Agenda/modelGrupoAgenda';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Usuario } from 'src/app/models/usuarios/modelLogin';
 import { AgendaGrupoCadastroComponent } from '../../GrupoAgenda/agenda-grupo-cadastro/agenda-grupo-cadastro.component';
 import { AgendaGrupoUpdateComponent } from '../../GrupoAgenda/agenda-grupo-update/agenda-grupo-update.component';
-import { AgendaGrupoExcluirComponent } from '../../GrupoAgenda/agenda-grupo-excluir/agenda-grupo-excluir.component';
 import { AgendaCadastroUnidadeComponent } from '../../Unidade/agenda-cadastro-unidade/agenda-cadastro-unidade.component';
 import { HorarioAgenda } from 'src/app/models/Agenda/modelHorarioAgenda';
 import { AgendaDto } from 'src/app/models/Agenda/modelRetornoAgenda';
 import { Component, OnInit } from '@angular/core';
 import { Overlay } from '@angular/cdk/overlay';
 import { LoginService } from 'src/app/services/login.service';
-import { Pessoa } from 'src/app/models/Pessoa/Pessoa';
 import { ViewPessoa } from 'src/app/models/Pessoa/ViewPessoa';
-import { newArray } from '@angular/compiler/src/util';
 import { DetalhesDiasDisponiveisAgendaComponent } from './modal/detalhes-dias-disponiveis-agenda/detalhes-dias-disponiveis-agenda.component';
+import { CatalogoServico } from 'src/app/models/CatalogoServico/CatalogoServico';
+import { PopupSelecaoIdsComponent } from 'src/app/components/Popups/popup-selecao-ids/popup-selecao-ids.component';
+import { AgendaCatalogoServico } from 'src/app/models/Agenda/AgendaCatalogoServico';
+import { PopupConfirmacaoComponent } from 'src/app/components/Popups/popup-confirmacao/popup-confirmacao.component';
 
 
 @Component({
@@ -71,9 +71,32 @@ export class AgendaCreateComponent implements OnInit {
   dadosHorarios: HorarioAgenda = new HorarioAgenda();
 
 
-  Colunas = ['id', 'Agenda', 'Responsável', 'Unidade', 'Sala',
-    'Grupo', 'Inicio', 'Fim', 'bloqueado', 'action']
+  Colunas = ['id', 'Agenda', 'Responsável', 'Unidade', 'Sala', 'Grupo', 'Inicio', 'Fim', 'bloqueado', 'action']
+
+  ColunasServicosAgendaveis = ['id', 'nome', 'codigo', 'codigoBarras', 'valor', 'action'];
+
+
+  // {
+  //   "id": 1,
+  //   "dtCriacao": "2024-09-16T11:55:42.423042",
+  //   "codigoBarras": "121321231",
+  //   "qrCode": "21212121",
+  //   "codigo": "TST",
+  //   "qtdEstoque": 1000,
+  //   "nome": "CONSULTA TST",
+  //   "tipoCatalogo": 1,
+  //   "peso": 0,
+  //   "margem": 0,
+  //   "valorCompra": 0,
+  //   "valor": 250,
+  //   "excluido": false,
+  //   "empresaId": 1
+  // },
+
+
   agendas: AgendaDto[] = [];
+
+  catalogoServicosAgenda: CatalogoServico[] = new Array();
 
   constructor(private route: Router,
     public dialogRef: MatDialogRef<AgendaCreateComponent>,
@@ -101,7 +124,8 @@ export class AgendaCreateComponent implements OnInit {
     if (!this.estadoForm)
       this.buscarAgenda("");
 
-    this.buscarHorarios(this.agendaSelecionada);
+    //this.buscarHorarios(this.agendaSelecionada);
+
 
   }
 
@@ -209,8 +233,7 @@ export class AgendaCreateComponent implements OnInit {
     // }
   }
 
-  selecionaAbaAgenda(tab: any) {
-
+  public selecionaAbaAgenda(tab: any): void {
     switch (tab.index) {
       case 1:
         this.buscarGrupos("");
@@ -218,10 +241,12 @@ export class AgendaCreateComponent implements OnInit {
       case 2:
         this.selecionarHorários();
         break;
-      case 2:
+      case 3:
         this.selecionarDiaNaoatende();
         break;
-
+      case 4:
+        this.SelecionarCatalogoServicos();
+        break;
       default:
         break;
     }
@@ -316,15 +341,23 @@ export class AgendaCreateComponent implements OnInit {
     this.buscarHorarios(this.agendaSelecionada);
   }
 
-  selecionarHorários() {
+  public selecionarHorários(): void {
 
     this.agendaSelecionada > 0
       ? this.buscarHorarios(this.agendaSelecionada)
       : this._utilService.showMessage("Selecionar a agenda para acessar os horários.", false)
   }
 
-  selecionarDiaNaoatende() {
+  public selecionarDiaNaoatende(): void {
+    this.agendaSelecionada > 0
+      ? this.BuscarServicosAgendaveis(this.agendaSelecionada)
+      : this._utilService.showMessage("Selecionar a agenda para acessar os dias não agendáveis.", false)
+  }
 
+  public SelecionarCatalogoServicos() {
+    this.agendaSelecionada > 0
+      ? this.BuscarServicosAgendaveis(this.agendaSelecionada)
+      : this._utilService.showMessage("Selecionar a agenda para acessar os serviços.", false)
   }
 
   private buscarHorarios(id: any): void {
@@ -354,11 +387,43 @@ export class AgendaCreateComponent implements OnInit {
     }
   }
 
-
-  //Métodos de Edição da agenda
   public CadastroAgenda(): void {
     this.estadoForm = true;
     this.carregaCombos()
+  }
+
+
+  public CadastroCatalogo(): void {
+
+    if (this.agendaSelecionada > 0) {
+      this._utilService.Popup(this.agendaSelecionada, PopupSelecaoIdsComponent, '70%', '60%', false)
+        .subscribe((result: CatalogoServico[]) => {
+          if (result && result.length > 0) {
+
+            let agendaCatalogo: AgendaCatalogoServico[] = new Array();
+            result.forEach(cat => {
+              let agendaCatalogoItem: AgendaCatalogoServico = new AgendaCatalogoServico();
+              agendaCatalogoItem.id = 0;
+              agendaCatalogoItem.dtCriacao = new Date;
+              agendaCatalogoItem.agendaId = this.agendaSelecionada;
+              agendaCatalogoItem.catalogoServicosId = cat.id;
+
+              agendaCatalogo.push(agendaCatalogoItem);
+            });
+
+            this.serviceApi.create(agendaCatalogo, Endpoint.AgendaCatalogoServico)
+              .subscribe((agendaId) => {
+                this._utilService.showMessage("Serviços associados a agenda", false);
+                this.BuscarServicosAgendaveis(agendaId)
+                this.agendaSelecionada = agendaId;
+              })
+          } else {
+            this._utilService.showMessage("Informações ignoradas", false);
+          }
+        })
+    } else
+      this._utilService.showMessage("Selecione uma agenda para cadastrar os serviços", true);
+
   }
 
   private buscarAgenda(filtroAgenda: string): void {
@@ -416,5 +481,46 @@ export class AgendaCreateComponent implements OnInit {
       }
       this._utilService.Popup('', DetalhesDiasDisponiveisAgendaComponent, '70%', '60%', false, dados)
     }
+  }
+
+  public ExcluirServicoAgenda(id: number): void {
+    let agendaAtual = this.agendaSelecionada;
+    this._utilService.Popup('', PopupConfirmacaoComponent, 'auto', 'auto', true, "Tem Certeza que deseja Excluir ?")
+      .subscribe(result => {
+        if (result) {
+          this.serviceApi.create(id, Endpoint.AgendaCatalogoServico + `/excluir/${id}`)
+            .subscribe((agendaId) => {
+              this._utilService.showMessage("Serviços excluido dessa agenda", true);
+              this.BuscarServicosAgendaveis(agendaId)
+              this.agendaSelecionada = agendaId;
+            }, (err) => {
+              this._utilService.showMessage(`${err}`, true);
+            }, () => {
+            })
+        }
+      })
+
+
+
+
+  }
+
+  private BuscarServicosAgendaveis(idAgenda: number): void {
+
+    this.serviceApi.read(Endpoint.AgendaCatalogoServico + `/estabelecimento/${idAgenda}`)
+      .subscribe((result) => {
+
+        let catalogoServicos: CatalogoServico[] = result.map(x => x.catalogoServicos);
+
+        catalogoServicos.forEach(x => {
+          result.forEach(f => {
+            if (f.catalogoServicosId === x.id) {
+              x.id = f.id;
+              return;
+            }
+          })
+        });
+        this.catalogoServicosAgenda = [...catalogoServicos.sort(function (a, b) { return a.id - b.id; })];
+      })
   }
 }

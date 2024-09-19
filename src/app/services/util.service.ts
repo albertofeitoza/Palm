@@ -41,7 +41,6 @@ export class UtilService {
   }
 
   erroHandler(e: any): Observable<any> {
-    let mensagem = e.error;
     this.showMessage(e.error, true)
     return EMPTY
   }
@@ -215,10 +214,19 @@ export class UtilService {
     return tipoUsuario
   }
 
-  YesNO() {
+  YesNO(inverte : boolean = true) {
     let yesno = []
-    yesno.push({ "id": false, "tipo": "Sim" })
-    yesno.push({ "id": true, "tipo": "Não" })
+  
+    if(inverte){
+      yesno.push({ "id": false, "tipo": "Sim" })
+      yesno.push({ "id": true, "tipo": "Não" })
+    } else {
+      yesno.push({ "id": false, "tipo": "Não" })
+      yesno.push({ "id": true, "tipo": "Sim" })
+    }
+    
     return yesno
+  
+  
   }
 }
