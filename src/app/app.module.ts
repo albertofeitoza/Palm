@@ -88,6 +88,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { PessoaCreateComponent } from './components/pessoa/modal/pessoa-create/pessoa-create.component';
 import { DetalhesDiasDisponiveisAgendaComponent } from './Aplicacoes/agenda/CadastroAgenda/agenda-create/modal/detalhes-dias-disponiveis-agenda/detalhes-dias-disponiveis-agenda.component';
 import { AgendaAssociarCatalogoComponent } from './Aplicacoes/agenda/CadastroAgenda/agenda-create/modal/agenda-associar-catalogo/agenda-associar-catalogo.component';
+import { AgendamentoSelecionarHorarioAgendarComponent } from './Aplicacoes/agenda/Agendamentos/dados-agendamento/modal/agendamento-selecionar-horario-agendar/agendamento-selecionar-horario-agendar.component';
 
 @NgModule({
   declarations: [
@@ -140,6 +141,7 @@ import { AgendaAssociarCatalogoComponent } from './Aplicacoes/agenda/CadastroAge
     PessoaCreateComponent,
     DetalhesDiasDisponiveisAgendaComponent,
     AgendaAssociarCatalogoComponent,
+    AgendamentoSelecionarHorarioAgendarComponent,
     
 
   ],

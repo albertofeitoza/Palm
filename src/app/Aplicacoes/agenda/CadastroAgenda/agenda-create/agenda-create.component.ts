@@ -21,7 +21,7 @@ import { ViewPessoa } from 'src/app/models/Pessoa/ViewPessoa';
 import { DetalhesDiasDisponiveisAgendaComponent } from './modal/detalhes-dias-disponiveis-agenda/detalhes-dias-disponiveis-agenda.component';
 import { CatalogoServico } from 'src/app/models/CatalogoServico/CatalogoServico';
 import { PopupSelecaoIdsComponent } from 'src/app/components/Popups/popup-selecao-ids/popup-selecao-ids.component';
-import { AgendaCatalogoServico } from 'src/app/models/Agenda/AgendaCatalogoServico';
+import { AgendaCatalogoServico, CatalogoServicoResponse, ResponseAgendaCatalagoServicos } from 'src/app/models/Agenda/AgendaCatalogoServico';
 import { PopupConfirmacaoComponent } from 'src/app/components/Popups/popup-confirmacao/popup-confirmacao.component';
 
 
@@ -198,7 +198,7 @@ export class AgendaCreateComponent implements OnInit {
     if (this._utilService.Sessao().TipoUsuarioLogado === TipoUsuario.MasterEmpresa || this._utilService.Sessao().TipoUsuarioLogado === TipoUsuario.Administrador) {
       this._serviceGrupoAgenda.read(Endpoint.GrupoAgenda + `/estabelecimento/${this._utilService.Sessao().EmpresaId}`)
         .subscribe(result => {
-          this.comboTipoGrupoAgenda = result;
+          this.comboTipoGrupoAgenda = [...result];
         });
     }
   }
@@ -282,8 +282,13 @@ export class AgendaCreateComponent implements OnInit {
   buscarGrupos(txtbusca: any) {
 
     this.servicoGrupo.read(Endpoint.GrupoAgenda + `/estabelecimento/${this._utilService.Sessao().EmpresaId}`)
-      .subscribe(x => {
-        this.grupos = txtbusca == null ? x : x.filter(x => x.nomeGrupoAgenda.toLocaleLowerCase().includes(txtbusca.toLocaleLowerCase()))
+      .subscribe(result => {
+        this.grupos = result;
+
+        this.grupos = [...this.grupos];
+
+        this.carregaComboGrupoAgenda();
+
       })
   }
 
@@ -406,7 +411,7 @@ export class AgendaCreateComponent implements OnInit {
               agendaCatalogoItem.id = 0;
               agendaCatalogoItem.dtCriacao = new Date;
               agendaCatalogoItem.agendaId = this.agendaSelecionada;
-              agendaCatalogoItem.catalogoServicosId = cat.id;
+              agendaCatalogoItem.catalogoServicoId = cat.id;
 
               agendaCatalogo.push(agendaCatalogoItem);
             });
@@ -500,27 +505,19 @@ export class AgendaCreateComponent implements OnInit {
         }
       })
 
-
-
-
   }
 
   private BuscarServicosAgendaveis(idAgenda: number): void {
 
     this.serviceApi.read(Endpoint.AgendaCatalogoServico + `/estabelecimento/${idAgenda}`)
-      .subscribe((result) => {
+      .subscribe((result: ResponseAgendaCatalagoServicos[]) => {
 
-        let catalogoServicos: CatalogoServico[] = result.map(x => x.catalogoServicos);
-
-        catalogoServicos.forEach(x => {
-          result.forEach(f => {
-            if (f.catalogoServicosId === x.id) {
-              x.id = f.id;
-              return;
-            }
-          })
-        });
-        this.catalogoServicosAgenda = [...catalogoServicos.sort(function (a, b) { return a.id - b.id; })];
+        this.catalogoServicosAgenda = new Array();
+        result.forEach(cat => {
+          cat.catalogoServico.id = cat.catalogoServicoId
+          this.catalogoServicosAgenda.push(cat.catalogoServico)
+        })
+        this.catalogoServicosAgenda = [...this.catalogoServicosAgenda.sort(function (a, b) { return a.id - b.id; })];
       })
   }
 }

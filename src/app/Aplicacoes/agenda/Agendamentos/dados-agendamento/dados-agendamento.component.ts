@@ -15,6 +15,8 @@ import { PopupSelecaoIdsComponent } from 'src/app/components/Popups/popup-seleca
 import { Contato } from 'src/app/models/contato/modelContato';
 import { TipoProtocolo } from 'src/app/Negocio/TipoProtocolo';
 import { StatusProtocolo } from 'src/app/Negocio/StatusProtocolo';
+import { CatalogoServico } from 'src/app/models/CatalogoServico/CatalogoServico';
+import { AgendamentoSelecionarHorarioAgendarComponent } from './modal/agendamento-selecionar-horario-agendar/agendamento-selecionar-horario-agendar.component';
 
 @Component({
   selector: 'app-dados-agendamento',
@@ -53,9 +55,7 @@ export class DadosAgendamentoComponent implements OnInit {
 
   constructor(
     private dialofRef: MatDialogRef<DadosAgendamentoComponent>,
-    private servicoProtocolo: ServiceAllService<Protocolo>,
-    private servicePessoa: ServiceAllService<Pessoa>,
-    private serviceTelefone: ServiceAllService<Telefone>,
+    private servicoApi: ServiceAllService<any>,
     private servico: UtilService
   ) { }
 
@@ -68,7 +68,7 @@ export class DadosAgendamentoComponent implements OnInit {
 
   private buscaPessoa(): void {
 
-    this.servicePessoa.readById(this.dialofRef.id, Endpoint.Pessoa)
+    this.servicoApi.readById(this.dialofRef.id, Endpoint.Pessoa)
       .subscribe((result: Pessoa) => {
 
         this.agendamento.nome = result.nome;
@@ -105,18 +105,17 @@ export class DadosAgendamentoComponent implements OnInit {
     this.protocolo.pessoaId = Number(this.dialofRef.id)
     this.protocolo.statusProtocolo = StatusProtocolo.Rascunho
 
-    this.servicoProtocolo.create(this.protocolo, Endpoint.Protocolo)
+    this.servicoApi.create(this.protocolo, Endpoint.Protocolo)
       .subscribe((result: Protocolo) => {
         this.protocolo = result;
       })
   }
 
-
-  fecharPopup(response: boolean) {
+  public fecharPopup(response: boolean): void {
 
     if (!response) {
       this.protocolo.statusProtocolo = StatusProtocolo.Cancelado;
-      this.servicoProtocolo.create(this.protocolo, Endpoint.Protocolo)
+      this.servicoApi.create(this.protocolo, Endpoint.Protocolo)
         .subscribe(() => {
           this.servico.showMessage("Protocolo Cancelado");
           this.dialofRef.close();
@@ -171,13 +170,6 @@ export class DadosAgendamentoComponent implements OnInit {
 
   }
 
-  Atender(id: any) {
-    alert('Realizar atendimento.')
-
-    // Ao atender Guardar Numero de atendimento. e guardar os dados na Faturamento
-
-  }
-
   selecionaLinha(id: any) {
     this.idSelecionado = 0;
     this.idSelecionado = id > 0 ? this.idSelecionado = id : 0;
@@ -185,22 +177,74 @@ export class DadosAgendamentoComponent implements OnInit {
 
   AdicionarServico(event: any) {
 
-    this.servico.Popup("", PopupSelecaoIdsComponent, '45%', '45%')
-      .subscribe(result => {
-        if (result) {
-          let retorno = result;
+    if (event.which === 1 || event.which === 13) {
+
+      const dados = {
+        codServico: this.codServico,
+        nomeServico: this.nomeServico
+
+      }
 
 
-          ////agendar
+      //this.dadosAgendamentos.push();
 
-          
+      this.servico.Popup("", PopupSelecaoIdsComponent, '45%', '45%', false, dados)
+        .subscribe((result: CatalogoServico[]) => {
+          if (result) {
+            let retorno = result;
+
+            let dadosselecionados: AgendamentoCatalogoServicos[] = new Array()
+
+            result.forEach(cat => {
+              let dadosAgendamentos: AgendamentoCatalogoServicos = new AgendamentoCatalogoServicos();
+
+              dadosAgendamentos.Id = cat.id;
+              dadosAgendamentos.Nome = cat.nome;
+              dadosAgendamentos.CodigoBarras = cat.codigoBarras;
+              dadosAgendamentos.QrCode = cat.qrCode;
+              dadosAgendamentos.Codigo = cat.codigo;
+              dadosAgendamentos.Valor = cat.valor
+
+              //dadosselecionados.push(dadosAgendamentos);
+              this.dadosAgendamentos.push(dadosAgendamentos)
+            });
+
+            this.dadosAgendamentos = [...this.dadosAgendamentos];
+
+            ////agendar
 
 
-        } else {
-          this.servico.showMessage("Seleção Ignorada.");
-        }
-      });
+            //   export class AgendamentoCatalogoServicos {
+
+            //     Id: number
+            //     Nome : string
+            //     CodigoBarras : string 
+            //     QrCode : string  
+            //     Codigo : string 
+            //     Valor : number
+
+            // }
+
+          } else {
+            this.servico.showMessage("Seleção Ignorada.");
+          }
+        });
+    }
+
+
   }
+
+  public Remover(row: any): void {
+
+
+    const index: number = this.dadosAgendamentos.indexOf(row);
+    if (index !== -1) {
+      this.dadosAgendamentos.splice(index, 1);
+      this.dadosAgendamentos = [...this.dadosAgendamentos];
+    }
+  }
+
+
 
   private CadastrarAgendamento(): void {
 
@@ -208,5 +252,16 @@ export class DadosAgendamentoComponent implements OnInit {
 
     agendamento.id = 0;
 
+  }
+
+  public BuscarHorarios(): void {
+
+    let idsSelecionados = this.dadosAgendamentos.map(x => x.Id);
+
+    if (idsSelecionados.length > 0) {
+      this.servico.Popup('', AgendamentoSelecionarHorarioAgendarComponent, 'auto', 'auto', false, this.dadosAgendamentos)
+    } else {
+      this.servico.showMessage("Informe pelo menos 1 serviço para agendamento.")
+    }
   }
 }

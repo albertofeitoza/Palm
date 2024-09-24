@@ -8,7 +8,8 @@ import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-popup-selecao-ids',
-  templateUrl: './popup-selecao-ids.component.html'
+  templateUrl: './popup-selecao-ids.component.html',
+  styleUrls: ['./popup-selecao-ids.component.css']
 })
 export class PopupSelecaoIdsComponent implements OnInit {
 
@@ -24,65 +25,34 @@ export class PopupSelecaoIdsComponent implements OnInit {
   dadosGrid: CatalogoServico[] = new Array()
   selecionaTodos = false;
   linhaSelecionada = 0;
-  // teste: PopupSelecaoIds
-  // selected: number = 0;
-
-
-
-  // id:           number;
-  // dtCriacao:    Date;
-  // codigoBarras: string;
-  // qrCode:       string;
-  // codigo:       string;
-  // qtdEstoque:   number;
-  // nome:         string;
-  // tipoCatalogo: number;
-  // peso:         number;
-  // margem:       number;
-  // valorCompra:  number;
-  // valor:        number;
-  // excluido:     boolean;
-  // empresaId:    number;
-
-
-
+  campoBusca: any = undefined;
 
 
   ngOnInit(): void {
-
-
-    // this.teste = new PopupSelecaoIds()
-
-    // this.teste.check = false;
-    // this.teste.Id = 1;
-    // this.teste.Nome = 'Alberto',
-    //   this.teste.Codigo = "ALB";
-
-    // this.dadosGrid.push(this.teste);
-
-    // this.teste = new PopupSelecaoIds()
-
-    // this.teste.check = false;
-    // this.teste.Id = 2;
-    // this.teste.Nome = 'Kelly',
-    //   this.teste.Codigo = "KEL";
-
-
-    this.BuscarProdutosServicos();
-    // this.dadosGrid.push(this.teste);
+    let busca = this.dialofRef._containerInstance._config.data.object;
+    this.BuscarProdutosServicos(busca?.codServico);
   }
-  private BuscarProdutosServicos(): void {
 
-
+  private BuscarProdutosServicos(txtbusca: any = undefined): void {
+    
     this.serviceApi.read(Endpoint.CatalogoServico + `/estabelecimento/${this.servico.Sessao().EmpresaId}/${0}`)
       .subscribe((result: CatalogoServico[]) => {
-        this.dadosGrid = result
+        this.dadosGrid = txtbusca ? result.filter(res => res.codigo.toLocaleLowerCase().includes(txtbusca.toLocaleLowerCase())) : result;
+        this.campoBusca = undefined
       });
   }
 
   Adicionar() {
     this.dialofRef.close(this.dadosGrid.filter(x => x.check));
   }
+
+  public BuscarPor(event: any): void {
+    if (event.which === 13 || event.which === 1 ) {
+      this.BuscarProdutosServicos(this.campoBusca);
+      this.campoBusca = undefined;
+    }
+  }
+
 
   selecionaLinha(id: any) {
 
