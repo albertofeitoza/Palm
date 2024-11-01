@@ -14,10 +14,9 @@ import { UtilService } from 'src/app/services/util.service';
 export class DetalhesDiasDisponiveisAgendaComponent implements OnInit {
 
   //Horários
-  ColunasDetalhes = ['id', 'hora', 'intervalo', 'tipoHorario', 'diaDasemana', 'naoDisponivel', 'bloqueadoEmTela'];
+  ColunasDetalhes = ['id', 'hora', 'intervalo', 'tipoHorario', 'diaDasemana', 'bloqueado', 'naoDisponivel', 'bloqueadoEmTela'];
   detalhes: HorarioAgenda[] = new Array();
-  comboDisponivel: any;
-  comboBloqueadoEmtela: any;
+  comboBloqueado: any;
 
   dados: any
 
@@ -37,8 +36,8 @@ export class DetalhesDiasDisponiveisAgendaComponent implements OnInit {
 
 
   private CarregaCombos(): void {
-    this.comboDisponivel = this.serviceUtil.YesNO(true);
-    this.comboBloqueadoEmtela = this.serviceUtil.YesNO(false);
+    this.comboBloqueado = this.serviceUtil.YesNO(true);
+   
   }
 
   private CarregarTela(): void {
@@ -59,16 +58,28 @@ export class DetalhesDiasDisponiveisAgendaComponent implements OnInit {
 
 
   public AlterarStatus(row: any): void {
-    this.serviceApi.update(row, Endpoint.AgendaHorarios)
-      .subscribe(() => {
-        this.Refresh();
-        this.serviceUtil.showMessage("Registro atualizado com sucesso!");
-      }
-        , (err) => {
+
+    this.serviceApi.readById(row.id, Endpoint.AgendaHorarios)
+      .subscribe((result: HorarioAgenda) => {
+
+        if (!result.naoDisponivel) {
+          this.serviceApi.update(row, Endpoint.AgendaHorarios)
+            .subscribe(() => {
+              this.Refresh();
+              this.serviceUtil.showMessage("Horário da agenda bloqueado!");
+            }
+              , (err) => {
+                this.Refresh();
+              }, () => {
+                this.Refresh();
+              })
+        } else {
           this.Refresh();
-        }, () => {
-          this.Refresh();
-        })
+          this.serviceUtil.showMessage("O horário não pode ser alterado porque já foi agendado!");
+        }
+      });
+
+
   }
 
 }

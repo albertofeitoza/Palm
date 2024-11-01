@@ -1,40 +1,27 @@
 export class ResponseHorariosDisponiveis {
     id: number;
-    dtCriacao: Date;
-    catalogoServicosId: number;
-    agendaId: number;
-    agenda: Agenda;
+    agendaCatalogoId: number;
+    nome: string;
+    codigoBarras: string;
+    qrCode: string;
+    codigo: string;
+    agendaDisponivel: AgendaDisponivel;
 }
 
-export class Agenda {
+export class AgendaDisponivel {
     id: number;
-    dtCriacao: Date;
     nomeAgenda: string;
-    empresaId: number;
     unidadeId: number;
     salaId: number;
     pessoaId: number;
-    substituicao: boolean;
     grupoAgendaId: number;
-    vigenciaInicio: Date;
-    vigenciaFim: Date;
-    considerarFeriado: boolean;
-    bloqueado: boolean;
-    agendaHorarios: AgendaHorario[];
+    horariosDisponiveis: HorariosDisponiveis[];
 }
 
-export class AgendaHorario {
+export class HorariosDisponiveis {
     id: number;
     data: Date;
-    agendaId: number;
-    intervalo: string;
     tipoHorario: number;
     diaDasemana: number;
     hora: string;
-    criadoPor: number;
-    bloqueado: boolean;
-    naoDisponivel: boolean;
-    horaInicio: string;
-    horaFim: string;
-    bloqueadoEmTela: boolean;
 }

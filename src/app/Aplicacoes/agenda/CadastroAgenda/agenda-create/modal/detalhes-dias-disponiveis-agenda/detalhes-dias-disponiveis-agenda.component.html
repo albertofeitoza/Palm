@@ -1,67 +1,63 @@
+<h2>Data Selecionada: {{dados.dataSelecionada | date: 'dd/MM/yyyy'}}</h2>
+
 <div class="display">
 
-  <!-- Dias da semana 
-    
-    Segunda-->
+  <div class="mat-elevation-z4 "
+    style="height: 100px;overflow: auto;width: 99.5%; height: 57%;position: static; margin-left: 10px;">
+    <table mat-table [dataSource]="detalhes" >
 
-  <table mat-table [dataSource]="detalhes">
+      <mat-header-row *matHeaderRowDef="ColunasDetalhes"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: ColunasDetalhes;"></mat-row>
 
-    <mat-header-row *matHeaderRowDef="ColunasDetalhes"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: ColunasDetalhes;"></mat-row>
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef><b>Id</b></mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef><b>Id</b></mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="hora">
-      <mat-header-cell *matHeaderCellDef><b>Hora da Agenda</b></mat-header-cell>
-      <mat-cell id="idhora" *matCellDef="let row">{{row.hora | slice:0:5}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="hora">
+        <mat-header-cell *matHeaderCellDef><b>Hora da Agenda</b></mat-header-cell>
+        <mat-cell id="idhora" *matCellDef="let row">{{row.hora | slice:0:5}}</mat-cell>
+      </ng-container>
 
 
-    <ng-container matColumnDef="intervalo">
-      <mat-header-cell *matHeaderCellDef><b>Intervalo</b></mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.intervalo}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="intervalo">
+        <mat-header-cell *matHeaderCellDef><b>Intervalo</b></mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.intervalo}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="tipoHorario">
-      <mat-header-cell *matHeaderCellDef><b>Tipo Agendamento</b></mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.tipoHorario === 1 ? 'Normal' : 'Encaixe' }}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="tipoHorario">
+        <mat-header-cell *matHeaderCellDef><b>Tipo Agendamento</b></mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.tipoHorario === 1 ? 'Normal' : 'Encaixe' }}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="diaDasemana">
-      <mat-header-cell *matHeaderCellDef><b>Dia Semana</b></mat-header-cell>
-      <mat-cell *matCellDef="let row">
-        {{row.diaDasemana == 1 ? 'Domingo' : row.diaDasemana == 2 ? 'Segunda' : row.diaDasemana == 3 ? 'Terça' :
-        row.diaDasemana == 4 ? 'Quarta' : row.diaDasemana == 5 ? 'Quinta' : row.diaDasemana == 6 ? 'Sexta' :
-        row.diaDasemana == 7 ? 'Sábado' : ''}}
-      </mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="diaDasemana">
+        <mat-header-cell *matHeaderCellDef><b>Dia Semana</b></mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          {{row.diaDasemana == 1 ? 'Domingo' : row.diaDasemana == 2 ? 'Segunda' : row.diaDasemana == 3 ? 'Terça' :
+          row.diaDasemana == 4 ? 'Quarta' : row.diaDasemana == 5 ? 'Quinta' : row.diaDasemana == 6 ? 'Sexta' :
+          row.diaDasemana == 7 ? 'Sábado' : ''}}
+        </mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="naoDisponivel">
-      <mat-header-cell *matHeaderCellDef><b>Disponível</b></mat-header-cell>
-      <mat-cell *matCellDef="let row">
-        <mat-select style="padding-left: 30px;" [(value)]="row.naoDisponivel" (selectionChange)="AlterarStatus(row)">
-          <mat-option *ngFor="let dp of comboDisponivel" [value]="dp.id" >
-            {{dp.tipo}}
-          </mat-option>
-        </mat-select>
-      </mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="bloqueado">
+        <mat-header-cell *matHeaderCellDef><b>Bloqueado</b></mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <mat-select style="padding-left: 30px;" [(value)]="row.bloqueado" (selectionChange)="AlterarStatus(row)">
+            <mat-option [value]="true">Sim</mat-option>
+            <mat-option [value]="false">Não</mat-option>
+          </mat-select>
+        </mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="bloqueadoEmTela">
-      <mat-header-cell *matHeaderCellDef><b>Bloqueado em Tela</b></mat-header-cell>
-      <mat-cell *matCellDef="let row">
-        <mat-select style="padding-left: 30px;" [(value)]="row.bloqueadoEmTela" (selectionChange)="AlterarStatus(row)">
-          <mat-option *ngFor="let bt of comboBloqueadoEmtela" [value]="bt.id" >
-            {{bt.tipo}}
-          </mat-option>
-        </mat-select>
+      <ng-container matColumnDef="naoDisponivel">
+        <mat-header-cell *matHeaderCellDef><b>Horário Agendado</b></mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.naoDisponivel ? ' Sim: ' : ' Não'}}</mat-cell>
+      </ng-container>
 
-
-      </mat-cell>
-    </ng-container>
-  </table>
-
+      <ng-container matColumnDef="bloqueadoEmTela">
+        <mat-header-cell *matHeaderCellDef><b>Bloqueado em Tela</b></mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.bloqueadoEmTela ? ' Sim' : ' Não'}}</mat-cell>
+      </ng-container>
+    </table>
+  </div>
 </div>

@@ -15,7 +15,7 @@ import { ProductCreateComponent } from './components/product/product-create/prod
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import localePt from '@angular/common/locales/pt';
-import { registerLocaleData } from '@angular/common';
+import { registerLocaleData, DatePipe } from '@angular/common';
 import { LoginComponent } from './components/login/login.component';
 
 
@@ -178,9 +178,11 @@ import { AgendamentoSelecionarHorarioAgendarComponent } from './Aplicacoes/agend
   ],
   providers:
     [
+      DatePipe,
       {
         provide: LOCALE_ID,
         useValue: 'pt-BR',
+       
       },
       [
         LoginService,

@@ -10,7 +10,6 @@ export class PopupConfirmacaoComponent implements OnInit {
 
   mensagem = '';
 
-
   constructor(private matdialogRef: MatDialogRef<PopupConfirmacaoComponent>
 
   ) { }
@@ -22,5 +21,4 @@ export class PopupConfirmacaoComponent implements OnInit {
   public FecharPopup(confirm: boolean): void {
     this.matdialogRef.close(confirm)
   }
-
 }

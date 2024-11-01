@@ -1,242 +1,267 @@
 <div class="close">
-    <a (click)="fecharPopup(false)">
-        <i class="material-icons">
-            close
-        </i>
-    </a>
+  <a (click)="fecharPopup(false)">
+    <i class="material-icons">
+      close
+    </i>
+  </a>
 </div>
-<h1 class="close">PROT.: {{protocolo.id}}</h1>
+<h1 style="padding-right: 15px;" class="close">PROT.: {{protocolo.id}}</h1>
 <br>
 <hr />
-<h3>Dados do Agendamento</h3>
+<h2>Agendamento {{idAgendamento > 0 ? ' : '+ idAgendamento + ' Status : ' + statusAgendamento : ''}} </h2>
+
+
 <form>
-    <mat-form-field appearance="outline" style="width: 17%;">
-        <mat-label>Nome</mat-label>
-        <input matInput placeholder="Nome" id="nomePessoa"
-        [(ngModel)]="agendamento.nome" name="nome">        
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" style="width: 11%">
-        <mat-label>RG</mat-label>
-        <input matInput placeholder="RG" type="number"
-        [(ngModel)]="agendamento.rg" name="rg">
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" style="width: 12%;">
-        <mat-label>CPF</mat-label>
-        <input matInput placeholder="CPF" type="number"
-        [(ngModel)]="agendamento.cpf" name="cpf">
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" style="width: 12%">
-        <mat-label>Tel. Res</mat-label>
-        <input matInput placeholder="Telefone" type="number"
-        [(ngModel)]="agendamento.telefone" name="telefone">
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" style="width: 12%">
-        <mat-label>Tel. Cel</mat-label>
-        <input matInput placeholder="Celular" type="number"
-        [(ngModel)]="agendamento.celular" name="celular">
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" style="width: 10%; height: 10px;">
-        <mat-label>Data Nascimento</mat-label>
-        <input matInput placeholder="Data Nasc" id="dataNascimento" maxlength="10" type="datetime" 
-        [ngModel]="agendamento.dataNascimento|date:'dd/MM/yyyy'" name="dataNascimento">
-      </mat-form-field>
-
-    <mat-form-field appearance="outline" style="width: 18%">
-        <mat-label>E-Mail</mat-label>
-        <input matInput placeholder="email" type="text"
-        [(ngModel)]="agendamento.email" name="email">
-    </mat-form-field>
-    <span (click)="AtualizarDados()" >
-        <i class="material-icons botao">save</i>
-    </span>
-
-<h5>FILTROS</h5>
-<hr />
-<mat-form-field appearance="outline" style="width: 13%;">
-    <mat-label>Período</mat-label>
-    <mat-select [(value)]="idPeriodo" placeholder="Qualquer período" (selectionChange)="AtualizaPeriodo()">
-        <mat-option  *ngFor="let period  of periodo" [value]="period.id">
-            {{period.horario}} 
-        </mat-option>
-    </mat-select>
-</mat-form-field>
-
-<mat-form-field appearance="outline" style="width: 7%;">
-    <mat-label>Hora Início</mat-label>
-        <input matInput placeholder="Hora Início" id="horaInicio" 
-        [ngModel]="filtros.horaInicioPeriodo" name="horaInicioPeriodo">        
-</mat-form-field>
-
-<mat-form-field appearance="outline" style="width: 7%;">
-    <mat-label>Hora Fim</mat-label>
-        <input matInput placeholder="Hora Fim" id="horaFim" 
-        [(ngModel)]="filtros.horaFimPeriodo" name="horaFimPeriodo" >        
-</mat-form-field>
-
-<mat-form-field appearance="outline" style="width: 10%; height: 10px;">
-    <mat-label>Data</mat-label>
-    <input matInput placeholder="Data" id="DataPeriodo" maxlength="10" type="datetime" 
-    [ngModel]="filtros.data|date:'dd/MM/yyyy'" name="data">
+  <mat-form-field appearance="outline" style="width: 17%;">
+    <mat-label>Nome</mat-label>
+    <input matInput placeholder="Nome" id="nomePessoa" [(ngModel)]="agendamento.nome" name="nome">
   </mat-form-field>
-  
-<mat-form-field appearance="outline" style="width: 5%">
-    <mat-label>Id</mat-label>
-    <input matInput placeholder="Id" type="number" (keypress)="buscarUnidade($event)"
-    [(ngModel)]="filtros.unidade" name="idunidade">
-</mat-form-field>
 
-<mat-form-field appearance="outline" style="width: 12%">
+  <mat-form-field appearance="outline" style="width: 11%">
+    <mat-label>RG</mat-label>
+    <input matInput placeholder="RG" type="number" [(ngModel)]="agendamento.rg" name="rg">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" style="width: 12%;">
+    <mat-label>CPF</mat-label>
+    <input matInput placeholder="CPF" type="number" [(ngModel)]="agendamento.cpf" name="cpf">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" style="width: 12%">
+    <mat-label>Tel. Res</mat-label>
+    <input matInput placeholder="Telefone" type="number" [(ngModel)]="agendamento.telefone" name="telefone">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" style="width: 12%">
+    <mat-label>Tel. Cel</mat-label>
+    <input matInput placeholder="Celular" type="number" [(ngModel)]="agendamento.celular" name="celular">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" style="width: 10%; height: 10px;">
+    <mat-label>Data Nascimento</mat-label>
+    <input matInput placeholder="Data Nasc" id="dataNascimento" maxlength="10" type="datetime"
+      [ngModel]="agendamento.dataNascimento|date:'dd/MM/yyyy'" name="dataNascimento">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" style="width: 18%">
+    <mat-label>E-Mail</mat-label>
+    <input matInput placeholder="email" type="text" [(ngModel)]="agendamento.email" name="email">
+  </mat-form-field>
+  <span *ngIf="agendamento.statusAgendamento === 0" (click)="AtualizarDados()">
+    <i class="material-icons botao">save</i>
+  </span>
+
+  <h5>FILTROS</h5>
+  <hr />
+  <mat-form-field appearance="outline" style="width: 13%;">
+    <mat-label>Período</mat-label>
+    <mat-select [disabled]="agendamento.statusAgendamento > 0" [(value)]="idPeriodo" placeholder="Qualquer período"
+      (selectionChange)="AtualizaPeriodo()">
+      <mat-option *ngFor="let period  of periodo" [value]="period.id">
+        {{period.horario}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" style="width: 7%;">
+    <mat-label>Hora Início</mat-label>
+    <input [disabled]="agendamento.statusAgendamento > 0" matInput placeholder="Hora Início" id="horaInicio"
+      [ngModel]="filtros.horaInicioPeriodo" name="horaInicioPeriodo">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" style="width: 7%;">
+    <mat-label>Hora Fim</mat-label>
+    <input [disabled]="agendamento.statusAgendamento > 0" matInput placeholder="Hora Fim" id="horaFim"
+      [(ngModel)]="filtros.horaFimPeriodo" name="horaFimPeriodo">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" style="width: 10%; height: 10px;">
+    <mat-label>Data</mat-label>
+    <input [disabled]="agendamento.statusAgendamento > 0" matInput placeholder="Data" id="DataPeriodo" maxlength="10"
+      type="datetime" [ngModel]="filtros.data|date:'dd/MM/yyyy'" name="data">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" style="width: 5%">
+    <mat-label>Id</mat-label>
+    <input [disabled]="agendamento.statusAgendamento > 0" matInput placeholder="Id" type="number"
+      (keypress)="buscarUnidade($event)" [(ngModel)]="filtros.unidade" name="idunidade">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" style="width: 12%">
     <mat-label>Nome Unidade</mat-label>
-    <input matInput placeholder="Nome Unidade" (keypress)="buscarUnidade($event)"
-    [(ngModel)]="filtros.nomeUnidade" name="nomeunidade">
-</mat-form-field>
+    <input [disabled]="agendamento.statusAgendamento > 0" matInput placeholder="Nome Unidade"
+      (keypress)="buscarUnidade($event)" [(ngModel)]="filtros.nomeUnidade" name="nomeunidade">
+  </mat-form-field>
 
 </form>
 
 <form class="formularioRow" style="margin-top: 0%;">
-
-  
   <mat-form-field appearance="outline" style="width: 10%">
-      <mat-label>Cód Serviço</mat-label>
-      <input matInput placeholder="Cod Serviço" (keypress)="AdicionarServico($event)"
-      [(ngModel)]="codServico" name="codserviço">
+    <mat-label>Cód Serviço</mat-label>
+    <input [disabled]="agendamento.statusAgendamento > 0" matInput placeholder="Cod Serviço"
+      (keypress)="AdicionarServico($event)" [(ngModel)]="codServico" name="codserviço">
   </mat-form-field>
 
   <mat-form-field appearance="outline" style="width: 20%">
-    <input matInput placeholder="Nome Serviço"
-    [(ngModel)]="nomeServico" name="nomeServiço">
+    <input [disabled]="agendamento.statusAgendamento > 0" matInput placeholder="Nome Serviço" [(ngModel)]="nomeServico"
+      name="nomeServiço">
   </mat-form-field>
 
-  <a (click)="AdicionarServico($event )" class="delete">
+  <a *ngIf="agendamento.statusAgendamento === 0" (click)="AdicionarServico($event )" class="delete">
     <i class="material-icons">
-        add
+      add
     </i>
   </a>
 </form>
 
 <form class="formularioRow" style="margin-top: 0%;">
-       
-    <div class="mat-elevation-z4" style="height: 300px;width: 95.5%; overflow: auto; margin-left: 10px;">
-      
-      <table mat-table [dataSource]="dadosAgendamentos" class="mat-elevation-z8 demo-table">
 
-        <ng-container matColumnDef="Id" style="height: 30px;">
-          <th mat-header-cell *matHeaderCellDef>Id</th>
-          <td mat-cell *matCellDef="let row">{{row.Id}}</td>
-        </ng-container>
-        
-        <!-- Name Column -->
-        <ng-container matColumnDef="Codigo">
-          <th mat-header-cell *matHeaderCellDef>Código</th>
-          <td mat-cell *matCellDef="let row">{{row.Codigo}}</td>
-        </ng-container>
+  <div class="mat-elevation-z4" style="height: 300px;width: 95.5%; overflow: auto; margin-left: 10px;">
 
-        <ng-container matColumnDef="Nome">
-          <th mat-header-cell *matHeaderCellDef>Nome</th>
-          <td mat-cell *matCellDef="let row">{{row.Nome}}</td>
-        </ng-container>
+    <table mat-table [dataSource]="dadosAgendamentos" class="mat-elevation-z8 demo-table">
 
-        <!-- Name Column -->
-        <ng-container matColumnDef="CodigoBarras">
-          <th mat-header-cell *matHeaderCellDef>Codigo de Barras</th>
-          <td mat-cell *matCellDef="let row">{{row.CodigoBarras}}</td>
-        </ng-container>
+      <ng-container matColumnDef="Id" style="height: 30px;">
+        <th mat-header-cell *matHeaderCellDef>Id</th>
+        <td mat-cell *matCellDef="let row">{{row.Id}}</td>
+      </ng-container>
 
-        <!-- Dia da semana |Segunda -->
-        <ng-container matColumnDef="Seg">
-          <th mat-header-cell *matHeaderCellDef>S</th>
-          <td mat-cell *matCellDef="let row">{{row.Seg}}</td>
-        </ng-container>
-        
-        <!-- Dia da semana |Terça -->
-        <ng-container matColumnDef="Ter">
-          <th mat-header-cell *matHeaderCellDef>T</th>
-          <td mat-cell *matCellDef="let row">{{row.Ter}}</td>
-        </ng-container>
+      <ng-container matColumnDef="Nome">
+        <th mat-header-cell *matHeaderCellDef>Nome</th>
+        <td mat-cell *matCellDef="let row">{{row.Nome}}</td>
+      </ng-container>
 
-        <!-- Dia da semana |Quarta -->
-        <ng-container matColumnDef="Qua">
-          <th mat-header-cell *matHeaderCellDef>Q</th>
-          <td mat-cell *matCellDef="let row">{{row.Qua}}</td>
-        </ng-container>
+      <!-- Name Column -->
+      <ng-container matColumnDef="Codigo">
+        <th mat-header-cell *matHeaderCellDef>Código</th>
+        <td mat-cell *matCellDef="let row">{{row.Codigo}}</td>
+      </ng-container>
 
-        <!-- Dia da semana |Quinta -->
-        <ng-container matColumnDef="Qui">
-          <th mat-header-cell *matHeaderCellDef>Q</th>
-          <td mat-cell *matCellDef="let row">{{row.Qui}}</td>
-        </ng-container>
+      <!-- Name Column -->
+      <ng-container matColumnDef="CodigoBarras">
+        <th mat-header-cell *matHeaderCellDef>Codigo de Barras</th>
+        <td mat-cell *matCellDef="let row">{{row.CodigoBarras}}</td>
+      </ng-container>
 
-        <!-- Dia da semana |Sexta -->
-        <ng-container matColumnDef="Sex">
-          <th mat-header-cell *matHeaderCellDef>S</th>
-          <td mat-cell *matCellDef="let row">{{row.Sex}}</td>
-        </ng-container>
+      <!-- Name Column -->
+      <ng-container matColumnDef="QrCode">
+        <th mat-header-cell *matHeaderCellDef>QrCode</th>
+        <td mat-cell *matCellDef="let row">{{row.QrCode}}</td>
+      </ng-container>
 
-        <!-- Dia da semana |Sábado -->
-        <ng-container matColumnDef="Sab">
-          <th mat-header-cell *matHeaderCellDef>S</th>
-          <td mat-cell *matCellDef="let row">{{row.Sab}}</td>
-        </ng-container>
+      <ng-container matColumnDef="Data">
+        <th mat-header-cell *matHeaderCellDef>Data</th>
+        <td mat-cell *matCellDef="let row">{{row.Data | date: 'dd/MM/yyyy'}}</td>
+      </ng-container>
 
-        <!-- Dia da semana |Domingo -->
-        <ng-container matColumnDef="Dom">
-          <th mat-header-cell *matHeaderCellDef>D</th>
-          <td mat-cell *matCellDef="let row">{{row.Dom}}</td>
-        </ng-container>
+      <ng-container matColumnDef="Hora">
+        <th mat-header-cell *matHeaderCellDef>Hora Agendada</th>
+        <td mat-cell *matCellDef="let row">{{row.Hora}}</td>
+      </ng-container>
 
-               
-        <!-- Name Column -->
-        <ng-container matColumnDef="QrCode">
-          <th mat-header-cell *matHeaderCellDef>QrCode</th>
-          <td mat-cell *matCellDef="let row">{{row.QrCode}}</td>
-        </ng-container>
-  
-        <!-- Name Column -->
-        <ng-container matColumnDef="Valor">
-          <th mat-header-cell *matHeaderCellDef>Valor</th>
-          <td mat-cell *matCellDef="let row">{{row.Valor}}</td>
-        </ng-container>
+      <ng-container matColumnDef="StatusItem">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let row">
+          {{row.StatusItem === 1 ? 'Aberto' :
+              row.StatusItem === 2 ? 'Espera' : 
+              row.StatusItem === 3 ? 'Na Recepção' : 
+              row.StatusItem === 4 ? 'Em Atendimento' : 
+              row.StatusItem === 5 ? 'Finalizado' : 
+              row.StatusItem === 6 ? 'Cancelado' : 
+              ''
+          }}
 
-        
-        <!-- Coluna de Ações -->
-        <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef>Ações</th>
-          <td mat-cell *matCellDef="let row">
-              <a (click)="Remover(row)" class="delete">
-                  <i class="material-icons">
-                      delete
-                  </i>
-              </a>
-          </td>
-        </ng-container>
+        </td>
+      </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr 
-              mat-row 
-              [class.demo-row-is-clicked]="" 
-              *matRowDef="let row; columns: displayedColumns;"
-              (click)="selecionaLinha(row.id)"
-              [ngClass]="{'corLinhaGrid' : row.id == selected}"
-              >
-            </tr>
+      <!-- Dia da semana |Segunda -->
+      <ng-container matColumnDef="Seg">
+        <th mat-header-cell *matHeaderCellDef>S</th>
+        <td mat-cell *matCellDef="let row">{{row.seg > 0 ? 'S' : ''}}</td>
+      </ng-container>
 
-      </table>
+      <!-- Dia da semana |Terça -->
+      <ng-container matColumnDef="Ter">
+        <th mat-header-cell *matHeaderCellDef>T</th>
+        <td mat-cell *matCellDef="let row">{{row.Ter > 0 ? 'T' : ''}}</td>
+      </ng-container>
+
+      <!-- Dia da semana |Quarta -->
+      <ng-container matColumnDef="Qua">
+        <th mat-header-cell *matHeaderCellDef>Q</th>
+        <td mat-cell *matCellDef="let row">{{row.Qua > 0 ? 'Q' : ''}}</td>
+      </ng-container>
+
+      <!-- Dia da semana |Quinta -->
+      <ng-container matColumnDef="Qui">
+        <th mat-header-cell *matHeaderCellDef>Q</th>
+        <td mat-cell *matCellDef="let row">{{row.Qui > 0 ? 'Q' : ''}}</td>
+      </ng-container>
+
+      <!-- Dia da semana |Sexta -->
+      <ng-container matColumnDef="Sex">
+        <th mat-header-cell *matHeaderCellDef>S</th>
+        <td mat-cell *matCellDef="let row">{{row.Sex > 0 ? 'S' : ''}}</td>
+      </ng-container>
+
+      <!-- Dia da semana |Sábado -->
+      <ng-container matColumnDef="Sab">
+        <th mat-header-cell *matHeaderCellDef>S</th>
+        <td mat-cell *matCellDef="let row">{{row.Sab > 0 ? 'S' : ''}}</td>
+      </ng-container>
+
+      <!-- Dia da semana |Domingo -->
+      <ng-container matColumnDef="Dom">
+        <th mat-header-cell *matHeaderCellDef>D</th>
+        <td mat-cell *matCellDef="let row">{{row.Dom > 0 ? 'D' : ''}}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="Valor">
+        <th mat-header-cell *matHeaderCellDef>Valor</th>
+        <td mat-cell *matCellDef="let row">{{row.Valor}}</td>
+      </ng-container>
+
+      <!-- Coluna de Ações -->
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Ações</th>
+        <td mat-cell *matCellDef="let row">
+          <a *ngIf="agendamento.statusAgendamento < 5 " (click)="Remover(row)" class="delete">
+            <i class="material-icons">
+              delete
+            </i>
+          </a>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row [class.demo-row-is-clicked]="" *matRowDef="let row; columns: displayedColumns;"
+        (click)="selecionaLinha(row.id)" [ngClass]="{'corLinhaGrid' : row.id == selected}">
+      </tr>
+
+    </table>
 
   </div>
 
-  
+
 </form>
 
 <div style="padding-right: 50px;" class="rodape">
-  <button *ngIf="dadosAgendamentos.length > 0" class="button" mat-raised-button color="primary" (click)="BuscarHorarios()">
-      Buscar Horários
+  <button *ngIf="dadosAgendamentos.length > 0 && horariosPendentes" class="button" mat-raised-button color="primary"
+    (click)="BuscarHorarios()">
+    Buscar Horários
   </button>
+
+  <button *ngIf="dadosAgendamentos.length > 0 && !horariosPendentes && idAgendamento === 0" class="button"
+    mat-raised-button color="primary" (click)="ConfirmarAgendamento()">
+    Confirmar Agendamento
+  </button>
+
+  <button *ngIf="dadosAgendamentos.length > 0 && idAgendamento > 0 && agendamento.statusAgendamento < 5" class="button"
+    mat-raised-button color="primary" (click)="CancelarAgendamento()">
+    Cancelar Agendamento
+  </button>
+
   <button class="button" mat-raised-button color="primary" (click)="fecharPopup(false)">
-      Cancelar
+    Voltar
   </button>
 </div>

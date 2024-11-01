@@ -53,7 +53,7 @@ export class AgendamentosCreateComponent implements OnInit {
 
   public BuscarPessoas(): void {
     this.idSelecionado = 0;
-    
+
 
     this.serviceApi.read(Endpoint.Pessoa + `/estabelecimento/${this.servico.Sessao().EmpresaId}`)
       .subscribe(p => {
@@ -119,14 +119,15 @@ export class AgendamentosCreateComponent implements OnInit {
   }
 
   AgendarOrcar() {
-    if (this.idSelecionado)
-      this.servico.Popup(this.idSelecionado.toString(), DadosAgendamentoComponent, '75%', '80%', true)
-    .subscribe(result => {
 
-      let retorno = result;
+    if (this.idSelecionado) {
+      this.servico.Popup('', DadosAgendamentoComponent, '75%', '80%', true, this.idSelecionado)
+        .subscribe(result => {
+          if (result)
+            this.dialofRef.close();
+        });
+    }
 
-
-    });
 
   }
 

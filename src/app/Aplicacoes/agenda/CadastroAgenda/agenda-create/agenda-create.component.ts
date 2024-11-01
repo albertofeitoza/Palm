@@ -1,3 +1,4 @@
+import { filter } from 'rxjs/operators';
 import { Endpoint } from '../../../../Negocio/Endpoint';
 import { ServiceAllService } from '../../../../services/service-all.service';
 import { Aplicacao } from '../../../../Negocio/Aplicacao';
@@ -23,7 +24,7 @@ import { CatalogoServico } from 'src/app/models/CatalogoServico/CatalogoServico'
 import { PopupSelecaoIdsComponent } from 'src/app/components/Popups/popup-selecao-ids/popup-selecao-ids.component';
 import { AgendaCatalogoServico, CatalogoServicoResponse, ResponseAgendaCatalagoServicos } from 'src/app/models/Agenda/AgendaCatalogoServico';
 import { PopupConfirmacaoComponent } from 'src/app/components/Popups/popup-confirmacao/popup-confirmacao.component';
-
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-agenda-create',
@@ -35,13 +36,15 @@ export class AgendaCreateComponent implements OnInit {
   agenda: Agenda = new Agenda()
   estadoForm: boolean = false;
   agendaSelecionada: number = 0;
+  vigenciaInicio = new Date;
+  vigenciaFim = new Date;
 
   comboProfissional: ViewPessoa[] = new Array();
   comboUnidade: Unidade[] = new Array();
   comboSala: any = [];
   comboTipoGrupoAgenda: any = [];
   empresa: any = [];
-
+  todosOsHorariosDaAgenda = false;
   //Grupo
   grupos: GrupoAgenda[] = [];
   ColunasGrupo = ['id', 'dtCriacao', 'nomeGrupoAgenda', 'bloqueado', 'action']
@@ -70,29 +73,9 @@ export class AgendaCreateComponent implements OnInit {
   ColunasDatas = ['data']
   dadosHorarios: HorarioAgenda = new HorarioAgenda();
 
-
-  Colunas = ['id', 'Agenda', 'Responsável', 'Unidade', 'Sala', 'Grupo', 'Inicio', 'Fim', 'bloqueado', 'action']
+  Colunas = ['id', 'nomeAgenda', 'nome', 'nomeUnidade', 'nomeSala', 'nomeGrupoAgenda', 'vigenciaInicio', 'vigenciaFim', 'bloqueado', 'action']
 
   ColunasServicosAgendaveis = ['id', 'nome', 'codigo', 'codigoBarras', 'valor', 'action'];
-
-
-  // {
-  //   "id": 1,
-  //   "dtCriacao": "2024-09-16T11:55:42.423042",
-  //   "codigoBarras": "121321231",
-  //   "qrCode": "21212121",
-  //   "codigo": "TST",
-  //   "qtdEstoque": 1000,
-  //   "nome": "CONSULTA TST",
-  //   "tipoCatalogo": 1,
-  //   "peso": 0,
-  //   "margem": 0,
-  //   "valorCompra": 0,
-  //   "valor": 250,
-  //   "excluido": false,
-  //   "empresaId": 1
-  // },
-
 
   agendas: AgendaDto[] = [];
 
@@ -104,15 +87,13 @@ export class AgendaCreateComponent implements OnInit {
     public dialog: MatDialog,
     private serviceApi: ServiceAllService<any>,
     private _serviceAgenda: ServiceAllService<Agenda>,
-    private _serviceUnidade: ServiceAllService<Unidade>,
     private _serviceSala: ServiceAllService<Sala>,
     private _serviceGrupoAgenda: ServiceAllService<GrupoAgenda>,
-    private _serviceUsuario: ServiceAllService<any>,
     private _utilService: UtilService,
     private servicoGrupo: ServiceAllService<GrupoAgenda>,
     private servicoHorario: ServiceAllService<HorarioAgenda>,
     private _repAgenda: ServiceAllService<AgendaDto>,
-    private auth: LoginService
+    private auth: LoginService,
 
   ) { }
 
@@ -132,13 +113,26 @@ export class AgendaCreateComponent implements OnInit {
   public createAgenda(): void {
     this.agendaSelecionada = 0;
     this.agenda.empresaId = Number(this.auth.dadosUsuario.EmpresaId)
-    this._serviceAgenda.create(this.agenda, Endpoint.Agenda)
-      .subscribe((result: Agenda) => {
-        this.agenda = result;
-        this.agenda.dtCriacao = new Date;
-        this._utilService.showMessage("Dados salvos com sucesso!", false);
-        this.buscarAgenda("")
-      });
+
+    if (this.agenda && this.agenda.pessoaId > 0 && this.agenda.unidadeId > 0 && this.agenda.salaId > 0 && this.agenda.nomeAgenda.length > 0) {
+      this._serviceAgenda.create(this.agenda, Endpoint.Agenda)
+        .subscribe((result: Agenda) => {
+          this.agenda = result;
+          this.agenda.dtCriacao = new Date;
+          this._utilService.showMessage("Dados salvos com sucesso!", false);
+          this.agenda = new Agenda();
+          this.buscarAgenda("")
+          this.dialogRef.close();
+        }, (err) => {
+          this._utilService.showMessage(`${err.message}`, true);
+        }, () => {
+          this._utilService.showMessage(`erro`, true);
+        });
+    } else {
+      this._utilService.showMessage("Os campos, Nome da Agenda, unidade, sala e a Pessoa devem ser informados!.", true);
+      return
+    }
+
   }
 
   cancel() {
@@ -371,23 +365,33 @@ export class AgendaCreateComponent implements OnInit {
       this.servicoHorario.read(Endpoint.AgendaHorarios + `/agenda/${id}`)
         .subscribe((result: HorarioAgenda[]) => {
 
-          // this.todosHorarios = result;
+          this.domingo = [...new Set(this.todosOsHorariosDaAgenda ?
+            result.filter(x => x.diaDasemana == 1).map(dt => dt.data) :
+            result.filter(x => x.diaDasemana == 1 && x.data >= this.vigenciaInicio && x.data <= this.vigenciaFim).map(dt => dt.data))];
 
-          // this.detalhesDomingo = result.filter(x => x.diaDasemana == 1 && x.agendaId == id);
-          // this.detalhesSegunda = result.filter(x => x.diaDasemana == 2 && x.agendaId == id);
-          // this.detalhesTerca = result.filter(x => x.diaDasemana == 3 && x.agendaId == id);
-          // this.detalhesQuarta = result.filter(x => x.diaDasemana == 4 && x.agendaId == id);
-          // this.detalhesQuinta = result.filter(x => x.diaDasemana == 5 && x.agendaId == id);
-          // this.detalhesSexta = result.filter(x => x.diaDasemana == 6 && x.agendaId == id);
-          // this.detalhesSabado = result.filter(x => x.diaDasemana == 7 && x.agendaId == id);
+          this.segunda = [...new Set(this.todosOsHorariosDaAgenda ?
+            result.filter(x => x.diaDasemana == 2).map(dt => dt.data) :
+            result.filter(x => x.diaDasemana == 2 && x.data >= this.vigenciaInicio && x.data <= this.vigenciaFim).map(dt => dt.data))];
 
-          this.domingo = [...new Set(result.filter(x => x.diaDasemana == 1 && x.agendaId == id).map(dt => dt.data))];
-          this.segunda = [...new Set(result.filter(x => x.diaDasemana == 2 && x.agendaId == id).map(dt => dt.data))];
-          this.terca = [...new Set(result.filter(x => x.diaDasemana == 3 && x.agendaId == id).map(dt => dt.data))];
-          this.quarta = [...new Set(result.filter(x => x.diaDasemana == 4 && x.agendaId == id).map(dt => dt.data))];
-          this.quinta = [...new Set(result.filter(x => x.diaDasemana == 5 && x.agendaId == id).map(dt => dt.data))];
-          this.sexta = [...new Set(result.filter(x => x.diaDasemana == 6 && x.agendaId == id).map(dt => dt.data))];
-          this.sabado = [...new Set(result.filter(x => x.diaDasemana == 7 && x.agendaId == id).map(dt => dt.data))];
+          this.terca = [...new Set(this.todosOsHorariosDaAgenda ?
+            result.filter(x => x.diaDasemana == 3).map(dt => dt.data) :
+            result.filter(x => x.diaDasemana == 3 && x.data >= this.vigenciaInicio && x.data <= this.vigenciaFim).map(dt => dt.data))];
+
+          this.quarta = [...new Set(this.todosOsHorariosDaAgenda ?
+            result.filter(x => x.diaDasemana == 4).map(dt => dt.data) :
+            result.filter(x => x.diaDasemana == 4 && x.data >= this.vigenciaInicio && x.data <= this.vigenciaFim).map(dt => dt.data))];
+
+          this.quinta = [...new Set(this.todosOsHorariosDaAgenda ?
+            result.filter(x => x.diaDasemana == 5).map(dt => dt.data) :
+            result.filter(x => x.diaDasemana == 5 && x.data >= this.vigenciaInicio && x.data <= this.vigenciaFim).map(dt => dt.data))];
+
+          this.sexta = [...new Set(this.todosOsHorariosDaAgenda ?
+            result.filter(x => x.diaDasemana == 6).map(dt => dt.data) :
+            result.filter(x => x.diaDasemana == 6 && x.data >= this.vigenciaInicio && x.data <= this.vigenciaFim).map(dt => dt.data))];
+
+          this.sabado = [...new Set(this.todosOsHorariosDaAgenda ?
+            result.filter(x => x.diaDasemana == 7).map(dt => dt.data) :
+            result.filter(x => x.diaDasemana == 7 && x.data >= this.vigenciaInicio && x.data <= this.vigenciaFim).map(dt => dt.data))];
         });
     }
   }
@@ -472,9 +476,11 @@ export class AgendaCreateComponent implements OnInit {
     //   }
   }
 
-  AgendaSelecionada(id: any) {
+  AgendaSelecionada(row: any) {
     this.agendaSelecionada = 0;
-    this.agendaSelecionada = id > 0 ? this.agendaSelecionada = id : 0;
+    this.agendaSelecionada = row.id > 0 ? this.agendaSelecionada = row.id : 0;
+    this.vigenciaInicio = row.vigenciaInicio;
+    this.vigenciaFim = row.vigenciaFim;
   }
 
 
@@ -519,5 +525,10 @@ export class AgendaCreateComponent implements OnInit {
         })
         this.catalogoServicosAgenda = [...this.catalogoServicosAgenda.sort(function (a, b) { return a.id - b.id; })];
       })
+  }
+
+  public ExibirTodosOsHorarios(): void {
+    this.todosOsHorariosDaAgenda = this.todosOsHorariosDaAgenda ? false : true;
+    this.buscarHorarios(this.agendaSelecionada);
   }
 }

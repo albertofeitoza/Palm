@@ -10,6 +10,7 @@ import { Overlay } from '@angular/cdk/overlay';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginService } from './login.service';
 import { MatSnackBar } from '@angular/material/snack-bar'
+import { DatePipe } from '@angular/common';
 
 
 @Injectable({
@@ -28,6 +29,7 @@ export class UtilService {
     private router: Router,
     public overlay: Overlay,
     public dialog: MatDialog,
+    private datePipe: DatePipe
   ) { }
 
   showMessage(msg: string, isErro: boolean = false): void {
@@ -41,8 +43,8 @@ export class UtilService {
   }
 
   erroHandler(e: any): Observable<any> {
-    this.showMessage(e.error, true)
-    return EMPTY
+    //this.showMessage(e.error.System.Exception, true)
+    return e
   }
 
   convertToBase64(txt: string): string {
@@ -86,7 +88,7 @@ export class UtilService {
       disableClose: disableclose,
       scrollStrategy,
       id,
-      data : {object}
+      data: { object }
     });
     return dialogRef.afterClosed();
   }
@@ -214,19 +216,28 @@ export class UtilService {
     return tipoUsuario
   }
 
-  YesNO(inverte : boolean = true) {
+  YesNO(inverte: boolean = true) {
     let yesno = []
-  
-    if(inverte){
+
+    if (inverte) {
       yesno.push({ "id": false, "tipo": "Sim" })
       yesno.push({ "id": true, "tipo": "Não" })
     } else {
       yesno.push({ "id": false, "tipo": "Não" })
       yesno.push({ "id": true, "tipo": "Sim" })
     }
-    
+
     return yesno
-  
-  
+
+
+  }
+
+  public DataSistemaFront(data: string ) {
+    
+    let currentDate = this.datePipe.transform(data != '' ? new Date(data) : new Date, 'yyyy-MM-ddThh:mm:ss');
+    if (currentDate)
+      return currentDate
+
+    return new Date;
   }
 }
