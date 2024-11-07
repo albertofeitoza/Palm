@@ -228,12 +228,23 @@ export class UtilService {
     }
 
     return yesno
-
-
   }
 
-  public DataSistemaFront(data: string ) {
-    
+  public StatusProtocolo(): any {
+    let statusProtocolo = []
+    statusProtocolo.push({ "id": 0, "tipo": "Todos" })
+    statusProtocolo.push({ "id": 1, "tipo": "Aberto" })
+    statusProtocolo.push({ "id": 2, "tipo": "Espera" })
+    statusProtocolo.push({ "id": 3, "tipo": "Na Recepção" })
+    statusProtocolo.push({ "id": 4, "tipo": "Em Atendimento" })
+    statusProtocolo.push({ "id": 5, "tipo": "Finalizado" })
+    statusProtocolo.push({ "id": 6, "tipo": "Cancelado" })
+    return statusProtocolo
+  }
+
+
+  public DataSistemaFront(data: string) {
+
     let currentDate = this.datePipe.transform(data != '' ? new Date(data) : new Date, 'yyyy-MM-ddThh:mm:ss');
     if (currentDate)
       return currentDate

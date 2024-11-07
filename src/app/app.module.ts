@@ -42,6 +42,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
+import {MatSortModule} from '@angular/material/sort';
+
 import { ProductReadComponent } from './components/product/product-read/product-read.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -174,7 +176,7 @@ import { AgendamentoSelecionarHorarioAgendarComponent } from './Aplicacoes/agend
     MatDatepickerModule,
     MatNativeDateModule,
     MatAutocompleteModule,
-    MatAutocompleteModule
+    MatSortModule
   ],
   providers:
     [

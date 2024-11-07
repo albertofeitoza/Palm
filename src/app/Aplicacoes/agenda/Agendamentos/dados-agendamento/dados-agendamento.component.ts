@@ -165,7 +165,7 @@ export class DadosAgendamentoComponent implements OnInit {
   }
 
 
-  private criarProtocolo(): boolean {
+  async criarProtocolo() {
 
     this.protocolo.dtCriacao = new Date;
     this.protocolo.tipoProtocolo = TipoProtocolo.Agendamento;
@@ -174,18 +174,16 @@ export class DadosAgendamentoComponent implements OnInit {
     this.protocolo.pessoaId = Number(this.idPessoa)
     this.protocolo.statusProtocolo = StatusProtocolo.Rascunho
 
-    this.servicoApi.create(this.protocolo, Endpoint.Protocolo)
+    await this.servicoApi.create(this.protocolo, Endpoint.Protocolo)
       .subscribe((result: Protocolo) => {
         this.protocolo = result;
-        return true;
       }, (err) => {
-        return false;
+        this.servico.showMessage("Erro ao gerar protocolo.");
       })
-    return false;
   }
 
   public fecharPopup(response: boolean): void {
-    
+
     if (!response) {
 
       if (this.protocolo && this.protocolo.id > 0 && this.idAgendamento === 0) {
@@ -282,7 +280,6 @@ export class DadosAgendamentoComponent implements OnInit {
               dadosAgendamentos.Sab = 0;
               dadosAgendamentos.Dom = 0;
               dadosAgendamentos.Valor = cat.valor
-
               this.dadosAgendamentos.push(dadosAgendamentos)
             });
 
@@ -352,11 +349,7 @@ export class DadosAgendamentoComponent implements OnInit {
     this.agendamento.criadoPor = this.servico.Sessao().IdUsuario;
     this.agendamento.ura = MeioAberturaAgendamento.Outros
 
-
     let agendas = new Set(this.dadosAgendamentos.map(a => a.IdAgenda));
-
-
-
     this.agendamento.catalogoAgendado = new Array()
 
     agendas.forEach(idAgenda => {
@@ -387,21 +380,11 @@ export class DadosAgendamentoComponent implements OnInit {
         itensAgendamento.dom = it.Dom;
         itensAgendamento.Valor = it.Valor;
         itensAgendamento.statusItem = StatusProtocolo.Aberto
-
         this.agendamento.catalogoAgendado.push(itensAgendamento)
       });
-
-      if (quantAgendas === 1) {
-        this.CriarAgendamento(this.agendamento);
-      }
-      else {
-        if (this.criarProtocolo()){
-          this.CriarAgendamento(this.agendamento);
-        }
-          
-      }
-
+      this.CriarAgendamento(this.agendamento);
     });
+    // abrir o Popup com os numeros de Protocolos criados.
     this.dialofRef.close(true);
   }
 

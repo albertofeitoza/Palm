@@ -1,27 +1,23 @@
-<mat-dialog-content>
-    <div class="mat-elevation-z3">
+<!-- <mat-dialog-content> -->
+<div class="mat-elevation-z3">
 
-      <div class="barraMenu">
-          <button mat-button [matMenuTriggerFor]="menu">Rotina Diária</button>
-            <mat-menu #menu="matMenu">
-              <a mat-menu-item>Agendamento</a>
-              <a mat-menu-item>Consulta de Agenda</a>
-              <a mat-menu-item>Consulta Agendamentos</a>
-            
-            </mat-menu>
+  <div>
+    <button mat-button [matMenuTriggerFor]="menu">Rotina Diária</button>
+    <mat-menu #menu="matMenu">
+      <a mat-menu-item>Agendamento</a>
+      <a mat-menu-item>Consulta de Agenda</a>
+      <a mat-menu-item>Consulta Agendamentos</a>
 
-            <button mat-button [matMenuTriggerFor]="menucadastro">Cadastro</button>
-              <mat-menu #menucadastro="matMenu">
-                <a (click)="addNovaAgenda()" mat-menu-item>Agenda</a>
-                <a (click)="addUnidade()" mat-menu-item>Unidade</a>              
-              </mat-menu>
+    </mat-menu>
 
-      </div>
-      <!--Inserir a tabela aqui-->
-      <app-agendamentos-read></app-agendamentos-read>
-       
-    </div>
-</mat-dialog-content>
+    <button mat-button [matMenuTriggerFor]="menucadastro">Cadastro</button>
+    <mat-menu #menucadastro="matMenu">
+      <a (click)="addNovaAgenda()" mat-menu-item>Agenda</a>
+      <a (click)="addUnidade()" mat-menu-item>Unidade</a>
+    </mat-menu>
 
-
-
+  </div>
+  <!--Inserir a tabela aqui-->
+  <app-agendamentos-read></app-agendamentos-read>
+</div>
+<!-- </mat-dialog-content> -->
