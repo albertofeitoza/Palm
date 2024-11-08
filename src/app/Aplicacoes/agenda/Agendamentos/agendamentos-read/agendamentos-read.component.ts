@@ -23,7 +23,7 @@ export class AgendamentosReadComponent implements OnInit {
   displayedColumns = ['id', 'horaAgendada', 'nome', 'dataNascimento',
     'telefone', 'celular', 'email', 'profissional', 'protocoloId', 'statusAgendamento', 'action']
 
-  dataFiltro: Date;
+  dataFiltro = '';
 
   selected: Number = 0;
   statusProcoloBusca = 0;
@@ -47,7 +47,7 @@ export class AgendamentosReadComponent implements OnInit {
     this.statusProcoloBusca = 1;
     this.BuscarAgendamento();
     this.CarregarCombos();
-    this.dataFiltro = new Date
+    //this.dataFiltro = new Date
   }
 
   private CarregarCombos(): void {
@@ -57,23 +57,24 @@ export class AgendamentosReadComponent implements OnInit {
   public BuscarAgendamento(): void {
 
     let dataDia = this.dataFiltro;
-
-
     let data = this.datePipe.transform(dataDia, 'yyyy-MM-dd')?.toString() ?? new Date().toString();
 
-    let statusSelecionado = this.statusProcoloBusca;
+    //dataAtual +1
+    let dataAtual = new Date();
+    dataAtual.setDate(dataAtual.getDate() + 1);
 
     this.servicoAgendamento.read(Endpoint.Agendamentos + `/estabelecimento/${this.servico.Sessao().EmpresaId}`)
       .subscribe((result: ViewAgendamentos[]) => {
         let filters =
-          result.filter(x => statusSelecionado === 0 ? x.horaAgendada.toString().includes(data)
-            : statusSelecionado === 1 ? x.statusAgendamento == 'Aberto'
-              : statusSelecionado === 2 && x.horaAgendada.toString().includes(data) ? x.statusAgendamento == 'Espera'
-                : statusSelecionado === 3 && x.horaAgendada.toString().includes(data) ? x.statusAgendamento == 'NaRecepcao'
-                  : statusSelecionado === 4 && x.horaAgendada.toString().includes(data) ? x.statusAgendamento == 'EmAtendimento'
-                    : statusSelecionado === 5 && x.horaAgendada.toString().includes(data) ? x.statusAgendamento == 'Finalizado'
-                      : statusSelecionado === 6 && x.horaAgendada.toString().includes(data) ? x.statusAgendamento == 'Cancelado'
-                        : null);
+          result.filter(x => this.statusProcoloBusca === 0 ? x.horaAgendada.toString().includes(data)
+            : this.statusProcoloBusca === 1 && dataDia == null || dataDia == ''  ? x.statusAgendamento == 'Aberto' && x.horaAgendada < this.servico.DataSistemaFront(dataAtual.toString())
+              : this.statusProcoloBusca === 1 && dataDia != '' ? x.statusAgendamento == 'Aberto' && x.horaAgendada.toString().includes(data)
+                : this.statusProcoloBusca === 2 && x.horaAgendada.toString().includes(data) ? x.statusAgendamento == 'Espera'
+                  : this.statusProcoloBusca === 3 && x.horaAgendada.toString().includes(data) ? x.statusAgendamento == 'NaRecepcao'
+                    : this.statusProcoloBusca === 4 && x.horaAgendada.toString().includes(data) ? x.statusAgendamento == 'EmAtendimento'
+                      : this.statusProcoloBusca === 5 && x.horaAgendada.toString().includes(data) ? x.statusAgendamento == 'Finalizado'
+                        : this.statusProcoloBusca === 6 && x.horaAgendada.toString().includes(data) ? x.statusAgendamento == 'Cancelado'
+                          : null);
 
         this.agendamentos.data = [...filters];
       })

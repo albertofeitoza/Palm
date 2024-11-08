@@ -156,13 +156,14 @@ export class AgendamentoSelecionarHorarioAgendarComponent implements OnInit {
         at.AgendaCatalogoId = agendaCatalogoId;
         at.Data = row.data;
         at.Hora = bloqueado ? row.hora : '';
-        at.Seg = bloqueado && row.diaDasemana === 1 ? row.id : 0;
-        at.Ter = bloqueado && row.diaDasemana === 2 ? row.id : 0;
-        at.Qua = bloqueado && row.diaDasemana === 3 ? row.id : 0;
-        at.Qui = bloqueado && row.diaDasemana === 4 ? row.id : 0;
-        at.Sex = bloqueado && row.diaDasemana === 5 ? row.id : 0;
-        at.Sab = bloqueado && row.diaDasemana === 6 ? row.id : 0;
-        at.Dom = bloqueado && row.diaDasemana === 7 ? row.id : 0;
+        at.Dom = bloqueado && row.diaDasemana === 1 ? row.id : 0;
+        at.Seg = bloqueado && row.diaDasemana === 2 ? row.id : 0;
+        at.Ter = bloqueado && row.diaDasemana === 3 ? row.id : 0;
+        at.Qua = bloqueado && row.diaDasemana === 4 ? row.id : 0;
+        at.Qui = bloqueado && row.diaDasemana === 5 ? row.id : 0;
+        at.Sex = bloqueado && row.diaDasemana === 6 ? row.id : 0;
+        at.Sab = bloqueado && row.diaDasemana === 7 ? row.id : 0;
+        
       }
     })
     this.dadosAgendamentos = [...this.dadosAgendamentos];

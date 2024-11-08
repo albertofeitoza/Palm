@@ -11,8 +11,7 @@
 
     <mat-form-field style="width: 35%;">
       <div style="display: flex;">
-        <input class="heigth" matInput [matDatepicker]="picker" [(ngModel)]="dataFiltro"
-          (selectionchange)="BuscarAgendamento()">
+        <input class="heigth" matInput [matDatepicker]="picker" [(ngModel)]="dataFiltro">
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </div>
@@ -20,16 +19,20 @@
 
     <mat-form-field style="width: 35%;">
       <mat-label>Status</mat-label>
-      <mat-select [(value)]="statusProcoloBusca" placeholder="Qualquer período" (selectionChange)="BuscarAgendamento()">
+      <mat-select [(value)]="statusProcoloBusca" placeholder="Qualquer período">
         <mat-option *ngFor="let sp  of statusProtocolo " [value]="sp.id">
           {{sp.tipo}}
         </mat-option>
       </mat-select>
     </mat-form-field>
+    <!-- <mat-icon (click)="BuscarAgendamento()">OK</mat-icon> -->
+
+    <button style="padding-left: 15px;" class="button cursor"
+      mat-raised-button color="primary" (click)="BuscarAgendamento()">
+      Buscar
+    </button>
 
   </div>
-
-
 </div>
 
 <div>
