@@ -61,3 +61,8 @@ search {
     font-weight: bold;
     
   }
+
+  
+  ::ng-deep .mat-form-field-underline {
+    height: 0 !important;
+}
