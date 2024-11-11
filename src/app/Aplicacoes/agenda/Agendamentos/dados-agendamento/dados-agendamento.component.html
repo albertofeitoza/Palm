@@ -255,7 +255,7 @@
     mat-raised-button color="primary" (click)="ConfirmarAgendamento()">
     Confirmar Agendamento
   </button>
-
+  
   <button *ngIf="dadosAgendamentos.length > 0 && idAgendamento > 0 && agendamento.statusAgendamento < 5" class="button"
     mat-raised-button color="primary" (click)="CancelarAgendamento()">
     Cancelar Agendamento
