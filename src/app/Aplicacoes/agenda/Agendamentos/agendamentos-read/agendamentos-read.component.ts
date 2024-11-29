@@ -59,12 +59,9 @@ export class AgendamentosReadComponent implements OnInit {
 
     let dataDia = this.dataFiltro == null || this.dataFiltro == '' ? new Date : this.dataFiltro;
     let data = this.datePipe.transform(dataDia, 'yyyy-MM-dd')?.toString() ?? '';
-    //dataAtual +1
 
     let dataAmanha = new Date();
     dataAmanha.setDate(dataAmanha.getDate() + 1);
-
-
 
     this.servicoAgendamento.read(Endpoint.Agendamentos + `/estabelecimento/${this.servico.Sessao().EmpresaId}`)
       .subscribe((result: ViewAgendamentos[]) => {

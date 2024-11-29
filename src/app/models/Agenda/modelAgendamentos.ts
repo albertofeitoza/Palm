@@ -53,6 +53,6 @@ export class CatalogoAgendado {
     sex: number;
     sab: number;
     dom: number;
-    Valor: number;
+    valor: number;
     statusItem : number
 }

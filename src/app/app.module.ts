@@ -19,8 +19,6 @@ import { registerLocaleData, DatePipe } from '@angular/common';
 import { LoginComponent } from './components/login/login.component';
 
 
-
-
 registerLocaleData(localePt);
 
 //Modulos Material
@@ -91,6 +89,7 @@ import { PessoaCreateComponent } from './components/pessoa/modal/pessoa-create/p
 import { DetalhesDiasDisponiveisAgendaComponent } from './Aplicacoes/agenda/CadastroAgenda/agenda-create/modal/detalhes-dias-disponiveis-agenda/detalhes-dias-disponiveis-agenda.component';
 import { AgendaAssociarCatalogoComponent } from './Aplicacoes/agenda/CadastroAgenda/agenda-create/modal/agenda-associar-catalogo/agenda-associar-catalogo.component';
 import { AgendamentoSelecionarHorarioAgendarComponent } from './Aplicacoes/agenda/Agendamentos/dados-agendamento/modal/agendamento-selecionar-horario-agendar/agendamento-selecionar-horario-agendar.component';
+import { AgendamentoEditarItemAgendadoComponent } from './Aplicacoes/agenda/Agendamentos/dados-agendamento/modal/agendamento-editar-item-agendado/agendamento-editar-item-agendado.component';
 
 @NgModule({
   declarations: [
@@ -144,6 +143,7 @@ import { AgendamentoSelecionarHorarioAgendarComponent } from './Aplicacoes/agend
     DetalhesDiasDisponiveisAgendaComponent,
     AgendaAssociarCatalogoComponent,
     AgendamentoSelecionarHorarioAgendarComponent,
+    AgendamentoEditarItemAgendadoComponent,
     
 
   ],

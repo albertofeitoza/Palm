@@ -1,5 +1,4 @@
 import { PopupConfirmacaoComponent } from 'src/app/components/Popups/popup-confirmacao/popup-confirmacao.component';
-import { filter } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Protocolo } from 'src/app/models/Protocolo/modelProtocolo';
@@ -9,7 +8,7 @@ import { ServiceAllService } from 'src/app/services/service-all.service';
 import { UtilService } from 'src/app/services/util.service';
 import { Agendamentos, CatalogoAgendado } from 'src/app/models/Agenda/modelAgendamentos';
 import { Telefone } from 'src/app/models/Telefone/telefoneModel';
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { FormatListNumberedRtlOutlined } from '@material-ui/icons';
 import { FiltroBuscaTelaAgendamento } from 'src/app/models/Filtros/filtros';
 import { AgendamentoCatalogoServicos } from 'src/app/models/Agenda/modelAgendamentoSevico';
@@ -22,6 +21,8 @@ import { AgendamentoSelecionarHorarioAgendarComponent } from './modal/agendament
 import { HorarioAgenda } from 'src/app/models/Agenda/modelHorarioAgenda';
 import { MeioAberturaAgendamento } from 'src/app/Negocio/MeioAberturaAgendamento';
 import { promises } from 'fs';
+import { AgendamentoEditarItemAgendadoComponent } from './modal/agendamento-editar-item-agendado/agendamento-editar-item-agendado.component';
+import { ItensAgendadoAtividade } from './model/atividades';
 
 @Component({
   selector: 'app-dados-agendamento',
@@ -36,6 +37,7 @@ export class DadosAgendamentoComponent implements OnInit {
 
   dadosAgendamentos: AgendamentoCatalogoServicos[] = new Array();
   horariosPendentes = false;
+  itensPendentes = 0;
   codServico: any;
   nomeServico: any;
 
@@ -58,6 +60,7 @@ export class DadosAgendamentoComponent implements OnInit {
   idPeriodo: number = 0;
   idAgendamento: number = 0;
   statusAgendamento = '';
+  valorTotal = 0;
 
 
   constructor(
@@ -85,13 +88,14 @@ export class DadosAgendamentoComponent implements OnInit {
 
     this.servicoApi.readById(idAgendamento.toString(), Endpoint.Agendamentos)
       .subscribe((result: Agendamentos) => {
+
         if (result) {
           this.agendamento = result;
           this.statusAgendamento = this.StatusCancelamento(result.statusAgendamento);
-
+          this.dadosAgendamentos = new Array();
           this.protocolo.id = result.protocoloId;
-          result.catalogoAgendado.forEach(dado => {
 
+          result.catalogoAgendado.forEach(dado => {
             let dadosAgendados: AgendamentoCatalogoServicos = new AgendamentoCatalogoServicos();
             dadosAgendados.Id = dado.id;
             dadosAgendados.IdAgenda = 0;
@@ -109,15 +113,27 @@ export class DadosAgendamentoComponent implements OnInit {
             dadosAgendados.Sex = dado.sex;
             dadosAgendados.Sab = dado.sab;
             dadosAgendados.Dom = dado.dom;
-            dadosAgendados.Valor = dado.Valor;
+            dadosAgendados.Valor = dado.valor;
             dadosAgendados.StatusItem = dado.statusItem;
 
             this.dadosAgendamentos.push(dadosAgendados);
           });
+
           this.dadosAgendamentos = [...this.dadosAgendamentos];
+          this.itensPendentes = this.dadosAgendamentos.filter(x => x.StatusItem < 4).length;
         }
+
+        let valores = this.dadosAgendamentos.filter(x => x.StatusItem < 6).map(v => v.Valor);
+        this.SomarValores(valores);
       });
   }
+
+  private SomarValores(valores: number[]) {
+    valores.forEach(soma => {
+      this.valorTotal += soma;
+    })
+  }
+
   private StatusCancelamento(result: number): string {
     return result == 0 ? 'Rascunho' :
       result == 1 ? 'Aberto' :
@@ -191,7 +207,7 @@ export class DadosAgendamentoComponent implements OnInit {
         this.servicoApi.create(this.protocolo, Endpoint.Protocolo)
           .subscribe(() => {
             this.servico.showMessage("Protocolo Cancelado");
-            this.LiberarHorarios();
+            this.LiberarHorarios(new Array());
             this.dialofRef.close();
           })
 
@@ -292,29 +308,25 @@ export class DadosAgendamentoComponent implements OnInit {
     }
   }
 
-  public Remover(row: AgendamentoCatalogoServicos): void {
+  public Editar(row: AgendamentoCatalogoServicos): void {
 
-    const index: number = this.dadosAgendamentos.indexOf(row);
-    if (index !== -1) {
-      this.dadosAgendamentos.splice(index, 1);
-      this.dadosAgendamentos = [...this.dadosAgendamentos];
-      let id = this.ObterIdHorario(row)
+    this.servico.Popup(row.Id, AgendamentoEditarItemAgendadoComponent, '50%', '60%', true)
+      .subscribe((result: StatusProtocolo) => {
 
-      if (id && id > 0) {
-        this.servicoApi.readById(id.toString(), Endpoint.AgendaHorarios)
-          .subscribe((result: HorarioAgenda) => {
-            if (result) {
-              result.bloqueadoEmTela = false;
-              result.naoDisponivel = this.agendamento.id > 0 ? false : result.naoDisponivel;
-              this.servicoApi.update(result, Endpoint.AgendaHorarios)
-                .subscribe(() => { });
+        this.BuscarAgendamento(this.idAgendamento);
+
+        this.servicoApi.read(Endpoint.ItensAgendados + `/agendamento/${this.idAgendamento}`)
+          .subscribe((result: AgendamentoCatalogoServicos[]) => {
+
+            if (result.filter(x => x.StatusItem > 4)) {
+
+              this.AtualizarStatusAgendamento();
+
+              this.AtualizarStatusProtocolo();
             }
-          })
-      }
-      this.horariosPendentes = this.dadosAgendamentos.filter(r => r.Hora == '').length > 0 ? true : false;
-    }
+          });
+      })
   }
-
 
   private ObterIdHorario(row: AgendamentoCatalogoServicos): number {
 
@@ -378,7 +390,7 @@ export class DadosAgendamentoComponent implements OnInit {
         itensAgendamento.sex = it.Sex;
         itensAgendamento.sab = it.Sab;
         itensAgendamento.dom = it.Dom;
-        itensAgendamento.Valor = it.Valor;
+        itensAgendamento.valor = it.Valor;
         itensAgendamento.statusItem = StatusProtocolo.Aberto
         this.agendamento.catalogoAgendado.push(itensAgendamento)
       });
@@ -396,22 +408,42 @@ export class DadosAgendamentoComponent implements OnInit {
 
   public CancelarAgendamento(): void {
 
-    this.servico.Popup('', PopupConfirmacaoComponent, 'auto', 'auto', false, 'Tem Certeza? Ao cancelar os horários serão liberados automaticamente!')
-      .subscribe(result => {
-        if (result) {
-          this.LiberarHorarios();
-          this.AtualizarStatusAgendamento(StatusProtocolo.Cancelado);
-          this.AtualizarStatusProtocolo(StatusProtocolo.Cancelado);
-          this.dialofRef.close(true);
-        }
-      })
+    let pendencias = this.dadosAgendamentos.filter(x => x.StatusItem > 0 && x.StatusItem < 4);
+
+    if (pendencias.length > 0) {
+      this.servico.Popup('', PopupConfirmacaoComponent, 'auto', 'auto', false, 'Tem Certeza? Ao cancelar os horários serão liberados automaticamente.')
+        .subscribe(result => {
+          if (result) {
+
+            this.LiberarHorarios(pendencias);
+
+            pendencias.forEach(x => {
+              x.StatusItem = StatusProtocolo.Cancelado;
+            });
+
+            this.AtualizarStausItem(pendencias);
+
+            this.BuscarAgendamento(this.idAgendamento);
+
+            this.AtualizarStatusAgendamento();
+            this.AtualizarStatusProtocolo();
+
+            this.dialofRef.close(true);
+          }
+        })
+    } else {
+      this.AtualizarStatusAgendamento();
+      this.AtualizarStatusProtocolo();
+      return this.servico.showMessage("Não existem itens a ser cancelados")
+    }
   }
 
-  private LiberarHorarios(): void {
+  private LiberarHorarios(horarios: AgendamentoCatalogoServicos[]): void {
 
-    this.dadosAgendamentos.forEach(pro => {
-      if (this.ObterIdHorario(pro) > 0) {
-        this.servicoApi.readById(this.ObterIdHorario(pro).toString(), Endpoint.AgendaHorarios)
+    horarios.forEach(item => {
+
+      if (this.ObterIdHorario(item) > 0) {
+        this.servicoApi.readById(this.ObterIdHorario(item).toString(), Endpoint.AgendaHorarios)
           .subscribe((result: HorarioAgenda) => {
             if (result) {
               result.bloqueadoEmTela = false;
@@ -424,7 +456,40 @@ export class DadosAgendamentoComponent implements OnInit {
     });
   }
 
-  private AtualizarStatusAgendamento(status: StatusProtocolo): void {
+  private AtualizarStausItem(pendencias: AgendamentoCatalogoServicos[]): void {
+
+    pendencias.forEach(item => {
+
+      var atividade = new ItensAgendadoAtividade();
+      atividade.id = 0,
+        atividade.dataCriacao = new Date,
+        atividade.agendaId = null,
+        atividade.agendamentosId = null,
+        atividade.itensAgendadosId = item.Id,
+        atividade.historico = 'Status: ' + this.servico.StatusProtocolo()[item.StatusItem].tipo
+
+      this.servicoApi.create(atividade, Endpoint.Atividades)
+        .subscribe(() => { });
+    });
+  }
+
+
+  private AtualizarStatusAgendamento(): void {
+
+    let pendencias = this.dadosAgendamentos.filter(x => x.StatusItem < 5)
+
+    if (pendencias.length > 0)
+      return;
+
+    let finalizado = this.dadosAgendamentos.filter(x => x.StatusItem === 5).length
+    let cancelado = this.dadosAgendamentos.filter(x => x.StatusItem === 6).length
+
+    let status =
+      finalizado > 0 ? StatusProtocolo.Finalizado
+        : finalizado === 0 && cancelado > 0 ? StatusProtocolo.Cancelado
+          : StatusProtocolo.Aberto;
+
+
     this.servicoApi.readById(this.idAgendamento.toString(), Endpoint.Agendamentos)
       .subscribe((result: Agendamentos) => {
         if (result) {
@@ -434,10 +499,22 @@ export class DadosAgendamentoComponent implements OnInit {
               this.statusAgendamento = this.StatusCancelamento(response.statusAgendamento);
             })
         }
-      });
+      })
   }
 
-  private AtualizarStatusProtocolo(status: StatusProtocolo): void {
+  private AtualizarStatusProtocolo(): void {
+
+    if (this.dadosAgendamentos.filter(x => x.StatusItem < 5).length > 0)
+      return;
+
+    let finalizado = this.dadosAgendamentos.filter(x => x.StatusItem === 5).length
+    let cancelado = this.dadosAgendamentos.filter(x => x.StatusItem === 6).length
+
+    let status =
+      finalizado > 0 ? StatusProtocolo.Finalizado
+        : finalizado === 0 && cancelado > 0 ? StatusProtocolo.Cancelado
+          : StatusProtocolo.Finalizado;
+
     this.servicoApi.readById(this.protocolo.id.toString(), Endpoint.Protocolo)
       .subscribe((result: Protocolo) => {
         if (result) {
