@@ -129,6 +129,7 @@ export class DadosAgendamentoComponent implements OnInit {
   }
 
   private SomarValores(valores: number[]) {
+    this.valorTotal = 0;
     valores.forEach(soma => {
       this.valorTotal += soma;
     })
