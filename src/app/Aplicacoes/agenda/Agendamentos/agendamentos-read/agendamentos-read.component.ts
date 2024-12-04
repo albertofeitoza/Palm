@@ -83,6 +83,7 @@ export class AgendamentosReadComponent implements OnInit {
       })
     this.agendamentos.paginator = this.paginator
     this.agendamentos.sort = this.sort;
+    this.paginator._intl.itemsPerPageLabel = "Itens por página";
   }
 
   EditarAgendamento(id: any) {

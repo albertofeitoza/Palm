@@ -20,6 +20,7 @@ export enum Endpoint {
     Protocolo = '/Protocolo',
     Atividades = '/Atividades',
     ItensAgendados = '/ItensAgendados',
+    Dianaoatende = '/Dianaoatende',
     
     PessoaEndereco = '/PessoaEndereco',
     Contato = '/Contato',

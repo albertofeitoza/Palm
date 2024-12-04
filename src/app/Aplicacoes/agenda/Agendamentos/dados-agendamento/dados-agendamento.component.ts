@@ -123,7 +123,7 @@ export class DadosAgendamentoComponent implements OnInit {
           this.itensPendentes = this.dadosAgendamentos.filter(x => x.StatusItem < 4).length;
         }
 
-        let valores = this.dadosAgendamentos.filter(x => x.StatusItem < 6).map(v => v.Valor);
+        let valores = this.dadosAgendamentos.filter(x => x.StatusItem > 3 && x.StatusItem < 6).map(v => v.Valor);
         this.SomarValores(valores);
       });
   }

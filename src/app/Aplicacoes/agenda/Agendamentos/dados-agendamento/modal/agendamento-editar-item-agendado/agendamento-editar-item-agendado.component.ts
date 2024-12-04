@@ -60,7 +60,7 @@ export class AgendamentoEditarItemAgendadoComponent implements OnInit {
 
         this.atividades.paginator = this.paginator
         this.atividades.sort = this.sort;
-        this.paginator._intl.itemsPerPageLabel = "Test String";
+        this.paginator._intl.itemsPerPageLabel = "Itens por página";
       })
   }
 

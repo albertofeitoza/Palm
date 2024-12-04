@@ -236,30 +236,18 @@
              list
             </i>
           </a>
-
         </td>
       </ng-container>
-
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row [class.demo-row-is-clicked]="" *matRowDef="let row; columns: displayedColumns;"
         (click)="selecionaLinha(row.id)" [ngClass]="{'corLinhaGrid' : row.id == selected}">
       </tr>
-
     </table>
-
   </div>
-
-
 </form>
 
 <div style="padding-right: 50px;" class="rodape">
-
- 
   <mat-label style="text-align: left;padding-right: 30px;font-weight: bold;">Total a Pagar : {{valorTotal | currency : 'BRL' : true}}</mat-label>
-
-  
- 
-  
   <button *ngIf="dadosAgendamentos.length > 0 && horariosPendentes" class="button" mat-raised-button color="primary"
     (click)="BuscarHorarios()">
     Buscar Horários

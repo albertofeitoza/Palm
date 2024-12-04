@@ -25,6 +25,7 @@ import { PopupSelecaoIdsComponent } from 'src/app/components/Popups/popup-seleca
 import { AgendaCatalogoServico, CatalogoServicoResponse, ResponseAgendaCatalagoServicos } from 'src/app/models/Agenda/AgendaCatalogoServico';
 import { PopupConfirmacaoComponent } from 'src/app/components/Popups/popup-confirmacao/popup-confirmacao.component';
 import { DatePipe } from '@angular/common';
+import { AgendaDataNaoAtende } from 'src/app/models/Agenda/agendaNaoAtende';
 
 @Component({
   selector: 'app-agenda-create',
@@ -80,6 +81,13 @@ export class AgendaCreateComponent implements OnInit {
   agendas: AgendaDto[] = [];
 
   catalogoServicosAgenda: CatalogoServico[] = new Array();
+
+
+  //dia não atende 
+  ColunasDatasNaoAtende = ['id', 'dataNaoAtende', 'motivo' , 'action'];
+  datanaoatende: any;
+  dataNaoAtende: AgendaDataNaoAtende = new AgendaDataNaoAtende();
+  agendaDataNaoAtende: AgendaDataNaoAtende[] = new Array()
 
   constructor(private route: Router,
     public dialogRef: MatDialogRef<AgendaCreateComponent>,
@@ -349,7 +357,7 @@ export class AgendaCreateComponent implements OnInit {
 
   public selecionarDiaNaoatende(): void {
     this.agendaSelecionada > 0
-      ? this.BuscarServicosAgendaveis(this.agendaSelecionada)
+      ? this.BuscarDatasNaoAtende(this.agendaSelecionada)
       : this._utilService.showMessage("Selecionar a agenda para acessar os dias não agendáveis.", false)
   }
 
@@ -527,8 +535,41 @@ export class AgendaCreateComponent implements OnInit {
       })
   }
 
+  private BuscarDatasNaoAtende(idAgenda: number): void {
+    this.serviceApi.read(Endpoint.Dianaoatende + `?IdAgenda=${idAgenda}`)
+      .subscribe((result: AgendaDataNaoAtende[]) => {
+        this.agendaDataNaoAtende = [...result];
+      })
+  }
+
   public ExibirTodosOsHorarios(): void {
     this.todosOsHorariosDaAgenda = this.todosOsHorariosDaAgenda ? false : true;
     this.buscarHorarios(this.agendaSelecionada);
   }
+
+  public CadastroDataNaoAtende(): void {
+
+    if (this.agendaSelecionada > 0) {
+      this.dataNaoAtende.agendaId = this.agendaSelecionada;
+
+      this.serviceApi.create(this.dataNaoAtende, Endpoint.Dianaoatende)
+        .subscribe(() => {
+          this._utilService.showMessage("Nova data cadastrada com sucesso.", true);
+          this.BuscarDatasNaoAtende(this.agendaSelecionada);
+        })
+    } else {
+      this._utilService.showMessage("Selecione uma agenda para cadastrar uma data.", true);
+    }
+  }
+
+  public ExcluirDataNaoAtende(id: number): void {
+    this.serviceApi.create(id, Endpoint.Dianaoatende + `/excluir/${id}`)
+      .subscribe(() => {
+        
+          this._utilService.showMessage("Data Excluída.", true);
+          this.BuscarDatasNaoAtende(this.agendaSelecionada);
+       
+      })
+  }
+
 }

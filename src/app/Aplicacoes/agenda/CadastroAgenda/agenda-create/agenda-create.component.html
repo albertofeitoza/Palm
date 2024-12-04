@@ -117,18 +117,18 @@
 
       <!-- Cadastro de agendas-->
       <mat-card *ngIf="estadoForm">
-        <mat-card-title>Nova Agenda</mat-card-title>
+        <mat-card-title>{{ agenda && agenda.id > 0 ? 'Editar Agenda' : 'Nova Agenda'}}</mat-card-title>
         <form>
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <input matInput placeholder="Nome Agenda" [(ngModel)]="agenda.nomeAgenda" name="nomeAgenda">
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <input matInput placeholder="Profissional">
             <i class="material-icons ordem" (click)="AtualizarComboProfissional()">refresh</i>
             <i class="material-icons ordem" (click)="novoUsuario()">person_add</i>
             <p></p>
-            <mat-select [(value)]="agenda.pessoaId" placeholder="Profissional">
+            <mat-select [(value)]="agenda.pessoaId">
               <mat-option></mat-option>
               <mat-option *ngFor="let tipoProf of comboProfissional " [value]="tipoProf.id">
                 {{tipoProf.nome}}
@@ -136,40 +136,40 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <input matInput placeholder="Unidade Atendimento">
             <i class="material-icons ordem" (click)="AtualizarComboUnidade()">refresh</i>
             <i class="material-icons ordem" (click)="novaUnidade()">house</i>
             <p></p>
-            <mat-select [(value)]="agenda.unidadeId" placeholder="Unidade Atendimento" (selectionChange)="BuscarSala()">
+            <mat-select [(value)]="agenda.unidadeId" (selectionChange)="BuscarSala()">
               <mat-option *ngFor="let tipounidade of comboUnidade " [value]="tipounidade.id">
                 {{tipounidade.nomeUnidade}}
               </mat-option>
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <input matInput placeholder="Sala Atendimento">
             <p></p>
-            <mat-select [(value)]="agenda.salaId" placeholder="Sala Atendimento">
+            <mat-select [(value)]="agenda.salaId">
               <mat-option *ngFor="let tipoSala of comboSala " [value]="tipoSala.id">
                 {{tipoSala.nomeSala}}
               </mat-option>
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <input matInput placeholder="Substituição">
             <input name="substituicao" [(ngModel)]="agenda.substituicao" [checked]="agenda.substituicao"
               type="checkbox">
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <input matInput placeholder="Grupo Agenda">
             <i class="material-icons ordem" (click)="AtualizarComboGrupoAgenda()">refresh</i>
             <i class="material-icons ordem" (click)="cadGrupo()">house</i>
             <p></p>
-            <mat-select [(value)]="agenda.grupoAgendaId" placeholder="Grupo Agenda">
+            <mat-select [(value)]="agenda.grupoAgendaId">
               <mat-option *ngFor="let tipoGrupo of comboTipoGrupoAgenda " [value]="tipoGrupo.id">
                 {{tipoGrupo.nomeGrupoAgenda}}
               </mat-option>
@@ -177,25 +177,25 @@
           </mat-form-field>
 
 
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <input matInput placeholder="Vigência Início" [(ngModel)]="agenda.vigenciaInicio" name="vigenciaInicio"
               type="datetime-local" teste>
           </mat-form-field>
 
 
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <input matInput placeholder="Vigência Fim" [(ngModel)]="agenda.vigenciaFim" name="vigenciaFim"
               type="datetime-local">
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <input matInput placeholder="Considera Feriado">
             <input name="considerarFeriado" [(ngModel)]="agenda.considerarFeriado" [checked]="agenda.considerarFeriado"
               type="checkbox">
           </mat-form-field>
 
 
-          <mat-form-field *ngIf="agenda.id > 0">
+          <mat-form-field *ngIf="agenda.id > 0" appearance="outline">
             <input matInput placeholder="bloqueado">
             <input name="bloqueado" [(ngModel)]="agenda.bloqueado" [checked]="agenda.bloqueado" type="checkbox">
           </mat-form-field>
@@ -452,6 +452,65 @@
 
   <!--Cadastro os dias que não atende-->
   <mat-tab label="Data N.Atende">
+
+    <div style="display:ruby-text;padding-top: 5px;">
+      <mat-form-field>
+        <div style="display: flex;">
+          <input matInput matTooltip="Cadastrar nova Data" [matDatepicker]="Cnovadata" [(ngModel)]="dataNaoAtende.dataNaoAtende"
+            name="novadata">
+          <mat-datepicker-toggle matIconSuffix [for]="Cnovadata"></mat-datepicker-toggle>
+          <mat-datepicker #Cnovadata></mat-datepicker>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput placeholder="Motivo" [(ngModel)]="dataNaoAtende.motivo" name="Motivo">
+      </mat-form-field>
+
+      <a (click)="CadastroDataNaoAtende()" class="cadGrupo">
+        <i class="material-icons">save</i>
+      </a>
+    </div>
+    <table class="tabelaagenda" mat-table [dataSource]="agendaDataNaoAtende">
+      <!-- Id Column -->
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>Id</th>
+        <td mat-cell id="idAgenda" *matCellDef="let row">{{row.id}}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="dataNaoAtende">
+        <th mat-header-cell *matHeaderCellDef>Data</th>
+        <td mat-cell *matCellDef="let row">{{row.dataNaoAtende | date: 'dd/MM/yyyy'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="motivo">
+        <th mat-header-cell *matHeaderCellDef>Motivo</th>
+        <td mat-cell *matCellDef="let row">{{row.motivo }}</td>
+      </ng-container>
+
+      <!-- Coluna de Ações -->
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Ações</th>
+        <td mat-cell *matCellDef="let row">
+
+          <a (click)="ExcluirDataNaoAtende(row.id)" class="delete">
+            <i class="material-icons">
+              delete
+            </i>
+          </a>
+
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="ColunasDatasNaoAtende"></tr>
+      <tr mat-row *matRowDef="let row; columns: ColunasDatasNaoAtende;"
+        [ngClass]="{'corLinhaGrid' : row.id == agendaSelecionada} " (click)="AgendaSelecionada(row.id)"></tr>
+    </table>
+
+
+
 
   </mat-tab>
 
