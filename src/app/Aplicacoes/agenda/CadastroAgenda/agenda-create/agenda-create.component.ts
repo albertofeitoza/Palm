@@ -503,7 +503,7 @@ export class AgendaCreateComponent implements OnInit {
   }
 
   public ExcluirServicoAgenda(id: number): void {
-    let agendaAtual = this.agendaSelecionada;
+    
     this._utilService.Popup('', PopupConfirmacaoComponent, 'auto', 'auto', true, "Tem Certeza que deseja Excluir ?")
       .subscribe(result => {
         if (result) {
@@ -525,11 +525,14 @@ export class AgendaCreateComponent implements OnInit {
 
     this.serviceApi.read(Endpoint.AgendaCatalogoServico + `/estabelecimento/${idAgenda}`)
       .subscribe((result: ResponseAgendaCatalagoServicos[]) => {
-
+        
         this.catalogoServicosAgenda = new Array();
+
         result.forEach(cat => {
-          cat.catalogoServico.id = cat.catalogoServicoId
-          this.catalogoServicosAgenda.push(cat.catalogoServico)
+          cat.catalogoServico.id = cat.id;
+
+          this.catalogoServicosAgenda.push(cat.catalogoServico);
+
         })
         this.catalogoServicosAgenda = [...this.catalogoServicosAgenda.sort(function (a, b) { return a.id - b.id; })];
       })
