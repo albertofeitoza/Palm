@@ -1,5 +1,5 @@
 export interface ViewPessoa {
-    id: number;
+    id: number; 
     nome: string;
     rg: string;
     cpf: string;

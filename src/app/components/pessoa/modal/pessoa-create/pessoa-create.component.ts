@@ -85,7 +85,7 @@ export class PessoaCreateComponent implements core.OnInit {
 
           if (this.dados.acao === 'cadastro') {
 
-            if (result && result.id === 0) {
+            if (!result) {
               this.pessoa.id = 0;
               this.pessoa.dtCriacao = new Date;
               this.pessoa.rg = this.pessoa.rg.toString();

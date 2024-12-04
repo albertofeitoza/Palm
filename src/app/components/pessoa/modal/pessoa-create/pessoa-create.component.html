@@ -6,46 +6,45 @@
   </a>
 </div>
 
-<!-- <mat-card style="height: 87%; margin-top: 30px;"> -->
 <mat-card>
   <mat-card-title>Cadastro de Pessoa</mat-card-title>
   <form>
 
-
-    <mat-form-field>
+    <mat-form-field appearance="fill">
       <mat-label>Nome</mat-label>
       <input matInput placeholder="Nome" [(ngModel)]="pessoa.nome" name="nome">
     </mat-form-field>
 
 
-    <mat-form-field>
+    <mat-form-field appearance="fill">
       <mat-label>RG</mat-label>
       <input matInput placeholder="RG - Apenas Números" type="number" [(ngModel)]="pessoa.rg" name="rg">
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field appearance="fill">
       <mat-label>CPF</mat-label>
-      <input [disabled]="pessoa.id > 0" matInput placeholder="CPF - Apenas Números" type="number" [(ngModel)]="pessoa.cpf" name="cpf">
+      <input [disabled]="pessoa.id > 0" matInput placeholder="CPF - Apenas Números" type="number"
+        [(ngModel)]="pessoa.cpf" name="cpf">
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field appearance="fill">
       <mat-label>Data Nascimento</mat-label>
       <input matInput [matDatepicker]="dataNascimento" [(ngModel)]="pessoa.dataNascimento" name="dataNascimento">
       <mat-datepicker-toggle matIconSuffix [for]="dataNascimento"></mat-datepicker-toggle>
       <mat-datepicker #dataNascimento></mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field appearance="fill">
       <mat-label>Responsável</mat-label>
       <input matInput placeholder="Responsável" id="resposavel" [(ngModel)]="pessoa.responsavel" name="responsavel">
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field appearance="fill">
       <mat-label>Parentesco</mat-label>
       <input matInput placeholder="Parentesco" id="parentesco" [(ngModel)]="pessoa.parentesco" name="parentesco">
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field appearance="fill">
       <mat-label>Estado Cívil</mat-label>
       <mat-select [(value)]="pessoa.estCivil" placeholder="Estado Civil" id="EstCivil">
         <mat-option *ngFor="let pe of estCivil" [value]="pe.id">
@@ -54,7 +53,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field appearance="fill">
       <mat-label>Sexo</mat-label>
       <mat-select [(value)]="pessoa.tipoSexo" placeholder="Sexo">
         <mat-option *ngFor="let se of sexo" [value]="se.id">
@@ -63,29 +62,12 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field *ngIf="pessoa.id > 0">
+    <mat-form-field appearance="fill" *ngIf="pessoa.id > 0">
       <mat-label>Excluído</mat-label>
       <input matInput placeholder="Excluído">
       <input name="excluido" [(ngModel)]="pessoa.excluido" [checked]="pessoa.excluido" type="checkbox">
     </mat-form-field>
 
-
-
-    <!-- <mat-form-field appearance="outline" style="width: 23%;">
-    <mat-label>E-mail</mat-label>
-    <input matInput placeholder="e-mail" id="nomeContato" type="email" [(ngModel)]="contato.email" name="email">
-  </mat-form-field>
-
-  <mat-form-field appearance="outline" style="width: 20%;">
-    <mat-label>Email Secundário</mat-label>
-    <input matInput placeholder="E-mail Secundário" id="email_secundario" type="email"
-      [(ngModel)]="contato.email_secundario" name="email_secundario">
-  </mat-form-field> -->
-
-
-
-    <!-- <app-pessoa-endereco [enable]="enableComponent" [idPessoa]="pessoa.id"></app-pessoa-endereco>
-  <app-telefones [enable]="enableComponent" [idContato]="contato.id"></app-telefones> -->
   </form>
 
   <span style="padding-left: 10px;" (click)="Salvar()">
@@ -95,4 +77,3 @@
   </span>
 
 </mat-card>
-<!-- </mat-card> -->

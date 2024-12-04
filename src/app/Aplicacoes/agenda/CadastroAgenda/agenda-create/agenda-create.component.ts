@@ -1,3 +1,4 @@
+import { HorarioAgenda } from './../../../../models/Agenda/modelHorarioAgenda';
 import { filter } from 'rxjs/operators';
 import { Endpoint } from '../../../../Negocio/Endpoint';
 import { ServiceAllService } from '../../../../services/service-all.service';
@@ -13,7 +14,6 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AgendaGrupoCadastroComponent } from '../../GrupoAgenda/agenda-grupo-cadastro/agenda-grupo-cadastro.component';
 import { AgendaGrupoUpdateComponent } from '../../GrupoAgenda/agenda-grupo-update/agenda-grupo-update.component';
 import { AgendaCadastroUnidadeComponent } from '../../Unidade/agenda-cadastro-unidade/agenda-cadastro-unidade.component';
-import { HorarioAgenda } from 'src/app/models/Agenda/modelHorarioAgenda';
 import { AgendaDto } from 'src/app/models/Agenda/modelRetornoAgenda';
 import { Component, OnInit } from '@angular/core';
 import { Overlay } from '@angular/cdk/overlay';
@@ -53,7 +53,7 @@ export class AgendaCreateComponent implements OnInit {
 
   //Horários
 
-  // todosHorarios: HorarioAgenda[] = new Array();
+  qtdHorariosAgendados: HorarioAgenda[] = new Array();
 
   segunda: Date[] = new Array();
   terca: Date[] = new Array();
@@ -63,15 +63,7 @@ export class AgendaCreateComponent implements OnInit {
   sabado: Date[] = new Array();
   domingo: Date[] = new Array();
 
-  detalhesDomingo: HorarioAgenda[] = new Array();
-  detalhesSegunda: HorarioAgenda[] = new Array();
-  detalhesTerca: HorarioAgenda[] = new Array();
-  detalhesQuarta: HorarioAgenda[] = new Array();
-  detalhesQuinta: HorarioAgenda[] = new Array();
-  detalhesSexta: HorarioAgenda[] = new Array();
-  detalhesSabado: HorarioAgenda[] = new Array();
-
-  ColunasDatas = ['data']
+  ColunasDatas = ['data', 'qtd']
   dadosHorarios: HorarioAgenda = new HorarioAgenda();
 
   Colunas = ['id', 'nomeAgenda', 'nome', 'nomeUnidade', 'nomeSala', 'nomeGrupoAgenda', 'vigenciaInicio', 'vigenciaFim', 'bloqueado', 'action']
@@ -84,7 +76,7 @@ export class AgendaCreateComponent implements OnInit {
 
 
   //dia não atende 
-  ColunasDatasNaoAtende = ['id', 'dataNaoAtende', 'motivo' , 'action'];
+  ColunasDatasNaoAtende = ['id', 'dataNaoAtende', 'motivo', 'action'];
   datanaoatende: any;
   dataNaoAtende: AgendaDataNaoAtende = new AgendaDataNaoAtende();
   agendaDataNaoAtende: AgendaDataNaoAtende[] = new Array()
@@ -373,6 +365,8 @@ export class AgendaCreateComponent implements OnInit {
       this.servicoHorario.read(Endpoint.AgendaHorarios + `/agenda/${id}`)
         .subscribe((result: HorarioAgenda[]) => {
 
+          this.qtdHorariosAgendados = result.filter(x => x.naoDisponivel);
+
           this.domingo = [...new Set(this.todosOsHorariosDaAgenda ?
             result.filter(x => x.diaDasemana == 1).map(dt => dt.data) :
             result.filter(x => x.diaDasemana == 1 && x.data >= this.vigenciaInicio && x.data <= this.vigenciaFim).map(dt => dt.data))];
@@ -400,6 +394,9 @@ export class AgendaCreateComponent implements OnInit {
           this.sabado = [...new Set(this.todosOsHorariosDaAgenda ?
             result.filter(x => x.diaDasemana == 7).map(dt => dt.data) :
             result.filter(x => x.diaDasemana == 7 && x.data >= this.vigenciaInicio && x.data <= this.vigenciaFim).map(dt => dt.data))];
+
+
+
         });
     }
   }
@@ -503,7 +500,7 @@ export class AgendaCreateComponent implements OnInit {
   }
 
   public ExcluirServicoAgenda(id: number): void {
-    
+
     this._utilService.Popup('', PopupConfirmacaoComponent, 'auto', 'auto', true, "Tem Certeza que deseja Excluir ?")
       .subscribe(result => {
         if (result) {
@@ -525,7 +522,7 @@ export class AgendaCreateComponent implements OnInit {
 
     this.serviceApi.read(Endpoint.AgendaCatalogoServico + `/estabelecimento/${idAgenda}`)
       .subscribe((result: ResponseAgendaCatalagoServicos[]) => {
-        
+
         this.catalogoServicosAgenda = new Array();
 
         result.forEach(cat => {
@@ -568,11 +565,15 @@ export class AgendaCreateComponent implements OnInit {
   public ExcluirDataNaoAtende(id: number): void {
     this.serviceApi.create(id, Endpoint.Dianaoatende + `/excluir/${id}`)
       .subscribe(() => {
-        
-          this._utilService.showMessage("Data Excluída.", true);
-          this.BuscarDatasNaoAtende(this.agendaSelecionada);
-       
+
+        this._utilService.showMessage("Data Excluída.", true);
+        this.BuscarDatasNaoAtende(this.agendaSelecionada);
+
       })
+  }
+
+  public QuantidadeAgendamento(row: Date, dia: number): number {
+    return this.qtdHorariosAgendados.filter(x => x.data == row && x.diaDasemana == dia).length
   }
 
 }

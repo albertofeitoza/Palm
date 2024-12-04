@@ -119,11 +119,11 @@
       <mat-card *ngIf="estadoForm">
         <mat-card-title>{{ agenda && agenda.id > 0 ? 'Editar Agenda' : 'Nova Agenda'}}</mat-card-title>
         <form>
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="fill">
             <input matInput placeholder="Nome Agenda" [(ngModel)]="agenda.nomeAgenda" name="nomeAgenda">
           </mat-form-field>
 
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="fill">
             <input matInput placeholder="Profissional">
             <i class="material-icons ordem" (click)="AtualizarComboProfissional()">refresh</i>
             <i class="material-icons ordem" (click)="novoUsuario()">person_add</i>
@@ -136,7 +136,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="fill">
             <input matInput placeholder="Unidade Atendimento">
             <i class="material-icons ordem" (click)="AtualizarComboUnidade()">refresh</i>
             <i class="material-icons ordem" (click)="novaUnidade()">house</i>
@@ -148,7 +148,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="fill">
             <input matInput placeholder="Sala Atendimento">
             <p></p>
             <mat-select [(value)]="agenda.salaId">
@@ -158,13 +158,13 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="fill">
             <input matInput placeholder="Substituição">
             <input name="substituicao" [(ngModel)]="agenda.substituicao" [checked]="agenda.substituicao"
               type="checkbox">
           </mat-form-field>
 
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="fill">
             <input matInput placeholder="Grupo Agenda">
             <i class="material-icons ordem" (click)="AtualizarComboGrupoAgenda()">refresh</i>
             <i class="material-icons ordem" (click)="cadGrupo()">house</i>
@@ -177,25 +177,25 @@
           </mat-form-field>
 
 
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="fill">
             <input matInput placeholder="Vigência Início" [(ngModel)]="agenda.vigenciaInicio" name="vigenciaInicio"
               type="datetime-local" teste>
           </mat-form-field>
 
 
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="fill">
             <input matInput placeholder="Vigência Fim" [(ngModel)]="agenda.vigenciaFim" name="vigenciaFim"
               type="datetime-local">
           </mat-form-field>
 
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="fill">
             <input matInput placeholder="Considera Feriado">
             <input name="considerarFeriado" [(ngModel)]="agenda.considerarFeriado" [checked]="agenda.considerarFeriado"
               type="checkbox">
           </mat-form-field>
 
 
-          <mat-form-field *ngIf="agenda.id > 0" appearance="outline">
+          <mat-form-field *ngIf="agenda.id > 0" appearance="fill">
             <input matInput placeholder="bloqueado">
             <input name="bloqueado" [(ngModel)]="agenda.bloqueado" [checked]="agenda.bloqueado" type="checkbox">
           </mat-form-field>
@@ -357,12 +357,16 @@
       <table class="tabelaHorario" mat-table [dataSource]="segunda">
         <!-- Id Column -->
         <ng-container matColumnDef="data">
-
-          <th mat-header-cell *matHeaderCellDef><b>Segunda</b> <br />Data
-          </th>
+          <th mat-header-cell *matHeaderCellDef><b>Segunda</b></th>
           <td mat-cell id="idhora" *matCellDef="let row" class="cursor" (click)="DetalhesDatas(row)">{{row | date:
             'dd/MM/yyyy'}}</td>
         </ng-container>
+
+        <ng-container matColumnDef="qtd">
+          <th mat-header-cell *matHeaderCellDef><b>Qtd</b></th>
+          <td mat-cell style="color: rgb(81, 81, 235);" *matCellDef="let row" >{{QuantidadeAgendamento(row, 2)}} </td>
+        </ng-container>
+
         <tr mat-header-row *matHeaderRowDef="ColunasDatas"></tr>
         <tr mat-row *matRowDef="let row; columns: ColunasDatas;"></tr>
       </table>
@@ -370,10 +374,15 @@
       <!--Terça-->
 
       <table class="tabelaHorario" mat-table [dataSource]="terca">
+        
         <ng-container matColumnDef="data">
-          <th mat-header-cell *matHeaderCellDef><b>Terça</b> <br />Data</th>
-          <td mat-cell id="idhora" *matCellDef="let row" class="cursor" (click)="DetalhesDatas(row)">{{row | date:
-            'dd/MM/yyyy'}}</td>
+          <th mat-header-cell *matHeaderCellDef><b>Terça</b></th>
+          <td mat-cell id="idhora" *matCellDef="let row" class="cursor" (click)="DetalhesDatas(row)">{{row | date:'dd/MM/yyyy'}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="qtd">
+          <th mat-header-cell *matHeaderCellDef><b>Qtd</b> <br />
+          <td mat-cell style="color: rgb(81, 81, 235);" *matCellDef="let row" >{{QuantidadeAgendamento(row, 3)}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="ColunasDatas"></tr>
@@ -384,9 +393,14 @@
 
       <table class="tabelaHorario" mat-table [dataSource]="quarta">
         <ng-container matColumnDef="data">
-          <th mat-header-cell *matHeaderCellDef><b>Quarta</b> <br />Data</th>
+          <th mat-header-cell *matHeaderCellDef><b>Quarta</b></th>
           <td mat-cell id="idhora" *matCellDef="let row" class="cursor" (click)="DetalhesDatas(row)">{{row | date:
             'dd/MM/yyyy'}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="qtd">
+          <th mat-header-cell *matHeaderCellDef><b>Qtd</b></th>
+          <td mat-cell style="color: rgb(81, 81, 235);" *matCellDef="let row" >{{QuantidadeAgendamento(row, 4)}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="ColunasDatas"></tr>
@@ -397,9 +411,14 @@
 
       <table class="tabelaHorario" mat-table [dataSource]="quinta">
         <ng-container matColumnDef="data">
-          <th mat-header-cell *matHeaderCellDef><b>Quinta</b> <br />Data</th>
+          <th mat-header-cell *matHeaderCellDef><b>Quinta</b></th>
           <td mat-cell id="idhora" *matCellDef="let row" class="cursor" (click)="DetalhesDatas(row)">{{row | date:
-            'dd/MM/yyyy'}}</td>
+            'dd/MM/yyyy' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="qtd">
+          <th mat-header-cell *matHeaderCellDef><b>Qtd</b></th>
+          <td mat-cell style="color: rgb(81, 81, 235);"  *matCellDef="let row" >{{QuantidadeAgendamento(row, 5)}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="ColunasDatas"></tr>
@@ -410,9 +429,14 @@
 
       <table class="tabelaHorario" mat-table [dataSource]="sexta">
         <ng-container matColumnDef="data">
-          <th mat-header-cell *matHeaderCellDef><b>Sexta</b> <br />Data</th>
+          <th mat-header-cell *matHeaderCellDef><b>Sexta</b></th>
           <td mat-cell id="idhora" *matCellDef="let row" class="cursor" (click)="DetalhesDatas(row)">{{row | date:
             'dd/MM/yyyy'}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="qtd">
+          <th mat-header-cell *matHeaderCellDef><b>Qtd</b></th>
+          <td mat-cell style="color: rgb(81, 81, 235);" *matCellDef="let row" >{{QuantidadeAgendamento(row, 6)}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="ColunasDatas"></tr>
@@ -424,9 +448,14 @@
 
       <table class="tabelaHorario" mat-table [dataSource]="sabado">
         <ng-container matColumnDef="data">
-          <th mat-header-cell *matHeaderCellDef><b>Sábado</b> <br />Data</th>
+          <th mat-header-cell *matHeaderCellDef><b>Sábado</b></th>
           <td mat-cell id="idhora" *matCellDef="let row" class="cursor" (click)="DetalhesDatas(row)">{{row | date:
             'dd/MM/yyyy'}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="qtd">
+          <th mat-header-cell *matHeaderCellDef><b>Qtd</b></th>
+          <td mat-cell style="color: rgb(81, 81, 235);" *matCellDef="let row" >{{QuantidadeAgendamento(row, 7)}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="ColunasDatas"></tr>
@@ -437,9 +466,14 @@
 
       <table class="tabelaHorario" mat-table [dataSource]="domingo">
         <ng-container matColumnDef="data">
-          <th mat-header-cell *matHeaderCellDef><b>Domingo</b> <br />Data</th>
+          <th mat-header-cell *matHeaderCellDef><b>Domingo</b></th>
           <td mat-cell id="idhora" *matCellDef="let row" class="cursor" (click)="DetalhesDatas(row)">{{row | date:
             'dd/MM/yyyy'}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="qtd">
+          <th mat-header-cell *matHeaderCellDef><b>Qtd</b></th>
+          <td mat-cell style="color: rgb(81, 81, 235);" *matCellDef="let row" >{{QuantidadeAgendamento(row, 1)}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="ColunasDatas"></tr>

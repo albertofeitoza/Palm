@@ -4,7 +4,7 @@
 
   <div class="mat-elevation-z4 "
     style="height: 100px;overflow: auto;width: 99.5%; height: 57%;position: static; margin-left: 10px;">
-    <table mat-table [dataSource]="detalhes" >
+    <table mat-table [dataSource]="detalhes">
 
       <mat-header-row *matHeaderRowDef="ColunasDetalhes"></mat-header-row>
       <mat-row *matRowDef="let row; columns: ColunasDetalhes;"></mat-row>
@@ -42,7 +42,8 @@
       <ng-container matColumnDef="bloqueado">
         <mat-header-cell *matHeaderCellDef><b>Bloqueado</b></mat-header-cell>
         <mat-cell *matCellDef="let row">
-          <mat-select style="padding-left: 30px;" [(value)]="row.bloqueado" (selectionChange)="AlterarStatus(row)">
+          <mat-select style="padding-left: 30px; background-color: {{ row.bloqueado ? 'burlywood' : 'white'}};"
+            [(value)]="row.bloqueado" (selectionChange)="AlterarStatus(row)">
             <mat-option [value]="true">Sim</mat-option>
             <mat-option [value]="false">Não</mat-option>
           </mat-select>
@@ -51,12 +52,12 @@
 
       <ng-container matColumnDef="naoDisponivel">
         <mat-header-cell *matHeaderCellDef><b>Horário Agendado</b></mat-header-cell>
-        <mat-cell *matCellDef="let row">{{row.naoDisponivel ? ' Sim: ' : ' Não'}}</mat-cell>
+        <mat-cell style="background-color: {{ row.naoDisponivel ? 'burlywood' : 'white'}};" *matCellDef="let row">{{row.naoDisponivel ? ' Sim: ' : ' Não'}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="bloqueadoEmTela">
         <mat-header-cell *matHeaderCellDef><b>Bloqueado em Tela</b></mat-header-cell>
-        <mat-cell *matCellDef="let row">{{row.bloqueadoEmTela ? ' Sim' : ' Não'}}</mat-cell>
+        <mat-cell style="background-color: {{ row.bloqueadoEmTela ? 'burlywood' : 'white'}};"  *matCellDef="let row">{{row.bloqueadoEmTela ? ' Sim' : ' Não'}}</mat-cell>
       </ng-container>
     </table>
   </div>
