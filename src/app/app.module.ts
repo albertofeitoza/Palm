@@ -11,7 +11,6 @@ import { NavComponent } from './components/template/nav/nav.component';
 
 import { HomeComponent } from './components/home/home.component';
 
-import { ProductCreateComponent } from './components/product/product-create/product-create.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import localePt from '@angular/common/locales/pt';
@@ -42,11 +41,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import {MatSortModule} from '@angular/material/sort';
 
-import { ProductReadComponent } from './components/product/product-read/product-read.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { ProductUpdateComponent } from './components/product/product-update/product-update.component';
-import { ProductDeleteComponent } from './components/product/product-delete/product-delete.component';
 import { RedDirective } from './diretivas/red.directive';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { UsuarioReadComponent } from './components/usuario/usuario-read/usuario-read.component';
@@ -90,6 +86,8 @@ import { DetalhesDiasDisponiveisAgendaComponent } from './Aplicacoes/agenda/Cada
 import { AgendaAssociarCatalogoComponent } from './Aplicacoes/agenda/CadastroAgenda/agenda-create/modal/agenda-associar-catalogo/agenda-associar-catalogo.component';
 import { AgendamentoSelecionarHorarioAgendarComponent } from './Aplicacoes/agenda/Agendamentos/dados-agendamento/modal/agendamento-selecionar-horario-agendar/agendamento-selecionar-horario-agendar.component';
 import { AgendamentoEditarItemAgendadoComponent } from './Aplicacoes/agenda/Agendamentos/dados-agendamento/modal/agendamento-editar-item-agendado/agendamento-editar-item-agendado.component';
+import { SolucoesComponent } from './components/Solucoes/solucoes-read/solucoes-read.component';
+
 
 @NgModule({
   declarations: [
@@ -98,9 +96,7 @@ import { AgendamentoEditarItemAgendadoComponent } from './Aplicacoes/agenda/Agen
     FooterComponent,
     NavComponent,
     HomeComponent,
-    ProductReadComponent,
-    ProductUpdateComponent,
-    ProductDeleteComponent,
+    SolucoesComponent,
     LoginComponent,
     RedDirective,
     UsuarioComponent,
@@ -119,7 +115,6 @@ import { AgendamentoEditarItemAgendadoComponent } from './Aplicacoes/agenda/Agen
     AgendaCreateComponent,
     AgendaReadComponent,
     HomeAgendaComponent,
-    ProductCreateComponent,
     AgendaCadastroUnidadeComponent,
     AgendaAlterarUnidadeComponent,
     AgendaExcluirUnidadeComponent,

@@ -1,10 +1,9 @@
-import { PermissaoUsuario } from './../../models/produtos/produtoEmpresa.model';
 import { UtilService } from '../../services/util.service';
 import { Endpoint } from '../../Negocio/Endpoint';
 import { ServiceAllService } from '../../services/service-all.service';
 import { HeaderService } from '../template/header/header.service';
 import { Component, OnInit } from '@angular/core';
-import { Solucoes } from 'src/app/models/produtos/produtoEmpresa.model';
+import { Solucoes } from 'src/app/models/Solucoes/SolucoesEmpresa';
 import { LoginService } from 'src/app/services/login.service';
 
 @Component({

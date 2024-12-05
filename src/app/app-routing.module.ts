@@ -13,7 +13,7 @@ import { HomeComponent } from "./components/home/home.component";
 
 import { EmpresaReadComponent } from './components/empresa/empresa-read/empresa-read.component';
 import { ChamadoReadComponent } from './components/chamados/chamado-read/chamado-read.component';
-import { ProductReadComponent } from './components/product/product-read/product-read.component';
+import { SolucoesComponent } from './components/Solucoes/solucoes-read/solucoes-read.component';
 
 
 //Rotas de componentes Negócio
@@ -22,7 +22,7 @@ const routes: Routes = [
   {path : '', component:HomeComponent },
   {path: "login", component: LoginComponent },
   //Rotas de associação de produto a empresa  cadastroproduto
-  {path: "produtoempresa", component: ProductReadComponent },
+  {path: "solucoes", component: SolucoesComponent },
   //Rotas de usuarios
   //Rotas de chamados
   {path: "chamados", component : ChamadoReadComponent },

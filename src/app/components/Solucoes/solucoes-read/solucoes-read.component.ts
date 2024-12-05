@@ -1,22 +1,17 @@
-import { Empresa } from './../../../models/empresa/ModelEmpresa';
+import { Empresa } from '../../../models/empresa/ModelEmpresa';
 import { Router } from '@angular/router';
-import { Endpoint } from './../../../Negocio/Endpoint';
-import { ServiceAllService } from './../../../services/service-all.service';
-import { UtilService } from './../../../services/util.service';
-import { Component, OnInit, Input } from '@angular/core';
-import { TipoUsuario } from 'src/app/models/usuarios/enumUsuarios';
+import { ServiceAllService } from '../../../services/service-all.service';
+import { UtilService } from '../../../services/util.service';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Overlay } from '@angular/cdk/overlay';
-import { ProductCreateComponent } from '../product-create/product-create.component';
-import { ProductUpdateComponent } from '../product-update/product-update.component';
-import { ProductDeleteComponent } from '../product-delete/product-delete.component';
 
 @Component({
-  selector: 'app-product-read',
-  templateUrl: './product-read.component.html',
-  styleUrls: ['./product-read.component.css']
+  selector: 'app-solucoes-read',
+  templateUrl: './solucoes-read.component.html',
+  styleUrls: ['./solucoes-read.component.css']
 })
-export class ProductReadComponent implements OnInit {
+export class SolucoesComponent implements OnInit {
 
 vlrProduto : string
 
@@ -28,7 +23,7 @@ idSelecionado : Number = 0;
   constructor(private router : Router,
               private serviceProduto : ServiceAllService<any>,
               private serviceEmpresa : ServiceAllService<Empresa>,
-              private _utilService : UtilService,
+              private servico : UtilService,
               public dialog : MatDialog, 
               private overlay : Overlay
              ) { }

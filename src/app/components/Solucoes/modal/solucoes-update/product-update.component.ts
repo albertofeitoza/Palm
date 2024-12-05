@@ -1,5 +1,5 @@
-import { ServiceAllService } from './../../../services/service-all.service';
-import { UtilService } from './../../../services/util.service';
+import { ServiceAllService } from '../../../../services/service-all.service';
+import { UtilService } from '../../../../services/util.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';

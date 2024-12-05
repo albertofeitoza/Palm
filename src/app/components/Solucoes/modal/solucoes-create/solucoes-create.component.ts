@@ -1,29 +1,26 @@
-import { Empresa } from './../../../models/empresa/ModelEmpresa';
-import { Endpoint } from './../../../Negocio/Endpoint';
-import { ServiceAllService } from './../../../services/service-all.service';
-import { UtilService } from './../../../services/util.service';
-import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Empresa } from '../../../../models/empresa/ModelEmpresa';
+import { Endpoint } from '../../../../Negocio/Endpoint';
+import { ServiceAllService } from '../../../../services/service-all.service';
+import { UtilService } from '../../../../services/util.service';
+import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { TipoAplicacao } from 'src/app/Negocio/Aplicacao';
-import { Produto } from 'src/app/models/produtos/Produto';
+import { Solucoes } from 'src/app/models/Solucoes/SolucoesEmpresa';
+
 
 @Component({
-  selector: 'app-product-create',
-  templateUrl: './product-create.component.html',
-  styleUrls: ['./product-create.component.css']
+  selector: 'app-solucoes-create',
+  templateUrl: './solucoes-create.component.html',
+  styleUrls: ['./solucoes-create.component.css']
 })
 export class ProductCreateComponent implements OnInit {
 
- comboProduto : Produto[] ;
+ comboProduto : Solucoes[] ;
  empresa : Empresa[];
  produtoEmpresa: any
   constructor(
               private servico : UtilService,
-              private ProdutoEmpresaservice : ServiceAllService<any>,
-              private ServiceEmpresa : ServiceAllService<Empresa>,
+              private serviceApi : ServiceAllService<any>,
               public matDialogref : MatDialogRef<ProductCreateComponent>,
-              private serviceProduto : ServiceAllService<Produto>
                ) { }
 
   ngOnInit(): void {
@@ -58,14 +55,14 @@ export class ProductCreateComponent implements OnInit {
 
   buscarProduto(){
     debugger  
-    this.serviceProduto.read(Endpoint.CatalogoServico).subscribe(x => {
+    this.serviceApi.read(Endpoint.CatalogoServico).subscribe(x => {
         this.comboProduto = x;
       })
 
 
   }
   buscarEmpresa(){
-    this.ServiceEmpresa.read(Endpoint.Empresa).subscribe(emp => {
+    this.serviceApi.read(Endpoint.Empresa).subscribe(emp => {
       this.empresa = emp;
     })
   }

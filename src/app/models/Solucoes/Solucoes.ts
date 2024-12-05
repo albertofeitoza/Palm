@@ -1,4 +1,4 @@
-export class Produto {
+export class Solucoes {
     Id : number
     DtCriacao : Date
     Nome : string

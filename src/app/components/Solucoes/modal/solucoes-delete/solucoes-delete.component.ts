@@ -1,13 +1,13 @@
-import { Endpoint } from './../../../Negocio/Endpoint';
-import { ServiceAllService } from './../../../services/service-all.service';
-import { UtilService } from './../../../services/util.service';
+import { Endpoint } from '../../../../Negocio/Endpoint';
+import { ServiceAllService } from '../../../../services/service-all.service';
+import { UtilService } from '../../../../services/util.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-product-delete',
-  templateUrl: './product-delete.component.html',
-  styleUrls: ['./product-delete.component.css']
+  selector: 'app-solucoes-delete',
+  templateUrl: './solucoes-delete.component.html',
+  styleUrls: ['./solucoes-delete.component.css']
 })
 export class ProductDeleteComponent implements OnInit {
 
