@@ -4,42 +4,33 @@
         <mat-nav-list class="nav-list">
 
             <a mat-list-item routerLink="/">
-                <i class="material-icons">
-                    home
-                </i>
+                <mat-icon>home</mat-icon>
                 Início
             </a>
 
             <div *ngIf="unlockadm">
                 <a mat-list-item routerLink="empresa">
-                    <i class="material-icons">
-                        reorder
-                    </i>
+                    <mat-icon>reorder</mat-icon>
                     Empresas
                 </a>
 
                 <a mat-list-item routerLink="produtoempresa">
-                    <i class="material-icons">
-                        storefront
-                    </i>
+                    <mat-icon>storefront</mat-icon>
                     Produto Empresa
                 </a>
             </div>
 
             <div *ngIf="unlockMaster">
                 <a mat-list-item routerLink="empresa">
-                    <i class="material-icons">
-                        reorder
-                    </i>
+                    <mat-icon>reorder</mat-icon>
                     Empresas
                 </a>
             </div>
 
-            <a mat-list-item (click)="sairSistema()">
+            
+            <a (click)="sairSistema()">
+                <mat-icon>play_for_work</mat-icon>
                 Sair
-                <i class="material-icons">
-                    logout
-                </i>
             </a>
         </mat-nav-list>
     </mat-sidenav>

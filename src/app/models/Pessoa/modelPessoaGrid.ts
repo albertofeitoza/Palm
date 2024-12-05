@@ -14,4 +14,3 @@ export class PessoaGrid {
     celular : string
     email : string
 }
-

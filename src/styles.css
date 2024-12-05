@@ -129,9 +129,10 @@ body {
 
 
 /* classe default para quando não retornar dados da lista */
-.naopossuidados{
+.naopossuidados {
     font-size: 14px;
     color: cadetblue;
     text-align: center;
     padding-top: 10%;
 }
+

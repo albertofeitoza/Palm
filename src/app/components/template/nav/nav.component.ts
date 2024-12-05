@@ -10,31 +10,37 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
-opened = true;
-unlockadm = false;  
-unlockMaster = false;
-  constructor(private auth: LoginService,
-             private servico : UtilService) { }
+
+  opened = true;
+  unlockadm = false;
+  unlockMaster = false;
+  width = 0
+
+
+  constructor(
+    private auth: LoginService,
+    private servico: UtilService
+  ) { }
 
   ngOnInit(): void {
-     this.validarAcesso();
+    this.validarAcesso();
+    this.width = 200
   }
 
-  sairSistema(){
-    
+  sairSistema() {
+
     this.auth.sairSistema();
-    
+
   }
-  validarAcesso(){
-    
-    if(this.auth.dadosUsuario.TipoUsuarioLogado === 1){
+  validarAcesso() {
+
+    if (this.auth.dadosUsuario.TipoUsuarioLogado === 1) {
       this.unlockadm = true;
     }
 
-    if(this.auth.dadosUsuario.TipoUsuarioLogado === 2){
+    if (this.auth.dadosUsuario.TipoUsuarioLogado === 2) {
       this.unlockMaster = true;
     }
 
-   
   }
 }

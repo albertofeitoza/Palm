@@ -10,6 +10,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { PessoaCreateComponent } from 'src/app/components/pessoa/modal/pessoa-create/pessoa-create.component';
+import { ViewPessoa } from 'src/app/models/Pessoa/ViewPessoa';
 
 @Component({
   selector: 'app-agendamentos-create',
@@ -49,10 +50,7 @@ export class AgendamentosCreateComponent implements OnInit {
 
   }
 
-  // ngAfterViewInit() {
-  //   this.pessoas.paginator = this.paginator
-  //   this.pessoas.sort = this.sort;
-  // }
+ 
 
 
   NovoAgendamento() {
@@ -71,8 +69,8 @@ export class AgendamentosCreateComponent implements OnInit {
     this.idSelecionado = 0;
 
 
-    this.serviceApi.read(Endpoint.Pessoa + `/estabelecimento/${this.servico.Sessao().EmpresaId}`)
-      .subscribe(p => {
+    this.serviceApi.read(Endpoint.Pessoa + `/viewPersonalizada/${this.servico.Sessao().EmpresaId}`)
+      .subscribe((p : PessoaGrid[]) => {
         this.pessoas.data = p.filter(x =>
           // this.pessoa.nome != null &&
           //   this.pessoa.responsavel != null &&
@@ -123,6 +121,8 @@ export class AgendamentosCreateComponent implements OnInit {
 
         this.pessoas.paginator = this.paginator
         this.pessoas.sort = this.sort;
+        this.paginator._intl.itemsPerPageLabel = "Itens por página";
+
       });
   }
 
