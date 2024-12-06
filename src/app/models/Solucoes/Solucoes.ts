@@ -1,6 +1,7 @@
 export class Solucoes {
-    Id : number
-    DtCriacao : Date
-    Nome : string
-    Status : boolean
+    id: number = 0;
+    dataCriacao: Date;
+    nome: string;
+    rota: string;
+    ativo: boolean;
 }

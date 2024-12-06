@@ -1,8 +1,8 @@
 <mat-card>
-    <h1>Cadastro de Usuário</h1>
+    <h1>{{usuario.id > 0 ? 'Perfil de usuário' : 'Cadastro de Usuário' }} </h1>
 
     <form>
-        <mat-form-field >
+        <mat-form-field *ngIf="!perfil">
             <mat-select [disabled]="usuario.id > 0" [(value)]="usuario.pessoaId" placeholder="Selecione a Pessoa">
                 <mat-option *ngFor="let pe of pessoas" [value]="pe.id">
                     {{pe.nome}}
@@ -21,7 +21,7 @@
         <mat-form-field>
             <input matInput placeholder="Tipo de Usuário">
             <p></p>
-            <mat-select [disabled]="usuario.id > 0" [(value)]="usuario.tipoUsuario" placeholder="tipousuario">
+            <mat-select  [disabled]="perfil" [(value)]="usuario.tipoUsuario" placeholder="tipousuario">
                 <mat-option *ngFor="let us of tipoUsuario " [value]="us.id">
                     {{us.tipo}}
                 </mat-option>
@@ -36,7 +36,7 @@
         <mat-form-field *ngIf="usuario.id > 0">
             <mat-label>Ativo</mat-label>
             <input matInput placeholder="Ativo">
-            <input name="ativo" [(ngModel)]="usuario.ativo" [checked]="usuario.ativo" type="checkbox">
+            <input  [disabled]="perfil" name="ativo" [(ngModel)]="usuario.ativo" [checked]="usuario.ativo" type="checkbox">
         </mat-form-field>
     </form>
     <button *ngIf="usuario.pessoaId > 0 && usuario.nomeUsuario && usuario.senha && usuario.email" mat-raised-button

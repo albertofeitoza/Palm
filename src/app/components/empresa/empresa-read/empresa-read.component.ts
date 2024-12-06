@@ -32,7 +32,7 @@ export class EmpresaReadComponent implements OnInit {
   constructor(private router: Router,
     private serviceEmpresa: ServiceAllService<Empresa>,
     public dialog: MatDialog,
-    private _utilService: UtilService,
+    private servico: UtilService,
     private overlay: Overlay,
     private auth: LoginService
   ) {
@@ -58,43 +58,52 @@ export class EmpresaReadComponent implements OnInit {
 
   public CadastrarEmpresa(): void {
 
-    if (this.auth.dadosUsuario.TipoUsuarioLogado == TipoUsuario.Administrador || this.auth.dadosUsuario.TipoUsuarioLogado == TipoUsuario.MasterEmpresa) {
-      this._utilService.Popup("", EmpresaCreateComponent, '730px', 'auto')
+    if (this.servico.Sessao().TipoUsuarioLogado == TipoUsuario.Administrador || this.servico.Sessao().TipoUsuarioLogado == TipoUsuario.MasterEmpresa) {
+      this.servico.Popup("", EmpresaCreateComponent, '730px', 'auto')
         .subscribe(() => {
           this.buscarEmpresa();
         })
     } else {
-      this._utilService.showMessage("Você não possui permissão para criação de empresas", true);
+      this.servico.showMessage("Você não possui permissão para criação de empresas", true);
     }
   }
 
 
   public EditarEmpresa(id: number): void {
 
-    if (this.auth.dadosUsuario.TipoUsuarioLogado == TipoUsuario.Administrador || this.auth.dadosUsuario.TipoUsuarioLogado == TipoUsuario.MasterEmpresa) {
-      this._utilService.Popup(id, EmpresaCreateComponent, "730px", "auto")
+    if (this.servico.Sessao().TipoUsuarioLogado == TipoUsuario.Administrador || this.servico.Sessao().TipoUsuarioLogado == TipoUsuario.MasterEmpresa) {
+      this.servico.Popup(id, EmpresaCreateComponent, "730px", "auto")
         .subscribe(() => {
           this.buscarEmpresa();
         })
     } else {
-      this._utilService.showMessage("Você não possui permissão para alterar cadastro de empresas", true);
+      this.servico.showMessage("Você não possui permissão para alterar cadastro de empresas", true);
     }
   }
 
   public Pessoas(row: any): void {
     if (!row.status) {
-      return this._utilService.showMessage("Empresa desativada", true);
+      return this.servico.showMessage("Empresa desativada, solicite a ativação", true);
     }
 
-    this._utilService.Popup(row.id, PessoaReadComponent, "70%", "50%")
+    this.servico.Popup(row.id, PessoaReadComponent, "70%", "50%")
   }
 
-  public Usuarios(id: number): void {
-    this._utilService.Popup(id, UsuarioReadComponent, "70%", "60%")
+  public Usuarios(row: any): void {
+
+    if (!row.status) {
+      return this.servico.showMessage("Empresa desativada, solicite a ativação", true);
+    }
+
+    this.servico.Popup(row.id, UsuarioReadComponent, "70%", "60%")
   }
 
-  public Solucoes(id: number): void {
-    this._utilService.Popup(id, SolucoesComponent, "70%", "50%")
+  public Solucoes(row: any): void {
+    if (!row.status) {
+      return this.servico.showMessage("Empresa desativada, solicite a ativação", true);
+    }
+
+    this.servico.Popup(row.id, SolucoesComponent, "70%", "50%")
   }
 
 }

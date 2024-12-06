@@ -27,8 +27,10 @@ export class UsuarioCreateComponent implements OnInit {
   usuario: Usuario = new Usuario();
   pessoas: ViewPessoa[] = new Array();
   dados: any;
+  perfil = false;
+
   constructor(private serviceApi: ServiceAllService<any>,
-    private utilService: UtilService,
+    private servico: UtilService,
     private auth: LoginService,
     public dialogRef: MatDialogRef<UsuarioCreateComponent>,
 
@@ -36,11 +38,12 @@ export class UsuarioCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.dados = this.dialogRef._containerInstance._config.data.object;
-    this.carregaCombos();
-    this.carregaEmpresa();
+    this.perfil = this.dados.perfil == 'perfil' ? true : false;
 
     if (this.dados.acao === 'idIsuario')
       this.BuscarUsuario(this.dados)
+
+    // this.carregaCombos();
 
   }
 
@@ -55,7 +58,7 @@ export class UsuarioCreateComponent implements OnInit {
         .subscribe((result: ViewUsuarios[]) => {
 
           if (result.filter(x => x.empresaId === Number(this.dados.id) && x.nomeUsuario.toLocaleLowerCase().trim() === this.usuario.nomeUsuario.toLocaleLowerCase().trim()).length > 0) {
-            this.utilService.showMessage(`Já existe um usuário na empresa com esse nome`, true);
+            this.servico.showMessage(`Já existe um usuário na empresa com esse nome`, true);
             return;
           }
 
@@ -65,13 +68,13 @@ export class UsuarioCreateComponent implements OnInit {
 
             this.serviceApi.create(this.usuario, Endpoint.Usuarios)
               .subscribe(() => {
-                this.utilService.showMessage("Usuário cadastrado com sucesso!", false);
+                this.servico.showMessage("Usuário cadastrado com sucesso!", false);
                 this.fecharPopup();
               })
 
           } else {
             let response = result.filter(x => x.pessoaId === this.usuario.pessoaId && x.empresaId === Number(this.dados.id) && x.tipoUsuario === this.usuario.tipoUsuario).map(x => x.nomeUsuario);
-            this.utilService.showMessage(`Já existe um usuário para essa pessoa com esse perfil, Usuario : ${response}`, true);
+            this.servico.showMessage(`Já existe um usuário para essa pessoa com esse perfil, Usuario : ${response}`, true);
             return;
 
           }
@@ -80,7 +83,7 @@ export class UsuarioCreateComponent implements OnInit {
     } else {
       this.serviceApi.create(this.usuario, Endpoint.Usuarios)
         .subscribe(() => {
-          this.utilService.showMessage("Usuário alterado com sucesso!", false);
+          this.servico.showMessage("Usuário alterado com sucesso!", false);
           this.fecharPopup();
         })
 
@@ -95,7 +98,9 @@ export class UsuarioCreateComponent implements OnInit {
         this.serviceApi.read(Endpoint.Pessoa + `/estabelecimento/${result.empresaId}`)
           .subscribe((resultPessoa: ViewPessoa[]) => {
             this.pessoas.push(resultPessoa.filter(x => x.id == result.pessoaId)[0]);
+            this.carregaCombos();
           })
+
       })
   }
 
@@ -105,21 +110,28 @@ export class UsuarioCreateComponent implements OnInit {
 
 
   private carregaCombos(): void {
-    if (this.auth.dadosUsuario.TipoUsuarioLogado == TipoUsuario.Administrador) {
-      this.tipoUsuario = this.utilService.TipoUsuario();
+    if (this.servico.Sessao().TipoUsuarioLogado == TipoUsuario.Administrador) {
+      this.tipoUsuario = this.servico.TipoUsuario();
+      this.BuscarPessoas(this.dialogRef.id);
+      return;
+
     }
 
-    if (this.auth.dadosUsuario.TipoUsuarioLogado == TipoUsuario.MasterEmpresa) {
-      this.tipoUsuario = this.utilService.TipoUsuario().filter(x => x.id > 1);
+    if (this.servico.Sessao().TipoUsuarioLogado == TipoUsuario.MasterEmpresa && this.usuario.id == this.servico.Sessao().IdUsuario) {
+      this.tipoUsuario = this.servico.TipoUsuario().filter(x => x.id > 1);
+
+      this.BuscarPessoas(this.dialogRef.id);
+      return;
     }
 
-    this.BuscarPessoas(this.dialogRef.id);
+    if (this.servico.Sessao().TipoUsuarioLogado == TipoUsuario.Usuario && this.usuario.id == this.servico.Sessao().IdUsuario) {
+      this.tipoUsuario = this.servico.TipoUsuario().filter(x => x.id > 2);
 
+      this.BuscarPessoas(this.dialogRef.id);
+      return;
+    }
   }
 
-  carregaEmpresa(): void {
-
-  }
 
   private BuscarPessoas(filtro: any): void {
 

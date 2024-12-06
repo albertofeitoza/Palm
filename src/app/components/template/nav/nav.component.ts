@@ -1,7 +1,9 @@
 import { TipoUsuario } from './../../../models/usuarios/enumUsuarios';
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/services/login.service';
+import { ServiceAllService } from 'src/app/services/service-all.service';
 import { UtilService } from 'src/app/services/util.service';
+import { UsuarioCreateComponent } from '../../usuario/usuario-create/usuario-create.component';
 
 
 @Component({
@@ -11,6 +13,7 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class NavComponent implements OnInit {
 
+
   opened = true;
   unlockadm = false;
   unlockMaster = false;
@@ -19,7 +22,8 @@ export class NavComponent implements OnInit {
 
   constructor(
     private auth: LoginService,
-    private servico: UtilService
+    private servico: UtilService,
+
   ) { }
 
   ngOnInit(): void {

@@ -105,8 +105,10 @@ export class PessoaCreateComponent implements core.OnInit {
           }
 
           if (this.dados.acao === 'atualizar') {
+
             this.pessoa.rg = this.pessoa.rg.toString();
             this.pessoa.cpf = this.pessoa.cpf.toString();
+
             this.serviceApi.create(this.pessoa, Endpoint.Pessoa)
 
               .subscribe((result: Pessoa) => {

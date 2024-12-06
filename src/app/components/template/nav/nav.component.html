@@ -5,18 +5,25 @@
 
             <a mat-list-item routerLink="/">
                 <mat-icon>home</mat-icon>
-                Início
+                <div style="padding-left: 15px;">
+                    Início
+                </div>
             </a>
 
             <div *ngIf="unlockadm">
                 <a mat-list-item routerLink="empresa">
                     <mat-icon>reorder</mat-icon>
-                    Empresas
+                    <div style="padding-left: 15px;">
+                        Empresas
+                    </div>
+                    
                 </a>
 
                 <a mat-list-item routerLink="solucoes">
                     <mat-icon>storefront</mat-icon>
-                    Soluções
+                    <div style="padding-left: 15px;">
+                        Soluções
+                    </div>
                 </a>
 
                 <!-- <a mat-list-item routerLink="solucoesEmpresa">
@@ -31,15 +38,20 @@
             <div *ngIf="unlockMaster">
                 <a mat-list-item routerLink="empresa">
                     <mat-icon>reorder</mat-icon>
-                    Empresas
+                    <div style="padding-left: 15px;">
+                        Empresas
+                    </div>
                 </a>
             </div>
 
-            
-            <a (click)="sairSistema()">
-                <mat-icon>play_for_work</mat-icon>
-                Sair
-            </a>
+            <div style="padding-left: 15px; padding-top:inherit;">
+                <a style="display: flex;" (click)="sairSistema()">
+                    <mat-icon>logout</mat-icon>
+                    <div style="padding-left: 15px;">
+                        Sair
+                    </div>
+                </a>
+            </div>
         </mat-nav-list>
     </mat-sidenav>
 

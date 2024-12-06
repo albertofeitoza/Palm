@@ -11,9 +11,9 @@
                             <input matInput placeholder="Nome" [(ngModel)]="empresa.nome" name="nome">
                         </mat-form-field>
 
-                        <mat-form-field appearance="outline">
+                        <mat-form-field  appearance="outline">
                             <mat-label>Tipo de Pessoa</mat-label>
-                            <mat-select [(value)]="empresa.tipoPessoa" placeholder="Tipo de Pessoa">
+                            <mat-select [disabled]="empresa.id > 0 && dadosLogados.TipoUsuarioLogado > 1" [(value)]="empresa.tipoPessoa" placeholder="Tipo de Pessoa">
                                 <mat-option *ngFor="let tp  of tipoPessoa" [value]="tp.id">
                                     {{tp.tipo}}
                                 </mat-option>

@@ -1,3 +1,4 @@
+import { SolucoesCreateComponent } from './../modal/solucoes-create/solucoes-create.component';
 import { Empresa } from '../../../models/empresa/ModelEmpresa';
 import { Router } from '@angular/router';
 import { ServiceAllService } from '../../../services/service-all.service';
@@ -5,6 +6,9 @@ import { UtilService } from '../../../services/util.service';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Overlay } from '@angular/cdk/overlay';
+import { Solucoes } from 'src/app/models/Solucoes/Solucoes';
+import { Endpoint } from 'src/app/Negocio/Endpoint';
+import { TipoUsuario } from 'src/app/models/usuarios/enumUsuarios';
 
 @Component({
   selector: 'app-solucoes-read',
@@ -13,109 +17,76 @@ import { Overlay } from '@angular/cdk/overlay';
 })
 export class SolucoesComponent implements OnInit {
 
-vlrProduto : string
+  vlrProduto: string
 
-products: any
+  solucoes: Solucoes[] = new Array()
 
-displayedColumns = ['id','nome', 'nomeEmpresa', 'valor','bloqueado','action']  
-idSelecionado : Number = 0;
+  displayedColumns = ['id', 'dataCriacao', 'nome', 'rota', 'ativo', 'action']
+  idSelecionado: Number = 0;
 
-  constructor(private router : Router,
-              private serviceProduto : ServiceAllService<any>,
-              private serviceEmpresa : ServiceAllService<Empresa>,
-              private servico : UtilService,
-              public dialog : MatDialog, 
-              private overlay : Overlay
-             ) { }
+  constructor(private router: Router,
+    private serviceApi: ServiceAllService<any>,
+    private servico: UtilService,
+    public dialog: MatDialog,
+    private overlay: Overlay
+  ) { }
 
   ngOnInit(): void {
-      this.buscarProduto()
+    this.BuscarSolucoes();
   }
 
-  addProduto(){
+  private BuscarSolucoes(): void {
 
-    
-    // if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.MasterEmpresa.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
-    // {
-    //     const scrollStrategy = this.overlay.scrollStrategies.reposition();
-    //     const dialogRef = this.dialog.open(ProductCreateComponent, {
-    //       width : '500',
-    //       height : '400px',
-    //       scrollStrategy,
+    this.serviceApi.read(Endpoint.Solucoes + `/estabelecimento/${0}`)
+      .subscribe((result: Solucoes[]) => {
+        this.solucoes = result;
 
-    //     });
-    //     dialogRef.afterClosed().subscribe(result => {
-    //       console.log(`Dialog result: ${result}`);
-    //     });
-    // }else{
-    //   this._utilService.showMessage("Você não possui permissão para criação de empresas",true);
-    // }
-
-
+      });
   }
 
-  editarProduto(id : string){
-    
-    // if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
-    // {
-    //     const scrollStrategy = this.overlay.scrollStrategies.reposition();
-    //     const dialogRef = this.dialog.open(ProductUpdateComponent, {
-    //       width : '400px',
-    //       height : '360px',
-    //       scrollStrategy,
-    //       id
+  public AdicionarSolucao(): void {
 
-    //     });
-    //     dialogRef.afterClosed().subscribe(result => {
-    //       console.log(`Dialog result: ${result}`);
-    //     });
-    // }else{
-    //   this._utilService.showMessage("Você não possui permissão para associar produtos a uma empresa",true);
-    // }
-  }
+    if (this.servico.Sessao().TipoUsuarioLogado == TipoUsuario.Administrador) {
+      this.servico.Popup('', SolucoesCreateComponent, '50%', '45%', true)
+        .subscribe((result) => {
+          if (result)
+            this.servico.showMessage("Solução atualizada!.", false);
 
-
-  excluirProdutoEmpresa(id : string){
-
-    // if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
-    // {
-    //     const scrollStrategy = this.overlay.scrollStrategies.reposition();
-    //     const dialogRef = this.dialog.open(ProductDeleteComponent, {
-    //       width : '400px',
-    //       height : '240px',
-    //       scrollStrategy,
-    //       id
-
-    //     });
-    //     dialogRef.afterClosed().subscribe(result => {
-    //       console.log(`Dialog result: ${result}`);
-    //     });
-    // }else{
-    //   this._utilService.showMessage("Você não possui permissão para associar produtos a uma empresa",true);
-    // }
-
-
-  }
-
-
-  buscarProduto() {
-
-    // this.serviceProduto.read(Endpoint.ProdutoEmpresa).subscribe(product => {
-    //     this.products = this.vlrProduto == null ?  product : product.filter(x => x.nome.toLowerCase().includes(this.vlrProduto.toLowerCase()))
-    // })
-  }
-
-  selecionarProduto(KeyEvent : any){
-
-    if (KeyEvent.which == 13 || KeyEvent.which == 1){
-      this.vlrProduto =  (<HTMLInputElement>document.getElementById('txtbusca')).value;
-    
-      this.buscarProduto();
-    
+          this.BuscarSolucoes();
+        })
+    } else {
+      this.servico.showMessage("Você não possui permissão para associar produtos a uma empresa", true);
     }
   }
-  
-  selecionaLinha(id : Number){
+
+  EditarSolucao(id: number) {
+
+    if (this.servico.Sessao().TipoUsuarioLogado == TipoUsuario.Administrador) {
+      this.servico.Popup(id, SolucoesCreateComponent, '50%', '45%', true)
+        .subscribe((result) => {
+        
+          if (result)
+            this.servico.showMessage("Solução atualizada!.", false);
+          
+          this.BuscarSolucoes();
+        
+        })
+    } else {
+      this.servico.showMessage("Você não possui permissão para associar produtos a uma empresa", true);
+    }
+  }
+
+
+  selecionarProduto(KeyEvent: any) {
+
+    if (KeyEvent.which == 13 || KeyEvent.which == 1) {
+      this.vlrProduto = (<HTMLInputElement>document.getElementById('txtbusca')).value;
+
+
+    }
+  }
+
+  selecionaLinha(id: Number) {
     this.idSelecionado = id;
   }
 

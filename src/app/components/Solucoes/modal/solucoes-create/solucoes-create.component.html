@@ -1,42 +1,31 @@
 <mat-card>
-    <mat-card-title>Habilitar - Produto Empresa</mat-card-title>
-        <form>
-            <mat-form-field>
-                <input matInput placeholder="Produto">
-                <p></p>
-                <mat-select [(value)]="produtoEmpresa.produtoid" placeholder="ProdutoId" >
-                    <mat-option *ngFor="let prod of comboProduto" [value]="prod.Id">
-                         {{prod.Nome}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+    <mat-card-title>{{solucao.id > 0 ? 'Editar Solução' : 'Nova Solução'}}</mat-card-title>
+    <form>
 
+        <mat-form-field appearance="outline">
+            <mat-label>Solução</mat-label>
+            <input matInput placeholder="Nome da Solução" id="nome" [(ngModel)]="solucao.nome" name="nome">
+        </mat-form-field>
 
-            <mat-form-field>
-                <input matInput placeholder="Empresa">
-                <p></p>
-                <mat-select [(value)]="produtoEmpresa.empresaid" placeholder="EmpresaID" >
-                    <mat-option *ngFor="let comboEmpresa of empresa" [value]="comboEmpresa.id">
-                            {{comboEmpresa.nomeFantasia}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Rota</mat-label>
+            <input matInput placeholder="Rota da Solução" id="rota" [(ngModel)]="solucao.rota" name="rota">
+        </mat-form-field>
 
+        <mat-form-field *ngIf="solucao.id > 0" appearance="outline">
+            <mat-label>Status</mat-label>
+            <input matInput placeholder="Status">
+            <input name="ativo" [(ngModel)]="solucao.ativo" [checked]="solucao.ativo" type="checkbox">
+        </mat-form-field>
 
-            <mat-form-field>
-                <input matInput placeholder="Preço R$"
-                [(ngModel)]="produtoEmpresa.valor" name="valor">
+    </form>
 
-            </mat-form-field>
-            
-        </form>
+    <button *ngIf="solucao.nome && solucao.rota" mat-raised-button (click)="Salvar()" color="primary">
+        Salvar
+    </button>
 
-        <!-- <button mat-raised-button (click)="associarProdutoEmpresa()" color="primary" > 
-            Salvar
-        </button>
-        
-        <button mat-raised-button (click)="fecharPopup()" color="primary" > 
-            Cancelar
-        </button> -->
+    <button mat-raised-button (click)="FecharPopup()" color="primary">
+        Sair
+    </button>
+
 </mat-card>
-

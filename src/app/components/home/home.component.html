@@ -1,9 +1,12 @@
 <mat-card class="home mat-elevation-z3">
     <mat-card-title class="title">
         Bem Vindo
+        <div class="meusDados" >
+            <mat-icon matTooltip="Meus dados" (click)="DadosUsuario()">person</mat-icon>
+        </div>
     </mat-card-title>
-</mat-card>
 
+</mat-card>
 
 
 <div class="content">
@@ -11,21 +14,21 @@
         <div fxFlex="10%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let sol of solucoes">
             <mat-card class="tamanhoCard">
                 <mat-card-header></mat-card-header>
-                    <mat-card-title>
-                        {{sol.solucaoNome}}
-                        <a *ngIf="sol.ativo" mat-list-item routerLink="{{sol.solucaoRota}}">
-                            <i class="material-icons">
-                                schedule
-                            </i>
-                        </a>
-                        <a *ngIf="!sol.ativo">
-                            <i class="material-icons">
-                                block
-                            </i>
-                        </a>
-                    </mat-card-title>
+                <mat-card-title>
+                    {{sol.solucaoNome}}
+                    <a *ngIf="sol.ativo" mat-list-item routerLink="{{sol.solucaoRota}}">
+                        <i class="material-icons">
+                            schedule
+                        </i>
+                    </a>
+                    <a *ngIf="!sol.ativo">
+                        <i class="material-icons">
+                            block
+                        </i>
+                    </a>
+                </mat-card-title>
                 <mat-card-footer>
-               
+
                 </mat-card-footer>
 
             </mat-card>
@@ -33,4 +36,5 @@
     </div>
 </div>
 
-<div *ngIf="solucoes.length === 0" class="produtos">Você não possui acesso a nenhuma das nossas soluções entre em contato. </div>
+<div *ngIf="solucoes.length === 0" class="produtos">Você não possui acesso a nenhuma das nossas soluções entre em
+    contato. </div>

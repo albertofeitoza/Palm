@@ -1,4 +1,3 @@
-import { filter } from 'rxjs/operators';
 import { ItensAgendadoAtividade, ItensAgendados } from './../../model/atividades';
 import { ServiceAllService } from './../../../../../../services/service-all.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -8,7 +7,6 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Endpoint } from 'src/app/Negocio/Endpoint';
 import { UtilService } from 'src/app/services/util.service';
-import { from } from 'rxjs';
 
 @Component({
   selector: 'app-agendamento-editar-item-agendado',
