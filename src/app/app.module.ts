@@ -88,6 +88,8 @@ import { AgendamentoSelecionarHorarioAgendarComponent } from './Aplicacoes/agend
 import { AgendamentoEditarItemAgendadoComponent } from './Aplicacoes/agenda/Agendamentos/dados-agendamento/modal/agendamento-editar-item-agendado/agendamento-editar-item-agendado.component';
 import { SolucoesComponent } from './components/Solucoes/solucoes-read/solucoes-read.component';
 import { SolucoesCreateComponent } from './components/Solucoes/modal/solucoes-create/solucoes-create.component';
+import { SolucoesEmpresaComponent } from './components/empresa/modal/solucoes-empresa/solucoes-empresa.component';
+import { ProdutosEmpresaReadComponent } from './components/empresa/modal/produtos-empresa/produtos-empresa-read.component';
 
 
 @NgModule({
@@ -141,6 +143,8 @@ import { SolucoesCreateComponent } from './components/Solucoes/modal/solucoes-cr
     AgendaAssociarCatalogoComponent,
     AgendamentoSelecionarHorarioAgendarComponent,
     AgendamentoEditarItemAgendadoComponent,
+    SolucoesEmpresaComponent,
+    ProdutosEmpresaReadComponent,
     
 
   ],

@@ -12,6 +12,8 @@ import { EmpresaCreateComponent } from '../modal/empresa-create/empresa-create.c
 import { PessoaReadComponent } from '../../pessoa/pessoa-read/pessoa-read.component';
 import { UsuarioReadComponent } from '../../usuario/usuario-read/usuario-read.component';
 import { SolucoesComponent } from '../../Solucoes/solucoes-read/solucoes-read.component';
+import { SolucoesEmpresaComponent } from '../modal/solucoes-empresa/solucoes-empresa.component';
+import { ProdutosEmpresaReadComponent } from '../modal/produtos-empresa/produtos-empresa-read.component';
 
 @Component({
   selector: 'app-empresa-read',
@@ -98,12 +100,21 @@ export class EmpresaReadComponent implements OnInit {
     this.servico.Popup(row.id, UsuarioReadComponent, "70%", "60%")
   }
 
-  public Solucoes(row: any): void {
+  public ProdutosEmpresa(row: any): void {
     if (!row.status) {
       return this.servico.showMessage("Empresa desativada, solicite a ativação", true);
     }
 
-    this.servico.Popup(row.id, SolucoesComponent, "70%", "50%")
+    this.servico.Popup(row.id, ProdutosEmpresaReadComponent, "75%", "65%")
+  }
+
+
+  public SolucoesEmpresa(row: any): void {
+    if (!row.status) {
+      return this.servico.showMessage("Empresa desativada, solicite a ativação", true);
+    }
+
+    this.servico.Popup(row.id, SolucoesEmpresaComponent, "30%", "70%")
   }
 
 }
