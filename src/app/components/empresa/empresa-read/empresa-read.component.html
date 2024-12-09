@@ -71,9 +71,11 @@
 
 
     <!-- Coluna de Ações -->
+
     <ng-container matColumnDef="action">
       <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
-      <mat-cell *matCellDef="let row">
+
+      <mat-cell style="padding-right: 50px;" *matCellDef="let row">
 
         <a (click)="EditarEmpresa(row.id)">
           <i class="material-icons edit cursor">
@@ -106,12 +108,10 @@
         </a>
 
       </mat-cell>
-    </ng-container>
 
+    </ng-container>
     <mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'corLinhaGrid' : row.id == idSelecionado}"
       (click)="selecionaLinha(row.id)">
     </mat-row>
   </table>
-
-
 </div>
