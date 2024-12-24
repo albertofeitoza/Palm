@@ -27,16 +27,14 @@ export class EmpresaReadComponent implements OnInit {
   //contato: Contato;
   //endereco: Endereco;
   //Colunas do GRID
-  displayedColumns = ['id', 'cpfCnpj', 'razaoSocial', 'nomeFantasia', 'inscricaoEstadual', 'inscricaoMunicipal', 'status', 'action']
+  displayedColumns = ['id', 'cpfCnpj', 'razaoSocial', 'nomeFantasia', 'nomeEmpresaPai', 'inscricaoEstadual', 'inscricaoMunicipal', 'status', 'action']
 
   idSelecionado: Number = 0;
 
   constructor(private router: Router,
-    private serviceEmpresa: ServiceAllService<Empresa>,
+    private serviceEmpresa: ServiceAllService<any>,
     public dialog: MatDialog,
     private servico: UtilService,
-    private overlay: Overlay,
-    private auth: LoginService
   ) {
   }
 
@@ -52,10 +50,10 @@ export class EmpresaReadComponent implements OnInit {
   public buscarEmpresa(): void {
     let filtroEmpresa = (<HTMLSelectElement>document.getElementById('busca')).value;
 
-    this.serviceEmpresa.read(Endpoint.Empresa + `/estabelecimento/${this.auth.dadosUsuario.EmpresaId}`).subscribe(emp => {
-      this.empresas = filtroEmpresa != null ? emp.filter(x => x.razaoSocial.toLowerCase().includes(filtroEmpresa.toLowerCase())) : emp
-    })
-
+    this.serviceEmpresa.read(Endpoint.Empresa + `/estabelecimento/${this.servico.Sessao().EmpresaId}`)
+      .subscribe((emp: ViewEmpresas[]) => {
+        this.empresas = filtroEmpresa != null ? emp.filter(x => x.razaoSocial.toLowerCase().includes(filtroEmpresa.toLowerCase())) : emp
+      })
   }
 
   public CadastrarEmpresa(): void {

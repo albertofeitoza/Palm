@@ -27,9 +27,9 @@ table{
     color: #e35e6b;
 }
 .material-icons{
-    padding-left: 20px;
     padding-top: 10;
     font-size: 30px;
+    margin-left: 0px;
     
 }
 

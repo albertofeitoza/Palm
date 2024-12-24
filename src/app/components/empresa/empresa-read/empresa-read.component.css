@@ -1,10 +1,10 @@
-table{
+table {
     width: 100%;
 }
 
-.imagem{
-    max-width:50px;
-    max-height:50px;
+.imagem {
+    max-width: 50px;
+    max-height: 50px;
     width: auto;
     height: auto;
     border-radius: 50%;
@@ -22,18 +22,16 @@ table{
 .edit {
     color: #d9cd26;
 }
-.delete{
+
+.delete {
     color: #e35e6b;
     margin-left: 15px;
 }
 
 .mat-tab-group {
     margin-bottom: 48px;
-  }
+}
 
-
-
-  
 
 .search {
     font-size: 20px;
@@ -43,13 +41,12 @@ table{
 .material-icons {
     font-size: 20px;
     margin: 15px;
+    margin-left: 2px;
 }
 
 
 
 .footer .material-icons {
-
     margin: 15px;
     margin-left: 10px;
-        
 }

@@ -90,6 +90,7 @@ import { SolucoesComponent } from './components/Solucoes/solucoes-read/solucoes-
 import { SolucoesCreateComponent } from './components/Solucoes/modal/solucoes-create/solucoes-create.component';
 import { SolucoesEmpresaComponent } from './components/empresa/modal/solucoes-empresa/solucoes-empresa.component';
 import { ProdutosEmpresaReadComponent } from './components/empresa/modal/produtos-empresa/produtos-empresa-read.component';
+import { ProdutosEmpresaCadastroComponent } from './components/empresa/modal/produtos-empresa/modal/produtos-empresa-cadastro/produtos-empresa-cadastro.component';
 
 
 @NgModule({
@@ -145,6 +146,7 @@ import { ProdutosEmpresaReadComponent } from './components/empresa/modal/produto
     AgendamentoEditarItemAgendadoComponent,
     SolucoesEmpresaComponent,
     ProdutosEmpresaReadComponent,
+    ProdutosEmpresaCadastroComponent,
     
 
   ],

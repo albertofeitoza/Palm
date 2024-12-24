@@ -19,13 +19,17 @@ export class Empresa {
     pessoas: null;
 }
 
+
 export class ViewEmpresas {
     id: number;
     cpfCnpj: string;
     razaoSocial: string;
     nomeFantasia: string;
+    nomeEmpresaPai: string;
     inscricaoEstadual: string;
     inscricaoMunicipal: string;
     status: boolean;
+    empresaPai: number;
 }
+
 

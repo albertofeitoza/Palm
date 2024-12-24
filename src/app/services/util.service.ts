@@ -242,6 +242,17 @@ export class UtilService {
     return statusProtocolo
   }
 
+  TipoProduto() {
+    let tipoProduto = []
+    tipoProduto.push({ "id": 0, "tipo": "Selecione" })
+    tipoProduto.push({ "id": 1, "tipo": "Agenda" })
+    tipoProduto.push({ "id": 2, "tipo": "Pdv" })
+    tipoProduto.push({ "id": 3, "tipo": "Ambos" })
+    tipoProduto.push({ "id": 99, "tipo": "Outros" })
+    return tipoProduto
+
+  }
+
 
   public DataSistemaFront(data: string) {
 

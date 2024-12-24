@@ -28,25 +28,29 @@
       <mat-cell *matCellDef="let row">{{row.cpfCnpj}}</mat-cell>
     </ng-container>
 
-    <!-- Name Column -->
+
     <ng-container matColumnDef="razaoSocial">
       <mat-header-cell *matHeaderCellDef>Razão Social</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.razaoSocial}}</mat-cell>
     </ng-container>
 
-    <!-- Name Column -->
+
     <ng-container matColumnDef="nomeFantasia">
       <mat-header-cell *matHeaderCellDef>Nome Fantasia</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.nomeFantasia}}</mat-cell>
     </ng-container>
 
-    <!-- Name Price -->
+    <ng-container matColumnDef="nomeEmpresaPai">
+      <mat-header-cell *matHeaderCellDef>Empresa Pai</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.nomeEmpresaPai}}</mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="inscricaoEstadual">
       <mat-header-cell *matHeaderCellDef>Ins. Estadual</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.inscricaoEstadual}}</mat-cell>
     </ng-container>
 
-    <!-- Name Column -->
+
     <ng-container matColumnDef="inscricaoMunicipal">
       <mat-header-cell *matHeaderCellDef>Ins. Municipal</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.inscricaoMunicipal}}</mat-cell>
@@ -75,7 +79,7 @@
     <ng-container matColumnDef="action">
       <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
 
-      <mat-cell style="padding-right: 50px;" *matCellDef="let row">
+      <mat-cell *matCellDef="let row">
 
         <a (click)="EditarEmpresa(row.id)">
           <i class="material-icons edit cursor">
@@ -108,10 +112,12 @@
         </a>
 
       </mat-cell>
-
     </ng-container>
+
     <mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'corLinhaGrid' : row.id == idSelecionado}"
       (click)="selecionaLinha(row.id)">
     </mat-row>
+
   </table>
+
 </div>
