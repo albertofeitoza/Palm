@@ -17,7 +17,7 @@ export class CatalogoServico {
 }
 
 export class CatalogoServicoCadastro {
-    id: number;
+    id: number = 0;
     dtCriacao: Date;
     codigoBarras: string;
     qrCode: string;

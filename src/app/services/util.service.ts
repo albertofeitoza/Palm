@@ -56,6 +56,10 @@ export class UtilService {
 
   }
 
+  public CalcularPorcentagemValor(valorEntrada: number, margemPercentual: number) {
+    return valorEntrada + (valorEntrada * margemPercentual) / 100;
+  }
+
   AtualizarMenu(titulo: string, icone: string, urlIcone: string) {
     this.headerService.headerData.title = titulo;
     this.headerService.headerData.icon = icone

@@ -1,5 +1,5 @@
 <mat-card>
-    <h1>{{produto.id > 0 ? 'Novo Cadastro' : 'Editar Cadastro' }} </h1>
+    <h1>{{produto.id === 0 ? 'Novo Cadastro' : 'Editar Cadastro' }} </h1>
 
     <form>
         <mat-form-field>
@@ -19,54 +19,40 @@
         </mat-form-field>
 
         <mat-form-field>
-            <input matInput placeholder="Estoque" [(ngModel)]="produto.qtdEstoque" name="estoque">
+            <input type="number" matInput placeholder="Estoque" [(ngModel)]="produto.qtdEstoque" name="estoque">
         </mat-form-field>
 
-       
-
         <mat-form-field>
-            <mat-select [(value)]="produto.tipoCatalogo" placeholder="Selecione o produto">
-                <mat-option *ngFor="let pr of tipoProduto" [value]="pr.id">
-                    {{pr.tipo}}
+            <mat-select [(value)]="produto.tipoCatalogo" placeholder="Selecione a Solução">
+                <mat-option *ngFor="let se of solucoesEmpresa" [value]="se.id">
+                    {{se.solucaoNome}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
 
         <mat-form-field>
-            <input matInput placeholder="Peso" [(ngModel)]="produto.peso" name="Peso">
+            <input matInput type="number" placeholder="Peso do produto Formato 1.21 (Kg) ou 0.50 (g) Ponto(.) ou Virgula(,)" [(ngModel)]="produto.peso" name="Peso">
         </mat-form-field>
 
         <mat-form-field>
-            <input matInput placeholder="Margem" [(ngModel)]="produto.margem" name="Margem">
+            <input type="number" matInput placeholder="Margem de lucro Formato 10.5 (%) Ponto(.) ou Virgula(,)" (keypress)="CalcularValorVenda($event)" [(ngModel)]="produto.margem" name="Margem">
         </mat-form-field>
 
         <mat-form-field>
-            <input matInput placeholder="Valor Compra" [(ngModel)]="produto.valorCompra" name="valorCompra">
+            <input type="number" matInput placeholder="Valor compra Formato 10.51 Ponto(.) ou Virgula(,)" (keypress)="CalcularValorVenda($event)" [(ngModel)]="produto.valorCompra" name="valorCompra">
         </mat-form-field>
 
         <mat-form-field>
-            <input matInput placeholder="Valor Venda" [(ngModel)]="produto.valor" name="ValorVenda">
+            <input [disabled]="true"  type="number" matInput placeholder="Valor Venda Calculado automatico valor de compra  + % Margem" [(ngModel)]="produto.valor" name="ValorVenda">
         </mat-form-field>
 
-        <ng-container matColumnDef="excluido">
-            <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
-            <mat-cell *matCellDef="let row">
-                <div *ngIf="row.excluido">
-                    <i class="material-icons">
-                        lock
-                    </i>
-                </div>
-                <div *ngIf="!row.excluido">
-                    <i class="material-icons">
-                        lock_open
-                    </i>
-                </div>
-            </mat-cell>
-        </ng-container>
-
+        <mat-form-field *ngIf="produto.id > 0">
+            <input matInput placeholder="excluido">
+                <input name="excluido" [(ngModel)]="produto.excluido" [checked]="produto.excluido" type="checkbox">
+        </mat-form-field>
 
     </form>
-    <button *ngIf="produto.nome && produto.codigo && produto.qtdEstoque && produto.tipoCatalogo > 0 " mat-raised-button
+    <button *ngIf="produto.nome && produto.codigo && produto.tipoCatalogo > 0 " mat-raised-button
         (click)="CadastrarProduto()" color="primary">
         Salvar
     </button>
@@ -74,6 +60,5 @@
     <button mat-raised-button (click)="fecharPopup()" color="primary">
         Voltar
     </button>
-
 
 </mat-card>

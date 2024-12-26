@@ -1,3 +1,4 @@
+import { PopupConfirmacaoComponent } from './../../../Popups/popup-confirmacao/popup-confirmacao.component';
 import { CatalogoServico } from 'src/app/models/CatalogoServico/CatalogoServico';
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -58,12 +59,37 @@ export class ProdutosEmpresaReadComponent implements OnInit {
 
   selecionaLinha(id: number) { }
 
-  public EditarProduto(arg0: any): void {
-    throw new Error('Method not implemented.');
+  public EditarProduto(id: any): void {
+
+    const request = {
+      idEmpresa: this.idEmpresa,
+      idProduto: id
+    }
+
+    this.servico.Popup('', ProdutosEmpresaCadastroComponent, '40%', '87%', true, request)
+      .subscribe(result => {
+
+        if (result === 'atualizar')
+          this.servico.showMessage("Produto alterado com sucesso!")
+
+        this.BuscarProdutosEmpresa();
+     })
   }
 
-  public ExcluirProduto(_t152: any): void {
-    throw new Error('Method not implemented.');
+  public ExcluirProduto(id: any): void {
+
+    this.servico.Popup('', PopupConfirmacaoComponent, 'auto', 'auto', false, 'Tem Certeza que deseja excluir o produto?')
+      .subscribe(result => {
+        if (result) {
+          this.serviceApi.create(id, Endpoint.CatalogoServico + `/excluir/${id}`)
+            .subscribe((resultPrd) => {
+              this.servico.showMessage(resultPrd.mensagem);
+              this.BuscarProdutosEmpresa();
+            })
+        }
+      })
+
+
   }
 
   public BuscarProdutos(): void {
@@ -71,16 +97,18 @@ export class ProdutosEmpresaReadComponent implements OnInit {
   }
 
   public CadastrarProduto(): void {
-    this.servico.Popup('', ProdutosEmpresaCadastroComponent, '65%', '55%')
+
+    const request = {
+      idEmpresa: this.idEmpresa,
+      idProduto: 0
+    }
+
+    this.servico.Popup('', ProdutosEmpresaCadastroComponent, '40%', '83%', true, request)
       .subscribe(result => {
-        if(result === 'cadastro')
+        if (result === 'cadastro')
           this.servico.showMessage("Produto Cadastrado com sucesso!")
 
-        if(result === 'atualizar')
-          this.servico.showMessage("Produto alterado com sucesso!")
-
         this.BuscarProdutosEmpresa();
-
       })
   }
 

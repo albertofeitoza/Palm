@@ -55,7 +55,7 @@
 
         <ng-container matColumnDef="peso">
             <mat-header-cell *matHeaderCellDef>Peso</mat-header-cell>
-            <mat-cell *matCellDef="let row">{{row.peso | number: '1.1-5' :'pt'}} Kg</mat-cell>
+            <mat-cell *matCellDef="let row">{{row.peso | number: '1.1-5' :'pt'}} {{ row.peso > 1 ?  '(kg)' : '(g)' }}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="valorCompra">
@@ -101,7 +101,7 @@
                     </i>
                 </a>
 
-                <a (click)="ExcluirProduto(row)">
+                <a (click)="ExcluirProduto(row.id)">
                     <i matTooltip="Usuários" class="material-icons delete cursor ">
                         delete
                     </i>
