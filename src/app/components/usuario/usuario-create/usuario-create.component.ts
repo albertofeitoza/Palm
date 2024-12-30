@@ -43,7 +43,8 @@ export class UsuarioCreateComponent implements OnInit {
     if (this.dados.acao === 'idIsuario')
       this.BuscarUsuario(this.dados)
 
-    // this.carregaCombos();
+    if (this.dados.acao === 'idEmpresa')
+      this.carregaCombos();
 
   }
 
@@ -117,7 +118,8 @@ export class UsuarioCreateComponent implements OnInit {
 
     }
 
-    if (this.servico.Sessao().TipoUsuarioLogado == TipoUsuario.MasterEmpresa && this.usuario.id == this.servico.Sessao().IdUsuario) {
+    //if (this.servico.Sessao().TipoUsuarioLogado == TipoUsuario.MasterEmpresa && this.usuario.id == this.servico.Sessao().IdUsuario) {
+    if (this.servico.Sessao().TipoUsuarioLogado == TipoUsuario.MasterEmpresa) {
       this.tipoUsuario = this.servico.TipoUsuario().filter(x => x.id > 1);
 
       this.BuscarPessoas(this.dialogRef.id);

@@ -1,32 +1,44 @@
 <h1>Soluções contratadas</h1>
 
-  <table mat-table [dataSource]="solucoesEmpresa">
-        
-    
-    <!-- Id Column -->
-    <ng-container matColumnDef="solucaoNome">
-      <th mat-header-cell *matHeaderCellDef>Nome da Solução</th>
-      <td mat-cell *matCellDef="let row">{{row.solucaoNome}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="ativo">
-      <th mat-header-cell *matHeaderCellDef>Status</th>
-      <td mat-cell *matCellDef="let row">
-        <div *ngIf="row.ativo">
-          <i class="material-icons">
-            lock_open
-          </i>
-        </div>
-        <div *ngIf="!row.ativo">
-          <i class="material-icons">
-            lock
-          </i>
-        </div>
-      </td>
-    </ng-container>
+<table mat-table [dataSource]="solucoesEmpresa">
 
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'corLinhaGrid' : row.id == idSelecionado}"
-      (click)="selecionaLinha(row.id)"></tr>
-  </table>
+  <!-- Id Column -->
+  <ng-container matColumnDef="solucaoNome">
+    <th mat-header-cell *matHeaderCellDef>Nome da Solução</th>
+    <td mat-cell *matCellDef="let row">{{row.solucaoNome}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="ativo">
+    <th mat-header-cell *matHeaderCellDef>Status</th>
+    <td mat-cell *matCellDef="let row">
+      <div *ngIf="row.ativo">
+        <i class="material-icons">
+          lock_open
+        </i>
+      </div>
+      <div *ngIf="!row.ativo">
+        <i class="material-icons">
+          lock
+        </i>
+      </div>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef>Ações</th>
+    <td mat-cell *matCellDef="let row">
+
+      <a matTooltip="Usuários Permitidos" (click)="PermissaoUsuarios(row)" class="edit">
+        <i class="material-icons">
+          group
+        </i>
+      </a>
+    </td>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'corLinhaGrid' : row.id == idSelecionado}"
+    (click)="selecionaLinha(row.id)"></tr>
+</table>

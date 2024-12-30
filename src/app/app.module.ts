@@ -86,11 +86,13 @@ import { DetalhesDiasDisponiveisAgendaComponent } from './Aplicacoes/agenda/Cada
 import { AgendaAssociarCatalogoComponent } from './Aplicacoes/agenda/CadastroAgenda/agenda-create/modal/agenda-associar-catalogo/agenda-associar-catalogo.component';
 import { AgendamentoSelecionarHorarioAgendarComponent } from './Aplicacoes/agenda/Agendamentos/dados-agendamento/modal/agendamento-selecionar-horario-agendar/agendamento-selecionar-horario-agendar.component';
 import { AgendamentoEditarItemAgendadoComponent } from './Aplicacoes/agenda/Agendamentos/dados-agendamento/modal/agendamento-editar-item-agendado/agendamento-editar-item-agendado.component';
-import { SolucoesComponent } from './components/Solucoes/solucoes-read/solucoes-read.component';
 import { SolucoesCreateComponent } from './components/Solucoes/modal/solucoes-create/solucoes-create.component';
 import { SolucoesEmpresaComponent } from './components/empresa/modal/solucoes-empresa/solucoes-empresa.component';
 import { ProdutosEmpresaReadComponent } from './components/empresa/modal/produtos-empresa/produtos-empresa-read.component';
 import { ProdutosEmpresaCadastroComponent } from './components/empresa/modal/produtos-empresa/modal/produtos-empresa-cadastro/produtos-empresa-cadastro.component';
+import { AssociarsolucaoempresaComponent } from './components/Solucoes/modal/associarsolucaoempresa/associarsolucaoempresa.component';
+import { SolucoesComponent } from './components/Solucoes/solucoes-read/solucoes-read.component';
+import { PermissaoUsuarioSolucaoComponent } from './components/empresa/modal/permissao-usuario-solucao/permissao-usuario-solucao.component';
 
 
 @NgModule({
@@ -147,6 +149,8 @@ import { ProdutosEmpresaCadastroComponent } from './components/empresa/modal/pro
     SolucoesEmpresaComponent,
     ProdutosEmpresaReadComponent,
     ProdutosEmpresaCadastroComponent,
+    AssociarsolucaoempresaComponent,
+    PermissaoUsuarioSolucaoComponent,
     
 
   ],

@@ -9,6 +9,7 @@ import { Overlay } from '@angular/cdk/overlay';
 import { Solucoes } from 'src/app/models/Solucoes/Solucoes';
 import { Endpoint } from 'src/app/Negocio/Endpoint';
 import { TipoUsuario } from 'src/app/models/usuarios/enumUsuarios';
+import { AssociarsolucaoempresaComponent } from '../modal/associarsolucaoempresa/associarsolucaoempresa.component';
 
 @Component({
   selector: 'app-solucoes-read',
@@ -47,7 +48,7 @@ export class SolucoesComponent implements OnInit {
   public AdicionarSolucao(): void {
 
     if (this.servico.Sessao().TipoUsuarioLogado == TipoUsuario.Administrador) {
-      this.servico.Popup('', SolucoesCreateComponent, '50%', '45%', true)
+      this.servico.Popup('', SolucoesCreateComponent, '50%', '35%', true)
         .subscribe((result) => {
           if (result)
             this.servico.showMessage("Solução atualizada!.", false);
@@ -64,12 +65,12 @@ export class SolucoesComponent implements OnInit {
     if (this.servico.Sessao().TipoUsuarioLogado == TipoUsuario.Administrador) {
       this.servico.Popup(id, SolucoesCreateComponent, '50%', '45%', true)
         .subscribe((result) => {
-        
+
           if (result)
             this.servico.showMessage("Solução atualizada!.", false);
-          
+
           this.BuscarSolucoes();
-        
+
         })
     } else {
       this.servico.showMessage("Você não possui permissão para associar produtos a uma empresa", true);
@@ -88,6 +89,17 @@ export class SolucoesComponent implements OnInit {
 
   selecionaLinha(id: Number) {
     this.idSelecionado = id;
+  }
+
+  public AssociarNovaSolucaoEmpresa(row: Solucoes): void {
+    
+    if(!row.ativo)
+      return this.servico.showMessage("Essa solução não está disponível para comercialização.", true);
+
+    this.servico.Popup('', AssociarsolucaoempresaComponent, '50%', '40%', false, row)
+      .subscribe(() => {
+        this.BuscarSolucoes();
+      })
   }
 
 }

@@ -6,6 +6,7 @@ export enum Endpoint {
 
     Solucoes = '/Solucoes',
     SolucoesEmpresa = '/SolucoesEmpresa',
+    PermissaoUsuarioSolucao = '/PermissaoUsuarioSolucao',
 
 
     CatalogoServico = '/CatalogoServico',

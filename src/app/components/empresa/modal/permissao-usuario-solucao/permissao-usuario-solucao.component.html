@@ -1,0 +1,47 @@
+<mat-card>
+    <h1>Permissão de usuários</h1>
+    <div style="display: flex;">
+        <form>
+            <mat-form-field>
+                <mat-select [(value)]="idUsuario" placeholder="Selecione a Solução">
+                    <mat-option *ngFor="let us of viewUsuarios" [value]="us.id">
+                        {{us.nomeUsuario}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
+
+        <mat-icon style="padding-top: 10px;padding-left: 15px;" (click)="CadastrarPermissaoUsuario()">add</mat-icon>
+    </div>
+
+    <table mat-table [dataSource]="permissaoUsuarios">
+
+
+        <!-- Id Column -->
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>Id</th>
+            <td mat-cell *matCellDef="let row">{{row.id}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="nome">
+            <th mat-header-cell *matHeaderCellDef>Nome</th>
+            <td mat-cell *matCellDef="let row">{{row.nome}}</td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef>Ações</th>
+            <td mat-cell *matCellDef="let row">
+
+                <a matTooltip="Usuários Permitidos" (click)="ExcluirPermissao(row.id)" class="edit">
+                    <i class="material-icons">
+                        delete
+                    </i>
+                </a>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</mat-card>

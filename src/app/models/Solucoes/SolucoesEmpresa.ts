@@ -1,8 +1,17 @@
 export class SolucoesEmpresa {
-    id: number;
+    id: number = 0;
     solucaoId: number;
     solucaoNome: string;
     solucaoRota: string;
+    empresaId: number;
+    ativo: boolean;
+}
+
+export class ViewPermissaoUsuariosSolucao {
+    id: number = 0;
+    nome: string;
+    usuarioId: number;
+    solucaoEmpresaId: number;
     empresaId: number;
     ativo: boolean;
 }

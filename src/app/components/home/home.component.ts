@@ -7,6 +7,7 @@ import { LoginService } from 'src/app/services/login.service';
 import { Solucoes } from 'src/app/models/Solucoes/Solucoes';
 import { SolucoesEmpresa } from 'src/app/models/Solucoes/SolucoesEmpresa';
 import { UsuarioCreateComponent } from '../usuario/usuario-create/usuario-create.component';
+import { TipoUsuario } from 'src/app/models/usuarios/enumUsuarios';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +20,7 @@ export class HomeComponent implements OnInit {
   constructor(private serviceSolucoes: ServiceAllService<any>,
     private headerService: HeaderService,
     private servico: UtilService,
-    private auth: LoginService
+    // private auth: LoginService
   ) {
     // this.headerService.headerData = {
     //  title : 'Início',
@@ -36,10 +37,32 @@ export class HomeComponent implements OnInit {
 
   private ObterSolucoes(): void {
 
-    this.serviceSolucoes.read(Endpoint.SolucoesEmpresa + `/estabelecimento/${this.auth.dadosUsuario.EmpresaId}/${this.auth.dadosUsuario.IdUsuario}`)
-      .subscribe((solucoes: SolucoesEmpresa[]) => {
-        this.solucoes = solucoes
-      });
+    if (this.servico.Sessao().TipoUsuarioLogado === TipoUsuario.Administrador) {
+      this.serviceSolucoes.read(Endpoint.Solucoes + `/estabelecimento/${0}`)
+        .subscribe((result: Solucoes[]) => {
+
+          this.solucoes = new Array();
+
+          result.forEach(em => {
+            let solucaoEmp: SolucoesEmpresa = new SolucoesEmpresa()
+            solucaoEmp.id = em.id
+            solucaoEmp.solucaoId = 0;
+            solucaoEmp.solucaoNome = em.nome
+            solucaoEmp.solucaoRota = em.rota
+            solucaoEmp.empresaId = 0
+            solucaoEmp.ativo = em.ativo
+
+            this.solucoes.push(solucaoEmp)
+
+          })
+
+        })
+    } else {
+      this.serviceSolucoes.read(Endpoint.SolucoesEmpresa + `/estabelecimento/${this.servico.Sessao().EmpresaId}/${this.servico.Sessao().IdUsuario}`)
+        .subscribe((solucoes: SolucoesEmpresa[]) => {
+          this.solucoes = solucoes
+        });
+    }
   }
 
   public DadosUsuario(): void {
@@ -47,7 +70,7 @@ export class HomeComponent implements OnInit {
     const dados = {
       acao: 'idIsuario',
       id: this.servico.Sessao().IdUsuario,
-      perfil : 'perfil'
+      perfil: 'perfil'
     }
     this.servico.Popup('', UsuarioCreateComponent, "35%", '60%', false, dados)
 

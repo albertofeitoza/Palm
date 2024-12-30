@@ -20,7 +20,7 @@ import { DadosLogados } from 'src/app/models/usuarios/modelUsuarios';
 })
 export class EmpresaCreateComponent implements OnInit {
 
-
+  empresaPai = 0;
   empresa: Empresa = new Empresa();
   dadosLogados: DadosLogados = new DadosLogados();
   tipoPessoa: any[]
@@ -38,7 +38,7 @@ export class EmpresaCreateComponent implements OnInit {
   }
 
   private BuscarEmpresa(id: string): void {
-
+    this.empresaPai = this.utilService.Sessao().EmpresaPai;
     if (id && Number(id) > 0) {
       this.servicoEmpresa.readById(id, Endpoint.Empresa)
         .subscribe((result: Empresa) => {

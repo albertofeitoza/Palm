@@ -50,7 +50,7 @@
                             <input matInput placeholder="Cod. PIS" [(ngModel)]="empresa.codPIS" name="codPIS">
                         </mat-form-field>
                         <mat-form-field>
-                            <input matInput placeholder="Domínio esse campo será usado na tela de login da empresa"
+                            <input [disabled]="empresa.id > 0 && empresaPai > 0" matInput placeholder="Domínio esse campo será usado na tela de login da empresa"
                                 [(ngModel)]="empresa.dominio" name="dominio">
                         </mat-form-field>
 

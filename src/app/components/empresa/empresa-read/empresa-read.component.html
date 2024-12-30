@@ -6,7 +6,7 @@
   </span>
 </div>
 
-<div class="footer">
+<div *ngIf="empresaPai === 0" class="footer">
   <span (click)="CadastrarEmpresa()">
     <i class="material-icons">person_add</i>
   </span>
@@ -103,7 +103,6 @@
             qr_code
           </i>
         </a>
-
 
         <a (click)="SolucoesEmpresa(row)">
           <i matTooltip="Soluções contratadas" class="material-icons delete cursor ">

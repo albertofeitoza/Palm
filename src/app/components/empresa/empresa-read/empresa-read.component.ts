@@ -28,7 +28,7 @@ export class EmpresaReadComponent implements OnInit {
   //endereco: Endereco;
   //Colunas do GRID
   displayedColumns = ['id', 'cpfCnpj', 'razaoSocial', 'nomeFantasia', 'nomeEmpresaPai', 'inscricaoEstadual', 'inscricaoMunicipal', 'status', 'action']
-
+  empresaPai = 0;
   idSelecionado: Number = 0;
 
   constructor(private router: Router,
@@ -49,6 +49,7 @@ export class EmpresaReadComponent implements OnInit {
 
   public buscarEmpresa(): void {
     let filtroEmpresa = (<HTMLSelectElement>document.getElementById('busca')).value;
+    this.empresaPai = this.servico.Sessao().EmpresaPai;
 
     this.serviceEmpresa.read(Endpoint.Empresa + `/estabelecimento/${this.servico.Sessao().EmpresaId}`)
       .subscribe((emp: ViewEmpresas[]) => {
