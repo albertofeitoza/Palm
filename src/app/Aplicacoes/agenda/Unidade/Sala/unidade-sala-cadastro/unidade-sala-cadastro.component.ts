@@ -13,46 +13,47 @@ import { UtilService } from 'src/app/services/util.service';
 export class UnidadeSalaCadastroComponent implements OnInit {
 
 
-listasala : Sala[]
+  listasala: Sala[] = new Array();
 
-sala : Sala = new Sala()
+  sala: Sala = new Sala()
 
   constructor(
-              private servicoSala : ServiceAllService<Sala>,
-              private servico : UtilService,
-              public dialog : MatDialogRef<UnidadeSalaCadastroComponent>
+    private servicoSala: ServiceAllService<Sala>,
+    private servico: UtilService,
+    public dialog: MatDialogRef<UnidadeSalaCadastroComponent>
 
   ) { }
 
   ngOnInit(): void {
-      this.buscaSala()
-    
-
-  }
-
-  addSala(){
-
-    // this.sala.unidadeid= Number(this.dialog.id);
-    // this.sala.dtCriacao = new Date;
-    // this.sala.criadoPor = this.servico.Sessao().usuarioId;
-
-    // this.servicoSala.create(this.sala, Endpoint.Sala).subscribe(() => {
-    //   this.servico.showMessage("Sala Cadastrada com sucesso", false);
-    // })
+    this.buscaSala()
 
 
   }
 
-  fecharPopup(){
-      this.dialog.close()
+  addSala() {
+    if (!this.sala.nomeSala)
+      return this.servico.showMessage("Informe o nome da sala", true);
+
+    this.sala.unidadeid = Number(this.dialog.id);
+    this.sala.criadoPor = this.servico.Sessao().IdUsuario;
+
+    this.servicoSala.create(this.sala, Endpoint.Sala).subscribe(() => {
+      this.servico.showMessage("Sala Cadastrada com sucesso", false);
+      this.dialog.close();
+    })
+
   }
 
-  buscaSala(){
+  fecharPopup() {
+    this.dialog.close()
+  }
 
-        this.servicoSala.read(Endpoint.Sala).subscribe(sl => {
-          this.listasala = sl
-        })
+  buscaSala() {
 
+    this.servicoSala.read(Endpoint.Sala + `/estabelecimento/${this.dialog.id}`)
+      .subscribe((salas: Sala[]) => {
+        this.listasala = salas
+      })
   }
 
 }

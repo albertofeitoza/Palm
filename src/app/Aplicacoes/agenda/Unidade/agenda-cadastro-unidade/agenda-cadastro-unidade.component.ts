@@ -27,16 +27,17 @@ export class AgendaCadastroUnidadeComponent implements OnInit {
   ColunasSala = ['id', 'dtCriacao', 'nomeSala', 'ativo', 'action']
 
   unidade: Unidade = new Unidade()
-
   novaUnidade: boolean = false;
 
-  unidades: Unidade[];
+  unidades: Unidade[] = new Array();
   atualizarChamada: boolean = false;
 
   vlrsala: string = "";
 
-  salas: Sala[];
+  salas: Sala[] = new Array();
+
   unidadeSelecionada: number = 0;
+
   constructor(
     public dialog: MatDialogRef<AgendaCadastroUnidadeComponent>,
     private servico: UtilService,
@@ -47,7 +48,7 @@ export class AgendaCadastroUnidadeComponent implements OnInit {
 
   ngOnInit(): void {
     this.buscarUnidade("");
-    this.buscarSala();
+    //this.buscarSala();
 
   }
 
@@ -73,22 +74,27 @@ export class AgendaCadastroUnidadeComponent implements OnInit {
 
   buscarUnidade(vlrTxt: string) {
 
-    this.ServicoUnidade.read(Endpoint.Unidade).subscribe(un => {
-      this.unidades = vlrTxt == null ? un.filter(x => x.empresaId === this.servico.Sessao().EmpresaId) :
-                                         un.filter(x => x.empresaId === this.servico.Sessao().EmpresaId && x.nomeUnidade.toLowerCase().includes(vlrTxt.toLowerCase()));
-    })
+    this.ServicoUnidade.read(Endpoint.Unidade + `/estabelecimento/${this.servico.Sessao().EmpresaId}`)
+      .subscribe((un: Unidade[]) => {
+        this.unidades = vlrTxt == null ? un : un.filter(x => x.nomeUnidade.toLowerCase().includes(vlrTxt.toLowerCase()));
+      })
 
   }
 
   AtualizarUnidade(id: string) {
-
-    this.servico.Popup(id, AgendaAlterarUnidadeComponent, '500px', '400px');
+    this.servico.Popup(id, AgendaAlterarUnidadeComponent, '500px', '400px')
+    .subscribe(() => {
+      this.buscarUnidade("");
+    });
 
 
   }
 
   ExcluirUnidade(id: string) {
-    this.servico.Popup(id, AgendaExcluirUnidadeComponent, '500px', '400px');
+    this.servico.Popup(id, AgendaExcluirUnidadeComponent, '500px', '400px')
+    .subscribe(() => {
+      this.buscarUnidade("");
+    });
 
   }
 
@@ -132,10 +138,10 @@ export class AgendaCadastroUnidadeComponent implements OnInit {
 
 
   buscarSala() {
-    this.servicoSala.read(Endpoint.Sala).subscribe(sl => {
-      this.salas = this.vlrsala == null ? sl.filter(x => x.unidadeid == this.unidadeSelecionada) :
-        sl.filter(x => x.unidadeid == this.unidadeSelecionada && x.nomeSala.toLowerCase().includes(this.vlrsala.toLowerCase()))
-    })
+    this.servicoSala.read(Endpoint.Sala + `/estabelecimento/${this.unidadeSelecionada}`)
+      .subscribe((sl : Sala[]) => {
+        this.salas = this.vlrsala == null ? sl : sl.filter(x => x.nomeSala.toLowerCase().includes(this.vlrsala.toLowerCase()))
+      })
 
   }
 
@@ -149,11 +155,17 @@ export class AgendaCadastroUnidadeComponent implements OnInit {
 
   }
   AtualizarSala(id: any) {
-    this.servico.Popup(id, UnidadeSalaUpdateComponent, "500px", "400px");
+    this.servico.Popup(id, UnidadeSalaUpdateComponent, "500px", "400px")
+    .subscribe(() => {
+      this.buscarSala();
+    });
   }
 
   Excluirsala(id: any) {
     this.servico.Popup(id, UnidadeSalaDeleteComponent, "500px", "400px")
+    .subscribe(() => {
+      this.buscarSala();
+    });
   }
 
   cadsala() {

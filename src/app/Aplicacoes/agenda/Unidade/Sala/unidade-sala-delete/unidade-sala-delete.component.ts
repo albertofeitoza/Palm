@@ -12,7 +12,7 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class UnidadeSalaDeleteComponent implements OnInit {
 
-  sala : any
+  sala : Sala = new Sala();
 
   constructor(
                 public dialog : MatDialogRef <UnidadeSalaDeleteComponent>, 
@@ -31,7 +31,8 @@ export class UnidadeSalaDeleteComponent implements OnInit {
   }
 
   excluirSala(){
-    this.servicoSala.delete(this.sala.id, Endpoint.Sala).subscribe(x => {
+    this.servicoSala.create(this.sala, Endpoint.Sala + `/excluir/${this.sala.id}` )
+    .subscribe(x => {
       this.servico.showMessage("Sala excluída com sucesso", false);
       this.fecharPopup()
     })

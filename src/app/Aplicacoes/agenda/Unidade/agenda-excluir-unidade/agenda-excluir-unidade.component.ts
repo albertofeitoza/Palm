@@ -14,26 +14,28 @@ import { UtilService } from 'src/app/services/util.service';
 export class AgendaExcluirUnidadeComponent implements OnInit {
 
 
-  unidade : any
+  unidade: any
 
   constructor(
-              public dialog : MatDialogRef<AgendaExcluirUnidadeComponent>,
-              private servicoUnidade : ServiceAllService<Unidade>, 
-              private servico : UtilService
-              ) { }
+    public dialog: MatDialogRef<AgendaExcluirUnidadeComponent>,
+    private servicoUnidade: ServiceAllService<Unidade>,
+    private servico: UtilService
+  ) { }
 
   ngOnInit(): void {
     this.buscarUnidade();
   }
 
-  buscarUnidade(){
-      this.servicoUnidade.readById(this.dialog.id, Endpoint.Unidade).subscribe(un => {
-        this.unidade = un;
-      })
+  buscarUnidade() {
+    this.servicoUnidade.readById(this.dialog.id, Endpoint.Unidade).subscribe(un => {
+      this.unidade = un;
+    })
   }
 
-  ExcluirUnidade(){
-      this.servicoUnidade.delete(Number(this.dialog.id), Endpoint.Unidade).subscribe(() => {
+  ExcluirUnidade() {
+
+    this.servicoUnidade.create(this.unidade.id, Endpoint.Unidade + `/excluir/${this.unidade.id}`)
+      .subscribe(() => {
         this.servico.showMessage("Unidade Excluída com sucesso!", false);
         this.servico.atualizaRota("agenda", true)
         this.fecharPopup();
@@ -41,7 +43,7 @@ export class AgendaExcluirUnidadeComponent implements OnInit {
   }
 
 
-  fecharPopup(){
+  fecharPopup() {
     this.dialog.close();
   }
 

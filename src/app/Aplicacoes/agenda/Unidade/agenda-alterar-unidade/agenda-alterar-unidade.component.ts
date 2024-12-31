@@ -13,7 +13,7 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class AgendaAlterarUnidadeComponent implements OnInit {
 
-  unidade : Unidade
+  unidade : Unidade = new Unidade();
 
   constructor(
               public dialog : MatDialogRef<AgendaAlterarUnidadeComponent>,
@@ -30,19 +30,20 @@ export class AgendaAlterarUnidadeComponent implements OnInit {
   }
 
   buscarUnidade(){
-    this.servicoUnidade.readById(this.dialog.id, Endpoint.Unidade).subscribe(un => {
-      this.unidade = un;
+    this.servicoUnidade.readById(this.dialog.id, Endpoint.Unidade)
+    .subscribe((result: Unidade) => {
+      this.unidade = result;
     })
   }
 
 
   editarUnidade(){
 
-      this.servicoUnidade.update(this.unidade, Endpoint.Unidade).subscribe(() => {
+      this.servicoUnidade.create(this.unidade, Endpoint.Unidade)
+      .subscribe(() => {
         this.servico.showMessage("Unidade alterada com sucesso!", false)
-        this.fecharPopup();
 
-        
+        this.fecharPopup();
       })
   }
 

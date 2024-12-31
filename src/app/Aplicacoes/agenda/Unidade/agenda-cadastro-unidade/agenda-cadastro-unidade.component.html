@@ -151,12 +151,12 @@
                   <ng-container matColumnDef="ativo">
                     <th mat-header-cell *matHeaderCellDef>Status</th>
                       <td mat-cell *matCellDef="let row">
-                        <div *ngIf="row.ativo" >
+                        <div *ngIf="!row.ativo" >
                           <i class="material-icons">
                             lock
                           </i>
                         </div>
-                        <div *ngIf="!row.ativo" >
+                        <div *ngIf="row.ativo" >
                           <i class="material-icons">  
                             lock_open
                           </i>

@@ -2,11 +2,10 @@ import { Agenda } from "../Agenda/modelAgenda"
 
 
 export class Sala {
-    id? : null
+    id? : number = 0;
     dtCriacao : Date
     nomeSala : string
     unidadeid : number
     criadoPor : number
     ativo : boolean
-    agendas : Array<Agenda>
 }

@@ -6,7 +6,7 @@
                 [(ngModel)]="sala.nomeSala" name="nomeSala">
             </mat-form-field>
             
-            <mat-form-field>
+            <mat-form-field *ngIf="sala.id">
                 <input matInput placeholder="ativo">
                     <input name="ativo" [(ngModel)]="sala.ativo" [checked]="sala.ativo" type="checkbox">
             </mat-form-field>

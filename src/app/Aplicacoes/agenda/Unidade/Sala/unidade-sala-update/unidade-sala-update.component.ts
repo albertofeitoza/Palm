@@ -12,36 +12,38 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class UnidadeSalaUpdateComponent implements OnInit {
 
-  sala : any
-  
+  sala: Sala = new Sala();
+
   constructor(
-              public dialog : MatDialogRef<UnidadeSalaUpdateComponent>, 
-              private servico : UtilService, 
-              private servicoSala : ServiceAllService<Sala>
-              ) { }
+    public dialog: MatDialogRef<UnidadeSalaUpdateComponent>,
+    private servico: UtilService,
+    private servicoSala: ServiceAllService<Sala>
+  ) { }
 
   ngOnInit(): void {
-      this.buscarSala()
-  
+    this.buscarSala()
   }
 
-  
-  buscarSala(){
-        this.servicoSala.readById(this.dialog.id, Endpoint.Sala).subscribe(x => {
-            this.sala = x;
-        })
+
+  buscarSala() {
+    this.servicoSala.readById(this.dialog.id, Endpoint.Sala)
+      .subscribe((result: Sala) => {
+        this.sala = result;
+      })
   }
 
-  alterarSala(){
-    
-      this.servicoSala.update(this.sala, Endpoint.Sala).subscribe(x => {
+  alterarSala() {
+
+    this.servicoSala.create(this.sala, Endpoint.Sala)
+      .subscribe(() => {
         this.servico.showMessage("Sala alterada com sucesso!", false);
+        this.buscarSala();
       })
 
 
   }
-  
-  fecharPopup(){
+
+  fecharPopup() {
     this.dialog.close()
   }
 

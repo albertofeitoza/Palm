@@ -42,7 +42,7 @@ export class AgendaCreateComponent implements OnInit {
 
   comboProfissional: ViewPessoa[] = new Array();
   comboUnidade: Unidade[] = new Array();
-  comboSala: any = [];
+  comboSala: Sala[] = new Array();
   comboTipoGrupoAgenda: any = [];
   empresa: any = [];
   todosOsHorariosDaAgenda = false;
@@ -141,6 +141,7 @@ export class AgendaCreateComponent implements OnInit {
 
   BuscarSala() {
     //this.carregaComboSala(this._utilService.Sessao().idGrupoUsuario, this._utilService.Sessao().empresaUsuarioId.toString())
+    this.carregaComboSala();
   }
 
   AtualizarComboProfissional() {
@@ -179,9 +180,9 @@ export class AgendaCreateComponent implements OnInit {
 
   private carregaComboSala(): void {
     this.comboSala = new Array();
-    this._serviceSala.read(Endpoint.Sala)
-      .subscribe(sl => {
-        this.comboSala = sl.filter(x => x.unidadeid == this.agenda.unidadeId);
+    this._serviceSala.read(Endpoint.Sala + `/estabelecimento/${this.agenda.unidadeId}`)
+      .subscribe((result : Sala[]) => {
+        this.comboSala = result;
       });
 
   }
