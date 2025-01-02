@@ -361,7 +361,9 @@ export class DadosAgendamentoComponent implements OnInit {
     this.agendamento.protocoloId = this.protocolo.id;
     this.agendamento.criadoPor = this.servico.Sessao().IdUsuario;
     this.agendamento.ura = MeioAberturaAgendamento.Outros
-
+    this.agendamento.responsavel = !this.agendamento.responsavel || this.agendamento.responsavel == null ? '' : this.agendamento.responsavel;
+    this.agendamento.rg = !this.agendamento.rg || this.agendamento.rg == null ? '' : this.agendamento.rg;
+    
     let agendas = new Set(this.dadosAgendamentos.map(a => a.IdAgenda));
     this.agendamento.catalogoAgendado = new Array()
 
@@ -403,15 +405,9 @@ export class DadosAgendamentoComponent implements OnInit {
 
   CriarAgendamento(dadosAgendamento: Agendamentos) {
     return this.servicoApi.create(dadosAgendamento, Endpoint.Agendamentos)
-      .subscribe((res: Agendamentos) => {
+      .subscribe(() => {
 
-        let response = res
-
-       }, (err) => {
-
-        this.servico.showMessage(`Erro :${err} `)
-
-       });
+      });
   }
 
 

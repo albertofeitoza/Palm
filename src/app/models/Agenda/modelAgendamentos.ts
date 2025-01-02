@@ -17,7 +17,7 @@ export class ViewAgendamentos {
 export class Agendamentos {
     id: number = 0;
     dtCriacao: Date = new Date;
-    horaAgendada: Date;
+    horaAgendada: Date = new Date;
     nome: string;
     responsavel: string;
     cpf: string;

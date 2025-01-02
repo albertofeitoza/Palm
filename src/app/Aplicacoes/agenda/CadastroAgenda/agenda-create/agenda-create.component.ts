@@ -48,7 +48,7 @@ export class AgendaCreateComponent implements OnInit {
   empresa: any = [];
   todosOsHorariosDaAgenda = false;
   //Grupo
-  grupos: GrupoAgenda[] = [];
+  grupos: GrupoAgenda[] = new Array();
   ColunasGrupo = ['id', 'dtCriacao', 'nomeGrupoAgenda', 'bloqueado', 'action']
   GrupoSelecionado: number = 0;
 
@@ -71,7 +71,7 @@ export class AgendaCreateComponent implements OnInit {
 
   ColunasServicosAgendaveis = ['id', 'nome', 'codigo', 'codigoBarras', 'valor', 'action'];
 
-  agendas: AgendaDto[] = [];
+  agendas: AgendaDto[] = new Array();
 
   catalogoServicosAgenda: CatalogoServico[] = new Array();
 
@@ -234,7 +234,7 @@ export class AgendaCreateComponent implements OnInit {
   public selecionaAbaAgenda(tab: any): void {
     switch (tab.index) {
       case 1:
-        this.buscarGrupos("");
+        this.SelecionarGrupos();
         break;
       case 2:
         this.selecionarHorários();
@@ -251,7 +251,7 @@ export class AgendaCreateComponent implements OnInit {
 
   }
 
-  ////GRUPOPS//////
+  // ////GRUPOPS//////
   selecionarGrupo(event: any) {
 
     if (event.which == 1 || event.which == 13) {
@@ -280,15 +280,15 @@ export class AgendaCreateComponent implements OnInit {
   buscarGrupos(txtbusca: any) {
 
     this.servicoGrupo.read(Endpoint.GrupoAgenda + `/estabelecimento/${this._utilService.Sessao().EmpresaId}`)
-      .subscribe(result => {
+      .subscribe((result: GrupoAgenda[]) => {
         this.grupos = result;
-
         this.grupos = [...this.grupos];
-
         this.carregaComboGrupoAgenda();
-
       })
   }
+
+
+  
 
   cadGrupo() {
     this._utilService.Popup("", AgendaGrupoCadastroComponent, "500px", "500px")
@@ -352,6 +352,15 @@ export class AgendaCreateComponent implements OnInit {
     this.agendaSelecionada > 0
       ? this.buscarHorarios(this.agendaSelecionada)
       : this._utilService.showMessage("Selecionar a agenda para acessar os horários.", false)
+  }
+
+
+  public SelecionarGrupos(): void {
+    
+    this.agendaSelecionada > 0
+    ? this.buscarGrupos("")
+    : this._utilService.showMessage("Selecionar a agenda para acessar os horários.", false)
+
   }
 
   public selecionarDiaNaoatende(): void {
