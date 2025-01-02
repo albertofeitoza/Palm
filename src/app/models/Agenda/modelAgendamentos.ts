@@ -16,7 +16,7 @@ export class ViewAgendamentos {
 
 export class Agendamentos {
     id: number = 0;
-    dtCriacao: Date;
+    dtCriacao: Date = new Date;
     horaAgendada: Date;
     nome: string;
     responsavel: string;
@@ -44,7 +44,7 @@ export class CatalogoAgendado {
     codigo: string;
     codigoBarras: string;
     qrCode: string;
-    data?: Date
+    data?: Date;
     hora: string;
     seg: number;
     ter: number;
@@ -54,5 +54,5 @@ export class CatalogoAgendado {
     sab: number;
     dom: number;
     valor: number;
-    statusItem : number
+    statusItem: number;
 }

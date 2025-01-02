@@ -26,6 +26,7 @@ import { AgendaCatalogoServico, CatalogoServicoResponse, ResponseAgendaCatalagoS
 import { PopupConfirmacaoComponent } from 'src/app/components/Popups/popup-confirmacao/popup-confirmacao.component';
 import { DatePipe } from '@angular/common';
 import { AgendaDataNaoAtende } from 'src/app/models/Agenda/agendaNaoAtende';
+import { PessoaCreateComponent } from 'src/app/components/pessoa/modal/pessoa-create/pessoa-create.component';
 
 @Component({
   selector: 'app-agenda-create',
@@ -105,7 +106,7 @@ export class AgendaCreateComponent implements OnInit {
     if (!this.estadoForm)
       this.buscarAgenda("");
 
-    //this.buscarHorarios(this.agendaSelecionada);
+    this.buscarHorarios(this.agendaSelecionada);
 
 
   }
@@ -140,7 +141,6 @@ export class AgendaCreateComponent implements OnInit {
   }
 
   BuscarSala() {
-    //this.carregaComboSala(this._utilService.Sessao().idGrupoUsuario, this._utilService.Sessao().empresaUsuarioId.toString())
     this.carregaComboSala();
   }
 
@@ -174,6 +174,7 @@ export class AgendaCreateComponent implements OnInit {
       this.serviceApi.read(Endpoint.Unidade + `/estabelecimento/${this._utilService.Sessao().EmpresaId}`)
         .subscribe((result: Unidade[]) => {
           this.comboUnidade = result
+          this.BuscarSala();
         })
     }
   }
@@ -220,12 +221,14 @@ export class AgendaCreateComponent implements OnInit {
 
   novoUsuario() {
 
-    // if(this._utilService.Sessao().idGrupoUsuario == TipoUsuario.MasterEmpresa.toString() || this._utilService.Sessao().idGrupoUsuario == TipoUsuario.Administrador.toString())
-    // {
-    //     this._utilService.Popup("", UsuarioCreateComponent ,"700px","820px");
-    // }else{
-    //   this._utilService.showMessage("Solicitar ao um Usuário Master para criar Nova Agenda!",true);
-    // }
+    const dados = {
+      acao: 'cadastro',
+      idEmpresa : this._utilService.Sessao().EmpresaId
+    }
+    this._utilService.Popup('', PessoaCreateComponent, '40%', 'auto',false, dados)
+      .subscribe(() => {
+        this.AtualizarComboProfissional();
+      })
   }
 
   public selecionaAbaAgenda(tab: any): void {
@@ -307,6 +310,9 @@ export class AgendaCreateComponent implements OnInit {
 
   novaUnidade() {
     this._utilService.Popup("", AgendaCadastroUnidadeComponent, "700px", "500px")
+    .subscribe(() => {
+      this.AtualizarComboUnidade();
+    })
   }
 
 

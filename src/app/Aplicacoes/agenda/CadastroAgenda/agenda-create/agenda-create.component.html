@@ -118,58 +118,51 @@
       <!-- Cadastro de agendas-->
       <mat-card *ngIf="estadoForm">
         <mat-card-title>{{ agenda && agenda.id > 0 ? 'Editar Agenda' : 'Nova Agenda'}}</mat-card-title>
-        <form>
-          <mat-form-field appearance="fill">
-            <input matInput placeholder="Nome Agenda" [(ngModel)]="agenda.nomeAgenda" name="nomeAgenda">
+
+        <form class="formularioRow">
+
+          <mat-form-field appearance="outline">
+            <input matInput placeholder="Nome da agenda" [(ngModel)]="agenda.nomeAgenda" name="nomeAgenda">
           </mat-form-field>
 
-          <mat-form-field appearance="fill">
-            <input matInput placeholder="Profissional">
+          <mat-form-field appearance="outline">
             <i class="material-icons ordem" (click)="AtualizarComboProfissional()">refresh</i>
             <i class="material-icons ordem" (click)="novoUsuario()">person_add</i>
-            <p></p>
-            <mat-select [(value)]="agenda.pessoaId">
-              <mat-option></mat-option>
+            <mat-select style="padding-top: 5px;" [(value)]="agenda.pessoaId" placeholder="Selecione o profissional">
               <mat-option *ngFor="let tipoProf of comboProfissional " [value]="tipoProf.id">
                 {{tipoProf.nome}}
               </mat-option>
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field appearance="fill">
-            <input matInput placeholder="Unidade Atendimento">
+          <mat-form-field appearance="outline">
             <i class="material-icons ordem" (click)="AtualizarComboUnidade()">refresh</i>
             <i class="material-icons ordem" (click)="novaUnidade()">house</i>
-            <p></p>
-            <mat-select [(value)]="agenda.unidadeId" (selectionChange)="BuscarSala()">
+            <mat-select style="padding-top: 5px;" [(value)]="agenda.unidadeId" placeholder="Selecione a Unidade" (selectionChange)="BuscarSala()">
               <mat-option *ngFor="let tipounidade of comboUnidade " [value]="tipounidade.id">
                 {{tipounidade.nomeUnidade}}
               </mat-option>
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field appearance="fill">
-            <input matInput placeholder="Sala Atendimento">
-            <p></p>
-            <mat-select [(value)]="agenda.salaId">
+          <mat-form-field appearance="outline">
+            <mat-select [(value)]="agenda.salaId" placeholder="Selecione a Sala">
               <mat-option *ngFor="let tipoSala of comboSala " [value]="tipoSala.id">
                 {{tipoSala.nomeSala}}
               </mat-option>
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="outline">
             <input matInput placeholder="Substituição">
             <input name="substituicao" [(ngModel)]="agenda.substituicao" [checked]="agenda.substituicao"
               type="checkbox">
           </mat-form-field>
 
-          <mat-form-field appearance="fill">
-            <input matInput placeholder="Grupo Agenda">
+          <mat-form-field appearance="outline">
             <i class="material-icons ordem" (click)="AtualizarComboGrupoAgenda()">refresh</i>
             <i class="material-icons ordem" (click)="cadGrupo()">house</i>
-            <p></p>
-            <mat-select [(value)]="agenda.grupoAgendaId">
+            <mat-select style="padding-top: 5px;" placeholder="Selecione a Unidade" [(value)]="agenda.grupoAgendaId" placeholder="Selecione o tipo da agenda">
               <mat-option *ngFor="let tipoGrupo of comboTipoGrupoAgenda " [value]="tipoGrupo.id">
                 {{tipoGrupo.nomeGrupoAgenda}}
               </mat-option>
@@ -177,40 +170,42 @@
           </mat-form-field>
 
 
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="outline">
             <input matInput placeholder="Vigência Início" [(ngModel)]="agenda.vigenciaInicio" name="vigenciaInicio"
               type="datetime-local" teste>
           </mat-form-field>
 
 
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="outline">
             <input matInput placeholder="Vigência Fim" [(ngModel)]="agenda.vigenciaFim" name="vigenciaFim"
               type="datetime-local">
           </mat-form-field>
 
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="outline">
             <input matInput placeholder="Considera Feriado">
             <input name="considerarFeriado" [(ngModel)]="agenda.considerarFeriado" [checked]="agenda.considerarFeriado"
               type="checkbox">
           </mat-form-field>
 
 
-          <mat-form-field *ngIf="agenda.id > 0" appearance="fill">
+          <mat-form-field *ngIf="agenda.id > 0" appearance="outline">
             <input matInput placeholder="bloqueado">
             <input name="bloqueado" [(ngModel)]="agenda.bloqueado" [checked]="agenda.bloqueado" type="checkbox">
           </mat-form-field>
 
 
         </form>
+        
+        <div style="margin-top: -2%;padding-left: 10px; ">
+          <button *ngIf="agenda.nomeAgenda && agenda.vigenciaInicio && agenda.vigenciaFim" mat-raised-button
+            (click)="createAgenda()" color="primary">
+            Salvar
+          </button>
 
-        <button *ngIf="agenda.nomeAgenda && agenda.vigenciaInicio && agenda.vigenciaFim" mat-raised-button
-          (click)="createAgenda()" color="primary">
-          Salvar
-        </button>
-
-        <button mat-raised-button (click)="Voltar()" color="primary">
-          Voltar
-        </button>
+          <button mat-raised-button (click)="Voltar()" color="primary">
+            Voltar
+          </button>
+        </div>
       </mat-card>
 
     </div>
@@ -364,7 +359,7 @@
 
         <ng-container matColumnDef="qtd">
           <th mat-header-cell *matHeaderCellDef><b>Qtd</b></th>
-          <td mat-cell style="color: rgb(81, 81, 235);" *matCellDef="let row" >{{QuantidadeAgendamento(row, 2)}} </td>
+          <td mat-cell style="color: rgb(81, 81, 235);" *matCellDef="let row">{{QuantidadeAgendamento(row, 2)}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="ColunasDatas"></tr>
@@ -374,15 +369,16 @@
       <!--Terça-->
 
       <table class="tabelaHorario" mat-table [dataSource]="terca">
-        
+
         <ng-container matColumnDef="data">
           <th mat-header-cell *matHeaderCellDef><b>Terça</b></th>
-          <td mat-cell id="idhora" *matCellDef="let row" class="cursor" (click)="DetalhesDatas(row)">{{row | date:'dd/MM/yyyy'}}</td>
+          <td mat-cell id="idhora" *matCellDef="let row" class="cursor" (click)="DetalhesDatas(row)">{{row |
+            date:'dd/MM/yyyy'}}</td>
         </ng-container>
 
         <ng-container matColumnDef="qtd">
           <th mat-header-cell *matHeaderCellDef><b>Qtd</b> <br />
-          <td mat-cell style="color: rgb(81, 81, 235);" *matCellDef="let row" >{{QuantidadeAgendamento(row, 3)}} </td>
+          <td mat-cell style="color: rgb(81, 81, 235);" *matCellDef="let row">{{QuantidadeAgendamento(row, 3)}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="ColunasDatas"></tr>
@@ -400,7 +396,7 @@
 
         <ng-container matColumnDef="qtd">
           <th mat-header-cell *matHeaderCellDef><b>Qtd</b></th>
-          <td mat-cell style="color: rgb(81, 81, 235);" *matCellDef="let row" >{{QuantidadeAgendamento(row, 4)}} </td>
+          <td mat-cell style="color: rgb(81, 81, 235);" *matCellDef="let row">{{QuantidadeAgendamento(row, 4)}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="ColunasDatas"></tr>
@@ -418,7 +414,7 @@
 
         <ng-container matColumnDef="qtd">
           <th mat-header-cell *matHeaderCellDef><b>Qtd</b></th>
-          <td mat-cell style="color: rgb(81, 81, 235);"  *matCellDef="let row" >{{QuantidadeAgendamento(row, 5)}} </td>
+          <td mat-cell style="color: rgb(81, 81, 235);" *matCellDef="let row">{{QuantidadeAgendamento(row, 5)}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="ColunasDatas"></tr>
@@ -436,7 +432,7 @@
 
         <ng-container matColumnDef="qtd">
           <th mat-header-cell *matHeaderCellDef><b>Qtd</b></th>
-          <td mat-cell style="color: rgb(81, 81, 235);" *matCellDef="let row" >{{QuantidadeAgendamento(row, 6)}} </td>
+          <td mat-cell style="color: rgb(81, 81, 235);" *matCellDef="let row">{{QuantidadeAgendamento(row, 6)}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="ColunasDatas"></tr>
@@ -455,7 +451,7 @@
 
         <ng-container matColumnDef="qtd">
           <th mat-header-cell *matHeaderCellDef><b>Qtd</b></th>
-          <td mat-cell style="color: rgb(81, 81, 235);" *matCellDef="let row" >{{QuantidadeAgendamento(row, 7)}} </td>
+          <td mat-cell style="color: rgb(81, 81, 235);" *matCellDef="let row">{{QuantidadeAgendamento(row, 7)}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="ColunasDatas"></tr>
@@ -473,7 +469,7 @@
 
         <ng-container matColumnDef="qtd">
           <th mat-header-cell *matHeaderCellDef><b>Qtd</b></th>
-          <td mat-cell style="color: rgb(81, 81, 235);" *matCellDef="let row" >{{QuantidadeAgendamento(row, 1)}} </td>
+          <td mat-cell style="color: rgb(81, 81, 235);" *matCellDef="let row">{{QuantidadeAgendamento(row, 1)}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="ColunasDatas"></tr>
@@ -490,8 +486,8 @@
     <div style="display:ruby-text;padding-top: 5px;">
       <mat-form-field>
         <div style="display: flex;">
-          <input matInput matTooltip="Cadastrar nova Data" [matDatepicker]="Cnovadata" [(ngModel)]="dataNaoAtende.dataNaoAtende"
-            name="novadata">
+          <input matInput matTooltip="Cadastrar nova Data" [matDatepicker]="Cnovadata"
+            [(ngModel)]="dataNaoAtende.dataNaoAtende" name="novadata">
           <mat-datepicker-toggle matIconSuffix [for]="Cnovadata"></mat-datepicker-toggle>
           <mat-datepicker #Cnovadata></mat-datepicker>
         </div>

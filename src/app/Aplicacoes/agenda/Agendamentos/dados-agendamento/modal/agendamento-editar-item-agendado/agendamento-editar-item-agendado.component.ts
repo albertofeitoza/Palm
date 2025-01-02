@@ -38,7 +38,7 @@ export class AgendamentoEditarItemAgendadoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.idItem = Number(this.dialofRef.id);
+    this.idItem = this.dialofRef._containerInstance._config.data.object;
     this.CarregaCombos();
     this.BuscarItenAgendado();
   }

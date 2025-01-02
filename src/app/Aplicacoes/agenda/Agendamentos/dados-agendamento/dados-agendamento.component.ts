@@ -311,7 +311,7 @@ export class DadosAgendamentoComponent implements OnInit {
 
   public Editar(row: AgendamentoCatalogoServicos): void {
 
-    this.servico.Popup(row.Id, AgendamentoEditarItemAgendadoComponent, '50%', '60%', true)
+    this.servico.Popup('', AgendamentoEditarItemAgendadoComponent, '50%', '60%', true, row.Id)
       .subscribe((result: StatusProtocolo) => {
 
         this.BuscarAgendamento(this.idAgendamento);
@@ -401,9 +401,17 @@ export class DadosAgendamentoComponent implements OnInit {
     this.dialofRef.close(true);
   }
 
-  async CriarAgendamento(dadosAgendamento: Agendamentos) {
-    return await this.servicoApi.create(dadosAgendamento, Endpoint.Agendamentos)
-      .subscribe(() => { });
+  CriarAgendamento(dadosAgendamento: Agendamentos) {
+    return this.servicoApi.create(dadosAgendamento, Endpoint.Agendamentos)
+      .subscribe((res: Agendamentos) => {
+
+        let response = res
+
+       }, (err) => {
+
+        this.servico.showMessage(`Erro :${err} `)
+
+       });
   }
 
 
