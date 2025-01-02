@@ -46,7 +46,6 @@ export class PessoaCreateComponent implements core.OnInit {
     private servico: UtilService,
     private dialofRef: MatDialogRef<PessoaCreateComponent>,
     private serviceApi: ServiceAllService<any>,
-    private auth: LoginService
 
   ) { }
 
