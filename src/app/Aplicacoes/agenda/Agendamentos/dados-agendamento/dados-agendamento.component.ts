@@ -7,22 +7,18 @@ import { Endpoint } from 'src/app/Negocio/Endpoint';
 import { ServiceAllService } from 'src/app/services/service-all.service';
 import { UtilService } from 'src/app/services/util.service';
 import { Agendamentos, CatalogoAgendado } from 'src/app/models/Agenda/modelAgendamentos';
-import { Telefone } from 'src/app/models/Telefone/telefoneModel';
-import { map, Observable } from 'rxjs';
-import { FormatListNumberedRtlOutlined } from '@material-ui/icons';
 import { FiltroBuscaTelaAgendamento } from 'src/app/models/Filtros/filtros';
 import { AgendamentoCatalogoServicos } from 'src/app/models/Agenda/modelAgendamentoSevico';
 import { PopupSelecaoIdsComponent } from 'src/app/components/Popups/popup-selecao-ids/popup-selecao-ids.component';
-import { Contato } from 'src/app/models/contato/modelContato';
 import { TipoProtocolo } from 'src/app/Negocio/TipoProtocolo';
 import { StatusProtocolo } from 'src/app/Negocio/StatusProtocolo';
 import { CatalogoServico } from 'src/app/models/CatalogoServico/CatalogoServico';
 import { AgendamentoSelecionarHorarioAgendarComponent } from './modal/agendamento-selecionar-horario-agendar/agendamento-selecionar-horario-agendar.component';
 import { HorarioAgenda } from 'src/app/models/Agenda/modelHorarioAgenda';
 import { MeioAberturaAgendamento } from 'src/app/Negocio/MeioAberturaAgendamento';
-import { promises } from 'fs';
 import { AgendamentoEditarItemAgendadoComponent } from './modal/agendamento-editar-item-agendado/agendamento-editar-item-agendado.component';
 import { ItensAgendadoAtividade } from './model/atividades';
+import { Unidade } from 'src/app/models/Unidade/unidadeModel';
 
 @Component({
   selector: 'app-dados-agendamento',
@@ -40,6 +36,7 @@ export class DadosAgendamentoComponent implements OnInit {
   itensPendentes = 0;
   codServico: any;
   nomeServico: any;
+  unidades: Unidade[] = new Array();
 
 
   displayedColumns = ['Id', 'Nome', 'Codigo', 'CodigoBarras', 'QrCode', 'Data', 'Hora', 'StatusItem', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom', 'Valor', 'action']
@@ -83,6 +80,7 @@ export class DadosAgendamentoComponent implements OnInit {
     } else {
       this.agendamento.statusAgendamento = StatusProtocolo.Rascunho
     }
+
   }
   private BuscarAgendamento(idAgendamento: number): void {
 
@@ -233,35 +231,37 @@ export class DadosAgendamentoComponent implements OnInit {
       case 1:
         this.filtros.horaInicioPeriodo = "00:00"
         this.filtros.horaFimPeriodo = "23:59"
-        this.filtros.data = new Date
+
         break;
 
       case 2:
         this.filtros.horaInicioPeriodo = "06:00"
         this.filtros.horaFimPeriodo = "12:00"
-        this.filtros.data = new Date
+
         break;
 
       case 3:
         this.filtros.horaInicioPeriodo = "12:00"
-        this.filtros.horaFimPeriodo = "20:00"
-        this.filtros.data = new Date
+        this.filtros.horaFimPeriodo = "23:59"
+
         break;
 
       default:
         this.filtros.horaInicioPeriodo = "00:00"
         this.filtros.horaFimPeriodo = "23:59"
-        this.filtros.data = new Date
+
         break;
     }
-
+    this.buscarUnidade();
+    this.filtros.unidade = 0;
   }
 
-  buscarUnidade(event: any) {
-    if (event.which === 13) {
+  private buscarUnidade(): void {
 
-    }
-
+    this.servicoApi.read(Endpoint.Unidade + `/estabelecimento/${this.servico.Sessao().EmpresaId}`)
+      .subscribe((result: Unidade[]) => {
+        this.unidades = result
+      })
   }
 
   selecionaLinha(id: any) {
@@ -345,8 +345,10 @@ export class DadosAgendamentoComponent implements OnInit {
 
     let idsSelecionados = this.dadosAgendamentos.map(x => x.Id);
 
+    this.filtros.unidade = Number(this.filtros.unidade);
+
     if (idsSelecionados.length > 0) {
-      this.servico.Popup('', AgendamentoSelecionarHorarioAgendarComponent, '85%', '80%', true, this.dadosAgendamentos)
+      this.servico.Popup('', AgendamentoSelecionarHorarioAgendarComponent, '85%', '80%', true, this.dadosAgendamentos, this.filtros)
         .subscribe((result: AgendamentoCatalogoServicos[]) => {
           this.dadosAgendamentos = [...result];
           this.horariosPendentes = this.dadosAgendamentos.filter(r => r.Hora == '').length > 0 ? true : false;
@@ -363,7 +365,7 @@ export class DadosAgendamentoComponent implements OnInit {
     this.agendamento.ura = MeioAberturaAgendamento.Outros
     this.agendamento.responsavel = !this.agendamento.responsavel || this.agendamento.responsavel == null ? '' : this.agendamento.responsavel;
     this.agendamento.rg = !this.agendamento.rg || this.agendamento.rg == null ? '' : this.agendamento.rg;
-    
+
     let agendas = new Set(this.dadosAgendamentos.map(a => a.IdAgenda));
     this.agendamento.catalogoAgendado = new Array()
 

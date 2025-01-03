@@ -65,33 +65,38 @@
 
   <mat-form-field appearance="outline" style="width: 7%;">
     <mat-label>Hora Início</mat-label>
-    <input [disabled]="agendamento.statusAgendamento > 0" matInput placeholder="Hora Início" id="horaInicio"
+    <input [disabled]="true" matInput placeholder="Hora Início" id="horaInicio"
       [ngModel]="filtros.horaInicioPeriodo" name="horaInicioPeriodo">
   </mat-form-field>
 
   <mat-form-field appearance="outline" style="width: 7%;">
     <mat-label>Hora Fim</mat-label>
-    <input [disabled]="agendamento.statusAgendamento > 0" matInput placeholder="Hora Fim" id="horaFim"
+    <input [disabled]="true" matInput placeholder="Hora Fim" id="horaFim"
       [(ngModel)]="filtros.horaFimPeriodo" name="horaFimPeriodo">
   </mat-form-field>
 
-  <mat-form-field appearance="outline" style="width: 10%; height: 10px;">
-    <mat-label>Data</mat-label>
-    <input [disabled]="agendamento.statusAgendamento > 0" matInput placeholder="Data" id="DataPeriodo" maxlength="10"
-      type="datetime" [ngModel]="filtros.data|date:'dd/MM/yyyy'" name="data">
+  <mat-form-field appearance="outline">
+    <div style="display: flex; border-top-left-radius: 0%">
+      <input style="appearance: outline;" matInput matTooltip="Cadastrar nova Data" [matDatepicker]="Cnovadata"
+        [(ngModel)]="filtros.data" name="novadata">
+      <mat-datepicker-toggle matIconSuffix [for]="Cnovadata"></mat-datepicker-toggle>
+      <mat-datepicker #Cnovadata></mat-datepicker>
+    </div>
   </mat-form-field>
 
-  <mat-form-field appearance="outline" style="width: 5%">
-    <mat-label>Id</mat-label>
-    <input [disabled]="agendamento.statusAgendamento > 0" matInput placeholder="Id" type="number"
-      (keypress)="buscarUnidade($event)" [(ngModel)]="filtros.unidade" name="idunidade">
+
+
+
+  <mat-form-field appearance="outline" style="width: 20%;">
+    <mat-label>Unidades</mat-label>
+    <mat-select [(value)]="filtros.unidade" placeholder="Selecione a unidade">
+      <mat-option value="0">Todas</mat-option>
+      <mat-option *ngFor="let un of unidades " [value]="un.id">
+        {{un.nomeUnidade}}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
 
-  <mat-form-field appearance="outline" style="width: 12%">
-    <mat-label>Nome Unidade</mat-label>
-    <input [disabled]="agendamento.statusAgendamento > 0" matInput placeholder="Nome Unidade"
-      (keypress)="buscarUnidade($event)" [(ngModel)]="filtros.nomeUnidade" name="nomeunidade">
-  </mat-form-field>
 
 </form>
 

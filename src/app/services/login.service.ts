@@ -79,14 +79,12 @@ export class LoginService {
     this.router.navigate(['/login']);
   }
 
-  public header(): any {
+  public header(filtros: any = null): any {
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.token}`,
-      // 'idusuario': `${this.dadosUsuario.IdUsuario}`,
-      // //'IdEmpresa' : `${this.convertBase64toText(this.sessao.empresaUsuarioId)}`,
-
+      'filtros': `${filtros}`
     });
 
     return { headers: headers };

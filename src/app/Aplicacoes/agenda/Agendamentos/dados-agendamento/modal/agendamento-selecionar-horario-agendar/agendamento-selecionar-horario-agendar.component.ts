@@ -10,6 +10,8 @@ import { ResponseHorariosDisponiveis } from '../../model/responseHorariosDIsponi
 import { HorarioAgenda } from 'src/app/models/Agenda/modelHorarioAgenda';
 import { isNull } from '@angular/compiler/src/output/output_ast';
 import { EMPTY } from 'rxjs';
+import { FiltroBuscaTelaAgendamento } from 'src/app/models/Filtros/filtros';
+import { json } from 'body-parser';
 
 @Component({
   selector: 'app-agendamento-selecionar-horario-agendar',
@@ -21,7 +23,8 @@ export class AgendamentoSelecionarHorarioAgendarComponent implements OnInit {
   ColunasCatalogo = ['Id', 'Nome', 'Codigo', 'Data', 'Hora'];
   ColunasHorDisponiveis = ['data', 'hora', 'diaDasemana'];
   dadosAgendamentos: AgendamentoCatalogoServicos[] = new Array();
-  agendasDisponiveis: ResponseHorariosDisponiveis[] = new Array()
+  agendasDisponiveis: ResponseHorariosDisponiveis[] = new Array();
+  filtros: FiltroBuscaTelaAgendamento = new FiltroBuscaTelaAgendamento();
 
   linhasSelecionadas: any[] = new Array();
   linhaSelecionada = 0;
@@ -33,7 +36,8 @@ export class AgendamentoSelecionarHorarioAgendarComponent implements OnInit {
 
   ngOnInit(): void {
     this.dadosAgendamentos = this.dialogRef._containerInstance._config.data.object
-    //this.BuscarHorariosDisponiveis();
+    this.filtros = this.dialogRef._containerInstance._config.data.filtros
+
   }
 
   private BuscarHorariosDisponiveis(linhaSelecionada: AgendamentoCatalogoServicos): void {
@@ -42,7 +46,7 @@ export class AgendamentoSelecionarHorarioAgendarComponent implements OnInit {
     let idsSelecionados: number[] = new Array();
     idsSelecionados.push(linhaSelecionada.Id);
 
-    this.serverApi.create(idsSelecionados, Endpoint.Agenda + `/horariosDisponiveis/${this.serviceUtil.Sessao().EmpresaId}`)
+    this.serverApi.create(idsSelecionados, Endpoint.Agenda + `/horariosDisponiveis/${this.serviceUtil.Sessao().EmpresaId}`, JSON.stringify(this.filtros))
       .subscribe((result: ResponseHorariosDisponiveis[]) => {
 
         if (result && result.length > 0) {
@@ -89,18 +93,18 @@ export class AgendamentoSelecionarHorarioAgendarComponent implements OnInit {
   public LinhaCatalogoSelecionada(linha: any): void {
 
     let idHorario = this.ObterIdHorario(linha);
-    if (idHorario > 0){
+    if (idHorario > 0) {
       this.CancelarReservarHorario(idHorario);
       this.dadosAgendamentos.forEach(x => {
 
-        if(x.Id == linha.Id){
+        if (x.Id == linha.Id) {
           x.Data = undefined;
           x.Hora = '';
         }
 
       });
     }
-      
+
 
     this.BuscarHorariosDisponiveis(linha);
 
@@ -163,7 +167,7 @@ export class AgendamentoSelecionarHorarioAgendarComponent implements OnInit {
         at.Qui = bloqueado && row.diaDasemana === 5 ? row.id : 0;
         at.Sex = bloqueado && row.diaDasemana === 6 ? row.id : 0;
         at.Sab = bloqueado && row.diaDasemana === 7 ? row.id : 0;
-        
+
       }
     })
     this.dadosAgendamentos = [...this.dadosAgendamentos];
