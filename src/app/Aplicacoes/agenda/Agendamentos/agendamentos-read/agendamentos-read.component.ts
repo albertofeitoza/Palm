@@ -47,13 +47,7 @@ export class AgendamentosReadComponent implements OnInit {
     this.statusProcoloBusca = 1;
     this.BuscarAgendamento();
     this.CarregarCombos();
-
-    // let dataDodiaOninit = new Date();
-    // dataDodiaOninit.setDate(dataDodiaOninit.getDate() + 1);
-    // this.dataFiltro = this.datePipe.transform(dataDodiaOninit, 'yyyy-MM-dd')?.toString() ?? '';
     this.dataFiltro = new Date
-
-
     this.statusProcoloBusca = 1;
   }
 
