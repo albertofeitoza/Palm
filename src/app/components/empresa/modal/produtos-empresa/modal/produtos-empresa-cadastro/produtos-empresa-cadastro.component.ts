@@ -50,8 +50,19 @@ export class ProdutosEmpresaCadastroComponent implements OnInit {
   }
 
   public CadastrarProduto(): void {
+   
+    this.produto.codigoBarras = this.produto.codigoBarras ? this.produto.codigoBarras : '';
+    this.produto.qrCode = this.produto.qrCode ? this.produto.qrCode : '';
     this.produto.qtdEstoque = this.produto.qtdEstoque ? this.produto.qtdEstoque : 0;
-    this.produto.empresaId = this.produto.empresaId > 0 ? this.produto.empresaId  :this.idEmpresa;
+    this.produto.peso = this.produto.peso > 0 ? this.produto.peso : 0;
+    this.produto.margem = this.produto.margem > 0 ? this.produto.margem : 0;
+    this.produto.valorCompra = this.produto.valorCompra > 0 ? this.produto.valorCompra : 0;
+    this.produto.valor = this.produto.valor > 0 ? this.produto.valor : 0
+    this.produto.empresaId = this.produto.empresaId > 0 ? this.produto.empresaId  : this.idEmpresa;
+
+
+    if(this.produto.valor === 0)
+      return this.servico.showMessage("Definor um valor para o produto!", true)
 
     this.serviceApi.create(this.produto, Endpoint.CatalogoServico)
       .subscribe(() => {

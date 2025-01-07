@@ -113,7 +113,7 @@ export class AgendaCreateComponent implements OnInit {
 
   public createAgenda(): void {
     this.agendaSelecionada = 0;
-    this.agenda.empresaId = Number(this.auth.dadosUsuario.EmpresaId)
+    this.agenda.empresaId = this._utilService.Sessao().EmpresaId;
 
     if (this.agenda && this.agenda.pessoaId > 0 && this.agenda.unidadeId > 0 && this.agenda.salaId > 0 && this.agenda.nomeAgenda.length > 0) {
       this._serviceAgenda.create(this.agenda, Endpoint.Agenda)
@@ -125,9 +125,9 @@ export class AgendaCreateComponent implements OnInit {
           this.buscarAgenda("")
           this.dialogRef.close();
         }, (err) => {
-          this._utilService.showMessage(`${err.message}`, true);
+          this._utilService.showMessage('Já existe uma agenda para essa Unidade e sala nesse período.', true);
         }, () => {
-          this._utilService.showMessage(`erro`, true);
+          this._utilService.showMessage('Já existe uma agenda para essa Unidade e sala nesse período.', true);
         });
     } else {
       this._utilService.showMessage("Os campos, Nome da Agenda, unidade, sala e a Pessoa devem ser informados!.", true);
