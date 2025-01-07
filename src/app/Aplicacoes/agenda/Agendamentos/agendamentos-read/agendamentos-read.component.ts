@@ -28,7 +28,7 @@ export class AgendamentosReadComponent implements OnInit {
   selected: Number = 0;
   statusProcoloBusca = 0;
   statusProtocolo: any[] = new Array();
-
+  buscaProtocolo = 0;
 
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -84,6 +84,8 @@ export class AgendamentosReadComponent implements OnInit {
                                     : this.statusProcoloBusca === 6 && this.dataFiltro ? filter.horaAgendada.toString().includes(data) && filter.statusAgendamento === 'Cancelado'
                                       : this.statusProcoloBusca === 6 && !this.dataFiltro ? filter.statusAgendamento === 'Cancelado'
                                         : null);
+
+        filters = this.buscaProtocolo > 0 ? filters.filter(x => x.protocoloId === Number(this.buscaProtocolo)) : filters;
 
         this.agendamentos.data = [...filters];
       })

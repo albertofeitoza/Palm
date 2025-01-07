@@ -7,9 +7,14 @@
 
   </div>
 
-  <div style="padding-left: 75%;">
+  <div style="padding-left: 65%;">
 
-    <mat-form-field style="width: 35%;">
+    <mat-form-field style="width: 15%;">
+      <mat-label>Protocolo</mat-label>
+      <input matInput placeholder="Informe o protocolo" [(ngModel)]="buscaProtocolo" name="protocolo">
+    </mat-form-field>
+
+    <mat-form-field style="width: 22%;">
       <div style="display: flex;">
         <input class="heigth" matInput [matDatepicker]="picker" [(ngModel)]="dataFiltro">
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
@@ -17,7 +22,7 @@
       </div>
     </mat-form-field>
 
-    <mat-form-field style="width: 35%;padding-right: 15px;">
+    <mat-form-field style="width: 22%;padding-right: 15px;">
       <mat-label>Status</mat-label>
       <mat-select [(value)]="statusProcoloBusca" placeholder="Qualquer período">
         <mat-option *ngFor="let sp  of statusProtocolo " [value]="sp.id">
