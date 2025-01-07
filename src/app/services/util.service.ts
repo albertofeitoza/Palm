@@ -258,9 +258,9 @@ export class UtilService {
   }
 
 
-  public DataSistemaFront(data: string) {
-
-    let currentDate = this.datePipe.transform(data != '' ? new Date(data) : new Date, 'yyyy-MM-ddThh:mm:ss');
+  public DataSistemaFront(data: Date ) {
+    //this.datePipe.transform(dataDia, 'yyyy-MM-dd')?.toString() ?? '';
+    let currentDate = this.datePipe.transform(data ? new Date(data) : new Date, 'yyyy-MM-ddThh:mm:ss')?.toString() ?? '';
     if (currentDate)
       return currentDate
 

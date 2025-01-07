@@ -33,8 +33,6 @@ export class AgendamentosCreateComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   pessoas = new MatTableDataSource<PessoaGrid>();
 
-
-
   constructor(
     private dialofRef: MatDialogRef<AgendamentosCreateComponent>,
     private serviceApi: ServiceAllService<any>,
@@ -49,9 +47,6 @@ export class AgendamentosCreateComponent implements OnInit {
     this.BuscarPessoas()
 
   }
-
- 
-
 
   NovoAgendamento() {
     alert("Teste de cadastro");
@@ -105,16 +100,16 @@ export class AgendamentosCreateComponent implements OnInit {
           //           ? x.rg?.includes(this.pessoa.rg)
           //           && x.cpf?.includes(this.pessoa.cpf)
 
-                     this.pessoa.nome != null
+                     this.pessoa.nome
                       ? x.nome?.toLowerCase().includes(this.pessoa.nome.toLowerCase())
 
-                      : this.pessoa.responsavel != null
+                      : this.pessoa.responsavel
                         ? x.responsavel?.toLowerCase().includes(this.pessoa.responsavel.toLowerCase())
 
-                        : this.pessoa.rg != null
+                        : this.pessoa.rg
                           ? x.rg?.includes(this.pessoa.rg)
 
-                          : this.pessoa.cpf != null
+                          : this.pessoa.cpf
                             ? x.cpf?.includes(this.pessoa.cpf)
 
                             : p)
@@ -140,7 +135,7 @@ export class AgendamentosCreateComponent implements OnInit {
   AgendarOrcar() {
 
     if (this.idSelecionado) {
-      this.servico.Popup('', DadosAgendamentoComponent, '75%', '80%', true, this.idSelecionado)
+      this.servico.Popup('', DadosAgendamentoComponent, '75%', '83%', true, this.idSelecionado)
         .subscribe(result => {
           if (result)
             this.dialofRef.close();

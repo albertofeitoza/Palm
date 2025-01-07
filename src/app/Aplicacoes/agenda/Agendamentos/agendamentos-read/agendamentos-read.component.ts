@@ -9,7 +9,6 @@ import { DadosAgendamentoComponent } from '../dados-agendamento/dados-agendament
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { concat } from 'rxjs';
 
 
 @Component({
@@ -24,7 +23,7 @@ export class AgendamentosReadComponent implements OnInit {
   displayedColumns = ['id', 'horaAgendada', 'nome', 'dataNascimento',
     'telefone', 'celular', 'email', 'profissional', 'protocoloId', 'statusAgendamento', 'action']
 
-  dataFiltro = '';
+  dataFiltro: Date;
 
   selected: Number = 0;
   statusProcoloBusca = 0;
@@ -48,7 +47,14 @@ export class AgendamentosReadComponent implements OnInit {
     this.statusProcoloBusca = 1;
     this.BuscarAgendamento();
     this.CarregarCombos();
-    //this.dataFiltro = new Date
+
+    // let dataDodiaOninit = new Date();
+    // dataDodiaOninit.setDate(dataDodiaOninit.getDate() + 1);
+    // this.dataFiltro = this.datePipe.transform(dataDodiaOninit, 'yyyy-MM-dd')?.toString() ?? '';
+    this.dataFiltro = new Date
+
+
+    this.statusProcoloBusca = 1;
   }
 
   private CarregarCombos(): void {
@@ -57,27 +63,33 @@ export class AgendamentosReadComponent implements OnInit {
 
   public BuscarAgendamento(): void {
 
-    let dataDia = this.dataFiltro == null || this.dataFiltro == '' ? new Date : this.dataFiltro;
-    let data = this.datePipe.transform(dataDia, 'yyyy-MM-dd')?.toString() ?? '';
-
-    let dataAmanha = new Date();
-    dataAmanha.setDate(dataAmanha.getDate() + 1);
+    let data = this.dataFiltro ? this.servico.DataSistemaFront(this.dataFiltro).toString().substring(0, 10) : this.dataFiltro;
 
     this.servicoAgendamento.read(Endpoint.Agendamentos + `/estabelecimento/${this.servico.Sessao().EmpresaId}`)
       .subscribe((result: ViewAgendamentos[]) => {
         let filters =
-          result.filter(x => this.statusProcoloBusca === 0 ? x.horaAgendada.toString().includes(data)
-            : this.statusProcoloBusca === 1 && this.dataFiltro == null || this.dataFiltro == '' ? x.statusAgendamento == 'Aberto' && x.horaAgendada < this.servico.DataSistemaFront(dataAmanha.toString())
-              : this.statusProcoloBusca === 1 && this.dataFiltro != '' ? x.statusAgendamento == 'Aberto' && x.horaAgendada.toString().includes(data)
-                : this.statusProcoloBusca === 2 && this.dataFiltro == null || this.dataFiltro == '' ? x.statusAgendamento == 'Espera' && x.horaAgendada < this.servico.DataSistemaFront(dataAmanha.toString())
-                  : this.statusProcoloBusca === 2 && this.dataFiltro != ''  ? x.statusAgendamento == 'Espera' && x.horaAgendada.toString().includes(data)
-                    : this.statusProcoloBusca === 3 && this.dataFiltro == null || this.dataFiltro == '' ? x.statusAgendamento == 'NaRecepcao' && x.horaAgendada < this.servico.DataSistemaFront(dataAmanha.toString())
-                      : this.statusProcoloBusca === 3 && this.dataFiltro != ''  ? x.statusAgendamento == 'NaRecepcao' && x.horaAgendada.toString().includes(data)
-                        : this.statusProcoloBusca === 4 && this.dataFiltro == null || this.dataFiltro == '' ? x.statusAgendamento == 'EmAtendimento' && x.horaAgendada < this.servico.DataSistemaFront(dataAmanha.toString())
-                          : this.statusProcoloBusca === 4 && this.dataFiltro != ''  ? x.statusAgendamento == 'EmAtendimento' && x.horaAgendada.toString().includes(data)
-                            : this.statusProcoloBusca === 5 && x.horaAgendada.toString().includes(data) ? x.statusAgendamento == 'Finalizado'
-                              : this.statusProcoloBusca === 6 && x.horaAgendada.toString().includes(data) ? x.statusAgendamento == 'Cancelado'
-                                : null);
+          result.filter(filter =>
+            this.statusProcoloBusca === 0 && !this.dataFiltro ? filter
+              : this.statusProcoloBusca === 0 && this.dataFiltro ? filter.horaAgendada.toString().includes(data)
+
+                : this.statusProcoloBusca === 1 && this.dataFiltro ? filter.horaAgendada.toString().includes(data) && filter.statusAgendamento === 'Aberto'
+                  : this.statusProcoloBusca === 1 && !this.dataFiltro ? filter.statusAgendamento === 'Aberto'
+
+                    : this.statusProcoloBusca === 2 && this.dataFiltro ? filter.horaAgendada.toString().includes(data) && filter.statusAgendamento === 'Espera'
+                      : this.statusProcoloBusca === 2 && !this.dataFiltro ? filter.statusAgendamento === 'Espera'
+
+                        : this.statusProcoloBusca === 3 && this.dataFiltro ? filter.horaAgendada.toString().includes(data) && filter.statusAgendamento === 'NaRecepcao'
+                          : this.statusProcoloBusca === 3 && !this.dataFiltro ? filter.statusAgendamento === 'NaRecepcao'
+
+                            : this.statusProcoloBusca === 4 && this.dataFiltro ? filter.horaAgendada.toString().includes(data) && filter.statusAgendamento === 'EmAtendimento'
+                              : this.statusProcoloBusca === 4 && !this.dataFiltro ? filter.statusAgendamento === 'EmAtendimento'
+
+                                : this.statusProcoloBusca === 5 && this.dataFiltro ? filter.horaAgendada.toString().includes(data) && filter.statusAgendamento === 'Finalizado'
+                                  : this.statusProcoloBusca === 5 && !this.dataFiltro ? filter.statusAgendamento === 'Finalizado'
+
+                                    : this.statusProcoloBusca === 6 && this.dataFiltro ? filter.horaAgendada.toString().includes(data) && filter.statusAgendamento === 'Cancelado'
+                                      : this.statusProcoloBusca === 6 && !this.dataFiltro ? filter.statusAgendamento === 'Cancelado'
+                                        : null);
 
         this.agendamentos.data = [...filters];
       })
@@ -87,7 +99,7 @@ export class AgendamentosReadComponent implements OnInit {
   }
 
   EditarAgendamento(id: any) {
-    this.servico.Popup(id, DadosAgendamentoComponent, '75%', '80%', true)
+    this.servico.Popup(id, DadosAgendamentoComponent, '75%', '83%', true)
       .subscribe(() => {
         this.BuscarAgendamento();
       })
