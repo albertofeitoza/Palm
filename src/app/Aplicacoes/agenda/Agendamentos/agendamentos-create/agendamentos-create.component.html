@@ -5,7 +5,7 @@
     </i>
   </a>
 </div>
-<mat-card-title>Pessoas</mat-card-title>
+<mat-card-title>Cadastro de clientes / Pessoas</mat-card-title>
 
 <form class="formularioRow">
     <mat-form-field appearance="outline" style="width: 17%;">
@@ -120,6 +120,11 @@
   <mat-paginator #paginator [pageSize]="8" [pageSizeOptions]="[8]" showFirstLastButtons></mat-paginator>
 </form>
 <div class="rodape">
+  
+  <button class="button" mat-raised-button color="primary" (click)="Protocolos()">
+    Protocolos
+  </button>
+  
   <button class="button" mat-raised-button color="primary" (click)="AgendarOrcar()">
     Agendar e Orçar
   </button>

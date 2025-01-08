@@ -93,6 +93,7 @@ import { ProdutosEmpresaCadastroComponent } from './components/empresa/modal/pro
 import { AssociarsolucaoempresaComponent } from './components/Solucoes/modal/associarsolucaoempresa/associarsolucaoempresa.component';
 import { SolucoesComponent } from './components/Solucoes/solucoes-read/solucoes-read.component';
 import { PermissaoUsuarioSolucaoComponent } from './components/empresa/modal/permissao-usuario-solucao/permissao-usuario-solucao.component';
+import { ProtocolosReadComponent } from './components/protocolos/protocolos-read.component';
 
 
 @NgModule({
@@ -151,6 +152,7 @@ import { PermissaoUsuarioSolucaoComponent } from './components/empresa/modal/per
     ProdutosEmpresaCadastroComponent,
     AssociarsolucaoempresaComponent,
     PermissaoUsuarioSolucaoComponent,
+    ProtocolosReadComponent,
     
 
   ],

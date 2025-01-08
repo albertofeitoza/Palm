@@ -11,6 +11,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { PessoaCreateComponent } from 'src/app/components/pessoa/modal/pessoa-create/pessoa-create.component';
 import { ViewPessoa } from 'src/app/models/Pessoa/ViewPessoa';
+import { ProtocolosReadComponent } from 'src/app/components/protocolos/protocolos-read.component';
 
 @Component({
   selector: 'app-agendamentos-create',
@@ -65,7 +66,7 @@ export class AgendamentosCreateComponent implements OnInit {
 
 
     this.serviceApi.read(Endpoint.Pessoa + `/viewPersonalizada/${this.servico.Sessao().EmpresaId}`)
-      .subscribe((p : PessoaGrid[]) => {
+      .subscribe((p: PessoaGrid[]) => {
         this.pessoas.data = p.filter(x =>
           // this.pessoa.nome != null &&
           //   this.pessoa.responsavel != null &&
@@ -100,19 +101,19 @@ export class AgendamentosCreateComponent implements OnInit {
           //           ? x.rg?.includes(this.pessoa.rg)
           //           && x.cpf?.includes(this.pessoa.cpf)
 
-                     this.pessoa.nome
-                      ? x.nome?.toLowerCase().includes(this.pessoa.nome.toLowerCase())
+          this.pessoa.nome
+            ? x.nome?.toLowerCase().includes(this.pessoa.nome.toLowerCase())
 
-                      : this.pessoa.responsavel
-                        ? x.responsavel?.toLowerCase().includes(this.pessoa.responsavel.toLowerCase())
+            : this.pessoa.responsavel
+              ? x.responsavel?.toLowerCase().includes(this.pessoa.responsavel.toLowerCase())
 
-                        : this.pessoa.rg
-                          ? x.rg?.includes(this.pessoa.rg)
+              : this.pessoa.rg
+                ? x.rg?.includes(this.pessoa.rg)
 
-                          : this.pessoa.cpf
-                            ? x.cpf?.includes(this.pessoa.cpf)
+                : this.pessoa.cpf
+                  ? x.cpf?.includes(this.pessoa.cpf)
 
-                            : p)
+                  : p)
 
         this.pessoas.paginator = this.paginator
         this.pessoas.sort = this.sort;
@@ -167,5 +168,12 @@ export class AgendamentosCreateComponent implements OnInit {
     // this.servico.Popup(id.toString(), PessoaUpdateComponent, '70%', '80%')
   }
 
+  public Protocolos(): void {
+
+    if (this.idSelecionado === 0)
+      return this.servico.showMessage("Selecione uma linha e clique em protocolos", true)
+
+    this.servico.Popup("0", ProtocolosReadComponent, '65%', '50%', false, this.idSelecionado);
+  }
 
 }

@@ -4,13 +4,11 @@
   <div>
     <button mat-button [matMenuTriggerFor]="menu">Rotina Diária</button>
     <mat-menu #menu="matMenu">
-      <a mat-menu-item>Agendamento</a>
-      <a mat-menu-item>Consulta de Agenda</a>
-      <a mat-menu-item>Consulta Agendamentos</a>
+      <a (click)="ConsultaProtocolos()" mat-menu-item>Protocolos</a>
 
     </mat-menu>
 
-    <button mat-button [matMenuTriggerFor]="menucadastro">Cadastro</button>
+    <button mat-button [matMenuTriggerFor]="menucadastro">Cadastros</button>
     <mat-menu #menucadastro="matMenu">
       <a (click)="addNovaAgenda()" mat-menu-item>Agenda</a>
       <a (click)="addUnidade()" mat-menu-item>Unidade</a>
