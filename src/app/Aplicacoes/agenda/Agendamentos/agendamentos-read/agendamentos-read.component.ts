@@ -44,10 +44,11 @@ export class AgendamentosReadComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.dataFiltro = new Date
     this.statusProcoloBusca = 1;
     this.BuscarAgendamento();
     this.CarregarCombos();
-    this.dataFiltro = new Date
+    
     this.statusProcoloBusca = 1;
   }
 

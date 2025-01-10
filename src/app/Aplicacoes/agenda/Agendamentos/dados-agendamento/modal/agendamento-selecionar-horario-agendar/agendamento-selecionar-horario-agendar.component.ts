@@ -37,12 +37,10 @@ export class AgendamentoSelecionarHorarioAgendarComponent implements OnInit {
   ngOnInit(): void {
     this.dadosAgendamentos = this.dialogRef._containerInstance._config.data.object
     this.filtros = this.dialogRef._containerInstance._config.data.filtros
-
   }
 
   private BuscarHorariosDisponiveis(linhaSelecionada: AgendamentoCatalogoServicos): void {
 
-    //let idsSelecionadoss = this.dadosAgendamentos.map(x => x.Id);
     let idsSelecionados: number[] = new Array();
     idsSelecionados.push(linhaSelecionada.Id);
 
@@ -58,12 +56,6 @@ export class AgendamentoSelecionarHorarioAgendarComponent implements OnInit {
   }
 
   public LinhaSelecionada(row: any, servicoAgenda: any, idServico: number, idAgenda: number, agendaCatalogoId: number): void {
-
-    // let servico = servicoAgenda + ':' + row.id
-    // let valida = this.linhasSelecionadas.filter(x => x.includes(servicoAgenda))[0];
-
-
-    // let servico = servicoAgenda + ':' + row.id
     let valida = this.linhasSelecionadas.filter(x => x.id == row.id)[0]
 
     if (valida) {
@@ -81,13 +73,6 @@ export class AgendamentoSelecionarHorarioAgendarComponent implements OnInit {
       this.ReservarHorario(row, true, idServico, idAgenda, agendaCatalogoId);
 
     }
-
-    // let horarioJaselecionado = this.linhasSelecionadas.filter(x => x.includes(row.id))[0]
-
-    // if(horarioJaselecionado)  
-    //   return this.serviceUtil.showMessage("você já selecionou esse horário.");
-
-
   }
 
   public LinhaCatalogoSelecionada(linha: any): void {
@@ -101,19 +86,13 @@ export class AgendamentoSelecionarHorarioAgendarComponent implements OnInit {
           x.Data = undefined;
           x.Hora = '';
         }
-
       });
     }
-
-
     this.BuscarHorariosDisponiveis(linha);
-
   }
 
 
   public BuscarLInhaSelecionada(row: any, servicoAgenda: any): number {
-    //let servico = servicoAgenda + ':' + id
-
     let linha = this.linhasSelecionadas.filter(x => x.id == row.id)[0]
     if (linha) {
       return linha.id;

@@ -173,7 +173,7 @@ export class AgendamentosCreateComponent implements OnInit {
     if (this.idSelecionado === 0)
       return this.servico.showMessage("Selecione uma linha e clique em protocolos", true)
 
-    this.servico.Popup("0", ProtocolosReadComponent, '65%', '50%', false, this.idSelecionado);
+    this.servico.Popup("0", ProtocolosReadComponent, '65%', '60%', false, this.idSelecionado);
   }
 
 }

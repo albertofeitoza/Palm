@@ -55,7 +55,7 @@ export class AgendaReadComponent implements OnInit {
   }
 
   public ConsultaProtocolos(): void {
-    this.servico.Popup("0", ProtocolosReadComponent, '75%','50%');
+    this.servico.Popup("0", ProtocolosReadComponent, '70%','60%');
   }
 
 }

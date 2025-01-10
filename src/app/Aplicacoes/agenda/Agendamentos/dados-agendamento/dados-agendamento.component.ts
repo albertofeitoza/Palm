@@ -19,6 +19,7 @@ import { MeioAberturaAgendamento } from 'src/app/Negocio/MeioAberturaAgendamento
 import { AgendamentoEditarItemAgendadoComponent } from './modal/agendamento-editar-item-agendado/agendamento-editar-item-agendado.component';
 import { ItensAgendadoAtividade } from './model/atividades';
 import { Unidade } from 'src/app/models/Unidade/unidadeModel';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-dados-agendamento',
@@ -70,7 +71,7 @@ export class DadosAgendamentoComponent implements OnInit {
 
     this.idPessoa = this.dialofRef._containerInstance._config.data.object;
     this.idAgendamento = this.dialofRef.id && Number(this.dialofRef.id) > 0 ? Number(this.dialofRef.id) : 0
-    if (this.idPessoa && this.idPessoa > 0) {
+    if (this.idPessoa && this.idPessoa > 0 && this.idAgendamento === 0) {
       this.buscaPessoa();
       this.AtualizaPeriodo();
       this.criarProtocolo();
@@ -119,6 +120,9 @@ export class DadosAgendamentoComponent implements OnInit {
 
           this.dadosAgendamentos = [...this.dadosAgendamentos];
           this.itensPendentes = this.dadosAgendamentos.filter(x => x.StatusItem < 4).length;
+
+          this.AtualizarStatusAgendamento();
+          this.AtualizarStatusProtocolo();
         }
 
         let valores = this.dadosAgendamentos.filter(x => x.StatusItem > 3 && x.StatusItem < 6).map(v => v.Valor);
@@ -182,7 +186,6 @@ export class DadosAgendamentoComponent implements OnInit {
 
   async criarProtocolo() {
 
-    this.protocolo.dtCriacao = new Date;
     this.protocolo.tipoProtocolo = TipoProtocolo.Agendamento;
     this.protocolo.criadoPor = this.servico.Sessao().IdUsuario;
     this.protocolo.empresaId = this.servico.Sessao().EmpresaId;
@@ -312,19 +315,25 @@ export class DadosAgendamentoComponent implements OnInit {
   public Editar(row: AgendamentoCatalogoServicos): void {
 
     this.servico.Popup('', AgendamentoEditarItemAgendadoComponent, '50%', '60%', true, row.Id)
-      .subscribe((result: StatusProtocolo) => {
-
-        this.BuscarAgendamento(this.idAgendamento);
+      .subscribe((status) => {
 
         this.servicoApi.read(Endpoint.ItensAgendados + `/agendamento/${this.idAgendamento}`)
-          .subscribe((result: AgendamentoCatalogoServicos[]) => {
+          .subscribe(result => {
 
-            if (result.filter(x => x.StatusItem > 4)) {
+            if (row.StatusItem < 6 && status === 6) {
+             
+              let pendencias = new Array(row);
 
-              this.AtualizarStatusAgendamento();
-
-              this.AtualizarStatusProtocolo();
+              if (pendencias.length > 0)
+                this.LiberarHorarios(pendencias);
+           
             }
+
+            if (result.filter(x => x.statusItem > 4).length > 0) {
+              
+              this.BuscarAgendamento(this.idAgendamento);
+            }
+
           });
       })
   }
@@ -448,7 +457,7 @@ export class DadosAgendamentoComponent implements OnInit {
   private LiberarHorarios(horarios: AgendamentoCatalogoServicos[]): void {
 
     horarios.forEach(item => {
-
+     
       if (this.ObterIdHorario(item) > 0) {
         this.servicoApi.readById(this.ObterIdHorario(item).toString(), Endpoint.AgendaHorarios)
           .subscribe((result: HorarioAgenda) => {
