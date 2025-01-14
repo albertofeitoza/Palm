@@ -3,6 +3,7 @@ export class SolucoesEmpresa {
     solucaoId: number;
     solucaoNome: string;
     solucaoRota: string;
+    icone: string;
     empresaId: number;
     ativo: boolean;
 }

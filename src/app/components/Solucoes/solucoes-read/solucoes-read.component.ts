@@ -24,7 +24,7 @@ export class SolucoesComponent implements OnInit {
 
   solucoes: Solucoes[] = new Array()
 
-  displayedColumns = ['id', 'dataCriacao', 'nome', 'rota', 'ativo', 'action']
+  displayedColumns = ['id', 'dataCriacao', 'nome', 'rota', 'icone', 'ativo', 'action']
   idSelecionado: Number = 0;
 
   constructor(private router: Router,
@@ -50,7 +50,7 @@ export class SolucoesComponent implements OnInit {
   public AdicionarSolucao(): void {
 
     if (this.servico.Sessao().TipoUsuarioLogado == TipoUsuario.Administrador) {
-      this.servico.Popup('', SolucoesCreateComponent, '50%', '35%', true)
+      this.servico.Popup('', SolucoesCreateComponent, '50%', '44%', true)
         .subscribe((result) => {
           if (result)
             this.servico.showMessage("Solução atualizada!.", false);
@@ -65,7 +65,7 @@ export class SolucoesComponent implements OnInit {
   public EditarSolucao(id: number): void {
 
     if (this.servico.Sessao().TipoUsuarioLogado == TipoUsuario.Administrador) {
-      this.servico.Popup(id, SolucoesCreateComponent, '50%', '45%', true)
+      this.servico.Popup(id, SolucoesCreateComponent, '50%', '54%', true)
         .subscribe((result) => {
 
           if (result)
@@ -83,15 +83,15 @@ export class SolucoesComponent implements OnInit {
   public ExcluirSolucao(id: number): void {
 
     this.servico.Popup('', PopupConfirmacaoComponent, 'auto', 'auto', false, "Deseja excluir essa Solução?")
-    .subscribe(result => {
-      if(result){
-        this.serviceApi.create(id, Endpoint.Solucoes + `/excluir/${id}`)
-        .subscribe((response: ApiResponse) => {
-          this.servico.showMessage(response.mensagem , true);
-          this.BuscarSolucoes();
-        })
-      }
-    });
+      .subscribe(result => {
+        if (result) {
+          this.serviceApi.create(id, Endpoint.Solucoes + `/excluir/${id}`)
+            .subscribe((response: ApiResponse) => {
+              this.servico.showMessage(response.mensagem, true);
+              this.BuscarSolucoes();
+            })
+        }
+      });
 
   }
 

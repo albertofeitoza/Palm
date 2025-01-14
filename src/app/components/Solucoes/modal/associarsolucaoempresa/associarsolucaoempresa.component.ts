@@ -72,8 +72,9 @@ export class AssociarsolucaoempresaComponent implements OnInit {
           const cadastrarSolucao: SolucoesEmpresa = new SolucoesEmpresa();
 
           cadastrarSolucao.solucaoId = this.dadosSolucao.id;
-          cadastrarSolucao.solucaoNome = this.dadosSolucao.nome
-          cadastrarSolucao.solucaoRota = this.dadosSolucao.rota
+          cadastrarSolucao.solucaoNome = this.dadosSolucao.nome;
+          cadastrarSolucao.solucaoRota = this.dadosSolucao.rota;
+          cadastrarSolucao.icone = this.dadosSolucao.icone;
           cadastrarSolucao.empresaId = this.empresaId;
           cadastrarSolucao.ativo = true;
 
@@ -100,12 +101,12 @@ export class AssociarsolucaoempresaComponent implements OnInit {
         if (result) {
 
           //alterar no  faturamento..
-          this.serviceApi.create(result, Endpoint.SolucoesEmpresa + `/buscarPorSolucaoEmpresa/${this.dadosSolucao.id}/${row.id}` )
-            .subscribe((result : SolucoesEmpresa) => {
-              this.serviceApi.create(result, Endpoint.SolucoesEmpresa + `/excluir/${result.id}` )
-              .subscribe(() => {
-                this.BuscarEmpresasXSolucoes();
-              })
+          this.serviceApi.create(result, Endpoint.SolucoesEmpresa + `/buscarPorSolucaoEmpresa/${this.dadosSolucao.id}/${row.id}`)
+            .subscribe((result: SolucoesEmpresa) => {
+              this.serviceApi.create(result, Endpoint.SolucoesEmpresa + `/excluir/${result.id}`)
+                .subscribe(() => {
+                  this.BuscarEmpresasXSolucoes();
+                })
             })
         }
       });

@@ -47,10 +47,11 @@ export class HomeComponent implements OnInit {
             let solucaoEmp: SolucoesEmpresa = new SolucoesEmpresa()
             solucaoEmp.id = em.id
             solucaoEmp.solucaoId = 0;
-            solucaoEmp.solucaoNome = em.nome
-            solucaoEmp.solucaoRota = em.rota
-            solucaoEmp.empresaId = 0
-            solucaoEmp.ativo = em.ativo
+            solucaoEmp.solucaoNome = em.nome;
+            solucaoEmp.solucaoRota = em.rota;
+            solucaoEmp.icone = em.icone;
+            solucaoEmp.empresaId = 0;
+            solucaoEmp.ativo = em.ativo;
 
             this.solucoes.push(solucaoEmp)
 

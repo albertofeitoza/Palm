@@ -3,5 +3,6 @@ export class Solucoes {
     dataCriacao: Date;
     nome: string;
     rota: string;
+    icone: string;
     ativo: boolean;
 }

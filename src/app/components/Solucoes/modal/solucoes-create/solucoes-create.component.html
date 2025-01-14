@@ -12,15 +12,20 @@
             <input matInput placeholder="Rota da Solução" id="rota" [(ngModel)]="solucao.rota" name="rota">
         </mat-form-field>
 
+        <mat-form-field appearance="outline">
+            <mat-label>Nome do Icone</mat-label>
+            <input matInput placeholder="Nome do Ícone" id="icone" [(ngModel)]="solucao.icone" name="icone">
+        </mat-form-field>
+
         <mat-form-field *ngIf="solucao.id > 0" appearance="outline">
-            <mat-label>Status</mat-label>
+            <mat-label>Ativo</mat-label>
             <input matInput placeholder="Status">
             <input name="ativo" [(ngModel)]="solucao.ativo" [checked]="solucao.ativo" type="checkbox">
         </mat-form-field>
 
     </form>
 
-    <button *ngIf="solucao.nome && solucao.rota" mat-raised-button (click)="Salvar()" color="primary">
+    <button *ngIf="solucao.nome && solucao.rota && solucao.icone" mat-raised-button (click)="Salvar()" color="primary">
         Salvar
     </button>
 

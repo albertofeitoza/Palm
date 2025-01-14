@@ -1,7 +1,7 @@
 <mat-card class="home mat-elevation-z3">
     <mat-card-title class="title">
         Bem Vindo
-        <div class="meusDados" >
+        <div class="meusDados">
             <mat-icon matTooltip="Meus dados" (click)="DadosUsuario()">person</mat-icon>
         </div>
     </mat-card-title>
@@ -18,7 +18,7 @@
                     {{sol.solucaoNome}}
                     <a *ngIf="sol.ativo" mat-list-item routerLink="{{sol.solucaoRota}}">
                         <i class="material-icons">
-                            schedule
+                            {{sol.icone}}
                         </i>
                     </a>
                     <a *ngIf="!sol.ativo">
