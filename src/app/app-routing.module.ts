@@ -1,3 +1,4 @@
+import { PdvReadComponent } from './Aplicacoes/pdv/pdv-read/pdv-read.component';
 import { HomeAgendaComponent } from './Aplicacoes/agenda/home-agenda/home-agenda.component';
 import { AgendaReadComponent } from './Aplicacoes/agenda/CadastroAgenda/agenda-read/agenda-read.component';
 
@@ -35,7 +36,8 @@ const routes: Routes = [
   //Rotas das APlicações
   //Agenda
   {path: Aplicacao.Agenda , component : HomeAgendaComponent},
-  {path: Aplicacao.Agenda+"?" , component : AgendaReadComponent}
+  {path: Aplicacao.Agenda+"?" , component : AgendaReadComponent},
+  {path: Aplicacao.Pdv , component : PdvReadComponent}
       
 ]
 

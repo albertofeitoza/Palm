@@ -94,6 +94,7 @@ import { AssociarsolucaoempresaComponent } from './components/Solucoes/modal/ass
 import { SolucoesComponent } from './components/Solucoes/solucoes-read/solucoes-read.component';
 import { PermissaoUsuarioSolucaoComponent } from './components/empresa/modal/permissao-usuario-solucao/permissao-usuario-solucao.component';
 import { ProtocolosReadComponent } from './components/protocolos/protocolos-read.component';
+import { PdvReadComponent } from './Aplicacoes/pdv/pdv-read/pdv-read.component';
 
 
 @NgModule({
@@ -153,6 +154,7 @@ import { ProtocolosReadComponent } from './components/protocolos/protocolos-read
     AssociarsolucaoempresaComponent,
     PermissaoUsuarioSolucaoComponent,
     ProtocolosReadComponent,
+    PdvReadComponent,
     
 
   ],
