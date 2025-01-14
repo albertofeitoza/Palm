@@ -10,6 +10,8 @@ import { Solucoes } from 'src/app/models/Solucoes/Solucoes';
 import { Endpoint } from 'src/app/Negocio/Endpoint';
 import { TipoUsuario } from 'src/app/models/usuarios/enumUsuarios';
 import { AssociarsolucaoempresaComponent } from '../modal/associarsolucaoempresa/associarsolucaoempresa.component';
+import { PopupConfirmacaoComponent } from '../../Popups/popup-confirmacao/popup-confirmacao.component';
+import { ApiResponse } from 'src/app/models/ApiResponse';
 
 @Component({
   selector: 'app-solucoes-read',
@@ -60,7 +62,7 @@ export class SolucoesComponent implements OnInit {
     }
   }
 
-  EditarSolucao(id: number) {
+  public EditarSolucao(id: number): void {
 
     if (this.servico.Sessao().TipoUsuarioLogado == TipoUsuario.Administrador) {
       this.servico.Popup(id, SolucoesCreateComponent, '50%', '45%', true)
@@ -78,6 +80,22 @@ export class SolucoesComponent implements OnInit {
   }
 
 
+  public ExcluirSolucao(id: number): void {
+
+    this.servico.Popup('', PopupConfirmacaoComponent, 'auto', 'auto', false, "Deseja excluir essa Solução?")
+    .subscribe(result => {
+      if(result){
+        this.serviceApi.create(id, Endpoint.Solucoes + `/excluir/${id}`)
+        .subscribe((response: ApiResponse) => {
+          this.servico.showMessage(response.mensagem , true);
+          this.BuscarSolucoes();
+        })
+      }
+    });
+
+  }
+
+
   selecionarProduto(KeyEvent: any) {
 
     if (KeyEvent.which == 13 || KeyEvent.which == 1) {
@@ -92,8 +110,8 @@ export class SolucoesComponent implements OnInit {
   }
 
   public AssociarNovaSolucaoEmpresa(row: Solucoes): void {
-    
-    if(!row.ativo)
+
+    if (!row.ativo)
       return this.servico.showMessage("Essa solução não está disponível para comercialização.", true);
 
     this.servico.Popup('', AssociarsolucaoempresaComponent, '50%', '40%', false, row)

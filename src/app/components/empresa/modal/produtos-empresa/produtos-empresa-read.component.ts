@@ -1,11 +1,14 @@
 import { PopupConfirmacaoComponent } from './../../../Popups/popup-confirmacao/popup-confirmacao.component';
 import { CatalogoServico } from 'src/app/models/CatalogoServico/CatalogoServico';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ServiceAllService } from 'src/app/services/service-all.service';
 import { UtilService } from 'src/app/services/util.service';
 import { Endpoint } from 'src/app/Negocio/Endpoint';
 import { ProdutosEmpresaCadastroComponent } from './modal/produtos-empresa-cadastro/produtos-empresa-cadastro.component';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-produtos-empresa-read',
@@ -15,25 +18,14 @@ import { ProdutosEmpresaCadastroComponent } from './modal/produtos-empresa-cadas
 export class ProdutosEmpresaReadComponent implements OnInit {
 
 
-  produtosEmpresa: CatalogoServico[] = new Array();
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  produtosEmpresa = new MatTableDataSource<CatalogoServico>();
+
+
+  // produtosEmpresa: CatalogoServico[] = new Array();
 
   displayedColumns = ['id', 'codigoBarras', 'qrCode', 'codigo', 'qtdEstoque', 'nome', 'tipoCatalogo', 'peso', 'margem', 'valorCompra', 'valor', 'excluido', 'action']
-
-  // id: number;
-  // dtCriacao: Date;
-  // codigoBarras: string;
-  // qrCode: string;
-  // codigo: string;
-  // qtdEstoque: number;
-  // nome: string;
-  // tipoCatalogo: number;
-  // peso: number;
-  // margem: number;
-  // valorCompra: number;
-  // valor: number;
-  // excluido: boolean;
-  // empresaId: number;
-
 
   idSelecionado = 0;
   idEmpresa = 0;
@@ -53,8 +45,14 @@ export class ProdutosEmpresaReadComponent implements OnInit {
 
     this.serviceApi.read(Endpoint.CatalogoServico + `/estabelecimento/${this.idEmpresa}/${this.idEmpresa}`)
       .subscribe((result: CatalogoServico[]) => {
-        this.produtosEmpresa = result;
+        this.produtosEmpresa.data = result;
       });
+
+    this.produtosEmpresa.paginator = this.paginator
+    this.produtosEmpresa.sort = this.sort;
+    this.paginator._intl.itemsPerPageLabel = "Itens por página";
+
+
   }
 
   selecionaLinha(id: number) { }
@@ -73,24 +71,9 @@ export class ProdutosEmpresaReadComponent implements OnInit {
           this.servico.showMessage("Produto alterado com sucesso!")
 
         this.BuscarProdutosEmpresa();
-     })
-  }
-
-  public ExcluirProduto(id: any): void {
-
-    this.servico.Popup('', PopupConfirmacaoComponent, 'auto', 'auto', false, 'Tem Certeza que deseja excluir o produto?')
-      .subscribe(result => {
-        if (result) {
-          this.serviceApi.create(id, Endpoint.CatalogoServico + `/excluir/${id}`)
-            .subscribe((resultPrd) => {
-              this.servico.showMessage(resultPrd.mensagem);
-              this.BuscarProdutosEmpresa();
-            })
-        }
       })
-
-
   }
+
 
   public BuscarProdutos(): void {
     throw new Error('Method not implemented.');

@@ -75,16 +75,16 @@
         </ng-container>
 
         <ng-container matColumnDef="excluido">
-            <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef>Excluído</mat-header-cell>
             <mat-cell *matCellDef="let row">
                 <div *ngIf="row.excluido">
                     <i class="material-icons">
-                        lock
+                        highlight_off
                     </i>
                 </div>
                 <div *ngIf="!row.excluido">
                     <i class="material-icons">
-                        lock_open
+                        check_circle_outline
                     </i>
                 </div>
             </mat-cell>
@@ -100,12 +100,6 @@
                         edit
                     </i>
                 </a>
-
-                <a (click)="ExcluirProduto(row.id)">
-                    <i matTooltip="Usuários" class="material-icons delete cursor ">
-                        delete
-                    </i>
-                </a>
             </mat-cell>
         </ng-container>
 
@@ -114,4 +108,5 @@
         <mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'corLinhaGrid' : row.id == idSelecionado}"
             (click)="selecionaLinha(row.id)"></mat-row>
     </table>
+    <mat-paginator #paginator [pageSize]="6" [pageSizeOptions]="[6]" showFirstLastButtons></mat-paginator>
 </div>
