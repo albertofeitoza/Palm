@@ -1,11 +1,14 @@
 import { UtilService } from 'src/app/services/util.service';
 import { Endpoint } from './../../../Negocio/Endpoint';
 import { ServiceAllService } from './../../../services/service-all.service';
-import { Component, OnInit } from '@angular/core';;
+import { Component, OnInit, ViewChild } from '@angular/core';;
 import { MatDialogRef } from '@angular/material/dialog';
 import { ViewUsuarios } from 'src/app/models/usuarios/modelUsuarios';
 import { UsuarioCreateComponent } from '../usuario-create/usuario-create.component';
 import { LoginService } from 'src/app/services/login.service';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 
 @Component({
@@ -17,7 +20,12 @@ import { LoginService } from 'src/app/services/login.service';
 
 export class UsuarioReadComponent implements OnInit {
 
-  usuarios: ViewUsuarios[] = new Array()
+
+
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  usuarios = new MatTableDataSource<ViewUsuarios>();
+
   displayedColumns = ['id', 'nomeUsuario', 'tipoUsuario', 'ativo', 'action']
   idSelecionado: Number = 0;
 
@@ -60,25 +68,28 @@ export class UsuarioReadComponent implements OnInit {
 
 
   public BuscarUsuarios(event: any): void {
-    
+
     // let filtroUsuario = (<HTMLSelectElement>document.getElementById('busca')).value;
 
     let filtro = (<HTMLSelectElement>document.getElementById('buscartexto')).value
-    
-    if (event.which === 13 || event.which ===  1)
-    {
-      this.serviceApi.read(Endpoint.Usuarios + `/estabelecimento/${this.dialofRef.id}`)
-      .subscribe((result: ViewUsuarios[]) => {
-        this.usuarios = filtro != null ? result.filter(x => x.nomeUsuario.toLowerCase().includes(filtro.toLowerCase())) : result
-      })
 
+    if (event.which === 13 || event.which === 1) {
+      this.serviceApi.read(Endpoint.Usuarios + `/estabelecimento/${this.dialofRef.id}`)
+        .subscribe((result: ViewUsuarios[]) => {
+          this.usuarios.data = filtro != null ? result.filter(x => x.nomeUsuario.toLowerCase().includes(filtro.toLowerCase())) : result
+        })
+      this.usuarios.paginator = this.paginator
+      this.usuarios.sort = this.sort;
+      this.paginator._intl.itemsPerPageLabel = "Itens por página";
     } else {
       this.serviceApi.read(Endpoint.Usuarios + `/estabelecimento/${this.dialofRef.id}`)
-      .subscribe((result: ViewUsuarios[]) => {
-        this.usuarios = result
-      })
+        .subscribe((result: ViewUsuarios[]) => {
+          this.usuarios.data = result
+        })
+      this.usuarios.paginator = this.paginator
+      this.usuarios.sort = this.sort;
+      this.paginator._intl.itemsPerPageLabel = "Itens por página";
     }
-   
   }
 
   selecionaLinha(id: Number) {

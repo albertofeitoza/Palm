@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ViewPessoa } from 'src/app/models/Pessoa/ViewPessoa';
 import { Endpoint } from 'src/app/Negocio/Endpoint';
@@ -7,6 +7,9 @@ import { ServiceAllService } from 'src/app/services/service-all.service';
 import { UtilService } from 'src/app/services/util.service';
 import { PessoaCreateComponent } from '../modal/pessoa-create/pessoa-create.component';
 import { Pessoa } from 'src/app/models/Pessoa/Pessoa';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-pessoa-read',
@@ -16,7 +19,11 @@ import { Pessoa } from 'src/app/models/Pessoa/Pessoa';
 export class PessoaReadComponent implements OnInit {
   displayedColumns = ['id', 'nome', 'rg', 'cpf', 'dataNascimento', 'excluido', 'action']
 
-  pessoas: ViewPessoa[] = new Array();
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  pessoas = new MatTableDataSource<ViewPessoa>();
+
+  
   idSelecionado = 0;
 
   constructor(
@@ -36,8 +43,12 @@ export class PessoaReadComponent implements OnInit {
 
     this.serviceApi.read(Endpoint.Pessoa + `/estabelecimento/${this.dialofRef.id}`)
       .subscribe((result: ViewPessoa[]) => {
-        this.pessoas = filtro != null ? result.filter(x => x.nome.toLowerCase().includes(filtro)) : result
+        this.pessoas.data = filtro != null ? result.filter(x => x.nome.toLowerCase().includes(filtro)) : result
       })
+
+      this.pessoas.paginator = this.paginator
+      this.pessoas.sort = this.sort;
+      this.paginator._intl.itemsPerPageLabel = "Itens por página";
 
   }
 

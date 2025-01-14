@@ -195,17 +195,16 @@
 
 
         </form>
-        
-        <div style="margin-top: -2%;padding-left: 10px; ">
-          <button *ngIf="agenda.nomeAgenda && agenda.vigenciaInicio && agenda.vigenciaFim" mat-raised-button
-            (click)="createAgenda()" color="primary">
-            Salvar
-          </button>
+
+        <button *ngIf="agenda.nomeAgenda && agenda.vigenciaInicio && agenda.vigenciaFim" mat-raised-button
+          (click)="createAgenda()" color="primary">
+          Salvar
+        </button>
 
           <button mat-raised-button (click)="Voltar()" color="primary">
             Voltar
           </button>
-        </div>
+       
       </mat-card>
 
     </div>

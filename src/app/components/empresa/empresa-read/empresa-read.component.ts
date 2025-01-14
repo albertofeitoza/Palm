@@ -2,7 +2,7 @@ import { Endpoint } from './../../../Negocio/Endpoint';
 import { Router } from '@angular/router';
 import { ServiceAllService } from './../../../services/service-all.service';
 import { Empresa, ViewEmpresas } from './../../../models/empresa/ModelEmpresa';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UtilService } from 'src/app/services/util.service';
 import { Overlay } from '@angular/cdk/overlay';
@@ -14,6 +14,9 @@ import { UsuarioReadComponent } from '../../usuario/usuario-read/usuario-read.co
 import { SolucoesComponent } from '../../Solucoes/solucoes-read/solucoes-read.component';
 import { SolucoesEmpresaComponent } from '../modal/solucoes-empresa/solucoes-empresa.component';
 import { ProdutosEmpresaReadComponent } from '../modal/produtos-empresa/produtos-empresa-read.component';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-empresa-read',
@@ -23,7 +26,15 @@ import { ProdutosEmpresaReadComponent } from '../modal/produtos-empresa/produtos
 export class EmpresaReadComponent implements OnInit {
 
   empresa: Empresa[] = new Array();
-  empresas: ViewEmpresas[] = new Array();
+  
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  empresas = new MatTableDataSource<ViewEmpresas>();
+
+
+
+  // empresas: ViewEmpresas[] = new Array();
+
   //contato: Contato;
   //endereco: Endereco;
   //Colunas do GRID
@@ -53,8 +64,12 @@ export class EmpresaReadComponent implements OnInit {
 
     this.serviceEmpresa.read(Endpoint.Empresa + `/estabelecimento/${this.servico.Sessao().EmpresaId}`)
       .subscribe((emp: ViewEmpresas[]) => {
-        this.empresas = filtroEmpresa != null ? emp.filter(x => x.razaoSocial.toLowerCase().includes(filtroEmpresa.toLowerCase())) : emp
+        this.empresas.data = filtroEmpresa != null ? emp.filter(x => x.razaoSocial.toLowerCase().includes(filtroEmpresa.toLowerCase())) : emp
       })
+
+      this.empresas.paginator = this.paginator
+      this.empresas.sort = this.sort;
+      this.paginator._intl.itemsPerPageLabel = "Itens por página";
   }
 
   public CadastrarEmpresa(): void {
@@ -87,7 +102,7 @@ export class EmpresaReadComponent implements OnInit {
       return this.servico.showMessage("Empresa desativada, solicite a ativação", true);
     }
 
-    this.servico.Popup(row.id, PessoaReadComponent, "70%", "50%")
+    this.servico.Popup(row.id, PessoaReadComponent, "70%", "63%")
   }
 
   public Usuarios(row: any): void {
@@ -96,7 +111,7 @@ export class EmpresaReadComponent implements OnInit {
       return this.servico.showMessage("Empresa desativada, solicite a ativação", true);
     }
 
-    this.servico.Popup(row.id, UsuarioReadComponent, "70%", "60%")
+    this.servico.Popup(row.id, UsuarioReadComponent, "70%", "67%")
   }
 
   public ProdutosEmpresa(row: any): void {
