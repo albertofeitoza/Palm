@@ -120,9 +120,6 @@ export class DadosAgendamentoComponent implements OnInit {
 
           this.dadosAgendamentos = [...this.dadosAgendamentos];
           this.itensPendentes = this.dadosAgendamentos.filter(x => x.StatusItem < 4).length;
-
-          this.AtualizarStatusAgendamento();
-          this.AtualizarStatusProtocolo();
         }
 
         let valores = this.dadosAgendamentos.filter(x => x.StatusItem > 3 && x.StatusItem < 6).map(v => v.Valor);
@@ -217,7 +214,10 @@ export class DadosAgendamentoComponent implements OnInit {
         this.dialofRef.close();
 
     } else {
+      this.AtualizarStatusAgendamento();
+      this.AtualizarStatusProtocolo();
       this.dialofRef.close(this.protocolo);
+
     }
   }
 
@@ -321,18 +321,22 @@ export class DadosAgendamentoComponent implements OnInit {
           .subscribe(result => {
 
             if (row.StatusItem < 6 && status === 6) {
-             
+
               let pendencias = new Array(row);
 
               if (pendencias.length > 0)
                 this.LiberarHorarios(pendencias);
-           
+
             }
 
-            if (result.filter(x => x.statusItem > 4).length > 0) {
-              
-              this.BuscarAgendamento(this.idAgendamento);
-            }
+            this.BuscarAgendamento(this.idAgendamento);
+
+            setTimeout(() => {
+
+              this.AtualizarStatusAgendamento();
+              this.AtualizarStatusProtocolo();
+            
+            }, 2000);
 
           });
       })
@@ -457,7 +461,7 @@ export class DadosAgendamentoComponent implements OnInit {
   private LiberarHorarios(horarios: AgendamentoCatalogoServicos[]): void {
 
     horarios.forEach(item => {
-     
+
       if (this.ObterIdHorario(item) > 0) {
         this.servicoApi.readById(this.ObterIdHorario(item).toString(), Endpoint.AgendaHorarios)
           .subscribe((result: HorarioAgenda) => {
