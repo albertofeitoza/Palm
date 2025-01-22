@@ -47,8 +47,8 @@ line-height: 1.2;
 }
     
 .tamanhoCard{
-    width: 70px;
-    height: 70px;
+    width: 75%;
+    /* height: 70px; */
 }
 
 .produtos{

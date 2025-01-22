@@ -1,1 +1,65 @@
-<p>pdv-read works!</p>
+<!-- Menu -->
+<div class="mat-elevation-z3 arredondarBordas">
+    <div>
+        <button mat-button [matMenuTriggerFor]="menu">Cadastro</button>
+        <mat-menu #menu="matMenu">
+            <a (click)="CadastroProdutos()" mat-menu-item>Produtos</a>
+
+        </mat-menu>
+
+        <button mat-button [matMenuTriggerFor]="menucadastro">Caixa</button>
+        <mat-menu #menucadastro="matMenu">
+            <a (click)="AbrirCaixa()" mat-menu-item>Abrir Caixa</a>
+            <a (click)="ConsultaVendas()" mat-menu-item>Unidade</a>
+        </mat-menu>
+
+    </div>
+</div>
+<p>
+
+
+<div class="row">
+    <div class="col-md-8">
+
+        <div style="padding: 15px;" class="mat-elevation-z3">
+
+            <input type="text" name="text" id="" [(ngModel)]="codBarras" placeholder="Código de Barras"
+                (keypress)="BuscarProduto($event)">
+            <i style="padding-left: 15px;" class="bi bi-search" (click)="BuscarProduto($event)"></i>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Produto</th>
+                        <th scope="col">Quantidade</th>
+                        <th scope="col">V. Unit</th>
+                        <th scope="col">Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let row of dados">
+                        <td>{{row.Id}}</td>
+                        <td>
+                            <div *ngIf="alterar">
+                                <input type="text" name="text" id="" [(ngModel)]="row.Produto">
+                            </div>
+                            <div *ngIf="!alterar">
+                                {{row.Produto}}
+                            </div>
+
+                        </td>
+                        <td>{{row.Quant}}</td>
+                        <td>{{row.ValorUnitario}}</td>
+                        <td>{{row.valor}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+        <h3>Produto Corrente</h3>
+    </div>
+</div>

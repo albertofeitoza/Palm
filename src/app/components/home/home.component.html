@@ -17,14 +17,16 @@
                 <mat-card-title>
                     {{sol.solucaoNome}}
                     <a *ngIf="sol.ativo" mat-list-item routerLink="{{sol.solucaoRota}}">
-                        <i class="material-icons">
+                        <mat-icon>{{sol.icone}}</mat-icon>
+                        <!-- <i class="material-icons">
                             {{sol.icone}}
-                        </i>
+                        </i> -->
                     </a>
                     <a *ngIf="!sol.ativo">
-                        <i class="material-icons">
+                        <mat-icon>block</mat-icon>
+                        <!-- <i class="material-icons">
                             block
-                        </i>
+                        </i> -->
                     </a>
                 </mat-card-title>
                 <mat-card-footer>

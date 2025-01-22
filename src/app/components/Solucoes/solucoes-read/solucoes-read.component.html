@@ -41,7 +41,7 @@
     <!-- Name Column -->
     <ng-container matColumnDef="icone">
       <th mat-header-cell *matHeaderCellDef>Nome do Ícone</th>
-      <td mat-cell *matCellDef="let row">{{row.icone}}</td>
+      <td mat-cell *matCellDef="let row"><mat-icon>{{row.icone}}</mat-icon></td>
     </ng-container>
 
     <ng-container matColumnDef="ativo">

@@ -1,0 +1,9 @@
+.arredondarBordas {
+    border-radius: 10px;
+}
+
+.espacamento {
+    padding: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+}

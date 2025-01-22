@@ -31,14 +31,12 @@ const routes: Routes = [
   //Rotas de empresa
   {path: "empresa", component : EmpresaReadComponent },
 
-  
 
   //Rotas das APlicações
   //Agenda
-  {path: Aplicacao.Agenda , component : HomeAgendaComponent},
-  {path: Aplicacao.Agenda+"?" , component : AgendaReadComponent},
-  {path: Aplicacao.Pdv , component : PdvReadComponent}
-      
+  { path: Aplicacao.Agenda, component: HomeAgendaComponent },
+  { path: Aplicacao.Agenda + "?", component: AgendaReadComponent },
+  { path: Aplicacao.Pdv, component: PdvReadComponent }
 ]
 
 
