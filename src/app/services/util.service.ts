@@ -258,12 +258,60 @@ export class UtilService {
   }
 
 
-  public DataSistemaFront(data: Date ) {
+  public DataSistemaFront(data: Date) {
     //this.datePipe.transform(dataDia, 'yyyy-MM-dd')?.toString() ?? '';
     let currentDate = this.datePipe.transform(data ? new Date(data) : new Date, 'yyyy-MM-ddThh:mm:ss')?.toString() ?? '';
     if (currentDate)
       return currentDate
 
     return new Date;
+  }
+
+  //Exemplo da chamada desse Método no html
+  //<input (keydown)='FormataPorcentagem($event, idElemento, quantCasas)'
+
+
+  public FormataPorcentagem(event: any, id: string, mininumEractionDigits: number = 2): void {
+
+    if (event.which === 13 || event.which === 9) {
+      const input = (event.target.value);
+
+      let res = input;
+      event.target.value = '';
+      let values = undefined;
+
+      if (res.includes(".")) {
+        values = res.split('.')
+      }
+
+      if (res.includes(",")) {
+        res = res.replace(",", ".")
+        values = res.split('.')
+      }
+
+      let resultado = values ? values[0] + '.' + (values[1] + '000000').substring(0, 3) + '%' : res + '.' + '000%';
+      event.target.value = resultado;
+    }
+  }
+
+  //chamada desse Método no html
+  //<input (keydown)='FormataMoeda($event, idElemento, quantCasas)'
+
+  public FormataMoeda(event: any, id: string, _mininumEractionDigits: number = 2): void {
+
+    if (event.which === 13 || event.which === 9) {
+      const input = event.target.value.replace(/\D/g, '0') // remove tudo que não é numero
+
+      const numberValue = parseFloat(input) || 0;
+
+      // caso seja 3 casas decimais divide por  1000
+      const formatedValue = (numberValue / 100).toLocaleString('pt-BR', {
+        minimumFractionDigits: _mininumEractionDigits,
+        maximumFractionDigits: _mininumEractionDigits,
+      });
+
+      event.target.value = `${formatedValue}`
+
+    }
   }
 }
